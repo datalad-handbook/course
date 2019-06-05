@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>YODA principles</title>
+
+  <meta name="description" content="Talk on DataLad">
+  <meta name="author" content="Michael Hanke and Yaroslav Halchenko">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="reveal.js/css/theme/beige.css" id="theme">
+  <link rel="stylesheet" href="s.css" id="theme">
+  <!-- Code syntax highlighting -->
+  <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <link rel="stylesheet" href="s.css" id="theme">
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <![endif]-->
+<!--<style type="text/css">
+    dt, dd { display: inline-block; float: left; }
+    dt { clear: left; }
+</style>
+-->
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+<section>
+  <h1>YODA principles</h1>
+  <table>
+  <tr>
+  <td>Michael Hanke</td><td>Yaroslav Halchenko</td>
+  </tr>
+  <tr>
+    <td>
+      <small>Psychoinformatics lab, Jülich Research Center and<br>
+      Heinrich-Heine-University, Düsseldorf</small>
+    </td>
+    <td>
+        <small>Dept. Psychological and Brain Sciences <br />
+      Center for Cognitive Neuroscience, Dartmouth College
+      </small>
+    </td>
+  </tr>
+  </table>
+  <img style="margin-top:60px" height="300px" data-src="pics/yoda.png">
+</section>
+
+
+<section data-markdown>
+## P1: One thing, one dataset
+![](pics/dataset_modules.png)
+whenever a particular collection of files could anyhow be useful in more than one context,
+put them in their own dataset
+</section>
+
+<section data-markdown>
+## P2: Record where you got it from, and we it is now
+![](pics/data_origin.png)
+
+link individual datasets to declare data-dependencies, record access URLs for individual files obtained from (unstructured) sources "in the cloud"
+</section>
+
+<section>
+  <h2>Link re-usable data resource units</h2>
+<img data-src="pics/dataset_linkage.png">
+<pre><code class="bash" style="font-size:115%;max-height:none">$ datalad install --dataset . --source http://example.com/ds inputs/rawdata
+</code></pre>
+
+<pre><code class="diff" style="max-height:none">$ git diff HEAD~1
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..c3370ba
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "inputs/rawdata"]
++       path = inputs/rawdata
++       url = http://example.com/importantds
+diff --git a/inputs/rawdata b/inputs/rawdata
+new file mode 160000
+index 0000000..fabf852
+--- /dev/null
++++ b/inputs/rawdata
+@@ -0,0 +1 @@
++Subproject commit fabf8521130a13986bd6493cb33a70e580ce8572
+</code></pre>
+    <aside class="notes">weighs just a few bytes</aside>
+</section>
+
+<section>
+  <h2>Modular data stewardship and curation</h2>
+  <img style="" height="750px" data-src="pics/virtual_dirtree.png">
+  <p style="margin-top:-.5em">"actionable" links to subdatasets/files, seamless handling of dataset trees</p>
+    <aside class="notes">dataset linkage is pairwise, i.e. cheap</aside>
+</section>
+
+
+<section data-markdown>
+## Move/share/publish data
+![](pics/decentralized_publishing.png)
+</section>
+
+
+
+<section data-markdown>
+## P3: Record what you did to it, and with what
+![](pics/w3cprov.png)
+
+capture how exactly the content of every file
+
+(that was not obtained from elsewhere)
+
+came to be
+</section>
+
+<section>
+  <h2>Data provenance capture</h2>
+  <img style="margin:-20px" data-src="pics/dataset_linkage_provenance.png">
+<pre><code class="bash" style="max-height:none">$ datalad run -m "Perform eye movement event detection"\
+  --input 'inputs/raw_eyegaze/sub-*/beh/sub-*...tsv.gz' \
+  --output 'sub-*' \
+  bash code/compute_all.sh
+
+-- Git commit -- Michael Hanke &lt;michael.hanke@gmail.com&gt;; Fri Sep 21 22:00:47 2018
+    [DATALAD RUNCMD] Perform eye movement event detection
+    === Do not change lines below ===
+    {
+     "cmd": "bash code/compute_all.sh",
+     "dsid": "d2b4b72a-7c13-11e7-9f1f-a0369f7c647e",
+     "exit": 0,
+     "inputs": ["inputs/raw_eyegaze/sub-*/beh/sub-*_task-movie_run-*_....tsv.gz"],
+     "outputs": ["sub-*"],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+---
+ sub-01/sub-01_task-movie_run-1_events.png | 2 +-
+ sub-01/sub-01_task-movie_run-1_events.tsv | 2 +-
+...
+</code></pre>
+</section>
+
+<section>
+  <h2>"Complete" provenance capture</h2>
+  <img style="margin:-20px" data-src="pics/dataset_linkage_provenance.png">
+<pre><code class="bash" style="max-height:none">$ datalad containers-run -n nilearn \
+  --input 'inputs/mri_aligned/sub-*/in_bold3Tp2/sub-*_task-avmovie_run-*_bold*' \
+  --output 'sub-*/LC_timeseries_run-*.csv' \
+  "bash -c 'for sub in sub-*; do for run in run-1 ... run-8;
+     do python3 code/extract_lc_timeseries.py \$sub \$run; done; done'"
+
+-- Git commit -- Michael Hanke &lt;michael.hanke@gmail.com&gt;; Fri Jul 6 11:02:28 2018
+    [DATALAD RUNCMD] singularity exec --bind {pwd} .datalad/e...
+    === Do not change lines below ===
+    {
+     "cmd": "singularity exec --bind {pwd} .datalad/environments/nilearn.simg bash..",
+     "dsid": "92ea1faa-632a-11e8-af29-a0369f7c647e",
+     "exit": 0,
+     "inputs": [
+      "inputs/mri_aligned/sub-*/in_bold3Tp2/sub-*_task-avmovie_run-*_bold*",
+      ".datalad/environments/nilearn.simg"
+     ],
+     "outputs": ["sub-*/LC_timeseries_run-*.csv"],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+---
+ sub-01/LC_timeseries_run-1.csv | 1 +
+ sub-01/LC_timeseries_run-2.csv | 1 +
+...
+</code></pre>
+</section>
+
+
+<section>
+    <h2>Datalad principles</h2>
+    <ul style="font-size:115%">
+        <li style="margin-bottom:1em">There are only two things in the world: <strong>datasets and files</strong>.</li>
+        <li style="margin-bottom:1em">A <strong>dataset is a Git repository</strong>.</li>
+        <li style="margin-bottom:1em">A dataset can have an <strong>optional <em>annex</em></strong> for (large) file content tracking (transport to and from the annex managed with Git-annex, <a href="https://git-annex.branchable.com">https://git-annex.branchable.com</a>).</li>
+        <hr />
+        <li style="margin-bottom:1em">Minimization of custom procedures and data structures: <strong>Users must not loose data or data access</strong>, if DataLad would vanish.</li>
+        <li style="margin-bottom:1em"><strong>Complete decentralization</strong>, no required central server or service.</li>
+        <li style="margin-bottom:1em">Maximize use of existing 3rd-party infrastructure.</li>
+    </ul>
+</section>
+
+
+<section data-markdown>
+## Scalable and Actionable (meta)data representations
+![](pics/metadata.png)
+- (meta)data logistics solution with **built-in provenance capture**
+
+- automatic **metadata updates** to track evolution of standards
+
+- integrates well with storage/hosting technology
+
+- facilitates building metadata-driven applications 
+
+- viable system to **bring computation to data**
+Note:
+</section>
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="reveal.js/lib/js/head.min.js"></script>
+<script src="reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>

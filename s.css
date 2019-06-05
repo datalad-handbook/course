@@ -1,0 +1,38 @@
+.reveal .slides {
+  height: 100%;
+  top: 0;
+  margin-top: 0;
+}
+
+.reveal .slides>section {
+  min-height: 90%;
+  top: auto;
+}
+
+.reveal .slides>section>section {
+  min-height: 100%;
+}
+
+.reveal section img {
+  margin: 15px 0px;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  box-shadow: none; }
+
+
+.reveal .slides section .fragment.current-visible-only {
+  opacity: 0;
+  height: 0;
+  visibility: hidden; }
+  .reveal .slides section .fragment.current-visible-only.current-fragment {
+    opacity: 1;
+    height: auto;
+    visibility: visible; }
+
+.reveal .slides section.present note {
+  position: fixed;
+  bottom: 0px;
+  font-size: 60%;
+  text-align: left;
+  display: block;
+}
