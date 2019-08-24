@@ -29,10 +29,24 @@
     height: auto;
     visibility: visible; }
 
+@media screen {
 .reveal .slides section.present note {
   position: fixed;
   bottom: 0px;
   font-size: 60%;
   text-align: left;
   display: block;
+}
+}
+
+@media print {
+.reveal .slides section.present note {
+  position: absolute;
+  font-size: 40%;
+  text-align: left;
+  display: block;
+}
+.reveal .slides section {
+  font-size: 90%!important;
+}
 }
