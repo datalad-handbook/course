@@ -1,38 +1,16 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-
   <title>Writing a reproducible paper</title>
-
   <meta name="description" content="A reproducible paper">
   <meta name="author" content="Adina Wagner">
 
+  <meta charset="utf-8">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="reveal.js/css/reveal.css">
-  <link rel="stylesheet" href="reveal.js/css/theme/beige.css" id="theme">
-  <link rel="stylesheet" href="s.css" id="theme">
-  <!-- Code syntax highlighting -->
-  <link rel="stylesheet" href="reveal.js/lib/css/zenburn.css">
-  <!-- Printing and PDF exports -->
-  <script>
-    var link = document.createElement( 'link' );
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
-    document.getElementsByTagName( 'head' )[0].appendChild( link );
-  </script>
-  <link rel="stylesheet" href="s.css" id="theme">
-  <!--[if lt IE 9]>
-  <script src="lib/js/html5shiv.js"></script>
-  <![endif]-->
-<!--<style type="text/css">
-    dt, dd { display: inline-block; float: left; }
-    dt { clear: left; }
-</style>
--->
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
 </head>
 <body>
 
@@ -72,7 +50,7 @@
 <section>
     <h2>What are the advantages?</h2>
     <br>
-    <img data-src="pics/noun_benefit.svg" width="250">
+    <img data-src="../pics/noun_benefit.svg" width="250">
     <br><br><br>
     <note><small>benefit by alvianwijaya from the Noun Project</small></note>
 </section>
@@ -81,7 +59,7 @@
 <section>
     <h2>Increasing trust in results and paper</h2>
     <br>
-    <img data-src="pics/trust.svg" width="250">
+    <img data-src="../pics/trust.svg" width="250">
     <br><br><br>
     <note><small>trusted by H Alberto Gongora from the Noun Project</small></note>
 
@@ -92,7 +70,7 @@
     <h2>A more convincing case with my research</h2>
 
     <br>
-    <img data-src="pics/data.svg" width="250">
+    <img data-src="../pics/data.svg" width="250">
     <br><br><br>
     <note><small>Data by Yamini Ahluwalia from the Noun Project</small></note>
 
@@ -102,7 +80,7 @@
 <section>
     <h2> Easy collaboration</h2>
         <br>
-    <img data-src="pics/noun_collaboration.svg" width="250">
+    <img data-src="../pics/noun_collaboration.svg" width="250">
     <br><br><br>
     <note><small>collaboration by Creative Stall from the Noun Project</small></note>
 
@@ -113,7 +91,7 @@
 <section>
     <h2>Saving time</h2>
         <br>
-    <img data-src="pics/time.svg" width="250">
+    <img data-src="../pics/time.svg" width="250">
     <br><br><br>
     <note><small>counterclockwise by Sara Jeffries from the Noun Project</small></note>
 
@@ -125,7 +103,7 @@
     <h2>"How can I  find out more?"</h2>
 
 
-    <a href="http://handbook.datalad.org/en/latest/" target="_blank"><img data-src="pics/logo.svg"></a>
+    <a href="http://handbook.datalad.org/en/latest/" target="_blank"><img data-src="../pics/logo.svg"></a>
     <div>
     <a href="http://handbook.datalad.org" target="_blank">handbook.datalad.org</a>
     </div>
@@ -148,7 +126,7 @@
         <ul>
             <br>
             <li> <b>Bug reports</b> or <b>feature requests</b>: Something does not work? Some content is yet missing? Please tell us by opening an <b>issue</b>. </li>
-            <img data-src="pics/issue.png">
+            <img data-src="../pics/issue.png">
         </ul>
 </section>
 
@@ -158,7 +136,7 @@
         <ul>
             <br>
             <li> <b>Typo fixes</b>, or any other <b>content</b> contributions: Do a <b>pull request</b>, and become a contributor! From fixed typos you found to full sections or use-cases. </li>
-            <img data-src="pics/PR.png">
+            <img data-src="../pics/PR.png">
         </ul>
         <li>Hint: Do it for this year's <a href="https://hacktoberfest.digitalocean.com/" target="_blank"> Hacktoberfest</a> and get a geeky T-Shirt ;-) </li>
 
@@ -184,8 +162,7 @@
 </div> <!-- /.slides -->
 </div> <!-- /.reveal -->
 
-<script src="reveal.js/lib/js/head.min.js"></script>
-<script src="reveal.js/js/reveal.js"></script>
+<script src="../reveal.js/js/reveal.js"></script>
 
 <script>
   // Full list of configuration options available at:
@@ -213,11 +190,11 @@
 
     // Optional reveal.js plugins
     dependencies: [
-      { src: 'reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
-      { src: 'reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-      { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
-      { src: 'reveal.js/plugin/notes/notes.js', async: true }
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
     ]
   });
 </script>
