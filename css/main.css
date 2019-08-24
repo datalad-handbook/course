@@ -1,6 +1,6 @@
-@import url("reveal.js/css/reveal.css");
-@import url("reveal.js/css/theme/beige.css");
-@import url("reveal.js/lib/css/zenburn.css");
+@import url("../reveal.js/css/reveal.css");
+@import url("../reveal.js/css/theme/beige.css");
+@import url("../reveal.js/lib/css/zenburn.css");
 
 .reveal .slides {
   height: 100%;
