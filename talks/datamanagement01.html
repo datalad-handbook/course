@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Datamanagement at INM7</title>
+  <meta name="description" content="Data management course session 01">
+  <meta name="author" content="Adina Wagner & Michael Hanke">
+
+  <meta charset="utf-8">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <h1 style="text-transform:none">Data management</h1> <br>
+    <h3 style="text-transform:none">Session 01</h3>
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Adina S. Wagner
+      <br><small>
+		<a href="https://twitter.com/AdinaKrik">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaWagner</a></small></td>
+	<td>Michael Hanke
+	  <br><small>
+		<a href="https://twitter.com/eknahm">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @eknahm</a></small></td>
+  </tr>
+  <tr>
+    <td>
+        <small>Psychoinformatics lab, Jülich Research Center<br>
+      </small>
+    </td>
+    <td>
+      <small></small>
+    </td>
+  </tr>
+  </table>
+  </div>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Agenda ![](../pics/agenda.svg) <!-- .element: height="60" -->
+
+- **Prerequisites & technicalities**
+  - Setting up a Git identity
+  - Gitlab/Github accounts
+  - Howto: Issues on Gitlab, The handbook's repository, Readthedocs
+- **Session 01**
+  - What is a DataLad dataset?
+  - YODA principles for dataset organization
+- **Hands-on 01:** Data in a DataLad dataset
+
+
+<imgcredit>agenda by Aneeque Ahmed from the Noun Project</imgcredit>
+
+<aside class="notes">
+- just giving an overview what will happen today
+</aside>
+</script>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+## Git identity ![](../pics/identity.svg)<!-- .element: height="60" -->
+
+- Git: free & open source version control software
+- Git is already installed on the cluster
+- Git identity: The name and e-mail address associated with what you "save"
+- Configuration with `git config` command in a terminal:
+   - `$ git config --global user.name "Adina Wagner"`
+   - `$ git config --global user.email adina.wagner@example.com`
+
+<imgcredit>identity by Maxim Basinski from the Noun Project</imgcredit>
+
+<aside class="notes">
+- everyone needs to setup Git identity on cluster
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Github & Gitlab
+
+- Two different web-based Git repository managers with similar features. Both are used to host Git repositories and to ease collaboration.
+
+**GitHub** ![](../pics/GitHub.png)<!-- .element: height="60" -->
+
+- https://Github.com: Large, owned by Microsoft, extensive functionality on free plans
+- Core concepts: Repositories, organizations
+
+**GitLab** ![](../pics/GitLab_Logo.svg)<!-- .element: height="60" -->
+
+- Open source, the FZJ hosts many different GitLab instances
+- JuGit (https://jugit.fz-juelich.de/): A GitLab instance hosted at FZJ, available both internally and externally
+- Core concepts: Groups, subgroups, projects
+
+<aside class="notes">
+- Key differences between the two. TODO: talk to Alex about permissions
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Handbook repositories ![](../pics/logo.svg)<!-- .element: height="100" -->
+
+- The basis for the data management course and user-oriented, introductory course on DataLad
+- Hosted both on Github (https://github.com/datalad-handbook/book) and Gitlab (https://jugit.fz-juelich.de/inm7/training/datalad-handbook)
+- File issues if you have questions or requests!
+- Contribute by pull requesting changes, additions, and fixes!
+
+
+<aside class="notes">
+-
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Filing issues on Gitlab ![](../pics/logo.svg)<!-- .element: height="100" -->
+
+- File issues if you have DataLad-related or course-related questions in the repository hosted on Gitlab
+- Practice: Everyone will file an issue right now
+
+
+<aside class="notes">
+-
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Readthedocs ![](../pics/logo.svg)<!-- .element: height="100" -->
+
+- The book is rendered with Sphinx and hosted on Readthedocs.org
+- Readthedocs supports HTML, eReader, and PDF formats
+- URL: http://handbook.datalad.org
+- We render an INM7 specific version
+- Practice: How to access public and INM-7-specific versions of the handbook in HTML and PDF format
+
+
+<aside class="notes">
+- talk about contributors, and PRs
+</aside>
+</script>
+</section>
+</section>
+
+<section>
+<section>
+  <h2>DataLad Datasets</h2>
+
+  TODO: What is a DataLad dataset
+  TODO: some picture
+  <dl>
+      <dt>Version controlled content</dt><dd>regardless of size</dd>
+      <dt>Modularity</dt><dd>independent, versioned components </dd>
+      <dt>Nesting</dt><dd>Individual datasets can be nested as subdatasets in superdatasets</dd>
+      <dt>Provenance tracking</dt><dd>how did this piece of data come into existence?</dd>
+      <dt>Collaboration</dt><dd>sharing, updating, publishing</dd>
+  </dl>
+</section>
+
+
+<section>
+  <h2>DataLad Datasets: Structure and looks</h2>
+  <img style="" data-src="../pics/virtual_dirtree.png" height="500">
+
+  <dl>
+      <dt>Git and Git-annex work <i>in the background</i></dt><dd>Dataset looks and feels like any directory on your computer</dd>
+      <dt>Nested datasets look like subfolders</dt><dd>TODO</dd>
+      <dt></dt><dd></dd>
+      <dt></dt><dd></dd>
+  </dl>
+</section>
+
+
+<section>
+  <h2>DataLad Datasets for data analysis</h2>
+  <dl>
+      <dt>One thing, one dataset</dt><dd>Separate code, data, output, execution environments. One analysis = one superdataset</dd>
+      <dt>Record where you got it from, and where it is now</dt><dd>Link components as subdatasets, record data orgin, keep a dataset self-contained (relative paths)</dd>
+      <dt>Record what you did to it, and with what</dt><dd>Collect and store provenance of all contents you create in a dataset</dd>
+      <dt></dt><dd></dd>
+      <dt></dt><dd></dd>
+  </dl>
+</section>
+</section>
+
+<section>
+<section>
+  <h2>Hands-on: Get data into a dataset</h2>
+
+  TODO
+  <ul>
+    <li>Use https://github.com/datalad/example-dicom-functional as a testdataset</li>
+    <li>Log into brainbfast and try to get this data into a DataLad dataset</li>
+    <li>Excersise is meant for exploration: use datalad --help to find out about
+    available commands, use tools of your choice to download/extract data, try to set up
+    an appropriate dataset structure</li>
+  </ul>
+  TODO: afterwards example solution
+</section>
+
+
+<section>
+  <h2>Solution: Get data into a dataset</h2>
+
+  TODO
+  <ul>
+    <li>datalad create -c yoda testdataset</li>
+    <li>datalad install -d . -s github...</li>
+    <li>Demonstrate content lock, and how that does not apply to code/</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Pointers to read more</h2>
+
+  TODO
+  <ul>
+    <li>Neuroimaging use case</li>
+    <li>Chapters 1-5 in handbook</li>
+    <li>YODA principles</li>
+  </ul>
+</section>
+</section>
+
+<section>
+<section>
+  <h2>Outline: What comes next?</h2>
+  TODO
+</section>
+
+<section data-markdown>
+    # Questions?
+</section>
+</section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
