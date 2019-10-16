@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Datamanagement at INM7</title>
+  <meta name="description" content="Data management course session 01">
+  <meta name="author" content="Adina Wagner & Michael Hanke">
+
+  <meta charset="utf-8">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <h1 style="text-transform:none">Data management</h1> <br>
+    <h3 style="text-transform:none">Session 01</h3>
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Adina S. Wagner
+      <br><small>
+		<a href="https://twitter.com/AdinaKrik">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaWagner</a></small></td>
+	<td>Michael Hanke
+	  <br><small>
+		<a href="https://twitter.com/eknahm">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @eknahm</a></small></td>
+  </tr>
+  <tr>
+    <td>
+        <small>Psychoinformatics lab, Jülich Research Center<br>
+      </small>
+    </td>
+    <td>
+      <small></small>
+    </td>
+  </tr>
+  </table>
+  </div>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Agenda ![](../pics/agenda.svg) <!-- .element: height="60" -->
+
+- **Prerequisites & technicalities**
+  - Setting up a Git identity
+  - Gitlab/Github accounts
+  - Howto: Issues on Gitlab, The handbook's repository, Readthedocs
+- **Session 01**
+  - What is a DataLad dataset?
+  - YODA principles for dataset organization
+- **Hands-on 01:** Data in a DataLad dataset
+
+
+<imgcredit>agenda by Aneeque Ahmed from the Noun Project</imgcredit>
+
+<aside class="notes">
+- just giving an overview what will happen today
+</aside>
+</script>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+## Git identity ![](../pics/identity.svg)<!-- .element: height="60" -->
+
+- Git: free & open source version control software
+- Git is already installed on the cluster
+- Git identity: The name and e-mail address associated with what you "save".
+- Configuration with `git config` command in a terminal:
+<pre><code class="bash" style="max-height:none">$ git config --global user.name "Adina Wagner"
+$ git config --global user.email adina.wagner@example.com
+</code></pre>
+
+
+- **Hands-on**: Log into `brainbfast` and configure your Git identity, if it isn't set up yet.
+
+<imgcredit>identity by Maxim Basinski from the Noun Project</imgcredit>
+
+<aside class="notes">
+- everyone needs to setup Git identity on cluster
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Github & Gitlab
+
+- Two different web-based Git repository managers with similar features. Both are used to host Git repositories and to ease collaboration.
+
+**GitHub** ![](../pics/GitHub.png)<!-- .element: height="60" -->
+
+- <a href="https://Github.com">Github.com</a>: Most popular, proprietary, extensive functionality on free plans
+- Core concepts: Repositories, organizations.
+
+**GitLab** ![](../pics/GitLab_Logo.svg)<!-- .element: height="60" -->
+
+- Similar to GitHub, but is open source. The FZJ hosts many different GitLab instances.
+- JuGit (<a href="https://jugit.fz-juelich.de/">jugit.fz-juelich.de</a>): The GitLab instance we recommend.
+- Core concepts: Groups, subgroups, projects
+
+<aside class="notes">
+- Key differences between the two. TODO: talk to Alex about permissions
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Handbook repositories ![](../pics/logo.svg)<!-- .element: height="100" -->
+
+- The DataLad Handbook: User-oriented, introductory course on DataLad and the
+  basis for the data management course.
+- Source code on
+   - Github (<a href="https://github.com/datalad-handbook/book">github.com/datalad-handbook/book</a>) and
+   - Gitlab (<a href="https://jugit.fz-juelich.de/inm7/training/datalad-handbook" target="_blank">jugit.fz-jeulich.de/inm7/training/datalad-handbook</a>)
+- **File issues** if you have questions or requests!
+- Contribute by **pull requesting** changes, additions, and fixes!
+
+
+<aside class="notes">
+-
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Filing issues on Gitlab ![](../pics/logo.svg)<!-- .element: height="100" -->
+
+- File issues if you have DataLad-related or course-related questions in the repository hosted on **Gitlab**
+- **Hands-on**: File an issue right now!
+   - go to <a href="https://jugit.fz-juelich.de/" target="_blank">jugit.fz-juelich.de</a>
+   - find the handbook project
+   - file an issue with any content
+
+
+<aside class="notes">
+-
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Readthedocs ![](../pics/logo.svg)<!-- .element: height="100" -->
+
+- The book is rendered with <a href="http://www.sphinx-doc.org/en/master/" target="_blank">Sphinx</a>
+  and hosted on <a href="https://readthedocs.org/" target="_blank">Readthedocs.org</a>
+- Readthedocs supports HTML, eReader, and PDF formats
+- Rendered version: <a href="http://handbook.datalad.org" target="_blank">handbook.datalad.org</a>
+- There is an additional **INM-7 specific** version with additional sections on internal workflows
+- **Hands-on**: Access public and INM-7-specific versions of the handbook in HTML and PDF format
+
+
+<aside class="notes">
+- talk about contributors, and PRs
+</aside>
+</script>
+</section>
+</section>
+
+<section>
+<section>
+  <h2>DataLad Datasets</h2>
+
+    <p align="left">
+    DataLad datasets are DataLad's core data structure. Datasets have many features:
+    </p>
+
+  <dl>
+      <dt>Version controlled content, regardless of size</dt><dd>Relying
+      on the tools Git and Git-annex working in the background.</dd>
+      <dt>Provenance tracking</dt><dd>Record and find out how data came into
+      existence (including the software environment), and reproduce entire analyses.</dd>
+      <dt>Easy collaboration</dt><dd>Install others' datasets, share datasets,
+      publish datasets with third-party services.</dd>
+      <dt>Staying up to date</dt><dd> Datasets can know their copies or origins.
+      This allows to <b>update</b> datasets from their sources with a single command.</dd>
+      <dt>Modularity & Nesting</dt><dd>Individual datasets are independent,
+      versioned components that can be <i>nested</i> as <i>subdatasets</i> in
+      <i>superdatasets</i>. Subdatasets have a stand-alone version history, and their
+      <i>version state</i> is recorded in the superdataset. </dd>
+  </dl>
+
+
+</section>
+
+
+<section>
+  <h2>DataLad Datasets</h2>
+
+    <p align="left">
+        DataLad datasets look like any other directory on your computer, and subdatasets
+        look like subdirectories. DataLad, Git-annex, and Git work in the background
+        (e.g., <code>.datalad/</code>, <code>.git/</code>)
+    </p>
+  <img style="" data-src="../pics/virtual_dirtree.png" height="600">
+
+    <p align="left">
+    You can <b>create & populate</b>
+    a dataset from scratch, or <b>install</b> existing datasets from collaborators
+    or open sources.
+    </p>
+</section>
+
+
+<section>
+  <h2>DataLad Datasets for data analysis</h2>
+
+  <ul>
+      <li>A DataLad dataset can have <i>any</i> structure, and use as many or few
+          features of a dataset as required.</li>
+
+      <li>However, for <b>data analyses</b> it is beneficial to make
+          use of DataLad features and structure datasets according to the <b>YODA principles</b>:</li>
+  </ul>
+
+  <img style="" data-src="../pics/yoda.png" height="400">
+  <dl>
+      <dt>P1: One thing, one dataset</dt>
+      <dt>P2: Record where you got it from, and where it is now</dt>
+      <dt>P3: Record what you did to it, and with what</dt>
+  </dl>
+</section>
+
+    <section data-markdown>
+## P1: One thing, one dataset
+![](../pics/dataset_modules.png)
+
+- Bundle all components of one analysis into one superdataset
+- Whenever a particular collection of files could anyhow be useful in more
+  than one context (e.g. data), put them in their own dataset, and install it as
+  a subdataset.
+- Keep everything clean and modular: Within an analysis, separate code, data, output, execution environments.
+
+</section>
+
+<section data-markdown>
+## P2: Record where you got it from, and we it is now
+![](../pics/data_origin.png)
+
+- Link individual datasets to declare data-dependencies (e.g. as subdatasets).
+- Record data's orgin with appropriate commands, for example
+  to record access URLs for individual files obtained from (unstructured) sources "in the cloud".
+- Keep a dataset self-contained with relative paths in scripts to subdatasets or files.
+- Share and publish datasets to collaborate.
+
+</section>
+
+    <section data-markdown>
+## P3: Record what you did to it, and with what
+![](../pics/dataset_linkage_provenance.png)
+
+- Collect and store provenance of all contents of a dataset that you create
+  (more on this in later sessions).
+
+</section>
+
+
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+  ## Hands-on excersise
+
+**Objective**: How would you get data into a dataset?
+
+- Use <a href=https://github.com/datalad/example-dicom-functional target="_blank">github.com/datalad/example-dicom-functional</a>
+  as test data. Download branch `1block` as a **ZIP archive**.
+- Log into `brainbfast`, get the data on `brainbfast`, and try to get
+  this data into a DataLad dataset with a sensible structure suitable for data analysis.
+- This excersise is meant for **exploration**:
+   - use `datalad --help`, the handbook, or the documentation at
+<a href=http://docs.datalad.org/en/latest target="_blank">docs.datalad.org</a>
+to find out about available commands to solve this task,
+   - use tools of your choice to download/extract data,
+   - try to set up an appropriate dataset structure.
+
+</script>
+</section>
+
+
+<section>
+    <h2>Hands-on solution</h2>
+
+    <ul>
+        <li>transform the zip folder into a DataLad dataset:</li>
+    </ul>
+    <pre><code class="bash" style="max-height:none">$ cd example_dicom_functional_block
+$ datalad create -f
+[INFO   ] Creating a new annex repo at [...]/example-dicom-functional-1block
+create(ok): [...]example-dicom-functional-1block (dataset)
+
+$ datalad save -m "add dicoms from functional acquisition"
+add(ok): LICENSE (file)
+add(ok): dicoms/MR.1.3.46.670589.11.38317.5.0.4476.2014042516045740754 (file) [...]
+</code></pre>
+
+   <ul>
+       <li>create a dataset for a data analysis (independent from the data directory)</li>
+   </ul>
+
+   <pre><code class="bash" style="max-height:none">$ cd ../
+$ datalad create -c yoda mydataset
+[INFO   ] Creating a new annex repo at [...]/myanalysis
+[INFO   ] Running procedure cfg_yoda
+[INFO   ] == Command start (output follows) =====
+[INFO   ] == Command exit (modification check follows) =====
+create(ok): [...]/myanalysis (dataset)
+</code></pre>
+
+   <ul>
+       <li>create a data directory and install the dicom dataset as a subdataset</li>
+   </ul>
+
+   <pre><code class="bash" style="max-height:none">$ cd myanalysis
+$ mkdir data
+$ datalad install -d . -s ../example_dicom_functional_1block data/dicoms
+[INFO   ] Cloning ../example-dicom-functional-1block into '[...]/myanalysis/data/dicoms'
+install(ok): data/dicoms (dataset)
+action summary:
+  add (ok: 2)
+  install (ok: 1)
+  save (ok: 1)
+</code></pre>
+
+
+<b>Hands-on</b>: Explore this dataset
+
+<aside class="notes">
+- wget https://github.com/datalad/example-dicom-functional/archive/1block.zip
+- unzip archive
+- force-create ds out of it; save
+- install from path
+
+explore: content lock; stuff saved in Git (code) versus stuff saved in annex; get
+</aside>
+</section>
+
+
+<section data-markdown><script type="text/template">
+  ## Further reading
+
+You will find the topics of this session in more detail in the following chapters of the handbook:
+
+- **The basics on datasets:**
+   - Chapter <a href=http://handbook.datalad.org/en/latest/index.html target="_blank">DataLad Datasets</a> in the handbook.
+- **Best practices for data analyses in datasets (YODA):**
+   - The section <a href=http://handbook.datalad.org/en/latest/basics/101-123-yoda.html target="_blank">YODA principles</a> in the handbook.
+- **A preview into automatically reproducible analyses in datasets:**
+   - Usecase <a href=http://handbook.datalad.org/en/latest/usecases/reproducible_neuroimaging_analysis.html target="_blank">"An automatically reproducible neuroimaging analysis of public data"</a> in the handbook.
+
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+  ## Outline: What comes next?
+
+- DataLad is installed on the cluster, try it out further, and ask questions on GitLab
+- Sessions will start with open question time about a past excersise, and end with an
+  excersise for the upcoming session.
+- Upcoming topics: Reproducible analysis, collaboration, INM-7 specific workflows
+  on data retrieval & JSC
+- **Which date is suitable?** <a href="https://doodle.com/poll/gavpbrtvzqtmy6up" target="_blank">Doodle poll</a>
+
+</script>
+</section>
+
+<section data-markdown>
+    # Questions?
+
+</section>
+</section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
