@@ -22,31 +22,6 @@
   <h1 style="text-transform:none">Data management</h1> <br>
     <h3 style="text-transform:none">Session 01</h3>
 
-  <div style="margin-top:1em;text-align:center">
-  <table style="border: none;">
-  <tr>
-	<td>Adina S. Wagner
-      <br><small>
-		<a href="https://twitter.com/AdinaKrik">
-		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
-		  @AdinaWagner</a></small></td>
-	<td>Michael Hanke
-	  <br><small>
-		<a href="https://twitter.com/eknahm">
-		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
-		  @eknahm</a></small></td>
-  </tr>
-  <tr>
-    <td>
-        <small>Psychoinformatics lab, Jülich Research Center<br>
-      </small>
-    </td>
-    <td>
-      <small></small>
-    </td>
-  </tr>
-  </table>
-  </div>
 </section>
 
 
@@ -109,7 +84,7 @@ $ git config --global user.email adina.wagner@example.com
 
 - Similar to GitHub, but is open source. The FZJ hosts many different GitLab instances.
 - JuGit (<a href="https://jugit.fz-juelich.de/">jugit.fz-juelich.de</a>): The GitLab instance we recommend.
-- Core concepts: Groups, subgroups, projects
+- Core concepts: Groups, subgroups, projects.
 
 <aside class="notes">
 - Key differences between the two. TODO: talk to Alex about permissions
@@ -205,7 +180,7 @@ $ git config --global user.email adina.wagner@example.com
     <p align="left">
         DataLad datasets look like any other directory on your computer, and subdatasets
         look like subdirectories. DataLad, Git-annex, and Git work in the background
-        (e.g., <code>.datalad/</code>, <code>.git/</code>)
+        (e.g., <code>.datalad/</code>, <code>.git/</code>, ...).
     </p>
   <img style="" data-src="../pics/virtual_dirtree.png" height="600">
 
@@ -240,7 +215,7 @@ $ git config --global user.email adina.wagner@example.com
 ## P1: One thing, one dataset
 ![](../pics/dataset_modules.png)
 
-- Bundle all components of one analysis into one superdataset
+- Bundle all components of one analysis into one superdataset.
 - Whenever a particular collection of files could anyhow be useful in more
   than one context (e.g. data), put them in their own dataset, and install it as
   a subdataset.
@@ -249,7 +224,7 @@ $ git config --global user.email adina.wagner@example.com
 </section>
 
 <section data-markdown>
-## P2: Record where you got it from, and we it is now
+## P2: Record where you got it from, and where it is now
 ![](../pics/data_origin.png)
 
 - Link individual datasets to declare data-dependencies (e.g. as subdatasets).
@@ -304,7 +279,7 @@ $ datalad create -f
 [INFO   ] Creating a new annex repo at [...]/example-dicom-functional-1block
 create(ok): [...]example-dicom-functional-1block (dataset)
 
-$ datalad save -m "add dicoms from functional acquisition"
+$ datalad save -m "add dicoms from functional acquisition" .
 add(ok): LICENSE (file)
 add(ok): dicoms/MR.1.3.46.670589.11.38317.5.0.4476.2014042516045740754 (file) [...]
 </code></pre>
@@ -314,7 +289,7 @@ add(ok): dicoms/MR.1.3.46.670589.11.38317.5.0.4476.2014042516045740754 (file) [.
    </ul>
 
    <pre><code class="bash" style="max-height:none">$ cd ../
-$ datalad create -c yoda mydataset
+$ datalad create -c yoda myanalysis
 [INFO   ] Creating a new annex repo at [...]/myanalysis
 [INFO   ] Running procedure cfg_yoda
 [INFO   ] == Command start (output follows) =====
@@ -371,12 +346,13 @@ You will find the topics of this session in more detail in the following chapter
 <section data-markdown><script type="text/template">
   ## Outline: What comes next?
 
-- DataLad is installed on the cluster, try it out further, and ask questions on GitLab
+- DataLad is installed on the cluster, try it out further, and ask questions on GitLab.
 - Sessions will start with open question time about a past excersise, and end with an
   excersise for the upcoming session.
 - Upcoming topics: Reproducible analysis, collaboration, INM-7 specific workflows
-  on data retrieval & JSC
-- **Which date is suitable?** <a href="https://doodle.com/poll/gavpbrtvzqtmy6up" target="_blank">Doodle poll</a>
+  on data retrieval & JSC.
+
+- **Which date is suitable?** > <a href="https://doodle.com/poll/gavpbrtvzqtmy6up" target="_blank">Doodle poll</a> <
 
 </script>
 </section>
