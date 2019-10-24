@@ -2,9 +2,10 @@
 
 Talks and materials for workshops based on the [DataLad handbook](http://handbook.datalad.org).
 
-Slides are written with [reveal.js](https://github.com/hakimel/reveal.js/) and can be found in ``talks/``.
+**Slides** are written with [reveal.js](https://github.com/hakimel/reveal.js/) and can be found in ``talks/``.
 PDFs of the slides are in ``talks/PDFs``.
 
+**Casts** are written with [autorunrecord]() in the [book](https://github.com/datalad-handbook/book) itself. Finished casts can be found in ``casts/``. To find out how to create casts on your own machine, check out the [contributing instructions for the book for casts](http://handbook.datalad.org/en/latest/contributing.html#directives). Casts can be executed using the tool ``cast_live`` found in ``tools/``.
 
 ## License
 
