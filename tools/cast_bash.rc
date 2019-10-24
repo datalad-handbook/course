@@ -58,5 +58,5 @@ git config --global user.email demo@datalad.org
 git config --global core.pager cat
 
 
-# cleanup at the end, customized to DataLad-101
-trap "cd ; datalad remove $SCREENCAST_HOME/DataLad-101 -r --nocheck > /dev/null 2>&1" EXIT
+# cleanup at the end, customized to DataLad-101 -- currently disabled!
+# trap "cd ; datalad remove $SCREENCAST_HOME/DataLad-101 -r --nocheck > /dev/null 2>&1" EXIT
