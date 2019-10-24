@@ -3,7 +3,7 @@
 set -u -e
 
 # reduce confusion with xdotool
-#setxkbmap us
+setxkbmap us
 
 test ! -e $1 && echo "input file does not exist" && exit 1
 title="$(echo $(basename $1) | sed -e 's/.sh$//')"
