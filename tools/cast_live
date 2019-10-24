@@ -10,6 +10,9 @@ title="$(echo $(basename $1) | sed -e 's/.sh$//')"
 bashrc_file="$(dirname $0)/cast_bash.rc"
 
 # shortcut for making xdotool use the right window
+# note: needs virtual desktops. Check 'Tweaks' > 'Workspaces' whether static
+# Workspaces are enabled.
+
 function xdt() {
     winid=$1
     shift
