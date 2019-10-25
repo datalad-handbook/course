@@ -126,7 +126,8 @@ xdt $xterm_window sleep 0.1
 
 echo "xterm PID $xterm_pid (window $xterm_window)  this window $this_window"
 
-show "Welcome to the mighty bash shell"
+show "Welcome to the mighty bash shell!
+This is cast $(basename $1) of The DataLad Handbook."
 key Return
 
 # now get the process tree attached to the terminal so we can
