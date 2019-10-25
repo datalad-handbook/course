@@ -2,6 +2,10 @@
 #ex: set sts=4 ts=4 sw=4 et:
 # This file contains bash configuration variables to be used for generating
 # asciinema demos to guarantee consistent appearance.
+# It is a minimally modified version from the cast configuration file of
+# datalad.
+
+# Credit: Yaroslav Halchenko, Michael Hanke, Alex Waite
 
 : ${do_colors:=1}
 
@@ -58,5 +62,5 @@ git config --global user.email demo@datalad.org
 git config --global core.pager cat
 
 
-# cleanup at the end, customized to DataLad-101
-trap "cd ; datalad remove $SCREENCAST_HOME/DataLad-101 -r --nocheck > /dev/null 2>&1" EXIT
+# cleanup at the end, customized to DataLad-101 -- currently disabled!
+# trap "cd ; datalad remove $SCREENCAST_HOME/DataLad-101 -r --nocheck > /dev/null 2>&1" EXIT

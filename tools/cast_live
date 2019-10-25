@@ -1,9 +1,19 @@
 #!/bin/bash
+
 #
+# A script to execute a screencast script. It expects an xterm window.
+# It feeds that window via a keyboard input simulation. This script is
+# a minimally modified version of the cast_live tool from datalad.
+#
+# Usage: cast_live <scriptfile>
+# Note: press keys only after being prompted by the script!
+#
+# Credit: Yaroslav Halchenko & Michael Hanke
+
 set -u -e
 
 # reduce confusion with xdotool
-#setxkbmap us
+setxkbmap us
 
 test ! -e $1 && echo "input file does not exist" && exit 1
 title="$(echo $(basename $1) | sed -e 's/.sh$//')"
@@ -116,7 +126,8 @@ xdt $xterm_window sleep 0.1
 
 echo "xterm PID $xterm_pid (window $xterm_window)  this window $this_window"
 
-show "Welcome to the mighty bash shell"
+show "Welcome to the mighty bash shell!
+This is cast $(basename $1) of The DataLad Handbook."
 key Return
 
 # now get the process tree attached to the terminal so we can
@@ -128,8 +139,11 @@ xterm_pstree="$(pstree -p -A $xterm_pid)"
 
 sleep 1
 
-show "$(cowsay "Demo was using $(datalad --version 2>&1 | head -n1). Discover more at http://datalad.org")"
+show "$(cowsay "Demo was using $(datalad --version 2>&1 | head -n1). Discover more at http://datalad.org and http://handbook.datalad.org")"
 
+# give me back my german keyboard! (disable if you do not have a german
+# keyboard)
+setxkbmap de
 # key Control_L+d
 
 echo "INSTRUCTION: Press Ctrl-D or run exit to close the terminal"
