@@ -141,6 +141,9 @@ sleep 1
 
 show "$(cowsay "Demo was using $(datalad --version 2>&1 | head -n1). Discover more at http://datalad.org and http://handbook.datalad.org")"
 
+# give me back my german keyboard! (disable if you do not have a german
+# keyboard)
+setxkbmap de
 # key Control_L+d
 
 echo "INSTRUCTION: Press Ctrl-D or run exit to close the terminal"
