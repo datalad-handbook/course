@@ -2,6 +2,10 @@
 #ex: set sts=4 ts=4 sw=4 et:
 # This file contains bash configuration variables to be used for generating
 # asciinema demos to guarantee consistent appearance.
+# It is a minimally modified version from the cast configuration file of
+# datalad.
+
+# Credit: Yaroslav Halchenko, Michael Hanke, Alex Waite
 
 : ${do_colors:=1}
 

@@ -1,5 +1,15 @@
 #!/bin/bash
+
 #
+# A script to execute a screencast script. It expects an xterm window.
+# It feeds that window via a keyboard input simulation. This script is
+# a minimally modified version of the cast_live tool from datalad.
+#
+# Usage: cast_live <scriptfile>
+# Note: press keys only after being prompted by the script!
+#
+# Credit: Yaroslav Halchenko & Michael Hanke
+
 set -u -e
 
 # reduce confusion with xdotool
