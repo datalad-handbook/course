@@ -128,7 +128,7 @@ xterm_pstree="$(pstree -p -A $xterm_pid)"
 
 sleep 1
 
-show "$(cowsay "Demo was using $(datalad --version 2>&1 | head -n1). Discover more at http://datalad.org")"
+show "$(cowsay "Demo was using $(datalad --version 2>&1 | head -n1). Discover more at http://datalad.org and http://handbook.datalad.org")"
 
 # key Control_L+d
 
