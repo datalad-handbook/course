@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Datamanagement at INM7</title>
+  <meta name="description" content="Data management course session 02">
+  <meta name="author" content="Adina Wagner & Michael Hanke">
+
+  <meta charset="utf-8">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <h1 style="text-transform:none">Data management</h1> <br>
+    <h3 style="text-transform:none">Local version control workflows</h3>
+
+    <img src="../pics/final.png" height="500" align="center">
+
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Last week...
+
+- **Prerequisites & technicalities**: Git identity, Gitlab/Github, Reathedocs, the Handbook
+- **Theory**: DataLad datasets, YODA principles
+- **Practice**: Create, structure, and install datasets
+
+![](../pics/yoda.svg)<!-- .element: height="60" -->
+### Open Questions? <!-- .element: class="fragment" -->
+
+<aside class="notes">
+- open question session
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Objectives
+
+**Local version control workflows**
+  - Saving modifications to datasets: adding and changing files
+  - Installing (sub)datasets
+  - Dataset nesting
+
+
+</script>
+</section>
+
+  <section>
+    <h2>Local version control</h2>
+    <img src="../pics/local_wf.svg" height="500">
+    <br>
+
+    <b>Advice:</b>
+    <ul>
+      <li>Save <i>meaningful</i> units of change</li>
+      <li>Attach helpful commit messages</li>
+    </ul>
+
+  </section>
+
+<section data-markdown><script type="text/template">
+  <h2>Dataset Nesting</h2>
+
+  <pre><code> $ datalad install --dataset . \
+  --source https://github.com/datalad-datasets/longnow-podcasts.git \
+  recordings/longnow
+  </code></pre>
+<ul>
+  <li class="fragment fade-in">Installs a dataset from Github (--source/-s) ...</li>
+  <li class="fragment fade-in">into the <i>super</i>dataset Datalad-101 (--dataset/-d) under the path recordings/longnow ...</li>
+  <li class="fragment fade-in">and registers it as a <i>subdataset</i>.</li>
+  <br>
+</ul>
+
+<img src="../pics/virtual_dstree_dl101.svg" height="600">
+
+</script>
+</section>
+
+<section>
+  <h2>Dataset Nesting</h2>
+  <img src="../pics/dataset_linkage_dl101.png">
+  <pre><code class="diff" style="max-height:none">commit 8fdf62acd0bf1e99ebcb6c466edc994a5f4013ba
+Author: DataLad Demo demo@datalad.org
+Date:   Sat Oct 26 15:54:44 2019 +0200
+
+    [DATALAD] Recorded changes
+
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..1b59b8c
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,4 @@
++[submodule "recordings/longnow"]
++       path = recordings/longnow
++       url = https://github.com/datalad-datasets/longnow-podcasts.git
++       datalad-id = b3ca2718-8901-11e8-99aa-a0369f7c647e
+diff --git a/recordings/longnow b/recordings/longnow
+new file mode 160000
+index 0000000..dcc34fb
+--- /dev/null
++++ b/recordings/longnow
+@@ -0,0 +1 @@
++Subproject commit dcc34fbe669b06ced84ced381ba0db21cf5e665f </code></pre>
+</section>
+
+
+  <section>
+    <h2>Summary</h2>
+    <h3>Local version control</h3>
+    <ul>
+      <li class="fragment fade-in"><b>datalad create</b> creates an empty dataset. Configurations such as <b>-c yoda</b> or <b>-c text2git</b> are useful</li>
+      <li class="fragment fade-in">A dataset has a <b>history</b> to track files and their modifications. Built-in Git tools (<b>git log</b>) or external tools (such as <b>tig</b>) allow to explore the history.</li>
+      <li class="fragment fade-in"><b>datalad save</b> records the current state of the dataset to the history. Specify a concise <b>commit message</b> to summarize the change, and provide a <b>path</b> to precise files if several unrelated modifications exist in your dataset.</li>
+      <li class="fragment fade-in"><b>datalad status</b> reports the current state of the dataset.</li>
+    </ul>
+  </section>
+
+
+  <section>
+    <h2>Summary</h2>
+    <h3>Dataset consumption & nesting</h3>
+
+    <ul>
+      <li class="fragment fade-in">A dataset can be installed with <b>datalad install</b>. It can be installed “on its own”, or within an existing dataset.</li>
+      <li class="fragment fade-in">Specify the location of an existing dataset (<b>--source/-s</b>), and a <b>path</b> to the desired installation location. Without a path, the dataset will be installed in the current directory, with its original name</li>
+      <li class="fragment fade-in">If a dataset is installed inside of a dataset as a subdataset, the <b>--dataset/-d</b> option needs to specify the root of the superdataset.</li>
+      <li class="fragment fade-in">After installation, only <b>small files</b> and <b>metadata about file availability</b> are present locally. To retrieve actual file content of larger files, <b>datalad get PATH</b> downloads large file content on demand.</li>
+      <li class="fragment fade-in"><b>datalad status --annex</b> or <b>datalad status --annex</b> all are helpful to determine total repository size and the amount of data that is present locally</li>
+    </ul>
+  </section>
+
+
+  <section>
+    <h2>Now what I can do with that?</h2>
+    <ul>
+      <li>Version control changing small files (code scripts, manuscripts (if they are textfiles), ...)</li>
+      <li>Add large files to a dataset history</li>
+      <li>Meaninful and well-described commits will make future interactions with the dataset history easier</li>
+      <li>Consume existing datasets</li>
+      <li>Link datasets together</li>
+    </ul>
+  </section>
+
+
+<section data-markdown><script type="text/template">
+  ## Further reading
+
+You will find the topics of this session in more detail in the following chapters of the handbook:
+
+- **The basics on datasets:**
+   - Chapter <a href=http://handbook.datalad.org/en/latest/index.html target="_blank">DataLad Datasets</a> in the handbook.
+
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+  ## Outline: What comes next?
+
+- Reproducible analyses with DataLad
+- **Which date is suitable?** > <a href="https://doodle.com/poll/gavpbrtvzqtmy6up" target="_blank">Doodle poll</a> <
+
+- TODO: excersise for next week
+
+</script>
+</section>
+
+<section data-markdown>
+    # Questions?
+
+</section>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+## What is `HEAD`?
+
+- A git repository is build up as a *tree* of **commits** (history entries).
+- A **branch** is a named pointer (reference) to a commit, and allows to isolate developments. The default branch is called `master`.
+- `HEAD` is a pointer to the branch you are on, and thus to the last commit in the given branch.
+
+![](../pics/git_branch_HEAD.png)<!-- .element: height="600" -->
+
+If you'd be on branch "testing", which commit would HEAD point to?  <!-- .element: class="fragment" -->
+
+</script>
+</section>
+
+<section style="text-align: left;">
+  <h2>How does a here-document work?</h2>
+
+<br>
+  <pre><code style="bash">
+    $ cat << EOT > notes.txt
+    One can create a new dataset with 'datalad create [--description] PATH'.
+    The dataset is created empty
+
+    EOT
+
+  </code></pre>
+<ul>
+  <li>Two <i>delimiting identifiers</i> (EOT) wrap any amount of text into a stream</li>
+  <li>The <code><<</code> characters <i>redirect</i> the stream into <i>standard input</i> for the <code>cat</code> command</li>
+  <li>The <code>></code> character <i>redirects</i> the <i>standard output</i> of <code>cat</code> and writes it into a new file <code>notes.txt</code></li>
+</ul>
+<br>
+<br>
+  <p align="left" class="fragment fade-in"> Why is it used?</p>
+  <ul align="left" class="fragment fade-in">
+    <li>Allows pretty formating (e.g., line breaks)</li>
+    <li>Allows writing documents from the terminal </li>
+  </ul>
+  </p>
+
+</section>
+</section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
