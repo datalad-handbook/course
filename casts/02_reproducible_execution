@@ -1,0 +1,144 @@
+say 'its impossible to remember how a large data analysis produced which result for a human, but datalad can help to keep track. To see this in action, we'"'"'ll do a data analysis. Start with yoda principles and structure ds with code directory.'
+run 'cd DataLad-101 && mkdir code && tree -d'
+say 'We will create a script to execute. Let'"'"'s make one that summarizes the podcasts titles in the longnow dataset:'
+run 'cat << EOT > code/list_titles.sh
+for i in recordings/longnow/Long_Now__Seminars*/*.mp3; do
+   # get the filename
+   base=\$(basename "\$i");
+   # strip the extension
+   base=\${base%.mp3};
+   # date as yyyy-mm-dd
+   printf "\${base%%__*}\t" | tr '"'"'_'"'"' '"'"'-'"'"';
+   # name and title without underscores
+   printf "\${base#*__}\n" | tr '"'"'_'"'"' '"'"' '"'"';
+done
+EOT'
+say 'We have to save the script first: status and save'
+run 'datalad status'
+say '... preferably with a helpful commit message'
+run 'datalad save -m "Add simple script to write a list of podcast speakers and titles"'
+say 'The datalad run command records a command'"'"'s impact on a dataset. We try it in the most simple way:'
+run 'datalad run -m "create a list of podcast titles" "bash code/list_titles.sh > recordings/podcasts.tsv"'
+say 'Let'"'"'s now check what has been written into the history. (runrecord)'
+run 'git log -p -n 1'
+say 'A run command that does not result in changes (no modifcations, no additional files) will not produce a record in the dataset history. So what happens if we do the same again?'
+run 'datalad run -m "Try again to create a list of podcast titles" "bash code/list_titles.sh > recordings/podcasts.tsv"'
+say 'as the result is byte-identical, there is no new commit'
+run 'git log --oneline'
+say 'The script produced a simple list of podcast titles. let'"'"'s take a look into our output file. What'"'"'s cool is that is was created in a way that the code and output are linked:'
+run 'less recordings/podcasts.tsv'
+say 'Dang, we made a mistake in our script: we only listed a part of the podcasts! Let'"'"'s fix the script:'
+run 'cat << EOT >| code/list_titles.sh
+for i in recordings/longnow/Long_Now*/*.mp3; do
+   # get the filename
+   base=\$(basename "\$i");
+   # strip the extension
+   base=\${base%.mp3};
+   printf "\${base%%__*}\t" | tr '"'"'_'"'"' '"'"'-'"'"';
+   # name and title without underscores
+   printf "\${base#*__}\n" | tr '"'"'_'"'"' '"'"' '"'"';
+
+done
+EOT'
+run 'datalad status'
+run 'datalad save -m "BF: list both directories content" code/list_titles.sh'
+say 'We could execute the same command as before. However, we can also let DataLad take care of it, and use the datalad rerun command.'
+run 'git log -n 2'
+say 'We'"'"'ll find the shasum of the run commit and plug it into rerun'
+run 'echo "$ datalad rerun $(git rev-parse HEAD~1)" && datalad rerun $(git rev-parse HEAD~1)'
+say 'how does a rerun look in the history?'
+run 'git log -n 1'
+say 'The datalad diff command can help us find out what changed between the last two commands:'
+run 'datalad diff --to HEAD~1'
+say 'The git diff command has even more insights:'
+run 'git diff HEAD~1'
+say 'Let'"'"'s make a note about this.'
+run 'cat << EOT >> notes.txt
+There are two useful functions to display changes between two
+states of a dataset: "datalad diff -f/--from COMMIT -t/--to COMMIT"
+and "git diff COMMIT COMMIT", where COMMIT is a shasum of a commit
+in the history.
+
+EOT'
+run 'datalad save -m "add note datalad and git diff"'
+say 'An amazing thing is that DataLad captured all of the provenance of the output file, and we get use git tools to find out about it'
+run 'git log -- recordings/podcasts.tsv'
+say 'Another final note on run and rerun'
+run 'cat << EOT >> notes.txt
+The datalad run command can record the impact a script or command has on a Dataset.
+In its simplest form, datalad run only takes a commit message and the command that
+should be executed.
+
+Any datalad run command can be re-executed by using its commit shasum as an argument
+in datalad rerun CHECKSUM. DataLad will take information from the run record of the original
+commit, and re-execute it. If no changes happen with a rerun, the command will not be written
+to history. Note: you can also rerun a datalad rerun command!
+
+EOT'
+run 'datalad save -m "add note on basic datalad run and datalad rerun"'
+say 'We saw a very simple datalad run. Now we'"'"'re going to extend it with useful options. Narrative: prepare talk about dataset, add logo to slides. For this, we'"'"'ll try to resize a logo in the meta data of the subdataset'
+run 'ls recordings/longnow/.datalad/feed_metadata/*jpg'
+say 'This command resizes the logo to 400 by 400 px -- but it will fail!'
+run 'datalad run -m "Resize logo for slides" \
+"convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
+say 'The problem is that the content (logo) is not yet retrieved. The --input option makes sure that all content is retrieved prior to command execution.'
+run 'datalad run --input "recordings/longnow/.datalad/feed_metadata/logo_salt.jpg" "convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
+say 'Maybe 400x400 is too small. We should try 450x450. Can we use a datalad rerun for this? (no)'
+run 'datalad run --input "recordings/longnow/.datalad/feed_metadata/logo_salt.jpg" "convert -resize 450x450 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
+say 'The created output is protected from accidental modifications, we have to unlock it first:'
+run 'datalad unlock recordings/salt_logo_small.jpg'
+say 'How does the file look like after an unlock?'
+run 'datalad status'
+say 'In principle, you could rerun the command now, outside of any datalad run. The unlocked output can be overwritten'
+run 'convert -resize 450x450 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg'
+say 'Afterwards you'"'"'d need to save, to lock everything again'
+run 'datalad save -m "resized picture by hand"'
+say 'but it is way easier to just use the --output option of datalad run: it takes care of unlocking if necessary'
+run 'datalad run --input "recordings/longnow/.datalad/feed_metadata/logo_interval.jpg" --output "recordings/interval_logo_small.jpg" "convert -resize 450x450 recordings/longnow/.datalad/feed_metadata/logo_interval.jpg recordings/interval_logo_small.jpg"'
+say 'Finally, lets add a note on this'
+run 'cat << EOT >> notes.txt
+You should specify all files that a command takes as input with an -i/--input flag. These
+files will be retrieved prior to the command execution. Any content that is modified or
+produced by the command should be specified with an -o/--output flag. Upon a run or rerun
+of the command, the contents of these files will get unlocked so that they can be modified.
+
+EOT'
+say 'mhh, 450x450px seems a bit large, we have to go back to 400. Lets make yet another, complete run command'
+run 'datalad run -m "Resize logo for slides" \
+--input "recordings/longnow/.datalad/feed_metadata/logo_interval.jpg" \
+--output "recordings/interval_logo_small.jpg" \
+"convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_interval.jpg recordings/interval_logo_small.jpg"'
+say 'What happened? The dataset is not "clean"'
+run 'datalad status'
+say 'One way to prevent this is to have a clean dataset state'
+run 'datalad save -m "add additional notes on run options"'
+say 'let'"'"'s try again with a clean dataset'
+run 'datalad run -m "Resize logo for slides" \
+--input "recordings/longnow/.datalad/feed_metadata/logo_interval.jpg" \
+--output "recordings/interval_logo_small.jpg" \
+"convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_interval.jpg recordings/interval_logo_small.jpg"'
+say 'we'"'"'ll make a note on clean datasets (which we won'"'"'t save)'
+run 'cat << EOT >> notes.txt
+Important! If the dataset is not "clean" (a datalad status output is empty),
+datalad run will not work - you will have to save modifications present in your
+dataset.
+EOT'
+say 'alternatively, the --explicit flag allows run despite an unclean dataset. However, this will only save changes to --output'
+run 'datalad run -m "Resize logo for slides" \
+--input "recordings/longnow/.datalad/feed_metadata/logo_salt.jpg" \
+--output "recordings/salt_logo_small.jpg" \
+--explicit \
+"convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
+say 'the previously modified ``notes.txt`` is still modified:'
+run 'datalad status'
+say 'Note on --explicit flag'
+run 'cat << EOT >> notes.txt
+A suboptimal alternative is the --explicit flag,
+used to record only those changes done
+to the files listed with --output flags.
+
+EOT'
+say 'and save it'
+run 'datalad save -m "add note on clean datasets"'
+say 'finally, lets see a more complex runrecord'
+run 'git log -p -n 2'
