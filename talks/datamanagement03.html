@@ -38,8 +38,17 @@
 
 ![](../pics/local_wf_simple.png)<!-- .element: height="350" -->
 
-TODO mention question of somayeh!
+<aside class="notes">
+</aside>
+</script>
+</section>
 
+<section data-markdown><script type="text/template">
+## Clarification
+
+**Do I have to do all modifications to files or the dataset from the comand line?**
+
+No! <!-- .element: class="fragment" -->
 <aside class="notes">
 </aside>
 </script>
@@ -47,33 +56,65 @@ TODO mention question of somayeh!
 
 <section data-transition="fade">
   <h2>Reproducible analyses are hard...</h2>
-
   <img src="../pics/legacycode_phd.png" height="500">
 </section>
 
 <section data-transition="fade">
   <h2>Reproducible analyses are hard...</h2>
-
   <img src="../pics/ownlegacycode_phd.png" height="500">
 </section>
 
 <section data-transition="fade">
   <h2>Reproducible analyses are hard...</h2>
-
+  <img src="../pics/ownlegacycode_phd.png" height="500">
   <ul>
-    <li><i>Which script</i> (or worse: which unrecorded point-and-click action in a GUI) produced this figure?</li>
-    <li><i>What version</i> of this code produced result?</li>
-    <li><i>What input data</i> are all these outputs based on?</li>
-    <li><i>How</i> do I execute the analysis script?</li>
+    <li>Which script/unrecorded point-and-click in a GUI produced this figure?</li>
   </ul>
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+  <ul>
+    <li>If I found the correct script, <i>what version</i> of this script produced the result?</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+  <ul>
+    <li>If I know the correct code and correct version, <i>what input data</i> are all these outputs based on?</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+  <ul>
+    <li>And finally: <i>How</i> do I execute the analysis script I want to recompute?</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+  <img src="../pics/input-output_workflow.svg" height="200">
+  <br>
+  <h3 class="fragment fade-in">After a while...</h3>
+  <img style="" class="fragment fade-in" src="../pics/confused_phd.png" height="190">
+  <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1979">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
+
 </section>
 
 <section data-markdown><script type="text/template">
 ## Objectives
 
-**Reproducible analysis**
-  - Executing scripts and command line tools reproducibly
-  - Experience all the ways in which the command can fail
+<dl>
+  <dt>Reproducible analysis</dt>
+  <dd>Executing scripts and command line tools reproducibly with
+    <code>datalad run</code></dd>
+  <dd class="fragment fade-in">Experience all the ways in which
+     the command can fail</dd>
+</dl>
 
 
 &nbsp;
@@ -83,6 +124,8 @@ TODO mention question of somayeh!
 &nbsp;
 **Let's get into a terminal!**<!-- .element: class="fragment" -->
   <br><a href="http://handbook.datalad.org/en/latest/basics/101-101-create.html"> -> handbook chapter</a><!-- .element: class="fragment" -->
+  <br><a href="http://handbook.datalad.org/en/latest/TODO"> -> code snippet list</a><!-- .element: class="fragment" -->
+
 <aside class="notes">
 
 Important!
@@ -105,30 +148,36 @@ Important!
 </section>
 
 <section>
+  <h2>A basic datalad run command</h2>
+
+  <img src="../pics/run_basic.svg">
+    <ul>
+  Wrapping any command* in a <b>datalad run</b>
+  will record the command's impact on the dataset to the history.
+  <br>
+  <br>
+      <note>* Running scripts from the command line,
+      using tools from the command line, ...</note>
+  </ul>
+</section>
+
+
+<section>
   <h2>DataLad-101</h2>
+  TODO
   I need a graphic of datalad run, and a runrecord!
   Also something about how identical content does not get saved again!
 </section>
 
-<section>
-  <h2>The datalad run command</h2>
 
-  This slide should appear again and again and grow overtime...
-  start with a verz basic datalad run command
-
-</section>
-
-<section>
-  <h2>DataLad-101</h2>
-
-  this needs an overview of how the dataset looks like
+<section data-transition="fade">
+  <h2>DataLad-101 layout</h2>
   <img src="../pics/virtual_dstree_dl101repro1.png">
 </section>
 
-<section>
-  <h2>DataLad-101</h2>
+<section data-transition="fade">
+  <h2>DataLad-101 layout</h2>
 
-  this needs an overview of how the dataset looks like
   <img src="../pics/virtual_dstree_dl101repro2.png">
 </section>
 
@@ -144,27 +193,40 @@ CommandError: command 'convert -resize 400x400 recordings/longnow/.datalad/feed_
 Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg' under '/demo/DataLad-101'. Exit code=1.</code></pre>
 </section>
 
-
 <section>
-  <h2>The <code>datalad run</code> command</h2>
+  <h2>--input in datalad run</h2>
 
-  This slide should appear again and again and grow overtime...
-  start with a verz basic datalad run command
-  ... add the --input option (gets non-retrieved files)
+  <img src="../pics/run_input.svg">
+    <ul>
+  Files provided with the --input option are automatically retrieved
+  with <b>datalad get</b>, if necessary.
+  </ul>
 </section>
 
 
 <section>
-  I need to have something on protected content plus ref to next session
-  and on datalad unlock
-</section>
-<section>
-  <h2>The <code>datalad run</code> command</h2>
+  <h2>Content-locked files (vastly simplified)</h2>
+  <img src="../pics/git_vs_gitannex.svg" height="500">
 
-  This slide should appear again and again and grow overtime...
-  start with a verz basic datalad run command
-  ... add the --input option (gets non-retrieved files)
-  ... add the --output option (unlocks content)
+  <dl>
+    <dt class="fragment fade-in">Files are given to Git-annex or Git</dt>
+    <dd class="fragment fade-in">Based on dataset configuration about file <i>type</i>, <i>size</i>, or <i>name</i>.</dd>
+    <dt class="fragment fade-in">Git-annex removes write permission from the file content it stores.</dt>
+    <dd class="fragment fade-in">This prevents accidental modifications.</dd>
+    <dt class="fragment fade-in"><code>datalad unlock</code> can unlock content for modification.</dt>
+    <dd class="fragment fade-in"><code>datalad save</code> will lock content again.</dd>
+  </dl>
+
+</section>
+
+<section>
+  <h2>--output in datalad run</h2>
+
+  <img src="../pics/run_full.svg">
+    <ul>
+  Files provided with the --output option are automatically unlocked for
+  modification with <b>datalad unlock</b>, if necessary.
+  </ul>
 </section>
 
 <section>
@@ -172,10 +234,8 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
   <section>
     <h2>Analysis provenance capture</h2>
 
-    <p>TODO: easy provanance capture!</p>
-    <img class="fragment fade-in" src="../pics/local_wf.svg" height="500"> <!-- .element: class="fragment" -->
-    <br>
-
+    <p>Easy provanance capture!</p>
+    <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
     <b class="fragment fade-in">Advice:</b>
     <ul>
       <li class="fragment fade-in">use <code>--input</code> and <code>--output</code></li>
@@ -189,32 +249,38 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
 <section>
 
 <section>
-    <h3>Summary - Provenance capture with datalad run</h3>
+    <h3>Summary - Reproducible execution with datalad run</h3>
 
     <ul>
-      <dt class="fragment fade-in"><code>datalad install</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
-      Specify the <b>--source/-s</b> of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
+      <dt class="fragment fade-in"><code>datalad run</code> records a commands impact on a dataset.</dt>
+      <dd class="fragment fade-in"> This usually requires a "clean" dataset status (no unsaved modifications):
       <br>
-      <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
       <br>
-      <dt class="fragment fade-in">Only small files and metadata about file availability are present locally after an install. </dt><dd class="fragment fade-in">To retrieve actual file content of larger files, <code>datalad get </code> downloads large file content on demand.</dd>
+      <dt class="fragment fade-in">The command captures provenance for humans and machines</dt>
+      <dd class="fragment fade-in"> a machine-readable <b>runrecord</b> is automatically created, <i>you</i> need to provide a <b>commit message</b>.</dd>
       <br>
-      <dt class="fragment fade-in"><code>datalad status</code> can report on total and retrieved repository size</dt> <dd class="fragment fade-in">using <code>--annex</code> and <code>--annex all</code> options.</dd>
+      <dt class="fragment fade-in"><b>--input</b> to the datalad run command gets retrieved (if necessary) prior to command execution.</dt>
+      <dd class="fragment fade-in">This is done with a <b>datalad get</b> in the background.</dd>
       <br>
-      <dt class="fragment fade-in">Datasets preserve their history.</dt> <dd class="fragment fade-in">The superdataset records only the <i>version state</i> of the subdataset.</dd>
+      <dt class="fragment fade-in"><b>--output</b> to the datalad run command gets unlocked (if necessary) for modification prior to command execution.</dt>
+      <dd class="fragment fade-in">This is done with a <b>datalad unlock</b> in the background.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad rerun</code> can take any previous <code>datalad run</code> commit hash and re-execute it.</dt>
+      <dd class="fragment fade-in">TODO...</dd>
 
     </ul>
   </section>
 
-  <section>
-    <h2>Outlook: <i>computational reproducibility</i></h2>
-
-    <li>It may not be enough to record inputs, code, and outputs of an analysis!</li>
-    <li>Without sufficient information about required software (versions), analyses
-    may fail to reproduce or even run</li>
-    <li>The DataLad extension <a href="" target="_blank">datalad containers</a>
-    can also capture complete software environments</li>
-    <li>Get a preview here: TODO link chapters on extensions, if ready by then</li>
+<section>
+    <h2>Outlook: computational reproducibility</h2>
+    <ul>
+      <li>It may not be enough to record inputs, code, and outputs of an analysis!</li>
+      <li>Without sufficient information about <b>required software (versions)</b>, analyses
+        may fail to reproduce <i>or even run</i>.</li>
+      <li>The DataLad extension <a href="" target="_blank">datalad containers</a>
+      can also capture complete software environments.</li>
+      <li>Get a preview here: TODO link chapters on extensions, if ready by then</li>
+    </ul>
   </section>
 </section>
 
