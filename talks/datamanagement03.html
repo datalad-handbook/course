@@ -144,7 +144,29 @@ Important!
 
 ![](../pics/virtual_dstree_dl101.svg)<!-- .element: class="fragment" height="500" -->
 
+**Analysis idea: Write a list of all podcast titles!**  <!-- .element: class="fragment" -->
+
 </script>
+</section>
+
+<section>
+  <pre><code> for i in recordings/longnow/Long_Now__Seminars*/*.mp3; do
+    # get the filename
+    base=\$(basename "\$i");
+    # strip the extension
+    base=\${base%.mp3};
+    # date as yyyy-mm-dd
+    printf "\${base%%__*}\t" | tr '_' '-';
+    # name and title without underscores
+    printf "\${base#*__}\n" | tr '_' ' ';
+ done
+</code></pre>
+
+  <p align="left" class="fragment fade-in"> 🠒 A for loop in <code>shell</code>, will print each file name as
+    <b>Date - Speaker - Title </b> to the terminal. </p>
+  <p align="left" class="fragment fade-in"> 🠒 Redirection to a file with <code>></code> writes the stream to a file instead of the terminal.</p>
+  <p align="left" class="fragment fade-in"> 🠒 Note: This could be any script or shell command!</p>
+
 </section>
 
 <section>
@@ -163,23 +185,88 @@ Important!
 
 
 <section>
-  <h2>DataLad-101</h2>
-  TODO
-  I need a graphic of datalad run, and a runrecord!
-  Also something about how identical content does not get saved again!
+  <h3>Run-records link dataset modifications to commands</h3>
+  <pre><code class="bash" style="max-height:none">commit f4a35c8841062eb58f65dbf3cde70ccdc3c9df68 (HEAD -> master)
+Author: Adina Wagner adina.wagner@t-online.de
+Date:   Mon Nov 11 09:55:02 2019 +0100
+
+    [DATALAD RUNCMD] create a list of podcast titles
+
+    === Do not change lines below ===
+    {
+     "chain": [],
+     "cmd": "bash code/list_titles.sh > recordings/podcasts.tsv",
+     "dsid": "02a84dae-faf5-11e9-ba9f-e86a64c8054c",
+     "exit": 0,
+     "extra_inputs": [],
+     "inputs": [],
+     "outputs": [],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+
+diff --git a/recordings/podcasts.tsv b/recordings/podcasts.tsv
+new file mode 100644
+index 0000000..f691b53
+--- /dev/null
++++ b/recordings/podcasts.tsv
+@@ -0,0 +1,206 @@
++2003-11-15     Brian Eno  The Long Now
++2003-12-13     Peter Schwartz  The Art Of The Really Long View
++2004-01-10     George Dyson  There s Plenty of Room at the Top  Long term Thinking About Large scale Computing
+[...]
+</code> </pre>
+
+  <p class="fragment fade in" align="left">It follows logically: If a command does <b>not</b> lead to any modification in a dataset,
+  it will not be recorded!</p>
 </section>
 
 
 <section data-transition="fade">
-  <h2>DataLad-101 layout</h2>
-  <img src="../pics/virtual_dstree_dl101repro1.png">
+  <h2>Oh! An error in the code...</h2>
+  <b>DataLad-101 layout:</b>
+  <br><br>
+  <img style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" src="../pics/virtual_dstree_dl101repro1.png" height="550">
 </section>
 
 <section data-transition="fade">
-  <h2>DataLad-101 layout</h2>
-
-  <img src="../pics/virtual_dstree_dl101repro2.png">
+  <h2>Oh! An error in the code...</h2>
+  <b>DataLad-101 layout:</b>
+  <br><br>
+  <img style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" src="../pics/virtual_dstree_dl101repro2.png">
 </section>
+
+
+<section>
+  <h2>datalad rerun</h2>
+  <img src="../pics/rerun.svg">
+  <dl>
+    <dt>Re-execute previous datalad run commands</dt>
+    <dd>What shall be rerun can be specified via its commit hash: </dd>
+    <dd><pre><code>datalad rerun f4a35c884106</code></pre></dd>
+    <dd class="fragment fade-in">... but also via tag, revision specifications with <code>HEAD</code>, ..., or
+      by giving a range of commits.</dd>
+  </dl>
+</section>
+
+<section>
+    <h3>Summary - Basic datalad run</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad run</code> records a commands impact on a dataset.</dt>
+      <dd class="fragment fade-in">A record is only made if the command leads to dataset modifications</dd>
+      <br>
+      <dt class="fragment fade-in">The command captures provenance for humans and machines</dt>
+      <dd class="fragment fade-in"> a machine-readable <b>runrecord</b> is automatically created, <i>you</i> need to provide a <b>commit message</b>.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad rerun</code> can take any previous <code>datalad run</code> commit hash and re-execute it.</dt>
+      <dd class="fragment fade-in">This saves you the need to remember!</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad diff</code> and <code>git diff </code> are useful helpers to explore changes between version states of a dataset.</dt>
+    </ul>
+
+  <p class="fragment fade-in"> ... but there is more that this command can do for you:</p>
+  </section>
 
 <section>
 <h2> The anatomy of DataLad error messages</h2>
@@ -253,21 +340,13 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
 
     <ul>
       <dt class="fragment fade-in"><code>datalad run</code> records a commands impact on a dataset.</dt>
-      <dd class="fragment fade-in"> This usually requires a "clean" dataset status (no unsaved modifications):
-      <br>
-      <br>
-      <dt class="fragment fade-in">The command captures provenance for humans and machines</dt>
-      <dd class="fragment fade-in"> a machine-readable <b>runrecord</b> is automatically created, <i>you</i> need to provide a <b>commit message</b>.</dd>
+      <dd class="fragment fade-in"> This usually requires a "clean" dataset status (no unsaved modifications):</dd>
       <br>
       <dt class="fragment fade-in"><b>--input</b> to the datalad run command gets retrieved (if necessary) prior to command execution.</dt>
       <dd class="fragment fade-in">This is done with a <b>datalad get</b> in the background.</dd>
       <br>
       <dt class="fragment fade-in"><b>--output</b> to the datalad run command gets unlocked (if necessary) for modification prior to command execution.</dt>
       <dd class="fragment fade-in">This is done with a <b>datalad unlock</b> in the background.</dd>
-      <br>
-      <dt class="fragment fade-in"><code>datalad rerun</code> can take any previous <code>datalad run</code> commit hash and re-execute it.</dt>
-      <dd class="fragment fade-in">TODO...</dd>
-
     </ul>
   </section>
 
