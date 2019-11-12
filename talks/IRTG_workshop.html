@@ -1,0 +1,888 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Data management</title>
+  <meta name="description"
+        content=" 2 hour workshop on DataLad and BIDS at IRTG Aachen, 26.11.19 ">
+  <meta name="author" content=" Adina Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+<section>
+<h2><small>Data management for Neuroscience:</small><br /> The BIDS standard
+    and DataLad<br /><small>an Introduction</small></h2>
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Adina Wagner
+	  <br><small>
+		<a href="https://twitter.com/AdinaKrik">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaKrik</a></small></td>
+    <td><img style="height:100px;margin-right:10px" data-src="../pics/fzj_logo.svg" />
+	  <br></td>
+  </tr>
+  <tr>
+    <td>
+        <small><a href="http://psychoinformatics.de">Psychoinformatics lab</a>,
+          <br> Institute of Neuroscience and
+          Medicine, Brain &amp; Behavior (INM-7)<br>
+       Research Center Jülich</small><br>
+    </td>
+  </tr>
+  </table>
+  </div>
+
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+## Who are you?
+![](../pics/BIDS_Logo.png)<!-- .element: style="height:150px;margin-left:50px" class="fragment fade-in"-->
+![](../pics/datalad_logo_wide.svg)<!-- .element:style="height:150px;margin-left:50px" class="fragment fade-in" -->
+
+
+<aside class="notes">
+<ul>
+<li>Who has heard of BIDS?</li>
+<li>Who has heard of DataLad?</li>
+</ul>
+</aside>
+</script>
+</section>
+
+<section>
+<h2></h2>
+    <div><table>
+    <tr><dl>
+    <img src="../pics/BIDS_Logo.png" height="100">
+    <dt></dt>
+        <dd><i>What</i> is it?</dd>
+        <dd><i>Why</i> should I use it?</dd>
+        <dd><i>How</i> can I use it?</dd>
+        </dl></tr>
+    <tr><dl>
+    <img src="../pics/datalad_logo_wide.svg" height="100">
+    <dt></dt>
+        <dd><i>What</i> is it?</dd>
+        <dd><i>Why</i> should I use it?</dd>
+        <dd><i>How</i> can I use it?</dd>
+    </dl></tr>
+    </table>
+    </div>
+<aside class="notes">
+<ul>
+<li>There will be a lot of content in the next two hours given the darkness</li>
+<li>I'll provide a list of pointers to useful resources</li>
+<li>If you want and have your computer configured follow along when I tell you</li>
+
+</ul>
+</aside>
+</section>
+
+<section data-markdown><script type="text/template">
+![](../pics/BIDS_Logo.png)<!-- .element: height="100" -->
+![](../pics/bids.png)<!-- .element: height="600" -->
+<imgcredit>BIDS; CC-BY</imgcredit>
+
+BIDS is a <i>standard</i> for a multitude of neuroimaging data (MRI, EEG, ...).
+It defines a data organization, naming schemes for files, and meta data descriptors.
+
+<aside class="notes">
+<li>PLEASE, do ask dumb questions!</li>
+</aside>
+</script>
+</section>
+
+<section>
+<h2><img style="margin-top:50px" src="../pics/BIDS_Logo.png" height="100"></h2>
+    <dl>
+        <dt class="fragment fade-in">BIDS is a structure</dt>
+        <dd class="fragment fade-in">BIDS is not a new file format</dd>
+        <dt class="fragment fade-in">BIDS is a standard</dt>
+        <dd class="fragment fade-in">BIDS is not a software tool. However, there is a large and growing amount of
+            tools that are compatible with it that ease data archiving, data discovery/search,
+            and analysis</dd>
+        <dt class="fragment fade-in">There is no "one" BIDS</dt>
+        <dd class="fragment fade-in">BIDS exist for (a growing amount of) different modalities.
+            There is constant (open!) development of all of them</dd>
+    </dl>
+<aside class="notes">
+    <li>What is BIDS</li>
+</aside>
+</section>
+
+<section>
+<h2><img src="../pics/BIDS_Logo.png" height="100"></h2>
+    <dl>
+        <dt class="fragment fade-in">BIDS helps you and others to intuitively understand your data</dt>
+        <dd class="fragment fade-in"> A consensus on data organization spares you and others time to dive in to or rearrange data or scripts</dd>
+
+        <dt class="fragment fade-in">BIDS opens up a large range of tools for you:</dt>
+        <dd class="fragment fade-in">⮊ <a href="https://bids-apps.neuroimaging.io/about/">BIDS Apps</a>, e.g.,
+                                      <a href="https://fmriprep.readthedocs.io/en/stable/">fmriprep</a> or
+                                      <a href="mriqc.readthedocs.io">MRIQC</a></dd>
+        <dd class="fragment fade-in">⮊ BIDS-aware tooling, e.g.,
+                                      <a href="https://bids-standard.github.io/pybids/">PyBIDS</a> </dd>
+        <dd class="fragment fade-in">⮊ <a href="https://brainlife.io/">brainlife.io</a></dd>
+        <dd class="fragment fade-in">⮊ Upload your (or download others) BIDS-compliant
+                                      datasets from <a href="">OpenNeuro </a></dd>
+        <dd class="fragment fade-in"></dd>
+    </dl>
+</section>
+
+
+<section>
+    <h2>BIDS: Useful links and pointers</h2>
+    <div align="left">
+    <li>Read the <a href="https://www.nature.com/articles/sdata201644">paper</a></li>
+    <li>Get started with the <a href="https://github.com/bids-standard/bids-starter-kit">BIDS starter-kit</a></li>
+    <li>Use the <a href="http://bids-standard.github.io/bids-validator/">BIDS validator</a> to check your datasets</li>
+    <li><a href="https://github.com/bids-standard/bids-specification">Get involved</a> on
+        Github to help shape BIDS to your needs. You can also checkout the Google
+        <a href="https://groups.google.com/forum/#!forum/bids-discussion">discussion group</a></li>
+    </div>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Successful data (management)
+![](../pics/successfulldata_elsevier_ccby.png)<!-- .element: height="800" -->
+<imgcredit>Elsevier; CC-BY</imgcredit>
+
+Storage aspect often treated as somehow "given"
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Data life cycle
+![](../pics/datalifecycle_jisc_ccbysand.png)<!-- .element: height="800" -->
+<imgcredit>JISC; CC-BY-SA-ND</imgcredit>
+
+Much more than just shared/published data need managment
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+</section>
+
+
+<section>
+<section data-markdown><script type="text/template">
+## Problem! <span class="fragment" data-fragment-index="1" style="margin-left:350px">Solution?</span>
+![](../pics/finaldoc_comic.gif)<!-- .element: height="780" style="box-shadow: 10px 10px 8px #888888" -->
+![](../pics/gitflow.png)<!-- .element: class="fragment" data-fragment-index="1" height="780" style="box-shadow: 10px 10px 8px #888888" -->
+<imgcredit>www.phdcomics.com; www.linode.com</imgcredit>
+
+<p class="fragment" data-fragment-index="1">Version control can only be part of a solution</p>
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+![](../pics/datalad_logo_wide.svg)<!-- .element: height="600" -->
+http://datalad.org<!-- .element: style="margin-left:800px" -->
+
+
+Not **the** solution either...
+
+<aside class="notes">
+But let's not talk about it, and only talk about feature and example implementations in DataLad
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## What needs to be done?
+
+- How technical do researchers have to become?
+
+- What approach yields good trade-off between management improvement and "lost time" for science
+
+**How painful does it have to be?**
+<aside class="notes">
+Each minute spent on Git is one less on the brain
+</aside>
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+Can your data management concept answer the question:
+
+# Which data are important?
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section>
+<h2>Data interests</h2>
+<p><em>Depends whom one asks...</em></p>
+
+<table>
+<tr>
+<th style="text-align:center">Individual<br>researcher</th>
+<th style="text-align:center">Data<br>Steward</th>
+<th style="text-align:center">Tech/<br>Admin</th>
+<th style="text-align:center">Data<br>properties</th>
+</tr><tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">unique nature</td>
+</tr><tr>
+<td style="text-align:center">o</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">standardization</td>
+</tr><tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">long-term re-use</td>
+</tr><tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">computation throughput</td>
+</tr><tr>
+<td style="text-align:center">o</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">accounting/cost</td>
+</tr><tr style="background-color:#ccc">
+<td style="text-align:center">x</td>
+<td style="text-align:center">o</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">live storage access</td>
+</tr><tr style="background-color:#ccc">
+<td style="text-align:center">x</td>
+<td style="text-align:center">x</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">preservation</td>
+</tr></table>
+
+</section>
+
+
+<section>
+<h2>Manageabilty can be influenced very early in life</h2>
+<table><tr>
+<td style="text-align:center;font-size:150%;padding-right:150px">
+    <p><em>Key principles</em></p>
+    <p>modularity<br />
+    &amp;<br />
+    ephemerality</p>
+</td><td>
+<img src="../pics/freud_ccbysa.jpg" height="700"/>
+</td></tr></table>
+<imgcredit>Wikimedia user Photocolorization; CC-BY-SA</imgcredit>
+
+<aside class="notes">
+Note to self
+</aside>
+</section>
+</section>
+
+
+
+<section>
+<section data-markdown><script type="text/template">
+# Modularity
+
+Need for meaningful units of data that are clearly recognizable for anyone. Only then we have a handle on the *what* in "what is important?"
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section>
+<h2>Easily lost modularity through obfuscation</h2>
+Original
+<pre><code class="sh" style="max-height:none" data-trim>
+/dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+</code></pre>
+<div class="fragment">
+After applied transform (preprocessing, analysis, ...)
+<pre><code class="sh" style="max-height:none" data-trim>
+/dataset
+├── sample1
+│   ├── ps34t.dat
+│   └── a001.dat
+├── sample2
+│   ├── ps34t.dat
+│   └── a001.dat
+...
+</code></pre>
+Without expert/domain knowledge no distinction between original and derived data possible anymore.
+</div>
+</section>
+
+<section>
+<h2>Preserved modularity</h2>
+Original
+<pre><code class="sh" style="max-height:none" data-trim>
+/raw_dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+</code></pre>
+<div class="fragment">
+After applied transform (preprocessing, analysis, ...)
+<pre><code class="sh" style="max-height:none" data-trim>
+/derived_dataset
+├── sample1
+│   └── ps34t.dat
+├── sample2
+│   └── ps34t.dat
+├── ...
+└── inputs
+    └── raw
+        ├── sample1
+        │   └── a001.dat
+        ├── sample2
+        │   └── a001.dat
+        ...
+</code></pre>
+Clearer separation of semantics, through use of pristine version of original dataset within a
+<em>new, additional</em> dataset holding the outputs.
+</div>
+</section>
+
+
+<section>
+<h2>DataLad: Dataset linkage</h2>
+<img data-src="../pics/dataset_linkage.png">
+<pre><code class="bash" style="font-size:115%;max-height:none">$ datalad install --dataset . --source http://example.com/ds inputs/rawdata
+</code></pre>
+
+<pre><code class="diff" style="max-height:none">$ git diff HEAD~1
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..c3370ba
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "inputs/rawdata"]
++       path = inputs/rawdata
++       url = http://example.com/importantds
+diff --git a/inputs/rawdata b/inputs/rawdata
+new file mode 160000
+index 0000000..fabf852
+--- /dev/null
++++ b/inputs/rawdata
+@@ -0,0 +1 @@
++Subproject commit fabf8521130a13986bd6493cb33a70e580ce8572
+</code></pre>
+Each (sub)dataset is a separately, but jointly version-controlled entity.
+    <aside class="notes">weighs just a few bytes</aside>
+</section>
+
+<section>
+  <h2>Example modular data structure</h2>
+  <img style="" height="750px" data-src="../pics/virtual_dirtree.png">
+  <p style="margin-top:-.5em">Link precisely versioned inputs to version-controlled outputs</p>
+    <aside class="notes">dataset linkage is pairwise, i.e. cheap</aside>
+</section>
+
+<section data-markdown><script type="text/template">
+## When to modularize?
+
+- Target audience is different
+  - public vs. private
+  - domain specific vs. domain general
+
+- Pace of evolution is different
+  - "factual" raw data vs. choices of (pre-)processing
+  - completed acquisition vs. ongoing study
+
+- Size impacts I/O and logistics
+  - Git can struggle with 1M+ files
+  - filesystems (licensing) can struggle with large numbers of inodes
+
+- Legal/Access constraints
+  - personal vs. anonymized data
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+# Ephemerality
+of work spaces
+
+(ephemeral &mdash; to be short-lived)
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section>
+<h2>My $HOME is my castle...</h2>
+...and contains my entire career
+<pre><code class="zsh" data-trim>
+# number of files
+% find -type f | wc -l
+1402095
+
+# number of directories
+% find -type d |wc -l
+539862
+
+# oldest file
+% find -type f -printf '%T+ %p\n' | sort | head -n1
+2004-06-11+12:14:07.00 ./hacking/old/tikapp/gui/src/backprophiddenlayeritem.cpp
+</code></pre>
+<aside class="notes">
+Note to self
+</aside>
+
+<p>What are the chances that putting all stuff in a directory for 15 years yields a comprehensible, manageable data structure?</p>
+</section>
+
+<section>
+<h2>Trinity of research data handling</h2>
+<table>
+<tr><td><img src="../pics/ephemeral_infra.svg" width="800" />
+</td><td>
+    <dl>
+        <dt>$HOME (laptop, workstation)</dt>
+        <dd><ul>
+            <li>fully flexible/undefined structure</li>
+            <li>limited storage</li>
+            <li>minor computational resources</li>
+        </ul></dd>
+        <dt>$COMPUTE (cluster, HPC, cloud)</dt>
+        <dd><ul>
+            <li>analysis-defined structure</li>
+            <li>analysis-appropriate resources</li>
+        </ul></dd>
+        <dt>$DATA</dt>
+        <dd><ul>
+            <li>fully-determined, domain-agnostic structure</li>
+            <li>"unlimited" storage</li>
+            <li>managed backups</li>
+        </ul></dd>
+    </dl>
+</tr>
+</table>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section>
+<h2>Research data flow</h2>
+<table>
+<tr><td><img src="../pics/ephemeral_infra.svg" width="800" />
+</td><td>
+    <ul>
+        <li>Researchers are free to do whatever at <strong>$HOME</strong> (within limits)</li>
+        <li><strong>$COMPUTE</strong> pulls data (exclusively) from <strong>$DATA</strong></li>
+        <li>Results from <strong>$COMPUTE</strong> are immediately/eventually pushed back to <strong>$DATA</strong></li>
+    </ul>
+</tr>
+</table>
+<dl class="fragment">
+	<dt>Impact of ephemeral $HOME and $COMPUTE</dt>
+	<dd>
+<ul>
+    <li>No limits to tinkering and exploration of data</li>
+    <li>Anything that needs to scale requires researchers to use <strong>$COMPUTE</strong> and thereby <strong>$DATA</strong>
+    <li>Anything that is/was relevant for computation is tracked in <strong>$DATA</strong></li>
+    <li>The only trusted place for any data is <strong>$DATA</strong>, hence anything that could be important is there</li>
+</ul></dd></dl>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+</section>
+
+<section>
+<section data-transition="fade">
+<h2>DataLad: Possible implementation of $DATA</h2>
+<pre><code id="hp0" style="max-height:none" data-trim data-line-numbers="1-25">
+</code></pre>
+fully self-contained &mdash; plain file system storage, no databases<br>
+<tt>github.com/datalad/git-annex-ria-remote</tt>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section data-transition="fade">
+<h2>Dataset entries</h2>
+<pre><code id="hp1" style="max-height:none" data-trim data-line-numbers="2-3">
+</code></pre>
+DataLad dataset UUID determines location in data store<br />
+(<tt>2e524934-a09e-11e9-8503-f0d5bf7b5561</tt>)
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section data-transition="fade">
+<h2>Dataset entry components (1)</h2>
+<pre><code id="hp2" style="max-height:none" data-trim data-line-numbers="4-9">
+</code></pre>
+"Bare" Git repository holding a clone of the dataset<br>&nbsp;
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section data-transition="fade">
+<h2>Dataset entry components (2)</h2>
+<pre><code id="hp3" style="max-height:none" data-trim data-line-numbers="10-20">
+</code></pre>
+Git-annex object tree<br>&nbsp;
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section data-transition="fade">
+<h2>Dataset entry components (3)</h2>
+<pre><code id="hp4" style="max-height:none" data-trim data-line-numbers="21-22">
+</code></pre>
+(Optional) 7z archive with (additional) git-annex objects<br>
+Helpful on HPC-systems with inode limits, and for compression gains
+<aside class="notes">
+Note to self
+</aside>
+</section>
+</section>
+
+<section>
+<section>
+<h2>Researchers' point of view (1)</h2>
+<strong>Create a new dataset</strong> for data, analysis results, manuscripts, etc.
+<pre><code class="zsh" style="font-size:150%;padding:1em;max-height:none" data-trim>
+% datalad create -c inm7
+</code></pre>
+<ul>
+<li><tt>inm7</tt> is institute-specific configuration procedure that performs all relevant
+    setup</li>
+<li>fully configured link to <strong>$DATA</strong></li>
+<li>creator's identity recorded in dataset</li>
+</ul>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section>
+<h2>Researchers' point of view (2)</h2>
+<strong>Sync with $DATA</strong> for backup, collaboration, or computation
+<pre><code class="zsh" style="font-size:150%;padding:1em;max-height:none" data-trim>
+% datalad publish --to inm7
+</code></pre>
+<ul>
+<li>pushes all changes to the dataset repository</li>
+<li>transfers data files</li>
+<li>dataset now exists in a homogeneous, accessible, domain-agnostic format that links its evolution to individual people, and all associated data files</li>
+</ul>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section>
+<h2>Researchers' point of view (3)</h2>
+<strong>Dataset maintenance tasks</strong> like archiving, staging for HPC, etc.
+<pre><code class="zsh" style="font-size:150%;padding:1em;max-height:none" data-trim>
+% some_script &lt;dataset id&gt;
+</code></pre>
+
+or (if complicated or needs elevated permissions)
+
+<pre><code class="zsh" style="font-size:120%;padding:1em;max-height:none" data-trim>
+To: Data manager &lt;data@inm7.de&gt;
+
+Dear Laura,
+
+please stage dataset
+2e524934-a09e-11e9-8503-f0d5bf7b5561
+and all its dependencies at the HPC center.
+
+Thanks!
+</code></pre>
+<ul>
+<li>all datasets are uniquely identified</li>
+<li>dataset dependencies can be programmatically discovered</li>
+<li>archiving and staging are performed domain-agnostic format</li>
+</ul>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+<section>
+<h2>Researchers' point of view (4)</h2>
+<strong>Use a dataset</strong> for analysis, manuscript writing, etc.
+<pre><code class="zsh" style="font-size:150%;line-height:1.5em;padding:1em;max-height:none" data-trim>
+% datalad create -c inm7 mynewdataset
+% datalad install --dataset mynewdataset
+                  --source &lt;ID/URL&gt;
+                  mynewdataset/inputs/...
+</code></pre>
+<ul>
+<li>dataset linkage is established</li>
+<li>input and output datasets remain separate, modular entities</li>
+<li>on <tt>publish</tt> linkage information becomes accessible in <strong>$DATA</strong></li>
+</ul>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Open the black box
+![](../pics/adina.jpg)<!-- .element: class="ackimg" -->
+![](../pics/handbook_frontpage.png)<!-- .element: width="950" style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" -->
+
+http://handbook.datalad.org
+
+- **educational materials** on technologies &mdash; **targeting scientists**, not developers (executable paper,
+  student surpervisor workflow, ...)
+- handbook with 250+ pages on concepts, workflows, and use cases (work in progress, led by   Adina Wagner)
+</script></section>
+
+<section data-markdown><script type="text/template">
+## Hands-on training
+![](../pics/adina.jpg)<!-- .element: class="ackimg" -->
+![](../pics/datalad_course.jpg)<!-- .element: width="950" style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" -->
+
+- based on the handbook, as series or 2-day block event
+- introduction to working with datalad
+- research-focused use case demos: reproducible paper, collaborative workflow, etc.
+</script></section>
+</section>
+
+
+<section>
+<section data-markdown><script type="text/template">
+# Anticipate change!
+
+Maintenance often more expensive than initial development
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Services
+![](../pics/studyforrest_on_github.png)<!-- .element: height="500" style="box-shadow: 10px 10px 8px #888888" -->
+
+- make *the* difference for advertisment, discovery, convenience
+- but imply gigantic dependencies
+- often impossible to "take over"
+
+**Make sure data/metadata are self-contained<br>to facilitate/enable transition to another service**
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<!-- Make sure to only put persistent info in there -->
+
+<section data-markdown><script type="text/template">
+## Information longevity
+
+- number of datasets managed quickly exploded (e.g. HCP alone is 5k)
+- decentralized systems are hard to synchronize
+- **avoid location identifiers that need updates over time**
+  - no URLs that are not fully under control (own domain, etc.)
+- **use abstraction layer to enable change of location resolution** without touching datasets
+  - datasets only know that some file content is available at `inm7-storage`, and a dedicated
+    program `git-annex-remote-inm7-storage` is responsible for fulfilling a request
+  - implementation can be changed over time
+  - several different optimized implementation for particular environments (cluster, cloud, HPC)
+    can exist simultaenously
+- **reference datasets by ID rather than location**
+
+<aside class="notes">
+several million files, thousands of subdataset, where to put shit
+</aside>
+</script>
+</section>
+</section>
+
+<section data-markdown><script type="text/template">
+## What data is important?
+
+- recently modified
+- dependency of recent/many other dataset(s)
+- dependency of publication (dataset)
+- contribution by **$PERSON**
+- ...
+
+Many other properties inferrable through metadata queries.
+
+All information available directly from **$DATA**
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section>
+  <h2>Acknowledgements</h2>
+  <table>
+  <tr style="vertical-align:middle">
+      <td style="vertical-align:middle">
+  <ul>
+      <li>Yaroslav Halchenko</li>
+      <li>Joey Hess (git-annex)</li>
+      <li>Benjamin Poldrack</li>
+      <li>Kyle Meyer</li>
+	  <li>Adina Wagner</li>
+      <li>22+ additional contributors</li>
+  </ul>
+      </td>
+      <td style="vertical-align:middle">
+  <img style="height:150px;margin-right:50px" data-src="../pics/nsf.png" />
+  <img style="height:150px;margin-right:50pxi;margin-left:50px" data-src="../pics/binc.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/bmbf.png" />
+  <br />
+  <img style="height:80px;margin-top:-40px;margin-left:auto;margin-right:auto;width:100%" data-src="../pics/fzj_logo.svg" />
+  <div style="margin-top:-20px">
+  <img style="height:60px;margin-right:200px" data-src="../pics/erdf.png" />
+  <img style="height:60px" data-src="../pics/LSA-Logo.png" />
+  </div>
+  <div style="margin-top:-20px">
+  <img style="height:100px;margin:20px" data-src="../pics/hbp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/conp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/vbc_logo.png" />
+  </div>
+  <div style="margin-top:-40px">
+  <img style="height:120px;margin:20px" data-src="../pics/openneuro_logo.png" />
+  <img style="height:120px;margin:20px" data-src="../pics/cbrain_logo.png" />
+  <img style="height:140px;margin:20px" data-src="../pics/brainlife_logo.png" />
+  </div>
+  </td>
+  </tr>
+  </table>
+  <p>Website + Demos: <a href="http://datalad.org">http://datalad.org</a><br />
+  Documentation: <a href="http://handbook.datalad.org">http://handbook.datalad.org</a><br />
+  Development: <a href="http://github.com/datalad">http://github.com/datalad</a><br />
+  Support: <a href="https://matrix.to/#/#datalad:matrix.org">https://matrix.to/#/#datalad:matrix.org</a><br />
+  Open data: <a href="http://datasets.datalad.org">http://datasets.datalad.org</a></p>
+</section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+var hammerpants = `
+/datastore
+├── 2e5
+│   ├── 24934-a09e-11e9-8503-f0d5bf7b5561
+│   │   ├── branches
+│   │   ├── config
+│   │   ├── description
+│   │   ├── HEAD
+│   │   ├── refs ...
+│   │   ├── objects ...
+│   │   ├── annex
+│   │   │   ├── ...
+│   │   │   └── objects
+│   │   │       ├── ...
+│   │   │       └── ff4
+│   │   │           ├── ...
+│   │   │           ├── c57
+│   │   │           │   ├── ...
+│   │   │           │   └── MD5E-s4--ba1f2511fc30423bdbb183fe33f3dd0f
+│   │   │           │       └── MD5E-s4--ba1f2511fc30423bdbb183fe33f3dd0f
+│   │   │           └── ...
+│   │   └── archives
+│   │       └── archive.7z
+│   └── ...
+└── ff8
+    └── ...
+`;
+document.getElementById("hp0").innerHTML = hammerpants;
+document.getElementById("hp1").innerHTML = hammerpants;
+document.getElementById("hp2").innerHTML = hammerpants;
+document.getElementById("hp3").innerHTML = hammerpants;
+document.getElementById("hp4").innerHTML = hammerpants;
+
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
