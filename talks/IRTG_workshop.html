@@ -17,6 +17,8 @@
 
 <div class="reveal">
 <div class="slides">
+
+<section>
 <section>
 <h2><small>Data management for Neuroscience:</small><br /> The BIDS standard
     and DataLad<br /><small>an Introduction</small></h2>
@@ -26,7 +28,7 @@
   <tr>
 	<td>Adina Wagner
 	  <br><small>
-		<a href="https://twitter.com/AdinaKrik">
+		<a href="https://twitter.com/AdinaKrik" target="_blank">
 		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
 		  @AdinaKrik</a></small></td>
     <td><img style="height:100px;margin-right:10px" data-src="../pics/fzj_logo.svg" />
@@ -34,7 +36,7 @@
   </tr>
   <tr>
     <td>
-        <small><a href="http://psychoinformatics.de">Psychoinformatics lab</a>,
+        <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
           <br> Institute of Neuroscience and
           Medicine, Brain &amp; Behavior (INM-7)<br>
        Research Center Jülich</small><br>
@@ -44,6 +46,23 @@
   </div>
 
 </section>
+</section>
+
+<!--...-->
+
+<section>
+<section>
+    <h2>Why version control?</h2>
+    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px">
+</section>
+
+<section>
+    <h2>Why standards?</h2>
+        <img src="../pics/datasharing_xkcd.png" style="box-shadow: 10px 10px 8px #888888;height=800px">
+</section>
+</section>
+
+
 
 <section>
 <section data-markdown><script type="text/template">
@@ -129,12 +148,12 @@ It defines a data organization, naming schemes for files, and meta data descript
         <dd class="fragment fade-in"> A consensus on data organization spares you and others time to dive in to or rearrange data or scripts</dd>
 
         <dt class="fragment fade-in">BIDS opens up a large range of tools for you:</dt>
-        <dd class="fragment fade-in">⮊ <a href="https://bids-apps.neuroimaging.io/about/">BIDS Apps</a>, e.g.,
-                                      <a href="https://fmriprep.readthedocs.io/en/stable/">fmriprep</a> or
-                                      <a href="mriqc.readthedocs.io">MRIQC</a></dd>
+        <dd class="fragment fade-in">⮊ <a href="https://bids-apps.neuroimaging.io/about/" target="_blank">BIDS Apps</a>, e.g.,
+                                       <a href="https://fmriprep.readthedocs.io/en/stable/" target="_blank">fmriprep</a> or
+                                       <a href="mriqc.readthedocs.io" target="_blank">MRIQC</a></dd>
         <dd class="fragment fade-in">⮊ BIDS-aware tooling, e.g.,
-                                      <a href="https://bids-standard.github.io/pybids/">PyBIDS</a> </dd>
-        <dd class="fragment fade-in">⮊ <a href="https://brainlife.io/">brainlife.io</a></dd>
+                                       <a href="https://bids-standard.github.io/pybids/" target="_blank">PyBIDS</a> </dd>
+        <dd class="fragment fade-in">⮊ <a href="https://brainlife.io/" target="_blank">brainlife.io</a></dd>
         <dd class="fragment fade-in">⮊ Upload your (or download others) BIDS-compliant
                                       datasets from <a href="">OpenNeuro </a></dd>
         <dd class="fragment fade-in"></dd>
@@ -143,17 +162,78 @@ It defines a data organization, naming schemes for files, and meta data descript
 
 
 <section>
-    <h2>BIDS: Useful links and pointers</h2>
+<h2><img src="../pics/BIDS_Logo.png" height="100"></h2>
     <div align="left">
-    <li>Read the <a href="https://www.nature.com/articles/sdata201644">paper</a></li>
-    <li>Get started with the <a href="https://github.com/bids-standard/bids-starter-kit">BIDS starter-kit</a></li>
-    <li>Use the <a href="http://bids-standard.github.io/bids-validator/">BIDS validator</a> to check your datasets</li>
-    <li><a href="https://github.com/bids-standard/bids-specification">Get involved</a> on
+    <dl><dt>Useful links and pointers</dt>
+
+    <dd>⮊ Read the <a href="https://www.nature.com/articles/sdata201644" target="_blank">paper</a></dd>
+    <dd>⮊ Get started with the <a href="https://github.com/bids-standard/bids-starter-kit" target="_blank">BIDS starter-kit</a></dd>
+    <dd> Work through the Stanford Center for Reproducible Neuroscience
+        <a href="http://reproducibility.stanford.edu/bids-tutorial-series-part-1a/">BIDS Tutorial Series</dd>
+    <dd>⮊ Use the <a href="http://bids-standard.github.io/bids-validator/" target="_blank">BIDS validator</a> to check your datasets</dd>
+    <dd>⮊<a href="https://github.com/bids-standard/bids-specification" target="_blank"> Get involved</a> on
         Github to help shape BIDS to your needs. You can also checkout the Google
-        <a href="https://groups.google.com/forum/#!forum/bids-discussion">discussion group</a></li>
+        <a href="https://groups.google.com/forum/#!forum/bids-discussion" target="_blank">discussion group</a></dd>
+    </dl>
     </div>
 </section>
 
+
+<section data-transition="fade">
+<h2><img src="../pics/datalad-animated.gif"></h2>
+</section>
+
+<section data-transition="fade">
+<h2><img src="../pics/datalad_logo_wide.svg"></h2>
+    DataLad is a data management multitool.
+<aside class="notes">
+    <li>demonstrate a reproducible paper now</li>
+</aside>
+</section>
+
+<section data-transition="fade">
+<h2><img src="../pics/datalad_logo_wide.svg"></h2>
+    <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="_blank">Let's see it in action</a>
+<aside class="notes">
+    <li>log into brainbfast?</li>
+</aside>
+</section>
+
+<section>
+    <h2>Reproducible papers - a Magic trick?</h2>
+
+    If curious, you can read up all the details and a step-by-step instruction
+    <a href="http://handbook.datalad.org/en/latest/usecases/reproducible-paper.html">here.</a>
+</section>
+
+<section>
+    <h2> <img src="../pics/datalad_logo_wide.svg"> in brief</h2>
+    <ul>
+        <li>A command-line tool, available for all major operating systems (Linux, macOS/OSX, Windows)</li>
+        <li>Build on top of <a href="https://git-scm.com/">Git</a>
+            and <a href="https://git-annex.branchable.com/">Git-annex</a></li>
+        <dt><li>Allows...</li></dt>
+        <dd>... version-controlling arbitrarily large content,</dd>
+        <dd>... easily sharing and obtaining data (note: no data hosting!),</dd>
+        <dd>... (computationally) reproducible data analysis,
+        <dd>... and much more </dd>
+        <li>Completely domain-agnostic</li>
+    </ul>
+</section>
+
+
+
+<section>
+<h2>How to get started with BIDS and DataLad</h2>
+<dl>
+    <dt class="fragment fade-in">Check out BIDS compliant datasets - with DataLad!</dt>
+    <dd>Demonstrate download from the datalad superdataset</dd>
+    <dt class="fragment fade-in">Read <a href="https://handbook.datalad.org"> the DataLad handbook</a></dt>
+    <dd class="fragment fade-in">An interactive, hands-on crash-course (free and open source)</dd>
+
+</dl>
+
+</section>
 
 <section data-markdown><script type="text/template">
 ## Successful data (management)
