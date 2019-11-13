@@ -83,10 +83,12 @@ function sleep () {
 	xdotool sleep $1
 }
 function execute () {
+    xdt $this_window
+    read -p "Hit enter when any previous command has finished"
 	xdt $xterm_window sleep 0.5 key Return
-	while [ x"$xterm_pstree" != x"$(pstree -p $xterm_pid)" ]; do
-		sleep 0.1
-	done
+	#while [ x"$xterm_pstree" != x"$(pstree -p $xterm_pid)" ]; do
+	#	sleep 0.1
+	#done
 }
 function say()
 {

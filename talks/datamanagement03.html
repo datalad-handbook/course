@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Datamanagement at INM7</title>
+  <meta name="description" content="Data management course session 02">
+  <meta name="author" content="Adina Wagner & Michael Hanke">
+
+  <meta charset="utf-8">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+  <h1 style="text-transform:none">Data management</h1> <br>
+    <h3 style="text-transform:none">Reproducible analysis</h3>
+
+    <img src="../pics/legacycode_phd.png" height="500" align="center">
+
+  <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1689">http://phdcomics.com/comics.php?f=1689</a></imgcredit>
+
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+## Last session...
+
+- **Local version control**: <code>datalad create</code>, <code>datalad save</code>
+- **Datasets**: Exploring & nesting datasets
+- **Practice**: Create, structure, and install datasets
+
+![](../pics/local_wf_simple.png)<!-- .element: height="350" -->
+
+<aside class="notes">
+</aside>
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Clarification
+
+**Do I have to do all modifications to files or the dataset from the command line?**
+
+No! <!-- .element: class="fragment" -->
+
+### Any other questions? <!-- .element: class="fragment" -->
+<aside class="notes">
+</aside>
+</script>
+</section>
+</section>
+
+<section>
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/legacycode_phd.png" height="500">
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+  <ul>
+    <li>Which script/unrecorded point-and-click in a GUI produced this figure?</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+  <ul>
+    <li>If I found the correct script, <i>what version</i> of this script produced the result?</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+  <ul>
+    <li>If I know the correct code and correct version, <i>what input data</i> are all these outputs based on?</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+  <h2>Reproducible analyses are hard...</h2>
+  <img src="../pics/ownlegacycode_phd.png" height="500">
+  <ul>
+    <li>And finally: <i>How</i> do I execute the analysis script I want to recompute?</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+  <img src="../pics/input-output_workflow.svg" height="200">
+  <br>
+  <h3 class="fragment fade-in">After a while...</h3>
+  <img style="" class="fragment fade-in" src="../pics/confused_phd.png" height="190">
+  <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1979">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
+
+</section>
+
+<section data-markdown><script type="text/template">
+## Objectives
+
+<dl>
+  <dt>Reproducible analysis</dt>
+  <dd> ⮊ Executing scripts and command line tools reproducibly with
+    <code>datalad run</code></dd>
+  <dd class="fragment fade-in"> ⮊ Experience all the ways in which
+     the command can fail</dd>
+</dl>
+
+
+&nbsp;
+&nbsp;
+
+&nbsp;
+&nbsp;
+**Let's get into a terminal!**<!-- .element: class="fragment" -->
+<div style="vertical-align:middle">
+  <br><a href="http://handbook.datalad.org/en/latest/basics/101-101-create.html" target="_blank"> ⮊ handbook chapter</a><!-- .element: class="fragment" -->
+  <br><a href="http://handbook.datalad.org/en/latest/code_from_casts/02_reproducible_execution_code.html" target="_blank"> ⮊ code snippet list</a><!-- .element: class="fragment" -->
+</div>
+<aside class="notes">
+
+Important!
+  - VPN
+  - SSH into brainbfast!
+</aside>
+</script>
+</section>
+</section>
+
+<section>
+<section data-markdown><script type="text/template">
+## Reminder: DataLad-101 narrative
+
+  - Fictional educational course on DataLad<!-- .element: class="fragment" -->
+  - Downloaded and saved PDFs, created and modified notes in text file, installed a subdataset with hundreds of podcasts. <!-- .element: class="fragment" -->
+
+![](../pics/virtual_dstree_dl101.svg)<!-- .element: class="fragment" height="500" -->
+
+<small class="fragment fade-in">If you do not have this directory set up from last time, <a href="http://handbook.datalad.org/en/latest/code_from_casts/01_dataset_basics_code.html">here</a> is the code that gets you there! </small>
+
+**Analysis idea: Write a list of all podcast titles!**  <!-- .element: class="fragment" -->
+
+</script>
+</section>
+
+<section>
+  <pre><code> for i in recordings/longnow/Long_Now__Seminars*/*.mp3; do
+    # get the filename
+    base=\$(basename "\$i");
+    # strip the extension
+    base=\${base%.mp3};
+    # date as yyyy-mm-dd
+    printf "\${base%%__*}\t" | tr '_' '-';
+    # name and title without underscores
+    printf "\${base#*__}\n" | tr '_' ' ';
+ done
+</code></pre>
+
+  <p align="left" class="fragment fade-in"> ⮊ A for loop in <code>shell</code>, will print each file name as
+    <b>Date - Speaker - Title </b> to the terminal. </p>
+  <p align="left" class="fragment fade-in"> ⮊ Redirection to a file with <code>></code> writes the stream to a file instead of the terminal.</p>
+  <p align="left" class="fragment fade-in"> ⮊ Note: This could be any script or shell command!</p>
+
+</section>
+
+<section>
+  <h2>A basic datalad run command</h2>
+
+  <img src="../pics/run_basic.svg">
+    <ul>
+  Wrapping any command* in a <b>datalad run</b>
+  will record the command's impact on the dataset to the history.
+  <br>
+  <br>
+      <note>* Running scripts from the command line,
+      using tools from the command line, ...</note>
+  </ul>
+</section>
+
+
+<section>
+  <h3>Run-records link dataset modifications to commands</h3>
+  <pre><code class="bash" style="max-height:none">commit f4a35c8841062eb58f65dbf3cde70ccdc3c9df68 (HEAD -> master)
+Author: Adina Wagner adina.wagner@t-online.de
+Date:   Mon Nov 11 09:55:02 2019 +0100
+
+    [DATALAD RUNCMD] create a list of podcast titles
+
+    === Do not change lines below ===
+    {
+     "chain": [],
+     "cmd": "bash code/list_titles.sh > recordings/podcasts.tsv",
+     "dsid": "02a84dae-faf5-11e9-ba9f-e86a64c8054c",
+     "exit": 0,
+     "extra_inputs": [],
+     "inputs": [],
+     "outputs": [],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+
+diff --git a/recordings/podcasts.tsv b/recordings/podcasts.tsv
+new file mode 100644
+index 0000000..f691b53
+--- /dev/null
++++ b/recordings/podcasts.tsv
+@@ -0,0 +1,206 @@
++2003-11-15     Brian Eno  The Long Now
++2003-12-13     Peter Schwartz  The Art Of The Really Long View
++2004-01-10     George Dyson  There s Plenty of Room at the Top  Long term Thinking About Large scale Computing
+[...]
+</code> </pre>
+
+  <p class="fragment fade in" align="left">It follows logically: If a command does <b>not</b> lead to any modification in a dataset,
+  it will not be recorded!</p>
+</section>
+</section>
+
+<section>
+<section data-transition="fade">
+  <h2>Oh! An error in the code...</h2>
+  <b>DataLad-101 layout:</b>
+  <br><br>
+  <img style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" src="../pics/virtual_dstree_dl101repro1.png" height="550">
+</section>
+
+<section data-transition="fade">
+  <h2>Oh! An error in the code...</h2>
+  <b>DataLad-101 layout:</b>
+  <br><br>
+  <img style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" src="../pics/virtual_dstree_dl101repro2.png">
+</section>
+
+
+<section>
+  <h2>datalad rerun</h2>
+  <img src="../pics/rerun.svg">
+  <dl>
+    <dt>Re-execute previous datalad run commands</dt>
+    <dd>What shall be rerun can be specified via its commit hash: </dd>
+    <dd><pre><code>datalad rerun f4a35c884106</code></pre></dd>
+    <dd class="fragment fade-in">... but also via tag, revision specifications with <code>HEAD</code>, ..., or
+      by giving a range of commits.</dd>
+  </dl>
+</section>
+
+<section>
+    <h3>Summary - Basic datalad run</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad run</code> records a commands impact on a dataset.</dt>
+      <dd class="fragment fade-in">A record is only made if the command leads to dataset modifications</dd>
+      <br>
+      <dt class="fragment fade-in">The command captures provenance for humans and machines</dt>
+      <dd class="fragment fade-in"> a machine-readable <b>runrecord</b> is automatically created, <i>you</i> need to provide a <b>commit message</b>.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad rerun</code> can take any previous <code>datalad run</code> commit hash and re-execute it.</dt>
+      <dd class="fragment fade-in">This saves you the need to remember!</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad diff</code> and <code>git diff </code> are useful helpers to explore changes between version states of a dataset.</dt>
+    </ul>
+
+  <p class="fragment fade-in"> ... but there is more that this command can do for you:</p>
+  </section>
+
+<section>
+<h2> The anatomy of DataLad error messages</h2>
+<pre><code>"convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"
+[INFO   ] == Command start (output follows) =====
+convert-im6.q16: unable to open image `recordings/longnow/.datalad/feed_metadata/logo_salt.jpg': No such file or directory @ error/blob.c/OpenBlob/2874.
+convert-im6.q16: no images defined `recordings/salt_logo_small.jpg' @ error/convert.c/ConvertImageCommand/3258.
+[INFO   ] == Command exit (modification check follows) =====
+[INFO   ] The command had a non-zero exit code. If this is expected, you can save the changes with 'datalad save -d . -r -F .git/COMMIT_EDITMSG'
+CommandError: command 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg' failed with exitcode 1
+Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg' under '/demo/DataLad-101'. Exit code=1.</code></pre>
+</section>
+
+<section>
+  <h2>--input in datalad run</h2>
+
+  <img src="../pics/run_input.svg">
+    <ul>
+  Files provided with the --input option are automatically retrieved
+  with <b>datalad get</b>, if necessary.
+  </ul>
+</section>
+
+
+<section>
+  <h2>Content-locked files (vastly simplified)</h2>
+  <img src="../pics/git_vs_gitannex.svg" height="500">
+
+  <dl>
+    <dt class="fragment fade-in">Files are given to Git-annex or Git</dt>
+    <dd class="fragment fade-in">Based on dataset configuration about file <i>type</i>, <i>size</i>, or <i>name</i>.</dd>
+    <dt class="fragment fade-in">Git-annex removes write permission from the file content it stores.</dt>
+    <dd class="fragment fade-in">This prevents accidental modifications.</dd>
+    <dt class="fragment fade-in"><code>datalad unlock</code> can unlock content for modification.</dt>
+    <dd class="fragment fade-in"><code>datalad save</code> will lock content again.</dd>
+  </dl>
+
+</section>
+
+<section>
+  <h2>--output in datalad run</h2>
+
+  <img src="../pics/run_full.svg">
+    <ul>
+  Files provided with the --output option are automatically unlocked for
+  modification with <b>datalad unlock</b>, if necessary.
+  </ul>
+</section>
+
+<section>
+    <h2>Analysis provenance capture</h2>
+
+    <p>Easy provanance capture!</p>
+    <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
+    <b class="fragment fade-in">Advice:</b>
+    <ul>
+      <li class="fragment fade-in">use <code>--input</code> and <code>--output</code></li>
+      <li class="fragment fade-in">Attach helpful commit messages</li>
+      <li class="fragment fade-in">Make sure to have a clean dataset state</li>
+    </ul>
+</section>
+
+<section>
+    <h3>Summary - Reproducible execution with datalad run</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad run</code> records a commands impact on a dataset.</dt>
+      <dd class="fragment fade-in"> This usually requires a "clean" dataset status (no unsaved modifications)</dd>
+      <br>
+      <dt class="fragment fade-in"><b>--input</b> to the datalad run command gets retrieved (if necessary) prior to command execution.</dt>
+      <dd class="fragment fade-in">This is done with a <b>datalad get</b> in the background.</dd>
+      <br>
+      <dt class="fragment fade-in"><b>--output</b> to the datalad run command gets unlocked (if necessary) for modification prior to command execution.</dt>
+      <dd class="fragment fade-in">This is done with a <b>datalad unlock</b> in the background.</dd>
+    </ul>
+</section>
+
+<section>
+    <h2>Outlook: computational reproducibility</h2>
+    <ul>
+      <li>It may not be enough to record inputs, code, and outputs of an analysis!</li>
+      <li>Without sufficient information about <b>required software (versions)</b>, analyses
+        may fail to reproduce <i>or even run</i>.</li>
+      <li>The DataLad extension <a href="" target="_blank">datalad containers</a>
+      can also capture complete software environments.</li>
+      <li>Get a preview soon: chapters on extensions is close to being finished</li>
+    </ul>
+</section>
+</section>
+
+
+<section>
+  <section>
+    <h2>Now what I can do with that?</h2>
+    <dl>
+      <dt>Reproducible analysis with datalad run</dt>
+      <li>Record all provenance by wrapping any command in a datalad run</li>
+      <li>Link input, output, and code</li>
+      <li>Rerun computations with a single command</li>
+    </dl>
+  </section>
+
+  <section>
+    <h2>Practice @home</h2>
+
+    <ul>
+      <li>Wrap any simple shell command (e.g., <code>cp</code>) in a datalad run,
+          and (later) also scripts of yours</li>
+    </ul>
+  </section>
+
+<section style="text-align: left;">
+  <h2>Further reading</h2>
+
+<dl>
+  <dt>A walk-through on <code>datalad run</code>:</dt>
+  <dd>- Chapter <a href=http://handbook.datalad.org/en/latest/index.html target="_blank">DataLad, Run!</a> in the handbook.</dd>
+  <dt>More on the configurations that determine whether a file is managed by Git or Git-annex:</dt>
+  <dd>- Chapter <a href="http://handbook.datalad.org/en/latest/basics/101-125-config.html">Tuning datasets to your needs</a> in the handbook</dd>
+  <dt>How to get help on commands and their options:</dt>
+  <dd>- Section
+    <a href=http://handbook.datalad.org/en/latest/basics/101-135-help.html
+    target="_blank">How to get help</a> in the handbook</dd>
+</dl>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+  ## Outline: What comes next?
+
+- Symlinks, data integrity, data security (chapter <a href="http://handbook.datalad.org/en/latest/basics/101-114-txt2git.html" target="_blank">Under the hood: Git-annex</a> in the handbook).
+- **Which date is suitable?** > <a href="https://doodle.com/poll/c252qifr72h7adep" target="_blank">Doodle poll</a> <
+
+
+</script>
+</section>
+</section>
+
+<section data-markdown>
+    # Open Question Session
+
+</section>
+</section>
+
+<section>
+
+<section>
+  <h3>Backup slides for anticipated questions </h3>
+</section>
+<section data-markdown><script type="text/template">
+## What is `HEAD`?
+
+- A git repository is build up as a *tree* of **commits** (history entries).
+- A **branch** is a named pointer (reference) to a commit, and allows to isolate developments. The default branch is called `master`.
+- `HEAD` is a pointer to the branch you are on, and thus to the last commit in the given branch.
+
+![](../pics/git_branch_HEAD.png)<!-- .element: height="600" -->
+
+If you'd be on branch "testing", which commit would HEAD point to?  <!-- .element: class="fragment" -->
+
+</script>
+</section>
+
+<section style="text-align: left;">
+  <h2>How does a here-document work?</h2>
+
+<br>
+  <pre><code style="bash">
+    $ cat << EOT > notes.txt
+    One can create a new dataset with 'datalad create [--description] PATH'.
+    The dataset is created empty
+
+    EOT
+
+  </code></pre>
+<ul>
+  <li>Two <i>delimiting identifiers</i> (EOT) wrap any amount of text into a stream</li>
+  <li>The <code><<</code> characters <i>redirect</i> the stream into <i>standard input</i> for the <code>cat</code> command</li>
+  <li>The <code>></code> character <i>redirects</i> the <i>standard output</i> of <code>cat</code> and writes it into a new file <code>notes.txt</code></li>
+</ul>
+<br>
+<br>
+  <p align="left" class="fragment fade-in"> Why is it used?</p>
+  <ul align="left" class="fragment fade-in">
+    <li>Allows pretty formating (e.g., line breaks)</li>
+    <li>Allows writing documents from the terminal </li>
+  </ul>
+  </p>
+</section>
+
+</section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
