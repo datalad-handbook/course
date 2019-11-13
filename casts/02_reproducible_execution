@@ -99,33 +99,36 @@ EOT'
 say 'Another final note on run and rerun'
 run '### Code snippet 58
 datalad save -m "add note on basic datalad run and datalad rerun"'
-say 'This command resizes the logo to 400 by 400 px -- but it will fail!'
+say 'We saw a very simple datalad run. Now we'"'"'re going to extend it with useful options. Narrative: prepare talk about dataset, add logo to slides. For this, we'"'"'ll try to resize a logo in the meta data of the subdataset'
 run '### Code snippet 59
+ls recordings/longnow/.datalad/feed_metadata/*jpg'
+say 'This command resizes the logo to 400 by 400 px -- but it will fail!'
+run '### Code snippet 60
 datalad run -m "Resize logo for slides" \
 "convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
 say 'The problem is that the content (logo) is not yet retrieved. The --input option makes sure that all content is retrieved prior to command execution.'
-run '### Code snippet 60
+run '### Code snippet 61
 datalad run --input "recordings/longnow/.datalad/feed_metadata/logo_salt.jpg" "convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
 say 'Maybe 400x400 is too small. We should try 450x450. Can we use a datalad rerun for this? (no)'
-run '### Code snippet 61
+run '### Code snippet 62
 datalad run --input "recordings/longnow/.datalad/feed_metadata/logo_salt.jpg" "convert -resize 450x450 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
 say 'The created output is protected from accidental modifications, we have to unlock it first:'
-run '### Code snippet 62
+run '### Code snippet 63
 datalad unlock recordings/salt_logo_small.jpg'
 say 'How does the file look like after an unlock?'
-run '### Code snippet 63
+run '### Code snippet 64
 datalad status'
 say 'In principle, you could rerun the command now, outside of any datalad run. The unlocked output can be overwritten'
-run '### Code snippet 64
+run '### Code snippet 65
 convert -resize 450x450 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg'
 say 'Afterwards you'"'"'d need to save, to lock everything again'
-run '### Code snippet 65
+run '### Code snippet 66
 datalad save -m "resized picture by hand"'
 say 'but it is way easier to just use the --output option of datalad run: it takes care of unlocking if necessary'
-run '### Code snippet 66
+run '### Code snippet 67
 datalad run --input "recordings/longnow/.datalad/feed_metadata/logo_interval.jpg" --output "recordings/interval_logo_small.jpg" "convert -resize 450x450 recordings/longnow/.datalad/feed_metadata/logo_interval.jpg recordings/interval_logo_small.jpg"'
 say 'Finally, lets add a note on this'
-run '### Code snippet 67
+run '### Code snippet 68
 cat << EOT >> notes.txt
 You should specify all files that a command takes as input with an -i/--input flag. These
 files will be retrieved prior to the command execution. Any content that is modified or
@@ -134,42 +137,42 @@ of the command, the contents of these files will get unlocked so that they can b
 
 EOT'
 say 'mhh, 450x450px seems a bit large, we have to go back to 400. Lets make yet another, complete run command'
-run '### Code snippet 68
+run '### Code snippet 69
 datalad run -m "Resize logo for slides" \
 --input "recordings/longnow/.datalad/feed_metadata/logo_interval.jpg" \
 --output "recordings/interval_logo_small.jpg" \
 "convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_interval.jpg recordings/interval_logo_small.jpg"'
 say 'What happened? The dataset is not "clean"'
-run '### Code snippet 69
+run '### Code snippet 70
 datalad status'
 say 'One way to prevent this is to have a clean dataset state'
-run '### Code snippet 70
+run '### Code snippet 71
 datalad save -m "add additional notes on run options"'
 say 'let'"'"'s try again with a clean dataset'
-run '### Code snippet 71
+run '### Code snippet 72
 datalad run -m "Resize logo for slides" \
 --input "recordings/longnow/.datalad/feed_metadata/logo_interval.jpg" \
 --output "recordings/interval_logo_small.jpg" \
 "convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_interval.jpg recordings/interval_logo_small.jpg"'
 say 'we'"'"'ll make a note on clean datasets (which we won'"'"'t save)'
-run '### Code snippet 72
+run '### Code snippet 73
 cat << EOT >> notes.txt
 Important! If the dataset is not "clean" (a datalad status output is empty),
 datalad run will not work - you will have to save modifications present in your
 dataset.
 EOT'
 say 'alternatively, the --explicit flag allows run despite an unclean dataset. However, this will only save changes to --output'
-run '### Code snippet 73
+run '### Code snippet 74
 datalad run -m "Resize logo for slides" \
 --input "recordings/longnow/.datalad/feed_metadata/logo_salt.jpg" \
 --output "recordings/salt_logo_small.jpg" \
 --explicit \
 "convert -resize 400x400 recordings/longnow/.datalad/feed_metadata/logo_salt.jpg recordings/salt_logo_small.jpg"'
 say 'the previously modified ``notes.txt`` is still modified:'
-run '### Code snippet 74
+run '### Code snippet 75
 datalad status'
 say 'Note on --explicit flag'
-run '### Code snippet 75
+run '### Code snippet 76
 cat << EOT >> notes.txt
 A suboptimal alternative is the --explicit flag,
 used to record only those changes done
@@ -177,8 +180,8 @@ to the files listed with --output flags.
 
 EOT'
 say 'and save it'
-run '### Code snippet 76
+run '### Code snippet 77
 datalad save -m "add note on clean datasets"'
 say 'finally, lets see a more complex runrecord'
-run '### Code snippet 77
+run '### Code snippet 78
 git log -p -n 2'
