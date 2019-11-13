@@ -46,14 +46,18 @@
 <section data-markdown><script type="text/template">
 ## Clarification
 
-**Do I have to do all modifications to files or the dataset from the comand line?**
+**Do I have to do all modifications to files or the dataset from the comnand line?**
 
 No! <!-- .element: class="fragment" -->
+
+### Any other questions? <!-- .element: class="fragment" -->
 <aside class="notes">
 </aside>
 </script>
 </section>
+</section>
 
+<section>
 <section data-transition="fade">
   <h2>Reproducible analyses are hard...</h2>
   <img src="../pics/legacycode_phd.png" height="500">
@@ -110,9 +114,9 @@ No! <!-- .element: class="fragment" -->
 
 <dl>
   <dt>Reproducible analysis</dt>
-  <dd>Executing scripts and command line tools reproducibly with
+  <dd> ⮊ Executing scripts and command line tools reproducibly with
     <code>datalad run</code></dd>
-  <dd class="fragment fade-in">Experience all the ways in which
+  <dd class="fragment fade-in"> ⮊ Experience all the ways in which
      the command can fail</dd>
 </dl>
 
@@ -123,19 +127,21 @@ No! <!-- .element: class="fragment" -->
 &nbsp;
 &nbsp;
 **Let's get into a terminal!**<!-- .element: class="fragment" -->
-  <br><a href="http://handbook.datalad.org/en/latest/basics/101-101-create.html"> -> handbook chapter</a><!-- .element: class="fragment" -->
-  <br><a href="http://handbook.datalad.org/en/latest/TODO"> -> code snippet list</a><!-- .element: class="fragment" -->
-
+<div style="vertical-align:middle">
+  <br><a href="http://handbook.datalad.org/en/latest/basics/101-101-create.html" target="_blank"> ⮊ handbook chapter</a><!-- .element: class="fragment" -->
+  <br><a href="http://handbook.datalad.org/en/latest/code_from_casts/02_reproducible_execution_code.html" target="_blank"> ⮊ code snippet list</a><!-- .element: class="fragment" -->
+</div>
 <aside class="notes">
 
 Important!
   - VPN
-  - SSH into brainbfast! FIX THIS!
+  - SSH into brainbfast!
 </aside>
 </script>
 </section>
 </section>
 
+<section>
 <section data-markdown><script type="text/template">
 ## Reminder: DataLad-101 narrative
 
@@ -145,6 +151,9 @@ Important!
 ![](../pics/virtual_dstree_dl101.svg)<!-- .element: class="fragment" height="500" -->
 
 **Analysis idea: Write a list of all podcast titles!**  <!-- .element: class="fragment" -->
+
+
+<small class="fragment fade-in">If you do not have this directory set up from last time, <a href="http://handbook.datalad.org/en/latest/code_from_casts/01_dataset_basics_code.html">here</a> is the code that gets you there! </small>
 
 </script>
 </section>
@@ -162,10 +171,10 @@ Important!
  done
 </code></pre>
 
-  <p align="left" class="fragment fade-in"> 🠒 A for loop in <code>shell</code>, will print each file name as
+  <p align="left" class="fragment fade-in"> ⮊ A for loop in <code>shell</code>, will print each file name as
     <b>Date - Speaker - Title </b> to the terminal. </p>
-  <p align="left" class="fragment fade-in"> 🠒 Redirection to a file with <code>></code> writes the stream to a file instead of the terminal.</p>
-  <p align="left" class="fragment fade-in"> 🠒 Note: This could be any script or shell command!</p>
+  <p align="left" class="fragment fade-in"> ⮊ Redirection to a file with <code>></code> writes the stream to a file instead of the terminal.</p>
+  <p align="left" class="fragment fade-in"> ⮊ Note: This could be any script or shell command!</p>
 
 </section>
 
@@ -220,8 +229,9 @@ index 0000000..f691b53
   <p class="fragment fade in" align="left">It follows logically: If a command does <b>not</b> lead to any modification in a dataset,
   it will not be recorded!</p>
 </section>
+</section>
 
-
+<section>
 <section data-transition="fade">
   <h2>Oh! An error in the code...</h2>
   <b>DataLad-101 layout:</b>
@@ -317,8 +327,6 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
 </section>
 
 <section>
-
-  <section>
     <h2>Analysis provenance capture</h2>
 
     <p>Easy provanance capture!</p>
@@ -329,11 +337,7 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
       <li class="fragment fade-in">Attach helpful commit messages</li>
       <li class="fragment fade-in">Make sure to have a clean dataset state</li>
     </ul>
-  </section>
-
 </section>
-
-<section>
 
 <section>
     <h3>Summary - Reproducible execution with datalad run</h3>
@@ -348,7 +352,7 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
       <dt class="fragment fade-in"><b>--output</b> to the datalad run command gets unlocked (if necessary) for modification prior to command execution.</dt>
       <dd class="fragment fade-in">This is done with a <b>datalad unlock</b> in the background.</dd>
     </ul>
-  </section>
+</section>
 
 <section>
     <h2>Outlook: computational reproducibility</h2>
@@ -358,9 +362,9 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
         may fail to reproduce <i>or even run</i>.</li>
       <li>The DataLad extension <a href="" target="_blank">datalad containers</a>
       can also capture complete software environments.</li>
-      <li>Get a preview here: TODO link chapters on extensions, if ready by then</li>
+      <li>Get a preview soon: chapters on extensions is close to being finished</li>
     </ul>
-  </section>
+</section>
 </section>
 
 
@@ -379,7 +383,8 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
     <h2>Practice @home</h2>
 
     <ul>
-      <li>????????</li>
+      <li>Wrap any simple shell command (e.g., <code>cp</code>) in a datalad run,
+          and (later) also scripts of yours</li>
     </ul>
   </section>
 
@@ -396,17 +401,17 @@ Failed to run 'convert -resize 400x400 recordings/longnow/.datalad/feed_metadata
 </dl>
 </script>
 </section>
-</section>
 
-<section>
+
 <section data-markdown><script type="text/template">
   ## Outline: What comes next?
 
 - Symlinks, data integrity, data security (chapter <a href="http://handbook.datalad.org/en/latest/basics/101-114-txt2git.html" target="_blank">Under the hood: Git-annex</a> in the handbook).
-- **TODO Which date is suitable?** > <a href="TODO" target="_blank">Doodle poll</a> <
+- **Which date is suitable?** > <a href="https://doodle.com/poll/c252qifr72h7adep" target="_blank">Doodle poll</a> <
 
 
 </script>
+</section>
 </section>
 
 <section data-markdown>
