@@ -48,30 +48,76 @@
 </section>
 </section>
 
-<!--...-->
+<!--...INTRODUCTION...-->
 
 <section>
+
+<section>
+    <h2>Why data management?</h2>
+    <img src="../pics/frontend_vs_backend_paper.png" style="box-shadow: 10px 10px 8px #888888;height=600px">
+    <imgcredit>adapted from https://dribbble.com/shots/3090048-Front-end-vs-Back-end</imgcredit>
+</section>
+
+<section>
+    <h2>What is (research) data management?</h2>
+    <ul>
+        <li class="fragment fade-in">(Research) Data = every digital object involved in your project:
+            code, software/tools, raw data, processed data, results, manuscripts ...</li>
+    </ul>
+    <img src="../pics/datalifecycle_jisc_ccbysand.png" class="fragment fade-in">
+<imgcredit>JISC; CC-BY-SA-ND</imgcredit>
+
+    <note>No claim is made to completeness</note>
+</section>
+
+<section>
+    <h2>How is (research) data management possible?</h2>
+
+    <p>There are tools and concepts that can help:
+    </p>
+
+    <ul>
+        <li><b>Version control</b> your data</li>
+        <li><b>Standardize</b> data names and organization</li>
+        <li><b>Document</b> <i>everything</i>, ideally automatically</li>
+    </ul>
+
+<note>No claim is made to completeness</note>
+<aside class="notes">
+    <li>Knowing about these tools is the first step</li>
+    <li>Today you'll get a glimpse of all of that</li>
+</aside>
+</section>
+
+
 <section>
     <h2>Why version control?</h2>
-    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px">
+    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600">
+<aside class="notes">
+<li>Not only manuscripts, but also data!</li>
+</aside>
 </section>
 
 <section>
     <h2>Why standards?</h2>
-        <img src="../pics/datasharing_xkcd.png" style="box-shadow: 10px 10px 8px #888888;height=800px">
+        <img src="../pics/datasharing_xkcd.png" style="box-shadow: 10px 10px 8px #888888;height=800px" height="700">
+
+<aside class="notes">
+    <li>A lack of a standard or consensus in how to name or structure data leads to misunderstanding
+    and time wasted on rearranging data/rewriting scripts</li>
+    <li>Standards make your data compatible with others code, and vice versa -> mutual benefit</li>
+    <li>Clever: use the standard that is beneficial for you (don't reinvent the wheel)</li>
+</aside>
 </section>
 </section>
-
-
 
 <section>
 <section data-markdown><script type="text/template">
-## Who are you?
 ![](../pics/BIDS_Logo.png)<!-- .element: style="height:150px;margin-left:50px" class="fragment fade-in"-->
 ![](../pics/datalad_logo_wide.svg)<!-- .element:style="height:150px;margin-left:50px" class="fragment fade-in" -->
 
-
 <aside class="notes">
+Agenda for today: BIDS standard and data management
 <ul>
 <li>Who has heard of BIDS?</li>
 <li>Who has heard of DataLad?</li>
@@ -80,45 +126,46 @@
 </script>
 </section>
 
-<section>
-<h2></h2>
+<section data-transition="fade">
+<h3>Tools that can help with data management</h3>
     <div><table>
     <tr><dl>
-    <img src="../pics/BIDS_Logo.png" height="100">
+    <img src="../pics/BIDS_Logo.png" height="150">
     <dt></dt>
-        <dd><i>What</i> is it?</dd>
-        <dd><i>Why</i> should I use it?</dd>
-        <dd><i>How</i> can I use it?</dd>
         </dl></tr>
     <tr><dl>
-    <img src="../pics/datalad_logo_wide.svg" height="100">
+    <img src="../pics/datalad_logo_wide.svg" height="150">
     <dt></dt>
-        <dd><i>What</i> is it?</dd>
-        <dd><i>Why</i> should I use it?</dd>
-        <dd><i>How</i> can I use it?</dd>
     </dl></tr>
     </table>
     </div>
+    <ul style="vertical-align:middle">
+    <dd class="fragment fade-in"><i>What</i> is it?</dd>
+    <dd class="fragment fade-in"><i>Why</i> should I use it?</dd>
+    <dd class="fragment fade-in"><i>How</i> can I use it?</dd>
+    </ul>
 <aside class="notes">
 <ul>
 <li>There will be a lot of content in the next two hours given the darkness</li>
 <li>I'll provide a list of pointers to useful resources</li>
 <li>If you want and have your computer configured follow along when I tell you</li>
 
+<li>PLEASE, do ask dumb questions!</li>
 </ul>
 </aside>
 </section>
+
+<!--...THE BIDS STANDARD...-->
 
 <section data-markdown><script type="text/template">
 ![](../pics/BIDS_Logo.png)<!-- .element: height="100" -->
 ![](../pics/bids.png)<!-- .element: height="600" -->
 <imgcredit>BIDS; CC-BY</imgcredit>
 
-BIDS is a <i>standard</i> for a multitude of neuroimaging data (MRI, EEG, ...).
-It defines a data organization, naming schemes for files, and meta data descriptors.
+BIDS is a standard for a multitude of neuroimaging data (MRI, EEG, ...). It defines a data organization, naming schemes for files, and meta data descriptors. <!-- .element: class="fragment" -->
 
 <aside class="notes">
-<li>PLEASE, do ask dumb questions!</li>
+<li>WHAT is BIDS?</li>
 </aside>
 </script>
 </section>
@@ -137,9 +184,10 @@ It defines a data organization, naming schemes for files, and meta data descript
             There is constant (open!) development of all of them</dd>
     </dl>
 <aside class="notes">
-    <li>What is BIDS</li>
+    <li>WHAT is BIDS</li>
 </aside>
 </section>
+
 
 <section>
 <h2><img src="../pics/BIDS_Logo.png" height="100"></h2>
@@ -158,6 +206,9 @@ It defines a data organization, naming schemes for files, and meta data descript
                                       datasets from <a href="">OpenNeuro </a></dd>
         <dd class="fragment fade-in"></dd>
     </dl>
+<aside class="notes">
+    <li>WHY should I use it?</li>
+</aside>
 </section>
 
 
@@ -176,9 +227,15 @@ It defines a data organization, naming schemes for files, and meta data descript
         <a href="https://groups.google.com/forum/#!forum/bids-discussion" target="_blank">discussion group</a></dd>
     </dl>
     </div>
+<aside class="notes">
+    <li>HOW can I use it?</li>
+</aside>
+</section>
 </section>
 
+<!--...DATA MANAGEMENT WITH DATALAD...-->
 
+<section>
 <section data-transition="fade">
 <h2><img src="../pics/datalad-animated.gif"></h2>
 </section>
@@ -196,11 +253,17 @@ It defines a data organization, naming schemes for files, and meta data descript
     <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="_blank">Let's see it in action</a>
 <aside class="notes">
     <li>log into brainbfast?</li>
+    <li>TODO: What do I talk about while this compiles?</li>
+    <ul>
+        <li>who plans to follow along on the computer?</li>
+        <li>which operating system do we have?</li>
+        <li>has everyone DataLad installed? Where there installation problems?</li>
+    </ul>
 </aside>
 </section>
 
 <section>
-    <h2>Reproducible papers - a Magic trick?</h2>
+    <h2>Reproducible paper - a Magic trick?</h2>
 
     If curious, you can read up all the details and a step-by-step instruction
     <a href="http://handbook.datalad.org/en/latest/usecases/reproducible-paper.html">here.</a>
@@ -216,12 +279,134 @@ It defines a data organization, naming schemes for files, and meta data descript
         <dd>... version-controlling arbitrarily large content,</dd>
         <dd>... easily sharing and obtaining data (note: no data hosting!),</dd>
         <dd>... (computationally) reproducible data analysis,
-        <dd>... and much more </dd>
+        <dd>... and <i>much</i> more </dd>
         <li>Completely domain-agnostic</li>
+        <li>Today: Basic concepts and commands. Read <a href="https://handbook.datalad.org">the DataLad Handbook</a>
+        for more</li>
     </ul>
 </section>
 
+<section>
+    <h2>DataLad Datasets</h2>
 
+    <ul>
+        <li>DataLad's core data structure</li>
+        <ul>
+            <li class="fragment fade-in">Dataset = A directory managed by DataLad</li>
+            <li class="fragment fade-in">Any directory of your computer can be managed by DataLad.</li>
+            <li class="fragment fade-in">Datasets can be <i>created</i> (from scratch) or <i>installed</i></li>
+            <li class="fragment fade-in">Datasets can be nested: <i>linked subdirectories</i></li>
+        </ul>
+    </ul>
+
+    TODO Show this on the manuscript repo!
+    - history
+    - looks and feels
+<aside class="notes">
+    <li>anything can be managed: CV, website, music library, phd</li>
+</aside>
+</section>
+
+<section>
+    <h2>Local version control</h2>
+
+    <p>Procedurally, version control is easy with DataLad!</p>
+    <img class="fragment fade-in" src="../pics/local_wf.svg" height="500"> <!-- .element: class="fragment" -->
+    <br>
+
+    <b class="fragment fade-in">Advice:</b>
+    <ul>
+      <li class="fragment fade-in">Save <i>meaningful</i> units of change</li>
+      <li class="fragment fade-in">Attach helpful commit messages</li>
+    </ul>
+</section>
+
+<section data-markdown><script type="text/template">
+## From here <span class="fragment" data-fragment-index="1" style="margin-left:350px">to this:</span>
+![](../pics/finaldoc_comic.gif)<!-- .element: height="780" style="box-shadow: 10px 10px 8px #888888" -->
+![](../pics/gitflow.png)<!-- .element: class="fragment" data-fragment-index="1" height="780" style="box-shadow: 10px 10px 8px #888888" -->
+<imgcredit>www.phdcomics.com; www.linode.com</imgcredit>
+
+<p class="fragment" data-fragment-index="2">BUT: Version control is only one aspect of data management</p>
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section>
+    <h2>Consuming datasets</h2>
+    <img class="fragment fade-in" src="../pics/virtual_dstree_dl101.svg" height="600">
+  <ul>
+    <li class="fragment fade-in">Datasets are light-weight: Upon installation, only small
+    files and meta data about file availability are retrieved.</li>
+    <li class="fragment fade-in">Content can be obtained on demand via <code>datalad get</code>.</li>
+  </ul>
+</section>
+
+<section data-transition="fade">
+    <h2>reproducible data analysis</h2>
+    <img src="../pics/input-output_workflow.svg" height="200">
+  <br>
+  <h3 class="fragment fade-in">After a while...</h3>
+  <img style="" class="fragment fade-in" src="../pics/confused_phd.png" height="190">
+  <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1979">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
+
+</section>
+</section>
+
+<section>
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    <dl>
+        <dt>1. One thing, one dataset</dt>
+        <dd>An analysis is a superdataset, its components are subdatasets, and its structure modular</dd>
+        <table>
+            <tr>
+                <td><img src="../pics/dataset_modules.png" height="400"></td>
+                <td><pre><code class="bash" style="max-height:none">├── code/
+│   ├── tests/
+│   └── myscript.py
+├── docs
+│   ├── build/
+│   └── source/
+├── envs
+│   └── Singularity
+├── inputs/
+│   └─── data/
+│       ├── dataset1/
+│       │   └── datafile_a
+│       └── dataset2/
+│           └── datafile_a
+├── outputs/
+│   └── important_results/
+│       └── figures/
+└── README.md</code></pre></td>
+            </tr>
+        </table>
+
+    </dl>
+    <dd>do not touch/modify raw data: save any results/computations <i>outside</i> of input datasets</dd>
+    <dd>Keep a superdataset self-contained: Scripts reference subdatasets or files with <i>relative paths</i></dd>
+</section>
+
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    <dl>
+        <dt>1. Record where you got it from, and where it is now</dt>
+        <dd>Link datasets (as subdatasets), record data origin</dd>
+                <img src="../pics/data_origin.png">
+        <dd>Share, publish, and consume datasets to collaborate</dd>
+    </dl>
+
+    TODO
+        - document everything
+    - comply to existing standards
+</section>
+
+
+<!--...SUMMARY...-->
 
 <section>
 <h2>How to get started with BIDS and DataLad</h2>
