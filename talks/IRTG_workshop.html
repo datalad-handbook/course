@@ -339,6 +339,21 @@ BIDS is a standard for a multitude of neuroimaging data (MRI, EEG, ...). It defi
     </ul>
 </section>
 
+  <section>
+    <h3>Summary - Local version control</h3>
+
+<dl>
+      <dt class="fragment fade-in"><code>datalad create</code> creates an empty dataset.</dt> <dd class="fragment fade-in">Configurations (<b>-c yoda</b>, <b>-c text2git</b>) are useful.</dd>
+      <br>
+      <dt class="fragment fade-in">A dataset has a <i>history</i> to track files and their modifications. </dt><dd class="fragment fade-in">Explore it with Git (<b>git log</b>) or external tools (e.g., <b>tig</b>).</dd>
+      <br>
+    <dt class="fragment fade-in"><code>datalad save</code> records the dataset or file state to the history.</dt> <dd class="fragment fade-in">Concise <b>commit messages</b> should summarize the change for future you and others.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad status</code> reports the current state of the dataset.</dt> <dd class="fragment fade-in">A clean dataset status is good practice.</dd>
+    </dl>
+</section>
+
+
 <section data-markdown><script type="text/template">
 ## From here <span class="fragment" data-fragment-index="1" style="margin-left:350px">to this:</span>
 ![](../pics/finaldoc_comic.gif)<!-- .element: height="780" style="box-shadow: 10px 10px 8px #888888" -->
@@ -367,6 +382,25 @@ Note to self
     <h2>Dataset nesting</h2>
     <img src="../pics/linkage.svg" height="500">
 </section>
+
+<section>
+    <h3>Summary - Dataset consumption & nesting</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad install</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
+      Specify the <b>--source/-s</b> of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
+      <br>
+      <dt class="fragment fade-in">Only small files and metadata about file availability are present locally after an install. </dt><dd class="fragment fade-in">To retrieve actual file content of larger files, <code>datalad get </code> downloads large file content on demand.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad status</code> can report on total and retrieved repository size</dt> <dd class="fragment fade-in">using <code>--annex</code> and <code>--annex all</code> options.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets preserve their history.</dt> <dd class="fragment fade-in">The superdataset records only the <i>version state</i> of the subdataset.</dd>
+
+    </ul>
+  </section>
+
 
 <section data-transition="fade">
     <h2>reproducible data analysis</h2>
@@ -433,6 +467,21 @@ Note to self
     <note>Find out more about organizational principles in
         <a href="" target="_blank">the YODA principles</a>!</note>
 </section>
+
+<section>
+    <h2>A classification analysis on the iris flower dataset</h2>
+    <img src="../pics/iris-machinelearning.png" height="300">
+    <img src="../pics/iris_cluster.png" height="450">
+</section>
+
+<section>
+    <h2>Reproducible execution & provenance capture</h2>
+
+    <p>datalad run</p>
+    <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
+</section>
+
+
 </section>
 
 <!--...SUMMARY...-->
