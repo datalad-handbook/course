@@ -129,7 +129,8 @@ say 'We can find this shasum in the subdatasets history: it'"'"'s the most recen
 run '### Code snippet 35
 cd recordings/longnow
 git log --oneline'
-run 'cd ../../'
+run '### Code snippet 36
+cd ../../'
 
 
 say 'Let'"'"'s create a data analysis project with a yoda procedure'
