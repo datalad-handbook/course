@@ -230,19 +230,3 @@ datalad status'
 say 'Let'"'"'s save this change'
 run '### Code snippet 133
 datalad save -m "Provide project description" README.md'
-
-
-
-
-say 'We'"'"'ll find the shasum of the run commit and plug it into rerun'
-run '### Code snippet 50
-echo "$ datalad rerun $(git rev-parse HEAD~1)" && datalad rerun $(git rev-parse HEAD~1)'
-say 'how does a rerun look in the history?'
-run '### Code snippet 51
-git log -n 2'
-say 'The datalad diff command can help us find out what changed between the last two commands:'
-run '### Code snippet 52
-datalad diff --to HEAD~1'
-say 'The git diff command has even more insights:'
-run '### Code snippet 53
-git diff HEAD~1'
