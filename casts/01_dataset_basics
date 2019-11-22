@@ -1,83 +1,116 @@
 say 'Datasets are datalads core data type. We will explore the concepts of datasets by creating one with datalad create. optional configuration template and a description'
-run 'datalad create --description "course on DataLad-101 on my private Laptop" -c text2git DataLad-101'
+run '### Code snippet 1
+datalad create --description "course on DataLad-101 on my private Laptop" -c text2git DataLad-101'
 say 'Datalad informs about what it is doing during a command. At the end is a summary, in this case it is ok. What is inside of a newly created dataset? We list contents with ls.'
-run 'cd DataLad-101
+run '### Code snippet 2
+cd DataLad-101
 ls    # ls does not show any output, because the dataset is empty.'
 say 'GIT LOG, SHASUM, MESSAGE: A dataset is version controlled. This means, edits done to a file are associated with information about the change, the author, and the time + ability to restore previous states of the dataset. Let'"'"'s take a look into the history, even if it is small atm'
-run 'git log'
+run '### Code snippet 3
+git log'
 say 'Datalad, git-annex, and git create hidden files and directories in your dataset. Make sure to not delete them!'
-run 'ls -a # show also hidden files'
+run '### Code snippet 4
+ls -a # show also hidden files'
 say 'The dataset is empty, lets put some PDFs inside. First, create a directory to store them in:'
-run 'mkdir books'
+run '### Code snippet 5
+mkdir books'
 say 'The tree command shows us the directory structure in the dataset. Apart from the directory, its empty.'
-run tree
+run '### Code snippet 6
+tree'
 say 'We use wget to download a few books from the web. CAVE: longish realcommand!'
-run 'cd books && wget -nv https://sourceforge.net/projects/linuxcommand/files/TLCL/19.01/TLCL-19.01.pdf/download -O TLCL.pdf && wget -nv https://www.gitbook.com/download/pdf/book/swaroopch/byte-of-python -O byte-of-python.pdf && cd ../'
+run '### Code snippet 7
+cd books && wget -nv https://sourceforge.net/projects/linuxcommand/files/TLCL/19.01/TLCL-19.01.pdf/download -O TLCL.pdf && wget -nv https://www.gitbook.com/download/pdf/book/swaroopch/byte-of-python -O byte-of-python.pdf && cd ../'
 say 'Here they are:'
-run tree
+run '### Code snippet 8
+tree'
 say 'What has happened to our dataset now with this new content? We can use datalad status to find out:'
-run 'datalad status'
+run '### Code snippet 9
+datalad status'
 say 'ATM the files are untracked and thus unknown to any version control system. In order to version control the PDFs we need to save them. We attach a meaningful summary of this with the -m option:'
-run 'datalad save -m "add books on Python and Unix to read later"'
+run '### Code snippet 10
+datalad save -m "add books on Python and Unix to read later"'
 say 'Save command reports what has been added to the dataset. Now we can see how this action looks like in our dataset'"'"'s history:'
-run 'git log -p -n 1'
+run '### Code snippet 11
+git log -p -n 1'
 say 'Its inconvenient that we saved two books together - we should have saved them as independent modifications of the dataset. To see how single modifications can be saved, let'"'"'s download another book'
-run 'cd books && wget -nv https://github.com/progit/progit2/releases/download/2.1.154/progit.pdf && cd ../'
+run '### Code snippet 12
+cd books && wget -nv https://github.com/progit/progit2/releases/download/2.1.154/progit.pdf && cd ../'
 say 'Check the dataset state with the status command frequently'
-run 'datalad status'
+run '### Code snippet 13
+datalad status'
 say 'To save a single modification, provide a path to it!'
-run 'datalad save -m "add reference book about git" books/progit.pdf'
+run '### Code snippet 14
+datalad save -m "add reference book about git" books/progit.pdf'
 say 'Let'"'"'s view the growing history (concise with the --oneline option):'
-run '# lets make the output a bit more concise with the --oneline option
+run '### Code snippet 15
+# lets make the output a bit more concise with the --oneline option
 git log --oneline'
 say 'Let'"'"'s find out how we can modify files in dataset. Lets create a text file with notes about the DataLad commands we learned. (maybe explain here docs)'
-run 'cat << EOT > notes.txt
+run '### Code snippet 16
+cat << EOT > notes.txt
 One can create a new dataset with '"'"'datalad create [--description] PATH'"'"'.
 The dataset is created empty
 
 EOT'
 say 'As expected, there is a new file in the dataset. At first the file is untracked. We can save without a path specification because it is the only existing modification'
-run 'datalad status'
-run 'datalad save -m "Add notes on datalad create"'
+run '### Code snippet 17
+datalad status'
+run '### Code snippet 18
+datalad save -m "Add notes on datalad create"'
 say 'Now let'"'"'s start to modify this text file by adding more notes to it. Think about this being a code file that you add functions to:'
-run 'cat << EOT >> notes.txt
+run '### Code snippet 19
+cat << EOT >> notes.txt
 The command "datalad save [-m] PATH" saves the file
 (modifications) to history. Note to self:
 Always use informative, concise commit messages.
 
 EOT'
-run 'datalad status'
+run '### Code snippet 20
+datalad status'
 say 'The modification can simply be saved as well'
-run 'datalad save -m "add note on datalad save"'
+run '### Code snippet 21
+datalad save -m "add note on datalad save"'
 say 'An the history gives an accurate record of what happened to this file'
-run 'git log -p -n 2'
+run '### Code snippet 22
+git log -p -n 2'
 say 'The next challenge is to install an existing dataset from the web as a subdataset. First, we create a location for this'
-run '# we are in the root of DataLad-101
+run '### Code snippet 23
+# we are in the root of DataLad-101
 mkdir recordings'
 say 'We need to install the dataset as a subdataset. For this, we use the datalad install command with a --dataset option and --source option as well as a path. Else the dataset would not be registered as a subdataset!'
-run 'datalad install -d . -s https://github.com/datalad-datasets/longnow-podcasts.git recordings/longnow'
+run '### Code snippet 24
+datalad install -d . -s https://github.com/datalad-datasets/longnow-podcasts.git recordings/longnow'
 say 'Let'"'"'s take a look at the directory structure after the installation'
-run 'tree -d   # we limit the output to directories'
+run '### Code snippet 25
+tree -d   # we limit the output to directories'
 say 'And now lets look into these seminar series folders: There are hundreds of mp3 files, yet the download only took a few seconds! How can that be?'
-run 'cd recordings/longnow/Long_Now__Seminars_About_Long_term_Thinking
+run '### Code snippet 26
+cd recordings/longnow/Long_Now__Seminars_About_Long_term_Thinking
 ls'
 say 'Upon installation of a DataLad dataset, DataLad retrieves only small files and metadata. Therefore the dataset is tiny in size. The files are non-functional now atm (Try opening one)'
-run 'cd ../      # in longnow/
+run '### Code snippet 27
+cd ../      # in longnow/
 du -sh      # Unix command to show size of contents'
 say 'But how large would the dataset be if we had all the content?'
-run 'datalad status --annex'
+run '### Code snippet 28
+datalad status --annex'
 say 'Now let'"'"'s finally get some content in this dataset. This is done with the datalad get command'
-run 'datalad get Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3'
+run '### Code snippet 29
+datalad get Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3'
 say 'Datalad status can also summarize how much of the content is already present locally:'
-run 'datalad status --annex all'
+run '### Code snippet 30
+datalad status --annex all'
 say 'Let'"'"'s get a few more files. Note how already obtained files are not downloaded again:'
-run 'datalad get Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3 \
+run '### Code snippet 31
+datalad get Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3 \
 Long_Now__Seminars_About_Long_term_Thinking/2003_12_13__Peter_Schwartz__The_Art_Of_The_Really_Long_View.mp3 \
 Long_Now__Seminars_About_Long_term_Thinking/2004_01_10__George_Dyson__There_s_Plenty_of_Room_at_the_Top__Long_term_Thinking_About_Large_scale_Computing.mp3'
 say 'On Dataset nesting: You have seen the history of DataLad-101. But the subdataset has a standalone history as well! We can find out who created it!'
-run 'git log --reverse'
+run '### Code snippet 32
+git log --reverse'
 say 'We can make a note about this:'
-run '# in the root of DataLad-101:
+run '### Code snippet 33
+# in the root of DataLad-101:
 cd ../../
 cat << EOT >> notes.txt
 The command '"'"'datalad install [--source] PATH'"'"'
@@ -89,8 +122,11 @@ root of the superdataset with the '"'"'-d'"'"' option.
 EOT
 datalad save -m "Add note on datalad install"'
 say 'The superdataset only stores the version of the subdataset.  Let'"'"'s take a look into how the superdataset'"'"'s history looks like'
-run 'git log -p'
+run '### Code snippet 34
+git log -p'
 say 'We can find this shasum in the subdatasets history: it'"'"'s the most recent change'
-run 'cd recordings/longnow
+run '### Code snippet 35
+cd recordings/longnow
 git log --oneline'
-run 'cd ../../'
+run '### Code snippet 36
+cd ../../'
