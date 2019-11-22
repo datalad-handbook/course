@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Datamanagement at INM7</title>
+  <meta name="description" content="Data management course session 04">
+  <meta name="author" content="Adina Wagner & Michael Hanke">
+
+  <meta charset="utf-8">
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section>
+  <h1 style="text-transform:none">Data management</h1> <br>
+    <h3 style="text-transform:none">Session 04 - HAMMERPANTS</h3>
+<iframe src="https://giphy.com/embed/GPuVXyAmkMco0" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/animated-stone-moonwalk-GPuVXyAmkMco0"></a></p>
+</section>
+</section>
+
+<!--...INTRODUCTION...-->
+
+<section>
+
+<section>
+    <h2>The new cluster</h2>
+    <img src="../pics/ephemeral_infra.svg">
+
+    <ul>
+        <dt><code>$DATA</code> is our new data store, called <code>HAMMERPANTS</code></dt>
+        <dd class="fragment fade-in">⮊ <code>HAMMERPANTS</code> hosts all of our large datasets</dd>
+        <dd class="fragment fade-in">⮊ TODO: Link between cluster, hammerpants, JSC </dd>
+        <dd class="fragment fade-in">⮊ In order to interact with <code>HAMMERPANTS</code>, you will need DataLad</dd>
+    </ul>
+</section>
+
+
+<section>
+<h2>Research data flow</h2>
+<table>
+<tr><td><img src="../pics/ephemeral_infra.svg" width="800" />
+</td><td>
+    <ul>
+        <li>Researchers are free to do whatever at <strong>$HOME</strong> (within limits)</li>
+        <li><strong>$COMPUTE</strong> pulls data (exclusively) from <strong>$DATA</strong></li>
+        <li>Results from <strong>$COMPUTE</strong> are immediately/eventually pushed back to <strong>$DATA</strong></li>
+    </ul>
+</tr>
+</table>
+<dl class="fragment">
+	<dt>Impact of ephemeral $HOME and $COMPUTE</dt>
+	<dd>
+<ul>
+    <li>No limits to tinkering and exploration of data</li>
+    <li>Anything that needs to scale requires researchers to use <strong>$COMPUTE</strong> and thereby <strong>$DATA</strong>
+    <li>Anything that is/was relevant for computation is tracked in <strong>$DATA</strong></li>
+    <li>The only trusted place for any data is <strong>$DATA</strong>, hence anything that could be important is there</li>
+</ul></dd></dl>
+<aside class="notes">
+Note to self
+</aside>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Objectives
+
+<dl>
+  <dt>Interacting with the new data store</dt>
+      <dd class="fragment fade-in"> ⮊ Starting a project</dd>
+      <dd class="fragment fade-in"> ⮊ Getting datasets from <code>HAMMERPANTS</code></dd>
+      <dd class="fragment fade-in"> ⮊ Computing @juseless (TODO ???)</dd>
+      <dd class="fragment fade-in"> ⮊ Backing up results in HAMMERPANTS</dd>
+      <dd class="fragment fade-in"> ⮊ Disk-space-aware data management in local projects</dd>
+      <dd class="fragment fade-in"> ⮊ Computing @JSC</dd>
+      <dd class="fragment fade-in"> ⮊ TODO what else?</dd>
+
+  <dt class="fragment fade-in">Schedule</dt>
+    <li class="fragment fade-in">Slides with code examples for a high level overview</li>
+    <li class="fragment fade-in">Pointers for further or technical details on each slide</li>
+    <li class="fragment fade-in">Hands-on: Interacting with <code>HAMMERPANTS</code> in
+    a full analysis workflow</li>
+</dl>
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+**Let's get into a terminal!**<!-- .element: class="fragment" -->
+<div style="vertical-align:middle">
+  <br><a href="TODO: link Hammerpants use case" target="_blank"> ⮊ handbook use case (INM-7 specific)</a><!-- .element: class="fragment" -->
+  <br><a href="http://handbook.datalad.org/en/latest/code_from_casts/02_reproducible_execution_code.html" target="_blank"> ⮊ code snippet list</a><!-- .element: class="fragment" -->
+</div>
+<aside class="notes">
+
+Important!
+  - VPN
+  - SSH into brainbfast!
+</aside>
+</script>
+</section>
+
+<section>
+    <h2>Step 1: Log into the cluster</h2>
+    <pre><code style="max-height:none">$ ssh user@juseless.inm7.de
+    Linux juseless 4.19.0-6-amd64 #1 SMP Debian 4.19.67-2+deb10u1 (2019-09-20) x86_64
+
+ IIIIIIIIIII NNNNNNN     NNNNNN MMMMMMM       MMMMMMM 7777777777777777
+ I:::::::::I N::::::N    N::::N M::::::M     M::::::M 7::::::::::::::7
+ III:::::III N:::::::N   N::::N M:::::::M   M:::::::M 777777777::::::7
+    I:::I    N::::::::N  N::::N M::::::::M M::::::::M         7:::::7
+    I:::I    N::::NN:::N N::::N M::::MM:::M:::MM::::M        7:::::7
+    I:::I    N::::N N:::NN::::N M::::M M:::::M M::::M   77777:::::777
+    I:::I    N::::N  N:::N::::N M::::M  M:::M  M::::M   7:::::::::::7
+    I:::I    N::::N   N:::::::N M::::M   MMM   M::::M   777:::::77777
+    I:::I    N::::N    N::::::N M::::M         M::::M    7:::::7
+ III:::::III N::::N     N:::::N M::::M         M::::M   7:::::7
+ I:::::::::I N::::N      N::::N M::::M         M::::M  7:::::7
+ IIIIIIIIIII NNNNNN       NNNNN MMMMMM         MMMMMM 7777777
+
+Last login: Thu Nov 21 10:46:34 2019 from 134.94.9.210
+</code></pre>
+    <ul>
+    <li class="fragment fade-in"> Now you are in your <code>$HOME</code></li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Step X: Required configurations</h2>
+    TODO: annex.ria.remove.inm7-storage.base-path configuration?
+    TODO: YODA?
+</section>
+
+<section>
+    <h2>Step X: Create a dataset for your project...</h2>
+    <dl>
+        ... for data, analysis results, manuscripts, ...
+    </dl>
+
+    <pre><code style="max-height:none">$ datalad create -c inm7 myproject
+        TODO output of the command here
+    </code></pre>
+
+    <ul>
+        <dt class="fragment fade-in">Applying the inm7 procedure (<code>-c inm7</code>) is crucial:</dt>
+        <dd class="fragment fade-in">⮊ It is an institute-specific configuration procedure that performs
+        all relevant setup</dd>
+        <dd class="fragment fade-in">⮊ Sets up a fully configured link to <code>$DATA</code>:
+        install and get data, publish results back to data for backup, setup an
+        associated Gitlab project</dd>
+        <dt class="fragment fade-in">Find out more here:
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-101-create.html" target="_blank">Chapter on <code>datalad create</code></a> </li>
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-124-procedures.html" target="_blank">Chapter on DataLad's run-procedures</a></li>
+            <li><a href="https://jugit.fz-juelich.de/inm7/infrastructure/inm7-datalad/blob/master/inm7_datalad/resources/procedures/cfg_inm7.py" target="_blank">Source code of the inm7 procedure</a></li></dt>
+    </ul>
+
+    TODO: everyone needs to have their git configurations set up.
+</section>
+
+
+<section>
+    <h2>Step X: Install a dataset</h2>
+    <pre><code>$ datalad install --dataset myproject\
+    --source &lt;ID/URL&gt; \
+    mynewdataset/inputs/...
+
+    TODO: command output here</code></pre>
+    <ul>
+        <dt class="fragment fade-in">Todo</dt>
+        <dd class="fragment fade-in">⮊ Todo</dd>
+        <dd class="fragment fade-in">⮊ Todo</dd>
+        <dt class="fragment fade-in">Find out more here:
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-105-install.html" target="_blank">Chapter on <code>datalad install</code></a> </li>
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-127-yoda.html" target="_blank">Chapter on the YODA principles</a></li>
+        </dt>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Step X: How to get data?</h2>
+
+    - TODO: reference <code>datalad get</code>, <code>datalad run</code>,
+    and in-script datalad/system calls
+</section>
+
+<section>
+    <h2>Step X: Back up results in HAMMERPANTS</h2>
+    <pre><code>$ datalad publish --to inm7
+
+    TODO command output here</code></pre>
+
+    <ul>
+        <dt class="fragment fade-in"><code>publish</code> anything computed/wrote to <code>HAMMERPANTS</code> to be backed up</dt>
+        <dd class="fragment fade-in">⮊ This pushes all changes you made to your dataset (history),</dd>
+        <dd class="fragment fade-in">⮊ and transfers all data files</dd>
+        <dd class="fragment fade-in">⮊ The dataset now exists in a homogenous, accessible, domain-agnostic
+        format that links its evolution to individual people, and all associated data files</dd>
+        <dt class="fragment fade-in">Find out more here:
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-130-yodaproject.html#index-4" target="_blank">Chapter on a YODA project including<code> datalad publish</code></a> </li>
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-121-siblings.html" target="_blank">Chapter on the dataset siblings</a></li>
+        </dt>
+    </ul>
+</section>
+
+<section>
+    <h2>Step X: Staging datasets for HPC</h2>
+    TODO: maintenance scripts
+</section>
+
+
+<section>
+    <h2> Step X: Disk-space-aware data management in Datasets</h2>
+    <dl>
+         <dd class="fragment fade-in">When your computations are done, <code>
+            drop</code> non-precious data to save disk space</dd>
+        <dt class="fragment fade-in">Input data is not precious!</dt>
+        <dd class="fragment fade-in">It is backed up in <code>HAMMERPANTS</code>,
+        there is no need to keep a copy after you computed your analyses:</dd>
+        <pre class="fragment fade-in"><code>$ datalad drop inputs
+
+        TODO command output here</code></pre>
+
+    <ul>
+        <dt class="fragment fade-in"><code>drop</code> does.... TODO</dt>
+        <dd class="fragment fade-in">⮊ TODO</dd>
+        <dd class="fragment fade-in">⮊ TODO</dd>
+        <dt class="fragment fade-in">Find out more here:
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-130-yodaproject.html#index-4" target="_blank">Chapter on a YODA project including<code> datalad drop</code></a> </li>
+            <li><a href="http://handbook.datalad.org/en/latest/basics/101-136-filesystem.html" target="_blank">Chapter on miscellaneous file system operations<code> datalad drop</code></a> </li>
+        </dt>
+    </ul>
+
+    </dl>
+</section>
+</section>
+
+
+<section>
+    <h1>HANDS-ON PRACTICE</h1>
+</section>
+
+<section>
+    <h3>Thank you!</h3>
+    <h1>Questions?</h1>
+</section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
