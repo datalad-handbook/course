@@ -342,8 +342,8 @@ Note to self
     <h3>Summary - Dataset consumption & nesting</h3>
 
     <ul>
-      <dt class="fragment fade-in"><code>datalad install</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
-      Specify the <b>--source/-s</b> of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
+      <dt class="fragment fade-in"><code>datalad clone</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
+      Specify the source (url, path, ...) of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
       <br>
       <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
       <br>
@@ -448,7 +448,7 @@ Note to self
     <dd class="fragment fade-in">An interactive, hands-on crash-course (free and open source)</dd>
     <dt class="fragment fade-in">Check out or used public DataLad datasets, e.g., from OpenNeuro</dt>
     <dd class="fragment fade-in">
-        <pre><code style="max-height:none">$ datalad install ///openneuro/ds000001
+        <pre><code style="max-height:none">$ datalad clone ///openneuro/ds000001
 [INFO   ] Cloning http://datasets.datalad.org/openneuro/ds000001 [1 other candidates] into '/tmp/ds000001'
 [INFO   ] access to 1 dataset sibling s3-PRIVATE not auto-enabled, enable with:
 | 		datalad siblings -d "/tmp/ds000001" enable -s s3-PRIVATE
