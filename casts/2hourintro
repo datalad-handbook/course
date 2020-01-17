@@ -145,21 +145,21 @@ cd ../../'
 
 
 say 'Let'"'"'s create a data analysis project with a yoda procedure'
-run '### Code snippet 123
+run '### Code snippet 126
 # inside of DataLad-101
 datalad create -c yoda --dataset . midterm_project'
-say 'Now install input data as a subdataset'
-run '### Code snippet 124
+say 'Now clone input data as a subdataset'
+run '### Code snippet 127
 cd midterm_project
 # we are in midterm_project, thus -d . points to the root of it.
-datalad install -d . --source https://github.com/datalad-handbook/iris_data.git input/'
+datalad clone -d . https://github.com/datalad-handbook/iris_data.git input/'
 say 'here is how the directory structure looks like'
-run '### Code snippet 125
+run '### Code snippet 128
 cd ../
 tree -d
 cd midterm_project'
 say 'Let'"'"'s create code for an analysis'
-run '### Code snippet 126
+run '### Code snippet 129
 cat << EOT > code/script.py
 
 import pandas as pd
@@ -171,7 +171,7 @@ from sklearn.metrics import classification_report
 
 data = "input/iris.csv"
 
-# make sure that the data is obtained (get will also install linked sub-ds!):
+# make sure that the data are obtained (get will also install linked sub-ds!):
 dl.get(data)
 
 # prepare the data as a pandas dataframe
@@ -180,7 +180,7 @@ attributes = ["sepal_length", "sepal_width", "petal_length","petal_width", "clas
 df.columns = attributes
 
 # create a pairplot to plot pairwise relationships in the dataset
-plot = sns.pairplot(df, hue='"'"'class'"'"')
+plot = sns.pairplot(df, hue='"'"'class'"'"', palette='"'"'muted'"'"')
 plot.savefig('"'"'pairwise_relationships.png'"'"')
 
 # perform a K-nearest-neighbours classification with scikit-learn
@@ -204,23 +204,23 @@ df_report = pd.DataFrame(report).transpose().to_csv('"'"'prediction_report.csv'"
 
 EOT'
 say 'datalad status will show a new file'
-run '### Code snippet 127
+run '### Code snippet 130
 datalad status'
 say 'Save the analysis to the history'
-run '### Code snippet 128
+run '### Code snippet 131
 datalad save -m "add script for kNN classification and plotting" --version-tag ready4analysis code/script.py'
 say 'The datalad run command can reproducibly execute a command reproducibly'
-run '### Code snippet 129
+run '### Code snippet 132
 datalad run -m "analyze iris data with classification analysis" \
   --input "input/iris.csv" \
   --output "prediction_report.csv" \
   --output "pairwise_relationships.png" \
   "python3 code/script.py"'
 say 'Let'"'"'s take a look at the history'
-run '### Code snippet 130
+run '### Code snippet 133
 git log --oneline'
 say 'create human readable information for your project'
-run '### Code snippet 131
+run '### Code snippet 134
 # with the >| redirection we are replacing existing contents in the file
 cat << EOT >| README.md
 
@@ -236,8 +236,33 @@ cat << EOT >| README.md
 
 EOT'
 say 'The README file is now modified'
-run '### Code snippet 132
+run '### Code snippet 135
 datalad status'
 say 'Let'"'"'s save this change'
-run '### Code snippet 133
+run '### Code snippet 136
 datalad save -m "Provide project description" README.md'
+say 'Computational reproducibility: add a software container'
+run '### Code snippet 137
+# we are in the midterm_project subdataset
+datalad containers-add midterm-software --url shub://adswa/resources:1'
+say 'The software container got added to your datasets history'
+run '### Code snippet 138
+git log -n 1 -p'
+say 'The analysis can be rerun in a software container'
+run '### Code snippet 139
+datalad containers-run -m "rerun analysis in container" \
+  --container-name midterm-software \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+say 'Here is how that looks like in the history:'
+run '### Code snippet 140
+git log -p -n 1'
+say 'Save the change in the superdataset'
+run '### Code snippet 141
+cd ../
+datalad status'
+say 'Save the change in the superdataset'
+run '### Code snippet 142
+datalad save -d . -m "add container and execute analysis within container" midterm_project'
