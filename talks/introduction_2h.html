@@ -97,8 +97,10 @@
 
 <section>
 <h2>The most interesting datasets of our field require it!</h2>
-    <li>Too large for ... (Hammerpants abstract) TODO </li>
     <img src="../pics/big_data_cartoon.jpg">
+    <imgcredit>https://infostory.files.wordpress.com/2013/03/big_data_cartoon.jpeg</imgcredit>
+        <li>Exciting datasets (UKBiobank, HCP, ...) are orders of magnitudes larger, and neither the computational infrastructure
+            nor analysis workflows scale to these dataset sizes. </li>
 </section>
 
 <section>
@@ -144,7 +146,7 @@
     <ul>
         <li class="fragment fade-in">keep things organized</li>
         <li class="fragment fade-in">keep track of changes</li>
-        <li class="fragment fade-in"> DO IT FOR DATA!</li>
+        <li class="fragment fade-in">Mostly done for code, but <b>data</b> changes as well!</li>
     </ul>
 <aside class="notes">
 <li>Not only manuscripts, but also data!</li>
@@ -153,7 +155,18 @@
 
 <section>
     <h2>Why provenance capture?</h2>
-    TODO
+    <img src="../pics/xkcd_machinelearning.png" height="400">
+    <imgcredit>https://xkcd.com/1838/</imgcredit>
+    <ul>
+        <li>Data Provenance: How did a digital object come to be in its present form?</li>
+        <li>Many uses, but among others, it aids the reproducibility of science</li>
+        <ul>
+            <li class="fragment fade-in">Who generated an output and when?</li>
+            <li class="fragment fade-in">Which (version of which) data was used, and where does this input data come from?</li>
+            <li class="fragment fade-in">Which scripts with which parameters created which results, and how?</li>
+            <li class="fragment fade-in">What is the software (libraries, environment) used for a computation and its dependencies to data or code?</li>
+        </ul>
+    </ul>
 </section>
 </section>
 
@@ -436,6 +449,19 @@ Note to self
     <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
 </section>
 
+<section>
+    <h2>Computational reproducibility</h2>
+    <ul>
+        <li>Code may produce different results or fail if run in a different software environment</li>
+        <li>DataLad datasets can store (and share) software environments (Docker or Singularity containers)
+        and reproducibly execute code inside of the software container, capturing software as additional
+        provenance</li>
+        <li>DataLad extension: <code>datalad-container</code></li>
+    </ul>
+
+    <p>datalad-containers run</p>
+    <img class="fragment fade-in" src="../pics/containers-run.svg" height="600"> <!-- .element: class="fragment" -->
+</section>
 
 </section>
 
