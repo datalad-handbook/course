@@ -3,4 +3,4 @@
 	url = https://github.com/hakimel/reveal.js.git
 [submodule "pics/slides"]
 	path = pics/slides
-	url = adina@kumo.ovgu.de:/home/mih/public_html/datalad/slides
+	url = kumo.ovgu.de:/home/mih/public_html/datalad/slides
