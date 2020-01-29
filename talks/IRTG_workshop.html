@@ -44,6 +44,21 @@
   </tr>
   </table>
   </div>
+<br><br><small>
+    Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/IRTGworkshop_Nov19_wagner.pdf">
+    https://github.com/datalad-handbook/course/</a></small>
+</a>
+<aside class="notes">
+    <li>its dark already, the workshop will be intense, only 2 hours -> there will be lots of links
+    for you to re-read things in detail later</li>
+    <li>I take about one hour, then we do data management together</li>
+</aside>
+
+<aside class="notes">
+    <li>its dark already, the workshop will be intense, only 2 hours -> there will be lots of links
+    for you to re-read things in detail later</li>
+    <li>I take about one hour, then we do data management together</li>
+</aside>
 
 </section>
 </section>
@@ -52,21 +67,57 @@
 
 <section>
 
-<section>
-    <h2>Why data management?</h2>
-    <img src="../pics/frontend_vs_backend_paper.png" style="box-shadow: 10px 10px 8px #888888;height=600px">
-    <imgcredit>adapted from https://dribbble.com/shots/3090048-Front-end-vs-Back-end</imgcredit>
-</section>
 
 <section>
     <h2>What is (research) data management?</h2>
     <ul>
         <li class="fragment fade-in">(Research) Data = every digital object involved in your project:
             code, software/tools, raw data, processed data, results, manuscripts ...</li>
+        <li class="fragment fade-in">... needs to be properly managed - from its creation to its use, publication,
+        sharing, archiving, re-use, or destruction... (keyword:
+        <a href="https://www.go-fair.org/fair-principles/" target="_blank">FAIR</a> data) </li>
     </ul>
     <img src="../pics/datalifecycle_jisc_ccbysand.png" class="fragment fade-in">
+    <ul>
+        <li class="fragment fade-in">Research data management is a key component for reproducibility, efficiency, and impact/reach
+        of data analysis projects</li>
+    </ul>
 <imgcredit>JISC; CC-BY-SA-ND</imgcredit>
+</section>
 
+<section>
+    <h2>Why data management?</h2>
+    <img src="../pics/frontend_vs_backend_paper.png" style="box-shadow: 10px 10px 8px #888888;height=600px">
+    <imgcredit>adapted from https://dribbble.com/shots/3090048-Front-end-vs-Back-end</imgcredit>
+    <ul>
+        <li class="fragment fade-in">Funders & publishers require it</li>
+        <li class="fragment fade-in">Scientific peers increasingly expect it</li>
+        <li class="fragment fade-in">The quality and efficiency of your work improves</li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>How do you spend your time?</h2>
+    <ul>
+        <table>
+            <tr>
+                <td>CrowdFlower <br> <a href="https://visit.figure-eight.com/rs/416-ZBE-142/images/CrowdFlower_DataScienceReport.pdf">DataScience Report 2017</a></td>
+            </tr>
+                <td><img class="fragment fade-in" src="../pics/sciencetime1.jpg" height="350"></td>
+                <td><img class="fragment fade-in" height="400" src="../pics/sciencetime.jpg"></td>
+        </table>
+        <blockquote class="fragment fade-in" cite="Thomas Wachtler">
+    Collaborative work and re-use of data are hampered by the effort it takes to access and
+    understand the data. <br>
+    <small>Thomas Wachtler</small></blockquote></td>
+        <li class="fragment fade-in">Good data management can make your and others work & life much easier!</li>
+    </ul>
+<aside class="notes">
+    Data management is for yourself! You can concentrate on science, instead
+    of organizing data constantly
+    <li>not only others/your data, also code!</li>
+</aside>
 </section>
 
 <section>
@@ -89,7 +140,11 @@
 
 <section>
     <h2>Why version control?</h2>
-    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600">
+    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+    <ul>
+        <li class="fragment fade-in">keep things organized</li>
+        <li class="fragment fade-in">keep track of changes</li>
+    </ul>
 <aside class="notes">
 <li>Not only manuscripts, but also data!</li>
 </aside>
@@ -98,6 +153,9 @@
 <section>
     <h2>Why standards?</h2>
         <img src="../pics/datasharing_xkcd.png" style="box-shadow: 10px 10px 8px #888888;height=800px" height="700">
+    <ul>
+        <li class="fragment fade-in">reduce misunderstanding and rewriting/rearranging efforts</li>
+    </ul>
 
 <aside class="notes">
     <li>A lack of a standard or consensus in how to name or structure data leads to misunderstanding
@@ -200,7 +258,7 @@ BIDS is a standard for a multitude of neuroimaging data (MRI, EEG, ...). It defi
                                        <a href="https://bids-standard.github.io/pybids/" target="_blank">PyBIDS</a> </dd>
         <dd class="fragment fade-in">⮊ <a href="https://brainlife.io/" target="_blank">brainlife.io</a></dd>
         <dd class="fragment fade-in">⮊ Upload your (or download others) BIDS-compliant
-                                      datasets from <a href="https://openneuro.org/">OpenNeuro </a></dd>
+                                      datasets from <a href="https://openneuro.org/" target="_blank">OpenNeuro </a></dd>
         <dd class="fragment fade-in"></dd>
     </dl>
 <aside class="notes">
@@ -216,7 +274,7 @@ BIDS is a standard for a multitude of neuroimaging data (MRI, EEG, ...). It defi
 
     <dd>⮊ Read the <a href="https://www.nature.com/articles/sdata201644" target="_blank">paper</a></dd>
     <dd>⮊ Get started with the <a href="https://github.com/bids-standard/bids-starter-kit" target="_blank">BIDS starter-kit</a></dd>
-    <dd> Work through the Stanford Center for Reproducible Neuroscience
+    <dd>⮊  Work through the Stanford Center for Reproducible Neuroscience
         <a href="http://reproducibility.stanford.edu/bids-tutorial-series-part-1a/" target="_blank">BIDS Tutorial Series</a></dd>
     <dd>⮊ Use the <a href="http://bids-standard.github.io/bids-validator/" target="_blank">BIDS validator</a> to check your datasets</dd>
     <dd>⮊<a href="https://github.com/bids-standard/bids-specification" target="_blank"> Get involved</a> on

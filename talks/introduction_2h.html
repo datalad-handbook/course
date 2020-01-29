@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Data management</title>
+  <meta name="description"
+        content=" 2 hour workshop on DataLad and BIDS at IRTG Aachen, 26.11.19 ">
+  <meta name="author" content=" Adina Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section>
+<h2>Data management with DataLad<br /><small>an Introduction</small></h2>
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Adina Wagner
+	  <br><small>
+		<a href="https://twitter.com/AdinaKrik" target="_blank">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaKrik</a></small></td>
+    <td><img style="height:100px;margin-right:10px" data-src="../pics/fzj_logo.svg" />
+	  <br></td>
+  </tr>
+  <tr>
+    <td>
+        <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
+          <br> Institute of Neuroscience and
+          Medicine, Brain &amp; Behavior (INM-7)<br>
+       Research Center Jülich</small><br>
+    </td>
+  </tr>
+  </table>
+  </div>
+<br><br><small>
+    Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/introduction_2h.pdf" target="_blank">
+    https://github.com/datalad-handbook/course/</a></small>
+</a>
+<aside class="notes">
+    <li>its dark already, the workshop will be intense, only 2 hours -> there will be lots of links
+    for you to re-read things in detail later</li>
+    <li>I take about one hour, then we do data management together</li>
+</aside>
+
+<aside class="notes">
+    <li>its dark already, the workshop will be intense, only 2 hours -> there will be lots of links
+    for you to re-read things in detail later</li>
+    <li>I take about one hour, then we do data management together</li>
+</aside>
+
+</section>
+</section>
+
+<!--...INTRODUCTION...-->
+
+<section>
+<section>
+    <h2>What is (research) data management?</h2>
+        <ul>
+        <li class="fragment fade-in">(Research) Data = every digital object involved in your project:
+            code, software/tools, raw data, processed data, results, manuscripts ...</li>
+        <li class="fragment fade-in">... needs to be properly managed - from creation to use, publication,
+        sharing, archiving, re-use, destruction... (keyword:
+        <a href="https://www.go-fair.org/fair-principles/" target="_blank">FAIR</a> data) </li>
+    </ul>
+    <img src="../pics/datalifecycle_jisc_ccbysand.png" class="fragment fade-in" width="500">
+    <imgcredit>JISC; CC-BY-SA-ND</imgcredit>
+    <ul>
+        <li class="fragment fade-in">Research data management is a key component for reproducibility, efficiency, and impact/reach
+        of data analysis projects</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Why data management?</h2>
+    <img src="../pics/frontend_vs_backend_paper.png" style="box-shadow: 10px 10px 8px #888888;height=600px">
+    <imgcredit>adapted from https://dribbble.com/shots/3090048-Front-end-vs-Back-end</imgcredit>
+    <ul>
+        <li class="fragment fade-in">Funders & publishers require it</li>
+        <li class="fragment fade-in">Scientific peers increasingly expect it</li>
+        <li class="fragment fade-in">The quality and efficiency of your work improves</li>
+    </ul>
+</section>
+
+<section>
+<h2>The most interesting datasets of our field require it!</h2>
+    <img src="../pics/big_data_cartoon.jpg">
+    <imgcredit>https://infostory.files.wordpress.com/2013/03/big_data_cartoon.jpeg</imgcredit>
+    <ul>
+        <li>Exciting datasets (UKBiobank, HCP, ...) are orders of magnitudes larger than previous public datasets, and neither the computational infrastructure
+            nor analysis workflows scale to these dataset sizes. </li>
+    </ul>
+</section>
+
+<section>
+    <h2>How is (research) data management possible?</h2>
+
+    <p>There are tools and concepts that can help:
+    </p>
+
+    <ul>
+        <li><b>Version control</b> your data</li>
+        <li><b>Document</b> <i>everything</i>, ideally automatically (Provenance capture)</li>
+    </ul>
+<aside class="notes">
+    <li>Knowing about these tools is the first step</li>
+    <li>Today you'll get a glimpse of all of that</li>
+</aside>
+</section>
+
+
+<section>
+    <h2>Why version control?</h2>
+    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+    <ul>
+        <li class="fragment fade-in">keep things organized</li>
+        <li class="fragment fade-in">keep track of changes</li>
+        <li class="fragment fade-in">Mostly done for code, but <b>data</b> changes as well!</li>
+    </ul>
+<aside class="notes">
+<li>Not only manuscripts, but also data!</li>
+</aside>
+</section>
+
+<section>
+    <h2>Why provenance capture?</h2>
+    <img src="../pics/xkcd_machinelearning.png" height="400">
+    <imgcredit>https://xkcd.com/1838/</imgcredit>
+    <ul>
+        <li>Data Provenance: How did a digital object come to be in its present form?</li>
+        <li>Many uses, but among others, it aids the reproducibility of science</li>
+        <ul>
+            <li class="fragment fade-in">Who generated an output and when?</li>
+            <li class="fragment fade-in">Which (version of which) data was used, and where does this input data come from?</li>
+            <li class="fragment fade-in">Which scripts with which parameters created which results, and how?</li>
+            <li class="fragment fade-in">What is the software (libraries, environment) used for a computation and its dependencies to data or code?</li>
+        </ul>
+    </ul>
+</section>
+</section>
+
+<section>
+<section data-transition="fade">
+<h3>DataLad can help with data management</h3>
+    <div><table>
+    <tr><dl>
+    <img src="../pics/datalad_logo_wide.svg" height="150">
+    <dt></dt>
+    </dl></tr>
+    </table>
+    </div>
+    <ul style="vertical-align:middle">
+    <dd class="fragment fade-in"><i>What</i> is it?</dd>
+    <dd class="fragment fade-in"><i>Why</i> should I use it?</dd>
+    <dd class="fragment fade-in"><i>How</i> can I use it?</dd>
+    </ul>
+<aside class="notes">
+<ul>
+<li>There will be a lot of content in the next two hours given the darkness</li>
+<li>I'll provide a list of pointers to useful resources</li>
+<li>If you want and have your computer configured follow along when I tell you</li>
+
+<li>PLEASE, do ask dumb questions!</li>
+</ul>
+</aside>
+</section>
+</section>
+
+<!--...DATA MANAGEMENT WITH DATALAD...-->
+
+<section data-transition="fade">
+<h2><img src="../pics/datalad_logo_wide.svg"></h2>
+    DataLad is a data management multitool.
+<aside class="notes">
+    <li>demonstrate a reproducible paper now</li>
+</aside>
+</section>
+
+<section data-transition="fade">
+<h2><img src="../pics/datalad_logo_wide.svg"></h2>
+    <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="_blank">Let's see it in action</a>
+<aside class="notes">
+    <li>log into brainbfast?</li>
+    <li>TODO: What do I talk about while this compiles?</li>
+    <ul>
+        <li>who plans to follow along on the computer?</li>
+        <li>which operating system do we have?</li>
+        <li>has everyone DataLad installed? Where there installation problems?</li>
+    </ul>
+</aside>
+</section>
+
+<section>
+    <h2>Reproducible paper - a Magic trick?</h2>
+
+    If curious, you can read up all the details and a step-by-step instruction
+    <a href="http://handbook.datalad.org/en/latest/usecases/reproducible-paper.html" target="_blank">here.</a>
+</section>
+</section>
+
+<section>
+<section>
+    <h2> <img src="../pics/datalad_logo_wide.svg"> in brief</h2>
+    <ul>
+        <li>A command-line tool, available for all major operating systems (Linux, macOS/OSX, Windows)</li>
+        <li>Build on top of <a href="https://git-scm.com/" target="_blank">Git</a>
+            and <a href="https://git-annex.branchable.com/" target="_blank">Git-annex</a></li>
+        <dt><li>Allows...</li></dt>
+        <dd>... version-controlling arbitrarily large content,</dd>
+        <dd>... easily sharing and obtaining data (note: no data hosting!),</dd>
+        <dd>... (computationally) reproducible data analysis,
+        <dd>... and <i>much</i> more </dd>
+        <li>Completely domain-agnostic</li>
+            <br>
+
+        <dt class="fragment fade-in">Today: Basic concepts and commands. </dt>
+        <table class="fragment fade-in">
+            <tr>
+                 <td>⮊ <b>For more:</b> Read <a
+                         href="http://handbook.datalad.org/en/latest/index.html" target="_blank">
+                         the DataLad Handbook</a>
+                 </td>
+                  <td><img src="../pics/logo.svg" height="100"></td>
+
+            </tr>
+        </table>
+    </ul>
+</section>
+
+<section>
+    <h2>DataLad Datasets</h2>
+
+    <ul>
+        <li>DataLad's core data structure</li>
+        <ul>
+            <li class="fragment fade-in">Dataset = A directory managed by DataLad</li>
+            <li class="fragment fade-in">Any directory of your computer can be managed by DataLad.</li>
+            <li class="fragment fade-in">Datasets can be <i>created</i> (from scratch) or <i>installed</i></li>
+            <li class="fragment fade-in">Datasets can be nested: <i>linked subdirectories</i></li>
+        </ul>
+    </ul>
+
+<aside class="notes">
+    <li>anything can be managed: CV, website, music library, phd</li>
+    <li>show this on the manuscript repo: history, looks/feels</li>
+</aside>
+</section>
+
+<section>
+    <h2>Experience a DataLad dataset</h2>
+
+    Code to follow along:
+    <a href="http://handbook.datalad.org/en/latest/code_from_chapters/01_dataset_basics_code.html" target="_blank">
+        http://handbook.datalad.org/en/latest/code_from_chapters/01_dataset_basics_code.html
+    </a>
+</section>
+
+<section>
+    <h2>Local version control</h2>
+
+    <p>Procedurally, version control is easy with DataLad!</p>
+    <img class="fragment fade-in" src="../pics/local_wf.svg" height="500"> <!-- .element: class="fragment" -->
+    <br>
+
+    <b class="fragment fade-in">Advice:</b>
+    <ul>
+      <li class="fragment fade-in">Save <i>meaningful</i> units of change</li>
+      <li class="fragment fade-in">Attach helpful commit messages</li>
+    </ul>
+</section>
+
+  <section>
+    <h3>Summary - Local version control</h3>
+
+<dl>
+      <dt class="fragment fade-in"><code>datalad create</code> creates an empty dataset.</dt> <dd class="fragment fade-in">Configurations (<b>-c yoda</b>, <b>-c text2git</b>) are useful.</dd>
+      <br>
+      <dt class="fragment fade-in">A dataset has a <i>history</i> to track files and their modifications. </dt><dd class="fragment fade-in">Explore it with Git (<b>git log</b>) or external tools (e.g., <b>tig</b>).</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad save</code> records the dataset or file state to the history. </dt><dd class="fragment fade-in">Concise <b>commit messages</b> should summarize the change for future you and others.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad download-url</code> obtains web content and records its origin. </dt><dd class="fragment fade-in">It even takes care of saving the change.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad status</code> reports the current state of the dataset.</dt> <dd class="fragment fade-in">A clean dataset status is good practice.</dd>
+    </dl>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## From here <span class="fragment" data-fragment-index="1" style="margin-left:350px">to this:</span>
+![](../pics/finaldoc_comic.gif)<!-- .element: height="780" style="box-shadow: 10px 10px 8px #888888" -->
+![](../pics/gitflow.png)<!-- .element: class="fragment" data-fragment-index="1" height="780" style="box-shadow: 10px 10px 8px #888888" -->
+<imgcredit>www.phdcomics.com; www.linode.com</imgcredit>
+
+<p class="fragment" data-fragment-index="2">BUT: Version control is only one aspect of data management</p>
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section>
+    <h2>Consuming datasets</h2>
+    <img class="fragment fade-in" src="../pics/virtual_dstree_dl101.svg" height="600">
+  <ul>
+    <li class="fragment fade-in">Datasets are light-weight: Upon installation, only small
+    files and meta data about file availability are retrieved.</li>
+    <li class="fragment fade-in">Content can be obtained on demand via <code>datalad get</code>.</li>
+  </ul>
+</section>
+
+<section>
+    <h2>Dataset nesting</h2>
+    <img src="../pics/linkage.svg" height="500">
+</section>
+
+<section>
+    <h3>Summary - Dataset consumption & nesting</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad clone</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
+      Specify the source (url, path, ...) of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
+      <br>
+      <dt class="fragment fade-in">Only small files and metadata about file availability are present locally after an install. </dt><dd class="fragment fade-in">To retrieve actual file content of larger files, <code>datalad get </code> downloads large file content on demand.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad status</code> can report on total and retrieved repository size</dt> <dd class="fragment fade-in">using <code>--annex</code> and <code>--annex all</code> options.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets preserve their history.</dt> <dd class="fragment fade-in">The superdataset records only the <i>version state</i> of the subdataset.</dd>
+
+    </ul>
+  </section>
+
+
+<section data-transition="fade">
+    <h2>reproducible data analysis</h2>
+    <img src="../pics/ownlegacycode_phd.png" height="500">
+  <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1689">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
+
+    <p class="fragment fade-in">Code to follow along:
+    <a href="http://handbook.datalad.org/en/latest/code_from_chapters/10_yoda_code.html" target="_blank">
+        http://handbook.datalad.org/en/latest/code_from_chapters/10_yoda_code.html
+    </a>
+    </p>
+</section>
+
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    <dl>
+        <dt>Keep everything clean and modular</dt>
+        <li>An analysis is a superdataset, its components are subdatasets, and its structure modular</li>
+        <table>
+            <tr>
+                <td><img src="../pics/dataset_modules.png" height="400"></td>
+                <td><pre><code class="bash" style="max-height:none">├── code/
+│   ├── tests/
+│   └── myscript.py
+├── docs
+│   ├── build/
+│   └── source/
+├── envs
+│   └── Singularity
+├── inputs/
+│   └─── data/
+│       ├── dataset1/
+│       │   └── datafile_a
+│       └── dataset2/
+│           └── datafile_a
+├── outputs/
+│   └── important_results/
+│       └── figures/
+└── README.md</code></pre></td>
+            </tr>
+        </table>
+
+    </dl>
+    <ul>
+    <li>do not touch/modify raw data: save any results/computations <i>outside</i> of input datasets</li>
+    <li>Keep a superdataset self-contained: Scripts reference subdatasets or files with <i>relative paths</i></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    <dl>
+        <dt>Record where you got it from, where it is now, and what you do to it</dt>
+        <li>Link datasets (as subdatasets), record data origin</li>
+        <li>Collect and store provenance of all contents of a dataset that you create</li>
+            <table style="verticala-lign:middle">
+                <tr><img src="../pics/dataset_linkage_provenance.png"></tr>
+            </table>
+        <dl>
+            <dt>Document everything:</dt>
+            <li>Which script produced which output? From which data? In which software environment? ... </li>
+        </dl>
+    </dl>
+    <note>Find out more about organizational principles in
+        <a href="" target="_blank">the YODA principles</a>!</note>
+</section>
+
+<section>
+    <h2>A classification analysis on the iris flower dataset</h2>
+    <img src="../pics/iris-machinelearning.png" height="300">
+    <img src="../pics/iris_cluster.png" height="450">
+</section>
+
+<section>
+    <h2>Reproducible execution & provenance capture</h2>
+
+    <p>datalad run</p>
+    <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
+</section>
+
+<section>
+    <h2>Computational reproducibility</h2>
+    <ul>
+        <li>Code may produce different results or fail if run in a different software environment</li>
+        <li>DataLad datasets can store (and share) software environments (Docker or Singularity containers)
+        and reproducibly execute code inside of the software container, capturing software as additional
+        provenance</li>
+        <li>DataLad extension: <code>datalad-container</code></li>
+    </ul>
+
+    <p>datalad-containers run</p>
+    <img class="fragment fade-in" src="../pics/containers-run.svg" height="600"> <!-- .element: class="fragment" -->
+</section>
+
+</section>
+
+<!--...SUMMARY...-->
+<section>
+<section>
+<h2>How to get started with DataLad</h2>
+<dl>
+    <dt class="fragment fade-in">Read <a href="https://handbook.datalad.org"> the DataLad handbook</a></dt>
+    <dd class="fragment fade-in">An interactive, hands-on crash-course (free and open source)</dd>
+    <dt class="fragment fade-in">Check out or used public DataLad datasets, e.g., from OpenNeuro</dt>
+    <dd class="fragment fade-in">
+        <pre><code style="max-height:none">$ datalad clone ///openneuro/ds000001
+[INFO   ] Cloning http://datasets.datalad.org/openneuro/ds000001 [1 other candidates] into '/tmp/ds000001'
+[INFO   ] access to 1 dataset sibling s3-PRIVATE not auto-enabled, enable with:
+| 		datalad siblings -d "/tmp/ds000001" enable -s s3-PRIVATE
+install(ok): /tmp/ds000001 (dataset)
+
+$ cd ds000001
+$ ls sub-01/*
+sub-01/anat:
+sub-01_inplaneT2.nii.gz  sub-01_T1w.nii.gz
+
+sub-01/func:
+sub-01_task-balloonanalogrisktask_run-01_bold.nii.gz
+sub-01_task-balloonanalogrisktask_run-01_events.tsv
+sub-01_task-balloonanalogrisktask_run-02_bold.nii.gz
+sub-01_task-balloonanalogrisktask_run-02_events.tsv
+sub-01_task-balloonanalogrisktask_run-03_bold.nii.gz
+sub-01_task-balloonanalogrisktask_run-03_events.tsv
+         </code></pre>
+    </dd>
+
+
+</dl>
+</section>
+
+
+<section>
+  <h2>Acknowledgements</h2>
+  <table>
+  <tr style="vertical-align:middle">
+      <td style="vertical-align:middle horizontal-align:top" >
+  </td>
+      <td style="vertical-align:middle">
+  <ul>
+      <img src="../pics/datalad_logo_wide.svg" height="120">
+      <li>Michael Hanke</li>
+      <li>Yaroslav Halchenko</li>
+      <li>Joey Hess (git-annex)</li>
+      <li>Benjamin Poldrack</li>
+      <li>Kyle Meyer</li>
+      <li>22+ additional contributors</li>
+  </ul>
+      </td>
+      <td style="vertical-align:middle horizontal-align:top" >
+  <ul>
+      <dt>The DataLad Handbook</dt>
+      <li>Laura Waite</li>
+      <li>Michael Hanke</li>
+      <li>17+ additional contributors</li>
+      <img src="../pics/logo.svg" height="200">
+  </ul>
+  </td>
+  </tr>
+  </table>
+
+</section>
+
+<section>
+    <h3>Thank you!</h3>
+    <h1>Questions?</h1>
+</section>
+</section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
