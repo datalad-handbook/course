@@ -1,0 +1,1300 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>DataLad</title>
+  <meta name="description"
+        content=" DataLad workshop Lucca ">
+  <meta name="author" content="Michael Hanke & Adina Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section>
+<h2>Reproducible and collaborative science with <br> <big>DataLad</big><br /> <small>IMT Lucca, March 23rd-24th</small></h2>
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Michael Hanke
+	  <br><small>
+		<a href="https://twitter.com/eknahm" target="_blank">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @eknahm</a></small></td>
+      <td>Adina Wagner
+	  <br><small>
+		<a href="https://twitter.com/AdinaKrik" target="_blank">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaKrik</a></small></td>
+  </tr>
+  <tr>
+    <td>
+      <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
+          Jülich Research Center and<br> Heinrich-Heine-University, Düsseldorf
+      </small>
+    </td>
+    <td>
+        <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
+        Jülich Research Center
+        </small><br>
+    </td>
+  </tr>
+  </table>
+  </div>
+<br><br><small>
+    Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/workshop_lucca_day1.pdf">
+    https://github.com/datalad-handbook/course/</a></small>
+</a>
+<aside class="notes">
+    <li></li>
+    <li></li>
+</aside>
+</section>
+</section>
+
+<!-- Logistics -->
+<section>
+<section data-markdown><script type="text/template">
+## Logistics
+
+* TODO: any logistics (rooms, times, breaks, where are slides, materials, ...)
+* TODO: maybe introduction
+* TODO: maybe interview participants about what they use (Git, Github, DataLad...)
+
+</script>
+</section>
+
+<section>
+<h2>Agenda</h2>
+
+  <table>
+  <tr>
+    <td></td>
+    <td> <b>Day 1</b> </td>
+    <td> <b>Day 2</b> </td>
+  </tr>
+  <tr>
+      <td><b>morning</b></td>
+      <td>
+          <small>
+              <ul>
+                  <li>DataLad concepts and principles <br></li>
+                  <li>Local version control workflows <br></li>
+                  <li><b>Hands-on</b>: Try out the basics</li>
+              </ul>
+          </small>
+      </td>
+      <td>
+          <small>
+              <ul>
+                  <li>Continued: Data management for collaborative science <br></li>
+                  <li><b>Hands-on</b>: Collaborate via GDrive</li>
+                  <li><b>Hands-on</b>: Data publication via GitHub <br></li>
+              </ul>
+          </small>
+      </td>
+  </tr>
+  <tr>
+      <td><b>afternoon</b></td>
+      <td>
+          <small>
+              <ul>
+                  <li>Modular data management for reproducible science <br></li>
+                  <li><b>Hands-on</b>: Reproducible paper <br></li>
+                  <li>Data management for collaborative science</li>
+              </ul>
+          </small>
+      </td>
+      <td>
+          <small>
+              <ul>
+                  <li><b>Outlook</b>: What is else possible, Resources, Use cases</li></td>
+              </ul>
+          </small>
+  </tr>
+  </table>
+</section>
+
+<section data-markdown><script type="text/template">
+## Setup
+
+* TODO: Installation, run a few simple commands to see whether it works-
+* TODO: Installation of relevant extensions! (containers? --> plus singularity?)
+* TODO: maybe distribute a simple shell script that tests whether all relevant software
+  is installed in correct versions?
+* TODO: Is everyone familiar with the shell? (if not, http://handbook.datalad.org/en/latest/intro/howto.html?)
+</script>
+</section>
+</section>
+
+
+<!-- Concepts and principles -->
+
+<section>
+<section data-markdown><script type="text/template">
+## concepts and principles
+
+![](../pics/building_blocks.svg)<!-- .element: width="500"-->
+
+
+<aside class="notes">
+<ul>
+    <li>Give an overview on what DataLad is: Maybe mimic "What you really need to know"</li>
+</ul>
+</aside>
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+## 10.000 feet overview
+
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+### DataLad datasets are directories on computers
+
+![](../pics/dataset.svg)<!-- .element: height="500" -->
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+### Simplified local version control workflows
+![](../pics/local_wf.svg)<!-- .element: height="500"-->
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+### Consume and share datasets, collaborate with others
+
+![](../pics/collaboration.svg)<!-- .element: height="500"-->
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+### Dataset linkage for provenance and recursive operations
+
+![](../pics/linkage_subds.svg)<!-- .element: height="500"-->
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+### Full provenance capture and reproducibility
+
+![](../pics/reproducible_execution.svg)<!-- .element: height="500"-->
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+### Third party service integration
+
+![](../pics/thirdparty.svg)<!-- .element: height="500"-->
+</script>
+</section>
+
+<section data-markdown data-transition="none"><script type="text/template">
+### Metadata handling
+
+![](../pics/metadata.png)<!-- .element: height="500"-->
+</script>
+</section>
+</section>
+
+
+<!-- DataLad datasets -->
+<!-- Idea: Use code casts to demonstrate:
+- how to create a dataset (from scratch, in existing empty/non-empty directories)
+- local version control workflows
+
+After this short demonstration, have a short hands-on:
+- Download https://github.com/datalad/example-dicom-functional as a tarball
+- Get the data into a DataLad dataset -->
+
+<section>
+<section>
+    <h2>DataLad Datasets</h2>
+
+    <ul>
+        <li>DataLad's core data structure</li>
+        <ul>
+            <li class="fragment fade-in">Dataset = A directory managed by DataLad</li>
+            <li class="fragment fade-in">Any directory of your computer can be managed by DataLad.</li>
+            <li class="fragment fade-in">Datasets can be <i>created</i> (from scratch) or <i>installed</i></li>
+            <li class="fragment fade-in">Datasets can be nested: <i>linked subdirectories</i></li>
+        </ul>
+    </ul>
+
+<aside class="notes">
+    <li>anything can be managed: CV, website, music library, phd</li>
+    <li>maybe: show some example datasets: Github repos (data), Github repos (Science),
+    local directories (Science), local directories (data), local directories (Misc, e.g. music/CV</li>
+</aside>
+</section>
+
+<section data-markdown>
+## Todo
+* Show how datasets can be created from scratch and in existing datasets
+* Maybe: extend the code casts slightly, show "datalad create DataLad-101" and
+  "mkdir DataLad-101 ;; cd DataLad-101 ;; datalad create ." and
+  "mkdir DataLad-101 ;; cd DataLad-101 ;; touch somefile ;; datalad create -f ."
+</section>
+
+<!-- Local version control workflows -->
+
+<section>
+    <h2>Local version control</h2>
+
+    <p>Procedurally, version control is easy with DataLad!</p>
+    <img class="fragment fade-in" src="../pics/local_wf.svg" height="500"> <!-- .element: class="fragment" -->
+    <br>
+
+    <b class="fragment fade-in">Advice:</b>
+    <ul>
+      <li class="fragment fade-in">Save <i>meaningful</i> units of change</li>
+      <li class="fragment fade-in">Attach helpful commit messages</li>
+    </ul>
+</section>
+
+<section data-markdown><script type="text/template">
+## Hands-on: Datalad datasets
+
+**Objective**: Get data into a dataset and under version control
+
+- Use <a href=https://github.com/datalad/example-dicom-functional target="_blank">github.com/datalad/example-dicom-functional</a>
+  as test data. Download branch `1block` as a **ZIP archive**.
+- Result: Extracted data is in a DataLad dataset and saved in the dataset
+- Help:
+   - use tools of your choice to download/extract data,
+   - use DataLad commands to create a dataset and save the data to it,
+   - use `datalad --help`, the handbook at <a href="http://handbook.datalad.org" target="_blank">
+    handbook.datalad.org</a>, or the documentation at <a href=http://docs.datalad.org/en/latest target="_blank">
+    docs.datalad.org</a> to find out about available commands to solve this task
+
+<aside class="notes">
+    <ul>
+        <li>Demonstrate the data download</li>
+    </ul>
+</aside>
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Solutions: DataLad datasets
+
+* TODO: Show solutions (on slides, easier to understand if revisited later)
+
+</script>
+<aside class="notes">
+    <ul>
+        <li>Make sure everyone has a dataset, and has data saved to the dataset!</li>
+        <li>We can build up on this in later hands-on sessions</li>
+    </ul>
+</aside>
+</section>
+
+<section>
+    <h3>Summary - Datasets and Local version control</h3>
+
+<dl>
+      <dt class="fragment fade-in"><code>datalad create</code> creates an empty dataset.</dt> <dd class="fragment fade-in">The <b>-f/--force</b> option creates a dataset in existing, non-empty directories</dd>
+      <br>
+      <dt class="fragment fade-in">A dataset has a <i>history</i> to track files and their modifications. </dt><dd class="fragment fade-in">Explore it with Git (<b>git log</b>) or external tools (e.g., <b>tig</b>).</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad save</code> records the dataset or file state to the history. </dt><dd class="fragment fade-in">Concise <b>commit messages</b> should summarize the change for future you and others.</dd>
+      <br>
+<!-- TODO: maybe leave this out, mention when talking about provenance capture. After all, we have time
+      <dt class="fragment fade-in"><code>datalad download-url</code> obtains web content and records its origin. </dt><dd class="fragment fade-in">It even takes care of saving the change.</dd>
+      <br>
+-->
+      <dt class="fragment fade-in"><code>datalad status</code> reports the current state of the dataset.</dt> <dd class="fragment fade-in">A clean dataset status is good practice.</dd>
+    </dl>
+</section>
+
+<section data-markdown><script type="text/template">
+## From here <span class="fragment" data-fragment-index="1" style="margin-left:350px">to this:</span>
+
+![](../pics/finaldoc_comic.gif)<!-- .element: height="780" style="box-shadow: 10px 10px 8px #888888" -->
+![](../pics/gitflow.png)<!-- .element: class="fragment" data-fragment-index="1" height="780" style="box-shadow: 10px 10px 8px #888888" -->
+
+<imgcredit>www.phdcomics.com; www.linode.com</imgcredit>
+
+</script>
+</section>
+
+</section>
+
+<!-- Consuming datasets -->
+<!-- Idea: Use code casts to demonstrate:
+- how to install a dataset from GitHub
+- explore looks and feels of a dataset
+
+After this short demonstration, have a short hands-on:
+- Create a new dataset and install the data dataset from the previous hands-on
+  from a path
+- explore the dataset, get data, find out dataset size, etc
+- TODO: Think about when to demonstrate/explore nesting and recursive operations
+-->
+
+<section>
+<section>
+    <h2>Consuming datasets</h2>
+    <img class="fragment fade-in" src="../pics/virtual_dstree_dl101.svg" height="600">
+  <ul>
+    <li class="fragment fade-in">Datasets are light-weight: Upon installation, only small
+    files and meta data about file availability are retrieved.</li>
+    <li class="fragment fade-in">Content can be obtained on demand via <code>datalad get</code>.</li>
+  </ul>
+</section>
+
+<section>
+    <h2>Dataset nesting</h2>
+    <img src="../pics/linkage.svg" height="500">
+</section>
+
+<section data-markdown><script type="text/template">
+## Hands-on: consume datasets
+
+**Objective**: Install a dataset as a subdataset
+
+- Create a new dataset (<b>myanalysis</b>)
+- Use the dataset you created in the last hands-on and install it as a subdataset
+  named <b>input</b> into <b>myanalysis</b> using <b>datalad clone</b>.
+- Reproduce the following directory hierarchy:
+
+<pre><code>myanalysis             <- superdataset
+└── input              <- subdataset
+    └── dicoms
+        └── [...]
+    └── events.tsv
+    └── LICENSE
+    └── README.md
+</code></pre>
+- Explore the dataset:
+    - <b>get</b> content
+    - find out how large all contents in <b>input</b> would be if obtained
+<aside class="notes">
+    <ul>
+        <li>Demonstrate the data download</li>
+    </ul>
+</aside>
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Solutions: consume datasets
+
+* TODO: Show solutions (on slides, easier to understand if revisited later)
+
+</script>
+<aside class="notes">
+    <ul>
+        <li>Make sure everyone has a proper super- and subdataset</li>
+        <li>We can build up on this in later hands-on sessions</li>
+    </ul>
+</aside>
+</section>
+
+<section>
+    <h3>Summary - Dataset consumption & nesting</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad clone</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
+      Specify the source (url, path, ...) of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
+      <br>
+      <dt class="fragment fade-in">Only small files and metadata about file availability are present locally after an install. </dt><dd class="fragment fade-in">To retrieve actual file content of larger files, <code>datalad get </code> downloads large file content on demand.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad status</code> can report on total and retrieved repository size</dt> <dd class="fragment fade-in">using <code>--annex</code> and <code>--annex all</code> options.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets preserve their history.</dt> <dd class="fragment fade-in">The superdataset records only the <i>version state</i> of the subdataset.</dd>
+
+    </ul>
+</section>
+</section>
+
+<!-- (Computationally) reproducible execution -->
+<!-- Idea:
+- Motivate the importance of reproducible execution
+- Use code casts to show a basic "datalad run" command (on the podcast titles)
+- Use code casts to show a "datalad rerun" command (on the podcast titles)
+- Hands-on intermezzo: Have participants do a tiny datalad run command in their
+  myanalysis dataset. E.g.: create tiny README file (TODO: think of something that makes sense and is easy)
+  Have them rerun the exact same command, observe that there are no changes and thus
+  no history record
+
+- Use code casts to show --input to retrieve one logo (TODO: modify cast for this)
+- Use code casts to show --output to modify the cropped logo (TODO: modify cast for this)
+- explain the difference between files stored in git versus managed by Git-annex (simplified)
+
+- Show a data-science example by using the code cast with the iris flower dataset.
+
+- Hands-on intermezzo: Have participants perform a complete datalad run (plus re-run?)
+  TODO: think of a hands-on without much software setup
+
+- Use code casts to show datalad containers-run
+- Hands-on intermezzo: Have participants clone the midterm dataset from Github
+  (lives here: https://github.com/datalad-handbook/midterm_project) and rerun
+  the last run command. Should get the container and all inputs, and create the
+  outputs. They could modify the color scheme in the script again and rerun
+  TODO: update midterm project on github, does not include color scheme in script yet
+
+TODO: Where to include "Datasets need to be clean?"
+-->
+<section>
+
+<section data-transition="fade">
+  <h2>Reproducible data analysis</h2>
+  <img src="../pics/legacycode_phd.png" height="500">
+  <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1689">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
+</section>
+
+<section data-transition="fade">
+    <h2>reproducible data analysis</h2>
+    <img src="../pics/ownlegacycode_phd.png" height="500">
+    <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1689">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
+</section>
+
+<section>
+  <pre><code> for i in recordings/longnow/Long_Now__Seminars*/*.mp3; do
+    # get the filename
+    base=\$(basename "\$i");
+    # strip the extension
+    base=\${base%.mp3};
+    # date as yyyy-mm-dd
+    printf "\${base%%__*}\t" | tr '_' '-';
+    # name and title without underscores
+    printf "\${base#*__}\n" | tr '_' ' ';
+ done
+</code></pre>
+
+  <p align="left" class="fragment fade-in"> ⮊ A for loop in <code>shell</code>, will print each file name as
+    <b>Date - Speaker - Title </b> to the terminal. </p>
+  <p align="left" class="fragment fade-in"> ⮊ Redirection to a file with <code>></code> writes the stream to a file instead of the terminal.</p>
+  <p align="left" class="fragment fade-in"> ⮊ Note: This could be any script or shell command!</p>
+
+</section>
+
+<section>
+  <h2>A basic datalad run command</h2>
+
+  <img src="../pics/run_basic.svg">
+    <ul>
+  Wrapping any command* in a <b>datalad run</b>
+  will record the command's impact on the dataset to the history.
+  <br>
+  <br>
+      <note>* Running scripts from the command line,
+      using tools from the command line, ...</note>
+  </ul>
+</section>
+
+
+<section>
+  <h3>Run-records link dataset modifications to commands</h3>
+  <pre><code class="bash" style="max-height:none">commit f4a35c8841062eb58f65dbf3cde70ccdc3c9df68 (HEAD -> master)
+Author: Adina Wagner adina.wagner@t-online.de
+Date:   Mon Nov 11 09:55:02 2019 +0100
+
+    [DATALAD RUNCMD] create a list of podcast titles
+
+    === Do not change lines below ===
+    {
+     "chain": [],
+     "cmd": "bash code/list_titles.sh > recordings/podcasts.tsv",
+     "dsid": "02a84dae-faf5-11e9-ba9f-e86a64c8054c",
+     "exit": 0,
+     "extra_inputs": [],
+     "inputs": [],
+     "outputs": [],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+
+diff --git a/recordings/podcasts.tsv b/recordings/podcasts.tsv
+new file mode 100644
+index 0000000..f691b53
+--- /dev/null
++++ b/recordings/podcasts.tsv
+@@ -0,0 +1,206 @@
++2003-11-15     Brian Eno  The Long Now
++2003-12-13     Peter Schwartz  The Art Of The Really Long View
++2004-01-10     George Dyson  There s Plenty of Room at the Top  Long term Thinking About Large scale Computing
+[...]
+</code> </pre>
+
+  <p class="fragment fade in" align="left">It follows logically: If a command does <b>not</b> lead to any modification in a dataset,
+  it will not be recorded!</p>
+</section>
+
+<section data-transition="fade">
+  <h2>Oh! An error in the code...</h2>
+  <b>DataLad-101 layout:</b>
+  <br><br>
+  <img style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" src="../pics/virtual_dstree_dl101repro1.png" height="550">
+</section>
+
+<section data-transition="fade">
+  <h2>Oh! An error in the code...</h2>
+  <b>DataLad-101 layout:</b>
+  <br><br>
+  <img style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom:-10px" src="../pics/virtual_dstree_dl101repro2.png">
+</section>
+
+
+<section>
+  <h2>datalad rerun</h2>
+  <img src="../pics/rerun.svg">
+  <dl>
+    <dt>Re-execute previous datalad run commands</dt>
+    <dd>What shall be rerun can be specified via its commit hash: </dd>
+    <dd><pre><code>datalad rerun -m "list podcast titles of both seminar series" f4a35c884106</code></pre></dd>
+    <dd class="fragment fade-in">... but also via tag, revision specifications with <code>HEAD</code>, ..., or
+      by giving a range of commits.</dd>
+  </dl>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Hands-on: datalad run and rerun (I)
+
+    **Objective**: Run simple datalad run and rerun commands
+
+- In your dataset myanalysis, wrap the following command in a <b>datalad run</b>
+<pre><code>TODO: come up with some shell command here</code></pre>
+- Make sure to attach a commit message to the execution
+- Explore the dataset history: How does the commit look like? What is its hash?
+- Try to re-execute the command using <b>datalad rerun</b>. Is there a new commit?
+
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Solutions: datalad run and rerun (I)
+
+
+- TODO
+
+</script>
+</section>
+
+
+<section>
+    <h3>Summary - Basic datalad run</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad run</code> records a commands impact on a dataset.</dt>
+      <dd class="fragment fade-in">A record is only made if the command leads to dataset modifications</dd>
+      <br>
+      <dt class="fragment fade-in">The command captures provenance for humans and machines</dt>
+      <dd class="fragment fade-in"> a machine-readable <b>runrecord</b> is automatically created, <i>you</i> need to provide a <b>commit message</b>.</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad rerun</code> can take any previous <code>datalad run</code> commit hash and re-execute it.</dt>
+      <dd class="fragment fade-in">This saves you the need to remember!</dd>
+      <br>
+      <dt class="fragment fade-in"><code>datalad diff</code> and <code>git diff </code> are useful helpers to explore changes between version states of a dataset.</dt>
+    </ul>
+
+  <p class="fragment fade-in"> ... but there is more that this command can do for you:</p>
+  </section>
+
+
+<section>
+  <h2>--input in datalad run</h2>
+
+  <img src="../pics/run_input.svg">
+    <ul>
+  Files provided with the --input option are automatically retrieved
+  with <b>datalad get</b>, if necessary.
+  </ul>
+</section>
+
+
+<section>
+  <h2>Content-locked files (vastly simplified)</h2>
+  <img src="../pics/git_vs_gitannex.svg" height="500">
+
+  <dl>
+    <dt class="fragment fade-in">Files are given to Git-annex or Git</dt>
+    <dd class="fragment fade-in">Based on dataset configuration about file <i>type</i>, <i>size</i>, or <i>name</i>.</dd>
+    <dt class="fragment fade-in">Git-annex removes write permission from the file content it stores.</dt>
+    <dd class="fragment fade-in">This prevents accidental modifications.</dd>
+    <dt class="fragment fade-in"><code>datalad unlock</code> can unlock content for modification.</dt>
+    <dd class="fragment fade-in"><code>datalad save</code> will lock content again.</dd>
+  </dl>
+
+</section>
+
+
+<section>
+  <h2>--output in datalad run</h2>
+
+  <img src="../pics/run_full.svg">
+    <ul>
+  Files provided with the --output option are automatically unlocked for
+  modification with <b>datalad unlock</b>, if necessary.
+  </ul>
+</section>
+
+<section data-markdown><script type="text/template">
+## Hands-on: datalad run and rerun (II)
+
+    **Objective**: Use --input and --output in datalad run
+
+
+- TODO
+
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Solutions: datalad run and rerun (II)
+
+
+- TODO
+
+</script>
+</section>
+
+
+<section>
+    <h3>Summary - Reproducible execution with datalad run</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad run</code> records a commands impact on a dataset.</dt>
+      <dd class="fragment fade-in"> This usually requires a "clean" dataset status (no unsaved modifications)</dd>
+      <br>
+      <dt class="fragment fade-in"><b>--input</b> to the datalad run command gets retrieved (if necessary) prior to command execution.</dt>
+      <dd class="fragment fade-in">This is done with a <b>datalad get</b> in the background.</dd>
+      <br>
+      <dt class="fragment fade-in"><b>--output</b> to the datalad run command gets unlocked (if necessary) for modification prior to command execution.</dt>
+      <dd class="fragment fade-in">This is done with a <b>datalad unlock</b> in the background.</dd>
+    </ul>
+</section>
+
+
+<section>
+    <h2>A classification analysis on the iris flower dataset</h2>
+    <img src="../pics/iris-machinelearning.png" height="300">
+    <img src="../pics/iris_cluster.png" height="450">
+</section>
+
+<section>
+    <h2>Reproducible execution & provenance capture</h2>
+
+    <p>datalad run</p>
+    <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
+</section>
+
+<section>
+    <h2>Computational reproducibility</h2>
+    <ul>
+        <li>Code may produce different results or fail in different software environments.
+        The extension <b>datalad-container</b> helps!</li>
+        <li>DataLad datasets can store (+ share) software environments (Docker or Singularity containers)
+        and reproducibly execute code inside of the software container, capturing software as additional
+        provenance</li>
+    </ul>
+    <br><br>
+    <img class="fragment fade-in" src="../pics/containers-run.svg" height="500"> <!-- .element: class="fragment" -->
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Hands-on: Datalad run and rerun (I)
+
+    **Objective**: Explore run commands as a collaborator
+
+- Use <b>datalad clone</b> to install the midterm dataset from
+  <a href="https://github.com/datalad-handbook/midterm_project" target="_blank">
+  github.com/datalad-handbook/midterm_project</a>. Try to rerun the last
+  commit in the dataset.
+- Modify the color scheme in the script to a color scheme of your choice, and
+  recompute the results. Explore the output, and the run-record.
+  - Is there a new commit?
+  - How many files were modified?
+
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Solutions: datalad run and rerun (III)
+
+
+- TODO
+
+</script>
+</section>
+</section>
+
+<!--
+TODO: yet to add: datalad download-url, datalad run-procedure, Python API?
+-->
+
+<section>
+<section data-markdown><script type="text/template">
+## Morning session wrap-up
+
+- TODO: Basically a large "what can I do with this?"
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+## Questions from morning session
+</script>
+</section>
+</section>
+
+<!-- YODA -->
+<!-- Idea:
+TODO: Based on schedule, this should be the afternoon session of the first day
+TODO: start by wrapping up the morning. If we had them work with the midterm dataset,
+      it already showed them some YODA principles we can refer to
+
+- Start theoretically: Introduce the YODA principles, showcase as much as possible
+  with real-world examples
+-->
+
+<section>
+
+<!-- Slides from mih's "principles" talk -->
+
+
+<section data-markdown>
+## P1: One thing, one dataset
+![](../pics/dataset_modules.png)
+whenever a particular collection of files could anyhow be useful in more than one context,
+put them in their own dataset
+</section>
+
+<section data-markdown>
+## P2: Record where you got it from, and we it is now
+![](../pics/data_origin.png)
+
+link individual datasets to declare data-dependencies, record access URLs for individual files obtained from (unstructured) sources "in the cloud"
+</section>
+
+<section>
+  <h2>Link re-usable data resource units</h2>
+<img data-src="../pics/dataset_linkage.png">
+<pre><code class="bash" style="font-size:115%;max-height:none">$ datalad install --dataset . --source http://example.com/ds inputs/rawdata
+</code></pre>
+
+<pre><code class="diff" style="max-height:none">$ git diff HEAD~1
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..c3370ba
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "inputs/rawdata"]
++       path = inputs/rawdata
++       url = http://example.com/importantds
+diff --git a/inputs/rawdata b/inputs/rawdata
+new file mode 160000
+index 0000000..fabf852
+--- /dev/null
++++ b/inputs/rawdata
+@@ -0,0 +1 @@
++Subproject commit fabf8521130a13986bd6493cb33a70e580ce8572
+</code></pre>
+    <aside class="notes">weighs just a few bytes</aside>
+</section>
+
+<section>
+  <h2>Modular data stewardship and curation</h2>
+  <img style="" height="750px" data-src="../pics/virtual_dirtree.png">
+  <p style="margin-top:-.5em">"actionable" links to subdatasets/files, seamless handling of dataset trees</p>
+    <aside class="notes">dataset linkage is pairwise, i.e. cheap</aside>
+</section>
+
+
+<section data-markdown>
+## Move/share/publish data
+![](../pics/decentralized_publishing.png)
+</section>
+
+
+
+<section data-markdown>
+## P3: Record what you did to it, and with what
+![](../pics/w3cprov.png)
+
+capture how exactly the content of every file
+
+(that was not obtained from elsewhere)
+
+came to be
+</section>
+
+<section>
+  <h2>Data provenance capture</h2>
+  <img style="margin:-20px" data-src="../pics/dataset_linkage_provenance.png">
+<pre><code class="bash" style="max-height:none">$ datalad run -m "Perform eye movement event detection"\
+  --input 'inputs/raw_eyegaze/sub-*/beh/sub-*...tsv.gz' \
+  --output 'sub-*' \
+  bash code/compute_all.sh
+
+-- Git commit -- Michael Hanke &lt;michael.hanke@gmail.com&gt;; Fri Sep 21 22:00:47 2018
+    [DATALAD RUNCMD] Perform eye movement event detection
+    === Do not change lines below ===
+    {
+     "cmd": "bash code/compute_all.sh",
+     "dsid": "d2b4b72a-7c13-11e7-9f1f-a0369f7c647e",
+     "exit": 0,
+     "inputs": ["inputs/raw_eyegaze/sub-*/beh/sub-*_task-movie_run-*_....tsv.gz"],
+     "outputs": ["sub-*"],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+---
+ sub-01/sub-01_task-movie_run-1_events.png | 2 +-
+ sub-01/sub-01_task-movie_run-1_events.tsv | 2 +-
+...
+</code></pre>
+</section>
+
+<section>
+  <h2>"Complete" provenance capture</h2>
+  <img style="margin:-20px" data-src="../pics/dataset_linkage_provenance.png">
+<pre><code class="bash" style="max-height:none">$ datalad containers-run -n nilearn \
+  --input 'inputs/mri_aligned/sub-*/in_bold3Tp2/sub-*_task-avmovie_run-*_bold*' \
+  --output 'sub-*/LC_timeseries_run-*.csv' \
+  "bash -c 'for sub in sub-*; do for run in run-1 ... run-8;
+     do python3 code/extract_lc_timeseries.py \$sub \$run; done; done'"
+
+-- Git commit -- Michael Hanke &lt;michael.hanke@gmail.com&gt;; Fri Jul 6 11:02:28 2018
+    [DATALAD RUNCMD] singularity exec --bind {pwd} .datalad/e...
+    === Do not change lines below ===
+    {
+     "cmd": "singularity exec --bind {pwd} .datalad/environments/nilearn.simg bash..",
+     "dsid": "92ea1faa-632a-11e8-af29-a0369f7c647e",
+     "exit": 0,
+     "inputs": [
+      "inputs/mri_aligned/sub-*/in_bold3Tp2/sub-*_task-avmovie_run-*_bold*",
+      ".datalad/environments/nilearn.simg"
+     ],
+     "outputs": ["sub-*/LC_timeseries_run-*.csv"],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+---
+ sub-01/LC_timeseries_run-1.csv | 1 +
+ sub-01/LC_timeseries_run-2.csv | 1 +
+...
+</code></pre>
+</section>
+
+<!-- Shortened slides by Adina
+
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    <dl>
+        <dt>Keep everything clean and modular</dt>
+        <li>An analysis is a superdataset, its components are subdatasets, and its structure modular</li>
+        <table>
+            <tr>
+                <td><img src="../pics/dataset_modules.png" height="400"></td>
+                <td><pre><code class="bash" style="max-height:none">├── code/
+│   ├── tests/
+│   └── myscript.py
+├── docs
+│   ├── build/
+│   └── source/
+├── envs
+│   └── Singularity
+├── inputs/
+│   └─── data/
+│       ├── dataset1/
+│       │   └── datafile_a
+│       └── dataset2/
+│           └── datafile_a
+├── outputs/
+│   └── important_results/
+│       └── figures/
+└── README.md</code></pre></td>
+            </tr>
+        </table>
+
+    </dl>
+    <ul>
+    <li>do not touch/modify raw data: save any results/computations <i>outside</i> of input datasets</li>
+    <li>Keep a superdataset self-contained: Scripts reference subdatasets or files with <i>relative paths</i></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    <dl>
+        <dt>Record where you got it from, where it is now, and what you do to it</dt>
+        <li>Link datasets (as subdatasets), record data origin</li>
+        <li>Collect and store provenance of all contents of a dataset that you create</li>
+            <table style="verticala-lign:middle">
+                <tr><img src="../pics/dataset_linkage_provenance.png"></tr>
+            </table>
+        <dl>
+            <dt>Document everything:</dt>
+            <li>Which script produced which output? From which data? In which software environment? ... </li>
+        </dl>
+    </dl>
+    <note>Find out more about organizational principles in
+        <a href="" target="_blank">the YODA principles</a>!</note>
+</section>
+</section>
+
+-->
+</section>
+
+<!-- Reproducible paper -->
+<!-- Idea:
+- start maybe with REMoDNaV paper demonstration
+- explain how it was done: linked, modular subdatasets (ref YODA), tex files with
+  variables as placeholders, scripts with relative paths (ref YODA), Make
+- Note advantages
+
+- Hands-on: Implement a sketch of a reproducible paper. This should be group work.
+  The outcome of this can be published to GDrive and GitHub and illustrate the
+  collaboration aspect later on.
+  # TODO: potentially cool: Give each group a different task to work on (e.g.
+          different types of figures, working with different types of data
+          (behavioral/neuroimaging), have them present how they did it in the end
+  Start locally:
+  - Create some analysis dataset (Yoda compliant)
+  - Install some input data (TODO: what data to take?)
+  - Get latex templates
+-->
+<section>
+<section data-transition="fade">
+<h2><img src="../pics/datalad_logo_wide.svg"></h2>
+    <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="_blank">Let's see it in action</a>
+<aside class="notes">
+</aside>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## How does it work?
+
+* The analysis is portable due to relative paths. Data retrieval is handled via
+  DataLads Python API:
+
+<pre><code># import Datalads API
+from datalad.api import get
+
+# note that the datapath is relative
+datapath = op.join('data',
+                   'studyforrest-data-eyemovementlabels',
+                   'sub*',
+                   '*run-2*.tsv')
+data = sorted(glob(datapath))
+
+# this will get the data if it is not yet retrieved
+get(dataset='.', path=data)
+</code></pre>
+
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## How does it work?
+
+* The manuscript .tex file contains variables as placeholders in tables:
+
+<pre><code class="tex" style="max-height:none">
+  \begin{document}
+  \input{results_def.tex}
+
+  \begin{table}[tbp]
+  \caption{This is a table caption.}
+  \label{tab:label_for_table}
+  \begin{tabular*}{cll}
+    Header col 1        & Header col 2     & Header col 3      \\
+    \noalign{\smallskip}\hline\noalign{\smallskip}
+    Row 1               & \res_c1_r1       & \res_c2_r1        \\
+    Row 2               & \res_c1_r2       & \res_c2_r2        \\
+    Row 3               & \res_c1_r3       & \res_c2_r3        \\
+    \hline\noalign{\smallskip}
+    Header col 1        & Header col 2     & Header col 3      \\
+    \noalign{\smallskip}\hline\noalign{\smallskip}
+    Row 4               & \res_c1_r4      & \res_c2_r4         \\
+    Row 5               & \res_c1_r5      & \res_c2_r5         \\
+    Row 6               & \res_c1_r6      & \res_c2_r6         \\
+    \noalign{\smallskip}
+  \end{tabular*}
+\end{table}
+</code></pre>
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+## How does it work?
+
+* The variables are created with the <b>\newcommand{}{}</b> function and stored in
+  separate file (results_def.tex) by capturing simple print() statements
+
+<pre><code class="python" style="max-height:none"># iterate over stimulus categories
+for column_name in ['c1', 'c2', 'c3']:
+      # create the combinations
+      for row_name, data in [('r1', [r1_data1, r1_data2]),
+                        ('r2', [r2_data1, r2_data2]),
+                        ('r3', [r3_data1, r3_data2])]:
+         result = some_function(data[0], data[1])
+         label = 'res{}{}{}'.format(row_name, column_name)
+         # print the result
+         print('\\newcommand{\\%s}{%s}' % (label, '%.2f' % result))
+</code></pre>
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+## How does it work?
+
+* A Makefile automates the process: Execute the script & capture its output,
+  render figures, compile the PDF
+
+<pre><code>all: main.pdf
+
+main.pdf: main.tex tools.bib EyeGaze.bib results_def.tex figures
+    latexmk -pdf -g $<
+
+results_def.tex: code/mk_figuresnstats.py
+    bash -c 'set -o pipefail; code/mk_figuresnstats.py -s | tee results_def.tex'
+
+figures: figures-stamp
+
+figures-stamp: code/mk_figuresnstats.py
+    code/mk_figuresnstats.py -f -r -m
+    $(MAKE) -C img
+    touch $@
+
+clean:
+    rm -f main.bbl main.aux main.blg main.log main.out main.pdf main.tdo main.fls main.fdb_latexmk example.eps img/*eps-converted-to.pdf texput.log results_def.tex figures-stamp
+    $(MAKE) -C img clean</code></pre>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Hands-on: Reproducible paper
+
+**Objective**: Write a (sketch of) a reproducible paper
+
+- **Step 1**: Create a YODA-compliant analysis dataset
+- **Step 2**: Create the manuscript
+- **Step 3**: Write the Makefile
+
+We'll approach these steps sequentially, in small groups (2-4 people)
+General help: <a href="http://handbook.datalad.org/en/latest/usecases/reproducible-paper.html">
+use case "Writing a reproducible paper"</a>
+
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## Hands-on: Reproducible paper
+
+**Objective**: Write a (sketch of) a reproducible paper
+
+- **Step 1**: Create an analysis dataset
+    - Create a yoda compliant dataset (-c yoda)
+    - Use (TODO: Find suitable dataset) as input data
+    - Create a short script (programming language of choice, TODO: write example)
+      It should create at least one figure and some numerical results
+
+    ⮊ find an example to use or modify (somewhere TODO)
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Hands-on: Reproducible paper
+
+**Objective**: Write a (sketch of) a reproducible paper
+
+- **Step 2**: Create the manuscript
+    - Get the Latex template (from course repository) (datalad download url?)
+    - Create tables with variables as placeholders and figures
+    - adjust just script to print results latex-style and save figures
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Hands-on: Reproducible paper
+
+**Objective**: Write a (sketch of) a reproducible paper
+
+- **Step 3**: Write the Makefile
+
+</script>
+</section>
+
+<!--
+TODO: maybe point to alternatives to latex
+TODO: maybe update the input data once everyone is ready. Have them update their
+      input dataset and recompute/recompile the manuscript? This will need a lot
+      of trying out/testing!
+-->
+</section>
+
+
+<!-- Data management for collaborative science -->
+<!--Idea:
+At this point, participants have analysis datasets, but can't collaborate yet.
+Groups could share their datasets and collaborate.
+- Start by exploring the studyforrest dataset. Elaborate on how GitHub does not
+  host the data, yet data retrieval is easily possible via get
+- Explain the concept of siblings/remotes
+- Revisit difference between files stored in Git and files stored in Git-annex,
+  introduce concept of a special remote for a storage place for all annexed contents
+- Talk about rclone and how to create a sibling
+-->
+
+<section>
+<section data-markdown><script type="text/template">
+## Data management for collaborative science
+
+TODO
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Data management for collaborative science
+
+TODO
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Data management for collaborative science
+
+TODO
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Data management for collaborative science
+
+TODO
+</script>
+</section>
+</section>
+
+<!-- Data publication -->
+<!-- COLLECT NOTES HERE -->
+<section>
+<section data-markdown><script type="text/template">
+## Data publication
+
+TODO
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Data publication
+
+TODO
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Data publication
+
+TODO
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+## Data publication
+
+TODO
+</script>
+</section>
+
+</section>
+
+
+
+<!-- Outlook -->
+<!-- Ideas
+- Talk about scalability? (HPC, UKBio, ... -> take home message: utilize nesting
+  and modularity)
+- Metadata
+- Storage/Backup (RIA)?
+-->
+
+
+
+<!-- Wrap up -->
+<section>
+<section data-markdown><script type="text/template">
+## wrap up
+
+TODO
+* summary on all that was covered (Local version control, reproducible execution,
+  provenance capture, reproducible paper, publishing data via Gdrive and GitHub,
+  collaboration with datasets
+* List resources: Handbook, Developer Documentation, youtube channel, ...?
+* Get participants feedback
+</script>
+</section>
+</section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
