@@ -1,0 +1,149 @@
+run 'datalad'
+run 'ipython'
+run 'import datalad.api as dl'
+run 'exit'
+run 'datalad --version'
+run 'git config --global --add user.name "Adina Wagner"
+git config --global --add user.email "adina.wagner@t-online.de"'
+say 'VERSION CONTROL'
+run 'datalad create -c text2git DataLad-101'
+run 'cd DataLad-101
+ls    # ls does not show any output, because the dataset is empty.'
+run 'git log'
+run 'mkdir books'
+run 'cd books && wget -nv https://sourceforge.net/projects/linuxcommand/files/TLCL/19.01/TLCL-19.01.pdf/download -O TLCL.pdf && wget -nv https://edisciplinas.usp.br/pluginfile.php/3252353/mod_resource/content/1/b_Swaroop_Byte_of_python.pdf -O byte-of-python.pdf && cd ../'
+run 'tree'
+run 'datalad status'
+run 'datalad save -m "add books on Python and Unix to read later"'
+run 'git log -p -n 1'
+run 'cd books && wget -nv https://github.com/progit/progit2/releases/download/2.1.154/progit.pdf && cd ../'
+run 'datalad status'
+run 'datalad save -m "add reference book about git" books/progit.pdf'
+run 'cat << EOT > notes.txt
+One can create a new dataset with '"'"'datalad create PATH'"'"'.
+The dataset is created empty
+
+
+EOT'
+run 'datalad status'
+run 'datalad save -m "Add notes on datalad create"'
+run 'cat << EOT >> notes.txt
+The command "datalad save [-m] PATH" saves the file
+(modifications) to history. Note to self:
+Always use informative, concise commit messages.
+
+EOT'
+run 'datalad status'
+run 'datalad save -m "add note on datalad save"'
+run 'git log -p -n 2'
+say 'CONSUMPTION'
+run 'mkdir recordings'
+run 'datalad clone --dataset . \
+ https://github.com/datalad-datasets/longnow-podcasts.git recordings/longnow'
+run 'tree -d   # we limit the output to directories'
+run 'cd recordings/longnow/Long_Now__Seminars_About_Long_term_Thinking
+ls'
+run 'vlc Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3'
+run 'cd ../      # in longnow/
+du -sh      # Unix command to show size of contents'
+run 'datalad status --annex'
+run 'datalad get Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3'
+run 'datalad get Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3 \
+Long_Now__Seminars_About_Long_term_Thinking/2003_12_13__Peter_Schwartz__The_Art_Of_The_Really_Long_View.mp3 \
+Long_Now__Seminars_About_Long_term_Thinking/2004_01_10__George_Dyson__There_s_Plenty_of_Room_at_the_Top__Long_term_Thinking_About_Large_scale_Computing.mp3'
+run 'datalad drop Long_Now__Seminars_About_Long_term_Thinking/2003_12_13__Peter_Schwartz__The_Art_Of_The_Really_Long_View.mp3'
+run 'datalad get Long_Now__Seminars_About_Long_term_Thinking/2003_11_15__Brian_Eno__The_Long_Now.mp3'
+say 'NESTING'
+run 'git log --reverse'
+run 'cd ../../'
+run 'git log -p -n 1'
+run 'cd recordings/longnow
+git log --oneline'
+run 'cd ../../'
+run 'cd ../'
+run 'datalad clone git@github.com:psychoinformatics-de/paper-remodnav.git'
+run 'cd paper-remodnav'
+run 'datalad subdatasets'
+run 'cd remodnav
+ls'
+run 'datalad get --recursive --recursion-limit 2 -n .
+ls'
+run 'datalad subdatasets'
+run 'cd remodnav/tests/data/anderson_etal
+git log -n 3'
+
+say 'REPRODUCIBLE ANALYSIS'
+run 'cd /demo'
+run 'datalad create -c yoda myanalysis'
+run 'cd myanalysis
+tree'
+run 'datalad clone -d . git@github.com:datalad-handbook/iris_data.git input/'
+
+run 'cat << EOT > code/script.py
+
+import pandas as pd
+import seaborn as sns
+import datalad.api as dl
+from sklearn import model_selection
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+
+data = "input/iris.csv"
+
+# make sure that the data are obtained (get will also install linked sub-ds!):
+dl.get(data)
+
+# prepare the data as a pandas dataframe
+df = pd.read_csv(data)
+attributes = ["sepal_length", "sepal_width", "petal_length","petal_width", "class"]
+df.columns = attributes
+
+# create a pairplot to plot pairwise relationships in the dataset
+plot = sns.pairplot(df, hue='"'"'class'"'"', palette='"'"'muted'"'"')
+plot.savefig('"'"'pairwise_relationships.png'"'"')
+
+# perform a K-nearest-neighbours classification with scikit-learn
+# Step 1: split data in test and training dataset (20:80)
+array = df.values
+X = array[:,0:4]
+Y = array[:,4]
+test_size = 0.20
+seed = 7
+X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y,
+                                                                    test_size=test_size,
+                                                                    random_state=seed)
+# Step 2: Fit the model and make predictions on the test dataset
+knn = KNeighborsClassifier()
+knn.fit(X_train, Y_train)
+predictions = knn.predict(X_test)
+
+# Step 3: Save the classification report
+report = classification_report(Y_test, predictions, output_dict=True)
+df_report = pd.DataFrame(report).transpose().to_csv('"'"'prediction_report.csv'"'"')
+
+EOT'
+run 'datalad status'
+run 'datalad save -m "add script for kNN classification and plotting" --version-tag ready4analysis code/script.py'
+run 'datalad status'
+run 'datalad run -m "analyze iris data with classification analysis" \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+run 'git log -n 1'
+
+run 'cd /demo
+datalad clone git@github.com:adswa/myanalysis.git analysis_clone'
+run 'cd analysis_clone'
+run 'datalad rerun 71cb8c5'
+run 'git log pairwise_relationships.png'
+
+say 'COMPUTATIONAL REPRODUCIBILITY'
+run 'cd ../myanalysis'
+run 'datalad containers-add software --url shub://adswa/resources:1'
+run 'datalad containers-run -m "rerun analysis in container" \
+  --container-name software \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
