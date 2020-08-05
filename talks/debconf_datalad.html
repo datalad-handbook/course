@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title> DataLad </title>
+  <meta name="description" content=" DataLad - Decentralized Management of Digital Objects for Open Science ">
+  <meta name="author" content=" Adina S. Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+
+<section>
+<section>
+<table style="border:none">
+    <tr>
+        <td><img style="height:150px;margin-bottom:30px" data-src="../pics/datalad_logo_wide.svg">
+        </td>
+        <td>
+            <h3>
+    Decentralized Management <br>of Digital Objects for Open Science</h3>
+        </td>
+    </tr>
+</table>
+
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Adina Wagner
+	  <br><small>
+		<a href="https://twitter.com/AdinaKrik" target="_blank">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaKrik</a></small></td>
+  </tr>
+  <tr>
+    <td>
+        <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
+          <br> Institute of Neuroscience and
+          Medicine, Brain &amp; Behavior (INM-7)<br>
+       Research Center Jülich</small><br>
+    </td>
+      <td></td>
+          <td><img style="height:70px;margin-right:10px" data-src="../pics/fzj_logo.svg" />
+	  <br></td>
+  </tr>
+  </table>
+  </div>
+<br><br>
+    <div>
+        <table>
+            <tr>
+                <td><img style="width:280px;margin-bottom:0px" src="../pics/dc2020.svg"></td>
+                <td><span class="rainbow">Debian in Arts & Science</span></td>
+            </tr> </table>
+    </div>
+    <small>
+    Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/debconf_datalad.pdf" target="_blank">
+    https://github.com/datalad-handbook/course/</a></small></a>
+
+</section>
+
+<section>
+  <h2>Acknowledgements</h2>
+  <table>
+  <tr style="vertical-align:middle">
+    <td style="vertical-align:middle">
+      <dl>
+        <dt>Software</dt>
+        <dd style="margin-left:5px!important">
+          <ul style="margin-left:5px!important">
+              <li>Michael Hanke</li>
+              <li>Yaroslav Halchenko</li>
+              <li>Joey Hess (git-annex)</li>
+              <li>Kyle Meyer</li>
+              <li>Benjamin Poldrack</li>
+              <li><em>26 additional contributors</em></li>
+          </ul>
+        </dd>
+        <dt style="margin-top:20px">Documentation project </dt>
+        <dd style="margin-left:5px!important">
+          <ul style="margin-left:5px!important">
+              <li>Michael Hanke</li>
+              <li>Laura Waite</li>
+              <li><em>28 additional contributors</em></li>
+          </ul>
+        </dd>
+      </dl>
+    </td>
+    <td style="vertical-align:middle">
+  <div style="margin-bottom:-20px;text-align:center"><strong>Funders</strong></div>
+  <img style="height:150px;margin-right:50px" data-src="../pics/nsf.png" />
+  <img style="height:150px;margin-right:50pxi;margin-left:50px" data-src="../pics/binc.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/bmbf.png" />
+  <br />
+  <img style="height:80px;margin-top:-40px;margin-left:auto;margin-right:auto;width:100%" data-src="../pics/fzj_logo.svg" />
+  <div style="margin-top:-20px">
+  <img style="height:60px;margin-right:20px" data-src="../pics/erdf.png" />
+  <img style="height:60px;margin-right:20px" data-src="../pics/cbbs_logo.png" />
+  <img style="height:60px" data-src="../pics/LSA-Logo.png" />
+  </div>
+  <div style="margin-top:40px;margin-bottom:20px;text-align:center"><strong>Collaborators</strong></div>
+  <div style="margin-top:-20px">
+  <img style="height:100px;margin:20px" data-src="../pics/hbp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/conp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/vbc_logo.png" />
+  </div>
+  <div style="margin-top:-40px">
+  <img style="height:120px;margin:20px" data-src="../pics/openneuro_logo.png" />
+  <img style="height:120px;margin:20px" data-src="../pics/cbrain_logo.png" />
+  <img style="height:140px;margin:20px" data-src="../pics/brainlife_logo.png" />
+  </div>
+  </td>
+  </tr>
+  </table>
+</section>
+</section>
+
+    <!-- INTRODUCTION -->
+
+<section>
+<section data-transition="none">
+    <h3>Perks of being a (neuro)scientist...</h3>
+    <p class="fragment fade-in" data-fragment-index="1">A growing culture of open data
+    <img src="../pics/opendata.gif">  <imgcredit>https://en.wikipedia.org/wiki/List_of_neuroscience_databases</imgcredit></p>
+</section>
+
+<section data-transition="none">
+    <h3>Perks of being a (neuro)scientist...</h3>
+    <p>... with many open dataset of several TB of data!
+    <img src="../pics/bigneurodata.png">
+        <img src="../pics/bigneurodata2.png"> </p>
+</section>
+
+<section data-transition="none">
+    <h3>Perks of being a (neuro)scientist...</h3>
+    <p> A large and growing amount of open source software
+      <table>
+  <tr style="vertical-align:middle">
+    <td style="vertical-align:middle">
+  <img style="height:150px;margin-right:50px" data-src="../pics/neurodebian.png" />
+  <img style="height:150px;margin-right:50px" data-src="../pics/jupyter_logo.png" />
+  <img style=height:150px;margin-left:50px" data-src="../pics/mindboggle_logo.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/pymvpa_logo.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/fsl_logo.png" />
+  <br />
+
+  <div style="margin-top:-20px">
+  <img style="height:150px;margin-left:50px" data-src="../pics/psychopy_logo.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/R_logo.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/rstudio-logo.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/pydra_logo.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/sklearn_logo.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/FSlogo.png" />
+  </div>
+  <div style="margin-top:-20px">
+  <img style="height:150px;margin-left:50px" data-src="../pics/pysurfer_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/nilearn-logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/ants_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/afni_logo.png" />
+  </div>
+  <div style="margin-top:-40px">
+  <img style="height:120px;margin:20px" data-src="../pics/brainiak_logo.svg" />
+  <img style="height:120px;margin:20px" data-src="../pics/spm.svg" />
+  <img style="height:140px;margin:20px" data-src="../pics/cpac_logo.png" />
+      <img style="height:140px;margin:20px" data-src="../pics/fieldtrip_logo.png" /> <br><small>... and many more!</small>
+  </div>
+  </td>
+  </tr>
+  </table>
+ </p>
+</section>
+
+<section data-transition="none">
+    <h3>Perks of being a (neuro)scientist...</h3>
+    <p>Coordinated efforts towards common standards
+        <img src="../pics/incf_standards.png"> <imgcredit>https://www.incf.org/resources/sbps</imgcredit>
+     </p>
+</section>
+
+
+<section data-transition="none">
+    <h3>Perks of being a (neuro)scientist...</h3>
+    <p>We can work on questions targeting <br>
+        treatments for mental and neural illness <br>
+        <img src="../pics/brainscan.gif"> <imgcredit>Dwayne Reed; https://commons.wikimedia.org/wiki/File:Parasagittal_MRI_of_human_head_in_patient_with_benign_familial_macrocephaly_prior_to_brain_injury_(ANIMATED).gif</imgcredit>
+     </p>
+</section>
+
+
+<section>
+    <h3>The good news, the bad news</h3>
+    <table>
+        <tr style="vertical-align:middle"></tr>
+        <tr>
+            <td class="fragment fade-in" data-fragment-index="1">Large, open datasets</td>
+            <td class="fragment fade-in">No formal data management training</td>
+        </tr>
+        <tr>
+            <td class="fragment fade-in" data-fragment-index="2">More data than we could ever analyze!</td>
+            <td class="fragment fade-in">More data than we could ever fit on our hard drives and compute clusters</td>
+        </tr>
+        <tr>
+            <td class="fragment fade-in" data-fragment-index="3">Fantastic open source analysis software, with a broad range of methods and pipelines</td>
+            <td class="fragment fade-in">Transparency and reproducibility is threatened as different software versions produce different results
+            <small><a href="https://doi.org/10.1177%2F1094342020926237" target="_blank">Kiar et al., 2020</a> </small>
+            & as analyses are multi-stepped and complex</td>
+        </tr>
+        <tr>
+            <td class="fragment fade-in" data-fragment-index="4">Standards towards consistent file organization, description, and interoperability </td>
+            <td class="fragment fade-in">Standards aren't static and evolve over time</td>
+        </tr>
+        <tr>
+            <td class="fragment fade-in" data-fragment-index="5">Invaluable patient data</td>
+            <td class="fragment fade-in">Patient data is sparse and can't be shared as patients privacy has to be ensured</td>
+        </tr>
+    </table>
+
+<aside class="notes">
+  - Life is no picnic though
+</aside>
+</section>
+
+<section>
+    <h2>How to do open science?</h2>
+    TODO
+    sketch a workflow of necessary steps towards for (open) science.
+    I need...
+    - obtain data
+    - analyze my data
+    - make code available
+    - make input data and results available
+    - provide instructions on how to turn input data and code into results
+    - attach suitable meta data
+</section>
+
+<section>
+    <h2>How does DataLad help me?</h2>
+    TODO
+Treat data like a software package
+From webpage: When publishing data, merely providing file access is insufficient for a simple reason: data are not static. Released data often (and should!) continue to evolve; file formats can change, bugs will be fixed, new data are added, and derived data needs to be integrated.
+While version control systems are a de-facto standard for open source software development, a similar level of tooling and culture is not present in the open data community.
+Idea behind datalad: Enable a similar level of tooling and culture for the distribution and version control of data as it is present for open source software development
+
+</section>
+
+</section>
+
+<section>
+
+
+<!-- General datalad functions -->
+<section data-markdown><script type="text/template">
+## DataLad
+
+- Joint management of data/code through their entire life cycle
+
+  - Version control
+  - Transport logistics
+  - Provenance capture
+
+- Free and open source Python software (MIT licence)
+
+- Python API and command line interface
+
+</script>
+<aside class="notes">
+  - modular management
+  - data provenance
+  - discoverability
+</aside>
+</section>
+
+<section>
+    Version control
+    - talk about Git/git-annex foundation
+    - show scaling, subdatasets
+</section>
+
+<!-- Provenance and modularity -->
+<section data-markdown><script type="text/template">
+## Modular data management for collaboration
+
+![](../pics/submodule_setup.svg)<!-- .element: height="500" -->
+
+- Typical workflow in science
+  - Prior works (algorithm development, empirical data, etc.) are combined
+    to produce novel results with to goal of a publication
+  - **Aggregation across time and contributors**
+  - Aiming for (but often failing) to be reproducible
+
+<aside class="notes">
+- Git combined with Git-annex can achieve almost anything, but not necessarily
+  in an comprehensible or convenient way
+
+- introduce submodules
+- show how a YODA dataset is assembled from subdatasets
+</aside>
+</script>
+</section>
+
+
+</section>
+
+<section data-markdown><script type="text/template">
+## Slide title
+
+![](../pics/.svg)<!-- .element: width="250" -->
+
+<imgcredit>Image author</imgcredit>
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
