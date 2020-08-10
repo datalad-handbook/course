@@ -133,12 +133,14 @@
     <img src="../pics/opendata.gif">  <imgcredit>https://en.wikipedia.org/wiki/List_of_neuroscience_databases</imgcredit></p>
 </section>
 
+<!--
 <section data-transition="none">
     <h3>Perks of being a (neuro)scientist...</h3>
     <p>... with many open dataset of several TB of data!
     <img src="../pics/bigneurodata.png">
         <img src="../pics/bigneurodata2.png"> </p>
 </section>
+-->
 
 <section data-transition="none">
     <h3>Perks of being a (neuro)scientist...</h3>
@@ -187,17 +189,18 @@
      </p>
 </section>
 
+    <!--
 <section data-transition="none">
     <h3>Perks of being a (neuro)scientist...</h3>
     <p>Coordinated efforts towards common standards
         <img src="../pics/incf_standards.png"> <imgcredit>https://www.incf.org/resources/sbps</imgcredit>
      </p>
 </section>
-
+-->
 
 <section data-transition="none">
     <h3>Perks of being a (neuro)scientist...</h3>
-    <p>We can work on questions targeting <br>
+    <p>Work on questions targeting understanding of and <br>
         treatments for mental and neural illness <br>
         <img src="../pics/brainscan.gif"> <imgcredit>Dwayne Reed; https://commons.wikimedia.org/wiki/File:Parasagittal_MRI_of_human_head_in_patient_with_benign_familial_macrocephaly_prior_to_brain_injury_(ANIMATED).gif</imgcredit>
      </p>
@@ -209,27 +212,30 @@
     <table>
         <tr style="vertical-align:middle"></tr>
         <tr>
-            <td class="fragment fade-in-then-semi-out" data-fragment-index="1">Many large, sometimes gigantic, open datasets</td>
-            <td class="fragment fade-in" data-fragment-index="2">Lack of data management skills, & datasets overstraining clusters</td>
+            <td class="fragment fade-in-then-semi-out" data-fragment-index="1">Many (large) open datasets</td>
+            <td class="fragment fade-in" data-fragment-index="2">Inconsistent distribution and updating, scientists lack data management skills</td>
         </tr>
         <tr>
-            <td class="fragment fade-in-then-semi-out" data-fragment-index="3">Fantastic open source analysis software, & a broad range of methods</td>
+            <td class="fragment fade-in-then-semi-out" data-fragment-index="3">Great FOSS analysis software, & a broad range of methods</td>
             <td class="fragment fade-in" data-fragment-index="4">Reproducibility is threatened by unstable results across versions¹ & intransparent, multi-stepped analyses</td>
         </tr>
         <tr>
-            <td class="fragment fade-in-then-semi-out" data-fragment-index="5">An ecosystem of services and tools that foster open science & collaboration</td>
-            <td class="fragment fade-in" data-fragment-index="6">Few generic or interoperable workflows across institutes, much rather isolated solutions</td>
+            <td class="fragment fade-in-then-semi-out" data-fragment-index="5">Ecosystem of services that foster open science & collaboration</td>
+            <td class="fragment fade-in" data-fragment-index="6">Few interoperable workflows across institutes, rather: isolated solutions</td>
         </tr>
+        <!--
         <tr>
             <td class="fragment fade-in-then-semi-out" data-fragment-index="7">Standards towards consistent file organization, description, and interoperability </td>
             <td class="fragment fade-in" data-fragment-index="8">Standards aren't static and evolve over time, thus tools and data need updates</td>
         </tr>
+        <-->
         <tr>
             <td class="fragment fade-in-then-semi-out" data-fragment-index="9">Invaluable, interesting patient data</td>
             <td class="fragment fade-in">... that's sparse & subject to strict data protection, making sharing difficult</td>
         </tr>
     </table>
-
+    <br>
+    <div class="fragment fade-in">General underlying difficulties (distribution, updates, management, interoperability, reproducibility) also exist(ed) for software - <br> what can we learn?</div>
     <div class="fragment fade-in-then-semi-out" data-fragment-index="4" align="left">
         ¹ <small> <a href="https://doi.org/10.1177%2F1094342020926237" target="_blank"> Kiar et al., 2020</a>
     </small>
@@ -238,10 +244,20 @@
 <aside class="notes">
   - Life is no picnic though
   - many of these problems surface in science, but underlying general principle
-    difficulties also exist for software and are solved, for example software
+    difficulties (distribution, management, updating, interoperability, reproducibility)
+    also exist for software and are solved, for example software
     packing, distribution, and updates
+  - package managers can easily and - importantly - generically distribute and update software
+  - version control for data management in software development is indispensible
+  - WHAT ELSE??
 </aside>
 </script>
+</section>
+
+<section>
+    <h3>improve scientific workflows, coming from the perspective of software distributions</h3>
+    <img class="fragment fade-in" src="../pics/datalad_logo_wide.svg">
+         <div class="fragment fade-in">"Share and treat data like sourcecode"</div>
 </section>
 </section>
 
@@ -260,6 +276,7 @@
 
 - Built on top of Git and [git-annex](https://git-annex.branchable.com/) (Joey Hess)
 - Free and open source Python software (MIT licence)
+- Available in Debian
 
 - Python API and command line interface
 
@@ -277,7 +294,7 @@
     <ul>
         <li>DataLad knows two things: Datasets and files</li>
         <li>A DataLad dataset is a Git repository</li>
-            <img style="box-shadow: 5px 5px 3px #888888" src="../pics/artwork/src/dataset.svg" height="330"><img style="box-shadow: 5px 5px 3px #888888"  height="330" src="../pics/artwork/src/collaboration.svg">
+            <img class="fragment fade-in" style="box-shadow: 5px 5px 3px #888888" src="../pics/artwork/src/dataset.svg" height="330"><img class="fragment fade-in" style="box-shadow: 5px 5px 3px #888888"  height="330" src="../pics/artwork/src/collaboration.svg">
     </ul>
 </section>
 
@@ -285,12 +302,15 @@
     <h2>Version Control</h2>
 
     <ul>
-        <li>Datasets can have an optional annex for (large) data.
+        <li>Datasets have an optional annex for (large) data.
             For annex'ed files, identity (hash) and location information is put
-            into Git, rather than their content.</li>
-        <li>Simplified local version control </li>
+            into Git, rather than their content → decentralized version control for files of any size.</li>
+        <li class="fragment fade-in" data-fragment-index="1">Simplified local version control for data management novices: </li>
+            </ul>
+                <img height="330" class="fragment fade-in" data-fragment-index="1" src="../pics/artwork/src/local_wf.svg">
+    <ul>
+    <li class="fragment fade-in">Flexibility and commands of Git and git-annex are preserved (useful for experienced Git/git-annex users)</li>
     </ul>
-                <img height="330" class="fragment fade-in" src="../pics/artwork/src/local_wf.svg">
 </section>
 
 
@@ -298,32 +318,37 @@
     <h2>Version Control</h2>
 
     <ul>
-        <li>Scaling issues with large amounts of files are overcome by
-            seamless nesting mechanisms (super-dataset - sub-dataset relationships), based on
-            Git submodules</li>
-    </ul>
-    <img height="330"  src="../pics/artwork/src/linkage_subds.svg">
-
-    <pre><code>adina@bulk1 in /ds/hcp/super on git:master
+        <li>Seamless nesting mechanisms (super-dataset / sub-dataset relationships), based on
+            Git submodules (but faster)</li>
+        <li>Overcomes scaling issues with large amounts of files</li>
+        <pre><code>adina@bulk1 in /ds/hcp/super on git:master
 ❱ datalad status --annex all
 TODO
     </code></pre>
+        <li>Modularizes research components for transparency and reuse</li>
+    </ul>
+    <img height="330"  src="../pics/artwork/src/linkage_subds.svg">
+
+
     <aside class="notes">
         Two advantages:
         <ul>
             <li>Scalable, size-independent version control</li>
             <li>Modularization of research components to increase transparency
                 and aid component reuse, as individual components can be flexibly
-            puzzled together into new research objects</li>
+            puzzled together into new research objects, while being uniquely identified and versioned</li>
         </ul>
+
+        At this point: Fixed data management, layed a foundation for updating data
     </aside>
 </section>
 
 <section data-transition="None">
     <h2>Transport logistics</h2>
     <ul>
+        <li>Share data like source code</li>
         <li class="fragment fade-in-then-semi-out" data-fragment-index="1">Datasets can be cloned, pushed, and updated from and to local paths,
-        remote hosting services, external special remotes - "Share data like source code!"</li>
+        remote hosting services, external special remotes</li>
         <li class="fragment fade-in-then-semi-out" data-fragment-index="1">Easy and generic procedures for...</li>
         <ul class="fragment fade-in-then-semi-out" data-fragment-index="1">
             <li>... data publication and updating</li>
@@ -331,6 +356,17 @@ TODO
             <li>... collaboration</li>
             <li>... centralized data management</li>
         </ul>
+    </ul>
+<aside class="notes">
+Idea behind datalad: Enable a similar level of tooling and culture for the distribution and version control of data as it is present for open source software development
+</aside>
+</section>
+
+
+
+<section data-transition="None">
+    <h2>Transport logistics</h2>
+    <ul>
         <li class="fragment fade-in">Disk-space aware workflows with git-annex's separation of
         file content and Git history: Cloned datasets are lean (only Git), and annexed contents can
         be retrieved & dropped on demand</li>
@@ -373,6 +409,19 @@ Idea behind datalad: Enable a similar level of tooling and culture for the distr
 </section>
 
 <section data-transition="None">
+    <h2>Interoperability</h2>
+    <ul>
+        <li>Minimize custom procedures and data structures (<b>users must not loose data or data access</b>,
+            if DataLad would vanish), but maximize interoperability and use with established hosting and
+            storage technology</li>
+    </ul>
+        <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="blank"> <img class="fragment fade-in-then-semi-out" src="../pics/remodnavpaper.png">
+    </a>
+</section>
+
+
+
+<section data-transition="None">
     <h2>Provenance capture</h2>
     <ul>
         <li>Datasets can track code, data and software - and associate it with
@@ -389,7 +438,7 @@ Idea behind datalad: Enable a similar level of tooling and culture for the distr
 <section data-transition="None">
     <h2>Provenance capture</h2>
     <ul>
-        <li><b>Computational provenance</b>: DataLad can capture arbitrary dataset
+        <li><b>Basic provenance</b>: DataLad can capture arbitrary dataset
             transformations (e.g., from computing analysis results) and record
             the cause of such a change
         </li>
@@ -502,10 +551,10 @@ action summary:
 <section>
     <h2>Dealing with sensitive data</h2>
     <ul>
-        <li>Share anonymized meta data not subject to privacy concerns
-            </li>
         <li>Flexible data access management - file contents can be made available
             to none or selected few</li>
+        <li>Share anonymized meta data not subject to privacy concerns
+            </li>
         <li>Viable solution to bring the computation to the data</li>
         <img src="../pics/artwork/src/hospital.png">
     </ul>
@@ -540,17 +589,14 @@ action summary:
     <h2>{Open,Transparent,Reproducible} science</h2>
 
 <ul>
-    <li class="fragment fade-in-then-semi-out"> Advanced data management made easy: obtain data, update data, version data,
-    store and compute disk-space aware</li>
+    <li class="fragment fade-in-then-semi-out"> Treat data like software: obtain, version, share, and update data</li>
+    <li class="fragment fade-in-then-semi-out"> Simplified data management, disk-space aware storage & computing</li>
     <li class="fragment fade-in-then-semi-out"> Transparent and reproducible science: link code, data, software, and execution
     in a human- and machine-readable way</li>
-    <li class="fragment fade-in-then-semi-out"> Collaborate: Generic workflows across labs, interoperabality with established tools & services</li>
+    <li class="fragment fade-in-then-semi-out"> Collaborate: Generic workflows, interoperabality with established tools & services</li>
     <li class="fragment fade-in-then-semi-out"> Publish and share data, but retain complete control over storage and access</li>
 
 </ul>
-
-    <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="blank"> <img class="fragment fade-in-then-semi-out" src="../pics/remodnavpaper.png">
-    </a>
 </section>
 </section>
 
@@ -561,7 +607,7 @@ action summary:
         <li>Extensive user documentation, tutorials, and use cases: <a href="https://handbook.datalad.org"> handbook.datalad.org</a></li>
         <li>Technical docs: <a href="https://docs.datalad.org">docs.datalad.org</a></li>
         <li>Video tutorials: <a href="https://www.youtube.com/channel/UCB8-Zf7D0DSzAsREoIt0Bvw">Youtube channel "DataLad"</a> </li>
-
+        <li>Matrix channel: <a href="https://matrix.to/#/!SaWRuXhTcCDulfttET:matrix.org?via=matrix.org&via=inm7.de" target="_blank">DataLad</a> </li>
     </ul>
 
 </section>
