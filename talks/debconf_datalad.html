@@ -63,7 +63,7 @@
             </tr> </table>
     </div>
     <small>
-    Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/debconf_datalad.pdf" target="_blank">
+    Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/DebConf.pdf" target="_blank">
     https://github.com/datalad-handbook/course/</a></small></a>
 
 </section>
@@ -97,9 +97,9 @@
     </td>
     <td style="vertical-align:middle">
   <div style="margin-bottom:-20px;text-align:center"><strong>Funders</strong></div>
-  <img style="height:150px;margin-right:50px" data-src="../pics/nsf.png" />
+  <img style="height:150px;margin-right:50px" data-src="../pics/nsf_2020.png" />
   <img style="height:150px;margin-right:50pxi;margin-left:50px" data-src="../pics/binc.png" />
-  <img style="height:150px;margin-left:50px" data-src="../pics/bmbf.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/bmbf_2020.png" />
   <br />
   <img style="height:80px;margin-top:-40px;margin-left:auto;margin-right:auto;width:100%" data-src="../pics/fzj_logo.svg" />
   <div style="margin-top:-20px">
@@ -239,7 +239,7 @@
     <br>
     <div class="fragment fade-in">General underlying difficulties (distribution, updates, management, interoperability, reproducibility) also exist(ed) for software - <br> what can we learn?</div>
     <div class="fragment fade-in-then-semi-out" data-fragment-index="6" align="left">
-        ¹ <small> <a href="https://doi.org/10.1177%2F1094342020926237" target="_blank"> Kiar et al., 2020</a>
+        ¹ <small> <a href="https://doi.org/10.1177%2F1094342020926237" target="_blank"> Kiar et al., 2020: Comparing perturbation models for evaluating stability of neuroimaging pipelines </a>
     </small>
     </div>
 
@@ -259,15 +259,21 @@
 <section>
     <h3>improve scientific workflows, coming from the perspective of software distributions</h3>
     <img class="fragment fade-in" src="../pics/datalad_logo_wide.svg">
-         <div class="fragment fade-in">"Share and treat data like sourcecode"</div>
-
+         <div class="fragment fade-in">"Share and treat data like software"</div>
+    <img class="fragment fade-in" src="../pics/yarik_michael.jpg">
+    <img class="fragment fade-in" src="../pics/neurodebian.png" height="250">
+    <img class="fragment fade-in" src="../pics/joey-hess.jpg" height="250">
+    <img class="fragment fade-in" src="../pics/gitannex.png" height="250">
 </section>
 
+    <!--
 <section data-transition="None">
     <h2>Rethinking data</h2>
         <ul class="fragment fade-in">
-    <li>Just like code, data is not static: Extending, fixing, & converting data to new standards
-        is essential. </li>
+            <li>Just like code, <b>data is not static</b>, and should be versioned</li>
+            <li>Just like code, <b>data is subject to collaboration</b>,
+                and workflows as in open source development should be possible</li>
+            <li>Provenance of data is essential for reproducibility </li>
                 </ul>
             <img class="fragment fade-in" src="../pics/phd052810s.gif">
 
@@ -275,13 +281,14 @@
     <section data-transition="None">
     <h2>Rethinking data</h2>
         <ul>
-    <li>Just like code, data is subject to collaboration. It should be (publicly)
+            <li>Just like code, <b>data is subject to collaboration</b>. It should be (publicly)
         sharable, and also update-able, with generic workflows similar to those in
         open-source software development</li>
                 </ul>
  <img height="450" class="fragment fade-in" src="../pics/collaboration13.svg">
 
 </section>
+-->
 </section>
 
 
@@ -290,18 +297,18 @@
 <section data-markdown><script type="text/template">
 ## DataLad
 
-- Joint management of digital objects through their entire life cycle
+- DataLad: Joint management of digital objects through their entire life cycle
 
   - Version control
   - Transport logistics
   - Interoperability
   - Provenance capture
 
-- Available in Debian
-- Built on top of Git and [git-annex](https://git-annex.branchable.com/) (Joey Hess)
-- Free and open source Python software (MIT licence)
+- Basics
 
-- Python API and command line interface
+    - Built on top of Git and [git-annex](https://git-annex.branchable.com/) (Joey Hess)
+    - Free and open source Python software (MIT license)
+    - Python API and command line interface
 
 </script>
 <aside class="notes">
@@ -320,7 +327,7 @@
         <li  class="fragment fade-in" data-fragment-index="3">A DataLad dataset is an Git repository:</li>
         <ul class="fragment fade-in" data-fragment-index="3">
             <li>Content and domain agnostic</li>
-            <li>Minimization of custom procedures or data structures (<b>user must not lose data or data access of DataLad vanishes</b></li>
+            <li>Minimization of custom procedures or data structures (<b>user must not lose data or data access if DataLad vanishes)</b></li>
             <li><b>Uncomprimised decentralization</b></li>
         </ul>
 
@@ -329,34 +336,34 @@
 </section>
 
 <section data-transition="None">
-    <h2>Version Control</h2>
+    <h2>Version Control: Data</h2>
 
     <ul>
-        <li class="fragment fade-in-then-semi-out">Datasets have an optional annex for (large) data. </li>
+        <li class="fragment fade-in-then-semi-out">Datasets have an optional annex for (large or sensitive) data (or text/code). </li>
         <li class="fragment fade-in-then-semi-out">Identity (hash) and location information is put
             into Git, rather than file content. The annex, and transport to and from
             it is managed with <b>git-annex</b>
             (<a href="https://git-annex.branchable.com" target="_blank">git-annex.branchable.com</a>) <br>
             → decentralized version control for files of any size.</li>
         <li class="fragment fade-in-then-semi-out">DataLad works towards wrapping Git and git-annex into a non-complex core-API
-            (helpful for data management novices)</li>
+            (helpful for data management novices).</li>
             </ul>
                 <img height="330" class="fragment fade-in" data-fragment-index="1" src="../pics/artwork/src/local_wf.svg">
     <ul>
-    <li class="fragment fade-in">Flexibility and commands of Git and git-annex are preserved (useful for experienced Git/git-annex users)</li>
+    <li class="fragment fade-in">Flexibility and commands of Git and git-annex are preserved (useful for experienced Git/git-annex users).</li>
     </ul>
 </section>
 
 
 <section data-transition="None">
-    <h2>Version Control</h2>
+    <h2>Version Control: Nesting</h2>
 
     <ul>
         <li>Seamless nesting mechanisms:
                 <img height="330"  src="../pics/artwork/src/linkage_subds.svg">
             <ul>
-                <li>hierarchies of datasets in super-/sub-dataset relationships)</li>
-                <li>based on Git submodules, but seamless (recursive operations) and faster</li>
+                <li>hierarchies of datasets in super-/sub-dataset relationships</li>
+                <li>based on Git submodules, but more seamless</li>
                 </ul>
         <li class="fragment fade-in" data-fragment-index="2">Overcomes scaling issues with large amounts of files</li>
         <pre  class="fragment fade-in" data-fragment-index="2"><code>adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
@@ -442,11 +449,8 @@ Idea behind datalad: Enable a similar level of tooling and culture for the distr
             storage technology</li>
     </ul>
     <img src="../pics/services_connected.png" height="650">
-    <ul>
-        <li  class="fragment fade-in"><b>Uncompromised decentralization</b>, no required central server or service.</li>
-    </ul>
 </section>
-
+<!--
 <section data-transition="None">
     <h2>Interoperability</h2>
     <ul>
@@ -456,7 +460,7 @@ Idea behind datalad: Enable a similar level of tooling and culture for the distr
         <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="blank"> <img src="../pics/remodnavpaper.png">
     </a>
 </section>
-
+-->
 
 
 <section data-transition="None">
@@ -641,19 +645,82 @@ action summary:
 </section>
 
 <section>
+<section>
+<h2>Find out more</h2>
+<table>
+  <tr>
+    <td>
+        Comprehensive user documentation in the<br>
+        DataLad Handbook
+       <a href="http://handbook.datalad.org">(handbook.datalad.org)</a>
+    </td>
+    <td>
+      <img src="../pics/logo.svg" height="150">
+    </td>
+  </tr>
+</table>
+
+  <table>
+      <tr>
+          <td><img src="../pics/artwork/src/enter.svg" height="100"></a></td>
+          <td>
+            <ul>
+              <li>High-level function/command overviews, <br>
+                  Installation, Configuration, Cheatsheet</li>
+            </ul>
+          </td>
+      </tr>
+      <tr>
+          <td><img src="../pics/artwork/src/basics.svg" height="100"></td>
+          <td>
+            <ul>
+              <li>Narrative-based code-along course</li>
+              <li>Independent on background/skill level, <br>
+                  suitable for data management novices</li>
+            </ul>
+          </td>
+     </tr>
+      <tr>
+          <td><img src="../pics/artwork/src/usecases.svg" height="100"></td>
+          <td>
+            <ul>
+              <li>Step-by-step solutions to common <br>
+                  data management problems, like<br />how to
+                  make a reproducible paper</li>
+            </ul>
+          </td>
+      </tr>
+  </table>
+
+<aside class="notes">
+- what is in it?
+- how is it structured?
+- who and what is it aiming for?
+- show "big picture" figure
+- claim data management demands of science map well onto datalad functionality
+- summarize remaining principles (obsoletion insurance, etc.)
+</aside>
+</script>
+</section>
+
+<section>
     <h2>Further Information</h2>
     <ul>
         <li>Source code: <a href="https://github.com/datalad/datalad">github.com/datalad/datalad</a> </li>
-        <li>Extensive user documentation, tutorials, and use cases: <a href="https://handbook.datalad.org"> handbook.datalad.org</a></li>
         <li>Technical docs: <a href="https://docs.datalad.org">docs.datalad.org</a></li>
         <li>Video tutorials: <a href="https://www.youtube.com/channel/UCB8-Zf7D0DSzAsREoIt0Bvw">Youtube channel "DataLad"</a> </li>
         <li>Matrix channel: <a href="https://matrix.to/#/!SaWRuXhTcCDulfttET:matrix.org?via=matrix.org&via=inm7.de" target="_blank">DataLad</a> </li>
     </ul>
+        <br>
+        <br>
+    Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/DebConf.pdf" target="_blank">
+    https://github.com/datalad-handbook/course/</a>
 
 </section>
 
 <section>
     <h1>Thanks!</h1>
+</section>
 </section>
 
 </div> <!-- /.slides -->
