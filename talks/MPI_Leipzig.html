@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title> 🚀 RDM for big data </title>
+  <meta name="description" content=" Workshop on DataLad, MPI CBS Leipzig ">
+  <meta name="author" content=" Adina Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+<section>
+<section>
+<h2>Research Data Management with DataLad<br  />🚀<br  /><small>for open and transparent science</small></h2>
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Adina Wagner
+	  <br><small>
+		<a href="https://twitter.com/AdinaKrik" target="_blank">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaKrik</a></small></td>
+    <td><img style="height:100px;margin-right:10px" data-src="../pics/fzj_logo.svg" />
+	  <br></td>
+  </tr>
+  <tr>
+    <td>
+        <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
+          <br> Institute of Neuroscience and
+          Medicine, Brain &amp; Behavior (INM-7)<br>
+       Research Center Jülich</small><br>
+    </td>
+  </tr>
+  </table>
+  </div>
+<br><br><small>
+    Slides: <a href="github.com/datalad-handbook/course/blob/master/talks/PDFs/HCPwithDataLad.pdf" target="_blank">
+    https://github.com/datalad-handbook/course/</a></small>
+</a>
+</section>
+</section>
+
+
+
+<!--...INTRODUCTION...-->
+<!--...RDM..-->
+<section>
+
+<section>
+    <h2>Research data management (RDM)</h2>
+    <div class="r-stack">
+        <ul>
+            <li class="fragment fade-in-then-semi-out" data-fragment-index="0">(Research) Data = every digital object involved in your project:
+                code, software/tools, raw data, processed data, results, manuscripts ...</li>
+            <li class="fragment fade-in-then-semi-out" data-fragment-index="1">
+                Data needs to be managed <a href="https://www.go-fair.org/fair-principles/" target="_blank">FAIR</a>ly- from creation to use, publication,
+            sharing, archiving, re-use, or destruction: </li>
+        </ul>
+    <img src="../pics/datalifecycle_jisc_ccbysand.png" class="fragment fade-in" height="550">
+    <ul>
+        <li class="fragment fade-in">Research data management is a key component for reproducibility, efficiency, and impact/reach
+        of data analysis projects</li>
+    </ul>
+    </div>
+<imgcredit>JISC; CC-BY-SA-ND</imgcredit>
+    <aside class="notes">
+        <ul>
+            <li>RDM can not be an afterthought!</li>
+        </ul>
+    </aside>
+</section>
+
+<section>
+    <h2>Why data management?</h2>
+
+    <img src="../pics/frontend_vs_backend_paper.png" style="box-shadow: 10px 10px 8px #888888;height=1000px">
+    <imgcredit>adapted from https://dribbble.com/shots/3090048-Front-end-vs-Back-end</imgcredit>
+     <br>⬆<br>
+    This a metaphor for most projects after publication
+    <aside class="notes">
+        mention irreprodubility of unmanaged studies, hence funders require FAIR data management
+        mention peer expectations
+    </aside>
+</section>
+
+<section>
+    <h2>Why data management?</h2>
+    <br> This a metaphor for reproducing (your own) research <br> a few months after publication <br>⬇<br>
+    <img src="../pics/frustration.jpg" height="500" style="box-shadow: 10px 10px 8px #888888x">
+    <imgcredit>TODO</imgcredit>
+</section>
+
+<section>
+<h2>Why data management?</h2>
+        <table>
+        <tr>
+            <td> This is a metaphor for <br> many computational ➡<br> clusters without RDM</td>
+            <td> <img src="../pics/big_data_cartoon.jpg" width="700"></td>
+        </tr>
+    </table>
+
+
+    <imgcredit>https://infostory.files.wordpress.com/2013/03/big_data_cartoon.jpeg</imgcredit>
+</section>
+
+<section>
+    <h2>Why data management?</h2>
+    <br>
+    <ul>
+        <dt class="fragment fade-in" data-fragment-index="1">External requirements and expectations</dt>
+        <dd class="fragment fade-in" data-fragment-index="1">Funders & publishers require it</dd>
+        <dd class="fragment fade-in" data-fragment-index="1">Scientific peers increasingly expect it</dd><br>
+        <dt class="fragment fade.in" data-fragment-index="2">Intrinsic motivation and personal & scientific benefits</dt>
+        <dd class="fragment fade-in" data-fragment-index="2">The quality, efficiency and replicability of your work improves</dd><br>
+        <dt class="fragment fade-in" data-fragment-index="3">The most interesting datasets of our field require it</dt>
+        <dd class="fragment fade-in" data-fragment-index="3">Exciting datasets (UKBiobank, HCP, ...) are orders of magnitudes larger than previous public datasets, and neither the computational infrastructure
+            nor analysis workflows scale to these dataset sizes</dd>
+    </ul>
+</section>
+
+<section>
+    <h2>Today</h2>
+    <ul>
+    <ul>
+        <li>General overview of the tool</li>
+        <li>DataLad-centric solutions to real-life data management problems</li>
+        <li>Hands-on experience</li>
+    </ul>
+
+    </ul>
+</section>
+</section>
+
+
+<!-- DataLad -->
+
+<section>
+<section data-transition="fade">
+    <div><table>
+    <tr><dl>
+    <img src="../pics/datalad_logo_wide.svg" height="150"><br>
+        <b><a href="https://www.datalad.org/" target="_blank"> DataLad</a>
+            can help <br> with small or large-scale <br> data management </b>
+    <dt></dt>
+    </dl></tr>
+        <tr><dl class="fragment fade-in">Free, <br> open source, <br> command line tool & Python API </dl></tr>
+    </table>
+    </div>
+    <ul style="vertical-align:middle">
+        <br>
+        <dt></dt>
+    <dd class="fragment fade-in">Introduction and core concepts</dd>
+    </ul>
+</section>
+
+<section>
+  <h2>Acknowledgements</h2>
+  <table>
+  <tr style="vertical-align:middle">
+    <td style="vertical-align:middle">
+      <dl>
+        <dt>Software</dt>
+        <dd style="margin-left:5px!important">
+          <ul style="margin-left:5px!important">
+              <li>Michael Hanke</li>
+              <li>Yaroslav Halchenko</li>
+              <li>Joey Hess (git-annex)</li>
+              <li>Kyle Meyer</li>
+              <li>Benjamin Poldrack</li>
+              <li><em>26 additional contributors</em></li>
+          </ul>
+        </dd>
+        <dt style="margin-top:20px">Documentation project </dt>
+        <dd style="margin-left:5px!important">
+          <ul style="margin-left:5px!important">
+              <li>Michael Hanke</li>
+              <li>Laura Waite</li>
+              <li><em>28 additional contributors</em></li>
+          </ul>
+        </dd>
+      </dl>
+    </td>
+    <td style="vertical-align:middle">
+  <div style="margin-bottom:-20px;text-align:center"><strong>Funders</strong></div>
+  <img style="height:150px;margin-right:50px" data-src="../pics/nsf.png" />
+  <img style="height:150px;margin-right:50pxi;margin-left:50px" data-src="../pics/binc.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/bmbf.png" />
+  <br />
+  <img style="height:80px;margin-top:-40px;margin-left:auto;margin-right:auto;width:100%" data-src="../pics/fzj_logo.svg" />
+  <div style="margin-top:-20px">
+  <img style="height:60px;margin-right:20px" data-src="../pics/erdf.png" />
+  <img style="height:60px;margin-right:20px" data-src="../pics/cbbs_logo.png" />
+  <img style="height:60px" data-src="../pics/LSA-Logo.png" />
+  </div>
+  <div style="margin-top:40px;margin-bottom:20px;text-align:center"><strong>Collaborators</strong></div>
+  <div style="margin-top:-20px">
+  <img style="height:100px;margin:20px" data-src="../pics/hbp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/conp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/vbc_logo.png" />
+  </div>
+  <div style="margin-top:-40px">
+  <img style="height:120px;margin:20px" data-src="../pics/openneuro_logo.png" />
+  <img style="height:120px;margin:20px" data-src="../pics/cbrain_logo.png" />
+  <img style="height:140px;margin:20px" data-src="../pics/brainlife_logo.png" />
+  </div>
+  </td>
+  </tr>
+  </table>
+</section>
+
+<section>
+    <h2>polling system for live-feedback</h2>
+    <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8GEhjrmCtjWPyeJp0Y4rJxAZFZG"
+             style="border: 0" width="900" height="700"></iframe>
+</section>
+
+
+<section>
+    <h2>Some more testing...</h2>
+    <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8GEhjrmCtjWPyeJp0Y4rJxAZFZG"
+             style="border: 0" width="900" height="700"></iframe>
+</section>
+
+<section>
+    <h2>Let's start</h2>
+    <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8GEhjrmCtjWPyeJp0Y4rJxAZFZG"
+             style="border: 0" width="900" height="700"></iframe>
+</section>
+
+<section>
+    <h2>
+        <img src="../pics/datalad_logo_wide.svg" height="150">
+        Core Features:
+    </h2>
+    <ul>
+    <li class="fragment fade-in-then-semi-out">
+        Joint <b>version control</b> (<a href="https://git-scm.com/" target="_blank">Git</a>,
+        <a href="https://git-annex.branchable.com/" target="_blank">git-annex</a>) for code, software, and data</li>
+    <li class="fragment fade-in-then-semi-out"> <b>Provenance capture</b>:
+        Create and share machine-readable, re-executable records of your data analysis for reproducible, transparent, and FAIR research</li>
+        <li class="fragment fade-in-then-semi-out"> <b>Data transport</b> mechanisms:
+        Install or share data extremely lightweight, retrieve it on demand, drop it to
+        free up space without losing data access or provenance </li>
+</ul>
+</section>
+
+<section>
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+    <li class="fragment fade-in-then-semi-out"> <b>Publishing datasets</b> and making them available via GitHub, GitLab, or similar services</li>
+        <li class="fragment fade-in-then-semi-out"> <b>Creating and sharing reproducible, open science</b>: Sharing data, software, code, and provenance </li>
+        <li class="fragment fade-in-then-semi-out">
+        Behind-the-scenes <b>infrastructure component for data transport and versioning</b>
+        (e.g., used by <a href="https://openneuro.org/" target="_blank"> OpenNeuro</a>,
+        <a href="https://brainlife.io/" target="_blank"> brainlife.io </a>,
+        the <a href="https://conp.ca/" target="_blank">Canadian Open Neuroscience Platform (CONP)</a>,
+        <a href="https://mcin.ca/technology/cbrain/" target="_blank"> CBRAIN</a>)</li>
+        <li class="fragment fade-in-then-semi-out"><b>Central data management</b> and archival system (pioneered at the INM-7, Research Centre Juelich)</li>
+
+</ul>
+</section>
+
+<section data-markdown><script type="text/template" >
+## DataLad datasets
+* DataLad's core data type: whatever we do, its in a dataset <!-- .element: class="fragment fade-in-then-semi-out" -->
+<!-- how does a dataset look like? show, e.g., remodnav paper-->
+* = A directory on your computer, managed by DataLad <!-- .element: class="fragment fade-in-then-semi-out" -->
+<img src="../pics/remodnav-ds-nautilus.png" width="500"> <img src="../pics/remodnav-ds-terminal.png" width="500">
+</script>
+</section>
+
+<section>
+    <h2>Version control</h2>
+    <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8GEhjrmCtjWPyeJp0Y4rJxAZFZG",
+            style="border: 0", width="900", height="900"></iframe>
+</section>
+
+<section>
+    <h2>Why version control?</h2>
+    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+    <ul>
+        <li class="fragment fade-in">keep things organized</li>
+        <li class="fragment fade-in">keep track of changes</li>
+        <li class="fragment fade-in">Mostly done for code, but <b>data</b> changes as well!</li>
+    </ul>
+<aside class="notes">
+<li>Not only manuscripts, but also data!</li>
+</aside>
+</section>
+
+<section data-markdown><script type="text/template" >
+## Version Control
+* Everything you put into a in a dataset can be easily version-controlled, regardless of size <!-- .element: class="fragment" -->
+<pre><code class="bash" style="max-height:none">$ datalad save \
+   -m "Adding raw data from study 1" \
+   sub-*
+add(ok): sub-1/anat/T1w.json (file)
+add(ok): sub-1/anat/T1w.nii.gz (file)
+add(ok): sub-1/anat/T2w.json (file)
+add(ok): sub-1/anat/T2w.nii.gz (file)
+add(ok): sub-1/func/sub-1-run-1_bold.json (file)
+add(ok): sub-1/func/sub-1-run-1_bold.nii.gz (file)
+add(ok): sub-10/anat/T1w.json (file)
+add(ok): sub-10/anat/T1w.nii.gz (file)
+add(ok): sub-10/anat/T2w.json (file)
+add(ok): sub-10/anat/T2w.nii.gz (file)
+  [110 similar messages have been suppressed]
+save(ok): . (dataset)
+action summary:
+  add (ok: 120)
+  save (ok: 1)
+</code></pre>  <!-- .element: class="fragment" -->
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+## Version Control
+* Your dataset can be a complete research log, capturing everything that was done, when, by whom, and how <!-- .element: class="fragment" -->
+![](../pics/researchlog.png)
+* Interact with the history: <!-- .element: class="fragment" -->
+  * reset your dataset (or subset of it) to a previous state, <!-- .element: class="fragment" -->
+  * throw out changes or bring them back, <!-- .element: class="fragment" -->
+  * find out what was done when, how, why, and by whom <!-- .element: class="fragment" -->
+  * ... <!-- .element: class="fragment" -->
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+## Datasets for yourself and others
+* A dataset can be created from scratch/existing directories: <!-- .element: class="fragment fade-in" -->
+<pre><code class="bash" style="max-height:none">$ datalad create mydataset
+[INFO   ] Creating a new annex repo at /home/adina/mydataset
+create(ok): /home/adina/mydataset (dataset)
+</code></pre><!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="1" -->
+* but datasets can also be installed from paths or from URLs:  <!-- .element: class="fragment fade-in-then-semi-out" -->
+<pre><code class="bash" style="max-height:none">$ datalad clone \
+   https://github.com/datalad-datasets/human-connectome-project-openaccess \
+   HCP
+install(ok): /tmp/HCP (dataset)
+</code></pre><!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="2" -->
+* and you can share your datasets, if you want to:  <!-- .element: class="fragment fade-in-then-semi-out" -->
+<pre><code class="bash" style="max-height:none">$ datalad clone \
+   https://github.com/datalad-datasets/human-connectome-project-openaccess \
+   HCP
+install(ok): /tmp/HCP (dataset)
+</code></pre><!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="2" -->
+</script>
+</section>
+
+
+<section data-markdown> <script type="text/template">
+## Dataset nesting
+* Modularize datasets into super- and subdatasets for intuitively structured and scalable
+  datasets
+* Benchmarks for dataset sizes: up to 200k files pre dataset (beyond this: dataset nesting) <!-- .element: class="fragment fade-in-then-semi-out"  -->
+![](../pics/virtual_dstree_short.svg)  <!-- .element: class="fragment" data-fragment-index="1" -->
+![](../pics/virtual_dstree_largeoutput.svg)  <!-- .element: class="fragment" data-fragment-index="2"-->
+* any standalone component  <!-- .element: class="fragment" data-fragment-index="1" -->
+* too large components (>100-200k files)  <!-- .element: class="fragment" data-fragment-index="2"-->
+</script>
+</section>
+
+<section data-markdown> <script type="text/template">
+## Provenance capture
+* Capture where data(sets) come from or how they were computed and re-obtain or
+  recompute them on demand
+![](../pics/provenance.svg)
+</script>
+</section>
+
+<section data-markdown> <script type="text/template">
+## Disk-space aware computations
+* After installations, datasets are light-weight:
+  "Meta data" (file names, availability) are present, but **no file content**
+<pre><code># eNKI dataset (1.5TB, 34k files):
+$ du -sh
+  1.5G	.
+</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
+
+<pre><code># HCP dataset (80TB, 15 million files)
+$ du -sh
+48G	.
+</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
+
+File content can be retrieved with datalad get: <!-- .element: class="fragment fade-in" -->
+
+<pre><code>$ datalad get 100307/MNINonLinear/T1w.nii.gz
+get(ok):HCP1200/ /.../HCP/HCP1200/100307/MNINonLinear/T1w.nii.gz (file) [from datalad...]
+action summary:
+  get (ok: 1)
+</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
+
+</script></section>
+
+
+<section data-markdown> <script type="text/template">
+## Disk-space aware computations
+* File contents can be dropped to remove them from your computer and free up
+  disk space - only their "meta data" stays behind.
+  They can be re-obtained on demand with datalad get. <!-- .element: class="fragment fade-in-then-semi-out" -->
+
+<pre><code>$ la -lhL HCP1200/100307/MNINonLinear/T1w.nii.gz
+... 72M ...	HCP1200/100307/MNINonLinear/T1w.nii.gz
+
+$ datalad drop HCP1200/100307/MNINonLinear/T1w.nii.gz
+drop(ok): /tmp/HCP/HCP1200/100307/MNINonLinear/T1w.nii.gz (file)
+
+$ ls -lh HCP1200/100307/MNINonLinear/T1w.nii.gz
+... 136 ...	HCP1200/100307/MNINonLinear/T1w.nii.gz
+</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
+
+Install input data <!-- .element: class="fragment fade-in" -->
+  *➡ get the data you need* <!-- .element: class="fragment fade-in" -->
+  *➡ compute your results* <!-- .element: class="fragment fade-in" -->
+  *➡ drop input data (and potentially all automatically re-computable results)* <!-- .element: class="fragment fade-in" -->
+
+</script></section>
+
+
+
+<section>
+<section>
+    <h2>common tales of RDM in science:</h2>
+    <h4>Raw-data mismanagement</h4>
+    <ul>
+        <li>Multiple large datasets are available on a compute cluster 🏞 </li>
+        <li>Each researcher creates their own copies of data ⛰ </li>
+        <li>Multiple different derivatives and results are computed from it 🏔</li>
+        <li>Data, copies of data, half-baked data transformations, results, and
+            old versions of results are kept - undocumented 🌋 </li>
+    </ul>
+</section>
+
+<section data-transition="None">
+    <h2>Example: eNKI dataset</h2>
+    <img class="fragment" data-fragment-index="6" src="../pics/drive.png">
+    <ul style="font-size:35px">
+        <li class="fragment fade-in" data-fragment-index="0">   Raw data size: 1.5 TB</li>
+        <li class="fragment fade-in" data-fragment-index="1">+ Back-up: 1.5 TB</li>
+        <li class="fragment fade-in" data-fragment-index="2">+ A BIDS structured version: 1.5 TB</li>
+        <li class="fragment fade-in" data-fragment-index="3">+ Common, minimal derivatives (fMRIprep): ~ 4.3TB</li>
+        <li class="fragment fade-in" data-fragment-index="4">+ Some other derivatives: "Some other" x 5TB</li>
+        <li class="fragment fade-in" data-fragment-index="5">+ Copies of it all or of subsets in home and project directories </li>
+    </ul>
+    <br>
+    <ul>
+</section>
+
+<section data-transition="None">
+    <h2>Example: eNKI dataset</h2>
+<img src="../pics/reallifeexample.png">
+    </ul>
+</section>
+
+<section data-transition="None">
+    <h2>Example: eNKI dataset</h2>
+    <img src="../pics/drive.png">
+    <ul style="font-size:35px">
+        <li>   Raw data size: 1.5 TB</li>
+        <li>+ Back-up: 1.5 TB</li>
+        <li>+ A BIDS structured version: 1.5 TB</li>
+        <li>+ Common, minimal derivatives (fMRIprep): ~ 4.3TB</li>
+        <li>+ Some other derivatives: "Some other" x 5TB</li>
+        <li>+ Copies of it all or of subsets in home and project directories </li>
+    </ul>
+    <br>
+    <ul>
+    <p class="fragment fade-in" data-fragment-index="7">How much storage capacity does a typical compute cluster have?</p>
+    </ul>
+        <b class="fragment fade-in" data-fragment-index="8">10-500TB</b>
+</section>
+
+<section data-transition="None">
+        <img class="fragment" data-fragment-index="3" src="../pics/drive.png">
+        <img class="fragment" data-fragment-index="3" src="../pics/drive.png">
+    <h2>Can we buy more hard drives?</h2>
+        <img class="fragment" data-fragment-index="0" src="../pics/drive.png">
+        <img class="fragment" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment" data-fragment-index="3" src="../pics/drive.png">
+        <img class="fragment" data-fragment-index="2" src="../pics/drive.png">
+        <img class="fragment" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment" data-fragment-index="2" src="../pics/drive.png">
+        <img class="fragment" data-fragment-index="3" src="../pics/drive.png">
+</section>
+
+<section data-transition="None">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+    <h2 class="fragment fade-out">Depends</h2>
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+        <img class="fragment fade-out" data-fragment-index="1" src="../pics/drive.png">
+</section>
+
+<section data-transition="None" class="center">
+        <p class="fragment fade-in"> If your institution doesn't care about money or the <br>
+        environment, more disk space can help...</p>
+    <h2>💸🤷🌏</h2>
+        <p class="fragment fade-in"> But with a certain amount of data, simply "stocking up" <br>
+            becomes not only ridiculous, but also infeasible:</p>
+    <ul>
+    <h3 class="fragment"> HCP: 80TB </h3>
+    <h3 class="fragment"> UKBiobank (current): 42TB </4>
+    </ul>
+        <aside class="notes">
+            If you don't care about money or the environment, go ahead...
+            but we're scientists, and in general *do* care...
+            and once it gets to HCP or UKB, simply stocking up isn't possible anymore
+        </aside>
+</section>
+
+<section>
+    <h2>common tales of RDM in science:</h2>
+    <h4>A lack of documentation and provenance</h4>
+    <ul>
+pycharm $PWD
+    </ul>
+</section>
+
+</section>
+
+<section>
+    <h2>Find out more</h2>
+    <table>
+  <tr>
+    <td>
+        Comprehensive user documentation in the<br>
+        DataLad Handbook
+       <a href="http://handbook.datalad.org">(handbook.datalad.org)</a>
+    </td>
+    <td>
+      <img src="../pics/logo.svg" height="150">
+    </td>
+  </tr>
+</table>
+
+  <table>
+      <th></th><th></th>
+      <tr>
+          <td><img src="../pics/enter.svg" height="100"></a></td>
+          <td>
+            <ul>
+              <li>High-level function/command overviews, <br>
+                  Installation, Configuration</li>
+            </ul>
+          </td>
+      </tr>
+
+      <tr>
+          <td><img src="../pics/basics.svg" height="100"></td>
+          <td>
+            <ul>
+              <li>Narrative-based code-along course</li>
+              <li>Independent on background/skill level, <br>
+                  suitable for data management novices</li>
+            </ul>
+          </td>
+     </tr>
+      <tr>
+          <td><img src="../pics/usecases.svg" height="100"></td>
+          <td>
+            <ul>
+              <li>Step-by-step solutions to common <br>
+                  data management problems, like<br />how to
+                  make a reproducible paper</li>
+            </ul>
+          </td>
+      </tr>
+  </table>
+</section>
+
+</section>
+
+<!-- Hands-on -->
+
+<section>
+
+<section>
+    <h2>Requirements</h2>
+        <ul>
+            <li>DataLad version 0.12.2 or later (Installation instructions at
+            <a href="https://handbook.datalad.org" target="_blank">handbook.datalad.org</a>) </li>
+        </ul>
+</section>
+
+<section>
+    <h2>Further info and reading</h2>
+    Everything I am talking about is documented in depth elsewhere: <br><br>
+    <ul>
+        <li>General DataLad tutorial:
+        <a href="https://handbook.datalad.org/en/latest/basics/intro.html" target="_blank">
+            handbook.datalad.org/basics/intro.html/
+        </a> </li>
+        <li>How to structure data analysis projects:
+            <a href="http://handbook.datalad.org/en/latest/basics/101-127-yoda.html#yoda" target="_blank">
+                handbook.datalad.org/r.html?yoda
+            </a> </li>
+        <li>More DataLad tutorials:
+            <a href="https://www.youtube.com/channel/UCB8-Zf7D0DSzAsREoIt0Bvw" target="_blank">
+                DataLad YouTube channel
+            </a> </li>
+    </ul>
+
+    <p class="fragment fade-in">Open an issue on
+        <a href="https://github.com/datalad-handbook/book" target="_blank">GitHub</a> if you have more questions! </p>
+</section>
+
+<section>
+    <h2>HCP data structure</h2>
+    <ul>
+        <li>HCP data is available in full, or in subsets (for speedier installation),
+        from <a href="https://github.com/datalad-datasets/human-connectome-project-openaccess">GitHub</a>:</li>
+        <img src="../pics/hcpfullgh.png">
+    </ul>
+</section>
+
+<section>
+    <h2>Get HCP data via DataLad</h2>
+<ul>
+    <li><b>datalad clone</b> a
+        <a href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">
+            GitHub repository</a></li>
+
+    <pre><code  class="bash" style="max-width:none">$ datalad clone \
+  git@github.com:datalad-datasets/human-connectome-project-openaccess.git \
+  HCP
+ install(ok): /.../HCP (dataset)</code></pre>
+    <li><b>datalad get</b> desired subdatasets and files</li>
+    <pre><code>$ datalad get HCP1200/221218/T1w/T1w_acpc_dc.nii.gz
+install(ok): /tmp/HCP/HCP1200/221218/T1w (dataset)
+             [Installed subdataset in order to get /tmp/HCP/HCP1200/221218/T1w/T1w_acpc_dc.nii.gz]
+get(ok): /tmp/HCP/HCP1200/221218/T1w/T1w_acpc_dc.nii.gz (file) [from datalad...]
+action summary:
+  get (ok: 1)
+  install (ok: 1)</code></pre>
+</ul>
+</section>
+
+<section>
+    <h2>HCP dataset structures</h2>
+    <ul>
+        <li>Dataset structure follows HCP data layout:</li>
+        <ul>
+            <li>subject-ID</li>
+            <li>data directories (unprocessed, T1w, MNINonLinear, MEG, release notes)</li>
+        </ul>
+        <li>The <b>full</b> HCP dataset consists of numerous <i>subdatasets</i> (subjects, data directories)</li>
+        <img src="../pics/hcp_full_dstree.svg">
+    </ul>
+</section>
+
+
+<section>
+    <h2>HCP dataset structures</h2>
+    <ul>
+        <li>The HCP subset datasets usually are a single dataset (advantage: much faster installation)</li>
+        <li>Some are available in BIDS-like structures</li>
+        <img src="../pics/hcpsubsetgh.png">
+        <li>You can <a href="http://handbook.datalad.org/en/latest/usecases/HCP_dataset.html#parallel-operations-and-subsampled-datasets-using-datalad-copy-file"
+                       target="_blank">
+            create such subsets yourself</a>
+            or request them by emailing us paths</li>
+    </ul>
+</section>
+
+</section>
+
+<!-- Processing with HTCondor-->
+<section>
+<section>
+    <h2>FAIR, large-scale data processing</h2>
+    <ul></ul>
+</section>
+
+
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    Read all about this in the <a href="http://handbook.datalad.org/en/latest/basics/101-127-yoda.html" target="_blank">chapter on YODA principles</a>
+
+    <dl>
+        <li>Keep everything clean and modular</li>
+        <table>
+            <tr>
+                <td><img src="../pics/dataset_modules.png" height="400"></td>
+                <td><pre><code class="bash" style="max-height:none">├── code/
+│   ├── tests/
+│   └── myscript.py
+├── docs
+│   ├── build/
+│   └── source/
+├── envs
+│   └── Singularity
+├── inputs/
+│   └─── data/
+│       ├── dataset1/
+│       │   └── datafile_a
+│       └── dataset2/
+│           └── datafile_a
+├── outputs/
+│   └── important_results/
+│       └── figures/
+└── README.md</code></pre></td>
+            </tr>
+        </table>
+
+    </dl>
+    <ul>
+    <li>do not touch/modify raw data: save any results/computations <i>outside</i> of input datasets</li>
+    <li>Keep a superdataset self-contained: Scripts reference subdatasets or files with <i>relative paths</i></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Basic organizational principles for datasets</h2>
+    <dl>
+        <dt>Record where you got it from, where it is now, and what you do to it</dt>
+        <li>Link datasets (as subdatasets), record data origin</li>
+        <li>Collect and store provenance of all contents of a dataset that you create</li>
+            <table style="verticala-lign:middle">
+                <tr><img src="../pics/dataset_linkage_provenance.png"></tr>
+            </table>
+        <li>Record command execution: Which script produced which output? From which data? In which software environment? ... </li>
+
+    </dl>
+
+</section>
+
+<section>
+    <iframe src="https://directpoll.com/r?XDbzPBdJ2bAX0ZEC2YlWLumm6WtYBkChGSFh5Vwe4W"
+    title="This is my poll", width="900", height="900"></iframe>
+</section>
+
+</section>
+
+<section data-markdown><script type="text/template">
+## Slide title
+
+![](../pics/.svg)<!-- .element: width="250" -->
+
+<imgcredit>Image author</imgcredit>
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
