@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title> 🚀 RDM for big data </title>
+  <title> 🚀 RDM with DataLad</title>
   <meta name="description" content=" Workshop on DataLad, MPI CBS Leipzig ">
   <meta name="author" content=" Adina Wagner ">
 
@@ -265,7 +265,7 @@
         <a href="https://brainlife.io/" target="_blank"> brainlife.io </a>,
         the <a href="https://conp.ca/" target="_blank">Canadian Open Neuroscience Platform (CONP)</a>,
         <a href="https://mcin.ca/technology/cbrain/" target="_blank"> CBRAIN</a>)</li>
-        <li class="fragment fade-in-then-semi-out"><b>Central data management</b> and archival system (pioneered at the INM-7, Research Centre Juelich)</li>
+        <li class="fragment fade-in-then-semi-out"><b>Central data management</b> and archival system</li>
 
 </ul>
 </section>
@@ -279,6 +279,7 @@
 </script>
 </section>
 
+
 <section>
     <h2>Version control</h2>
     <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8GEhjrmCtjWPyeJp0Y4rJxAZFZG",
@@ -291,16 +292,37 @@
     <ul>
         <li class="fragment fade-in">keep things organized</li>
         <li class="fragment fade-in">keep track of changes</li>
-        <li class="fragment fade-in">Mostly done for code, but <b>data</b> changes as well!</li>
+        <li class="fragment fade-in">revert changes or go back to previous states</li>
     </ul>
 <aside class="notes">
 <li>Not only manuscripts, but also data!</li>
 </aside>
 </section>
 
+<section>
+    <h2>Version Control</h2>
+
+    <ul>
+        <li>DataLad knows two things: Datasets and files</li>
+        <img class="fragment fade-in" data-fragment-index="1" style="box-shadow: 5px 5px 3px #888888" src="../pics/artwork/src/dataset.svg" height="330"> <img style="box-shadow: 5px 5px 3px #888888" height="330" class="fragment fade-in" data-fragment-index="2" src="../pics/artwork/src/local_wf.svg">
+        <li  class="fragment fade-in" data-fragment-index="3">A DataLad dataset is an Git/git-annex repository:</li>
+        <ul class="fragment fade-in" data-fragment-index="3">
+            <li>Git: industry-standard for version control for small files.
+                <a href="https://git-annex.branchable.com/" target="_blank">git-annex:</a> allows version control + transport for large files</li>
+            <li>Content and domain agnostic: Manage your science, or your music library</li>
+            <li>Minimization of custom procedures or data structures: A PDF stays a PDF, and users won't
+                lose data or data access if DataLad vanishes</li>
+        </ul>
+
+        <!--<img class="fragment fade-in" style="box-shadow: 5px 5px 3px #888888"  height="330" src="../pics/artwork/src/collaboration.svg">-->
+    </ul>
+</section>
+
 <section data-markdown><script type="text/template" >
 ## Version Control
 * Everything you put into a in a dataset can be easily version-controlled, regardless of size <!-- .element: class="fragment" -->
+* This means: You can also version control data! <!-- .element: class="fragment" -->
+
 <pre><code class="bash" style="max-height:none">$ datalad save \
    -m "Adding raw data from study 1" \
    sub-*
@@ -332,8 +354,45 @@ action summary:
   * reset your dataset (or subset of it) to a previous state, <!-- .element: class="fragment" -->
   * throw out changes or bring them back, <!-- .element: class="fragment" -->
   * find out what was done when, how, why, and by whom <!-- .element: class="fragment" -->
+  * Identify precise versions: Use data in the most recent version, or the one from 2018, or... <!-- .element: class="fragment" -->
   * ... <!-- .element: class="fragment" -->
 </script>
+</section>
+
+
+<section>
+<h2>Provenance capture</h2>
+    Your past self is the worst collaborator:
+<img src="../pics/ownlegacycode_phd.png" height="500">
+</section>
+
+<section>
+<h2>Provenance capture</h2>
+A DataLad dataset can link analysis/command outputs to the <b>code/command</b> execution that
+    produced it, the <b>data</b> it was derived from, and the <b>software environment</b> it was computed in
+<img src="../pics/run_prov.svg" height="500">
+<pre><code class="bash" style="max-height:none">$ datalad run -m "Perform eye movement event detection"\
+  --input 'raw_data/*.tsv.gz' --output 'sub-*' \
+  bash code/compute_all.sh</code></pre>
+</section>
+
+<section>
+<h2>Provenance capture</h2>
+<ul>
+    <li>Those "run records" are stored in a dataset's history and can be automatically rerun:</li>
+
+    <pre><code class="bash" style="max-height:none">$ datalad rerun eee1356bb7e8f921174e404c6df6aadcc1f158f0
+[INFO] == Command start (output follows) =====
+[INFO] == Command exit (modification check follows) =====
+add(ok): sub-01/LC_timeseries_run-1.csv (file)
+...
+save(ok): . (dataset)
+action summary:
+  add (ok: 45)
+  save (notneeded: 45, ok: 1)
+  unlock (notneeded: 45)
+...</code></pre>
+</ul>
 </section>
 
 <section data-markdown><script type="text/template" >
@@ -342,90 +401,185 @@ action summary:
 <pre><code class="bash" style="max-height:none">$ datalad create mydataset
 [INFO   ] Creating a new annex repo at /home/adina/mydataset
 create(ok): /home/adina/mydataset (dataset)
-</code></pre><!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="1" -->
-* but datasets can also be installed from paths or from URLs:  <!-- .element: class="fragment fade-in-then-semi-out" -->
+</code></pre><!-- .element: class="fragment fade-in"-->
+* but datasets can also be installed from paths or from URLs:  <!-- .element: class="fragment fade-in" -->
 <pre><code class="bash" style="max-height:none">$ datalad clone \
    https://github.com/datalad-datasets/human-connectome-project-openaccess \
    HCP
 install(ok): /tmp/HCP (dataset)
-</code></pre><!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="2" -->
-* and you can share your datasets, if you want to:  <!-- .element: class="fragment fade-in-then-semi-out" -->
-<pre><code class="bash" style="max-height:none">$ datalad clone \
-   https://github.com/datalad-datasets/human-connectome-project-openaccess \
-   HCP
-install(ok): /tmp/HCP (dataset)
-</code></pre><!-- .element: class="fragment fade-in-then-semi-out" data-fragment-index="2" -->
+</code></pre><!-- .element: class="fragment fade-in"  -->
+* and you can share your datasets, if you want to:  <!-- .element: class="fragment fade-in" -->
+   <img class="fragment fade-in" data-fragment-index="1" style="box-shadow: 5px 5px 3px #888888"  height="430"  src="../pics/artwork/src/collaboration.svg">
+
 </script>
 </section>
 
 
-<section data-markdown> <script type="text/template">
-## Dataset nesting
-* Modularize datasets into super- and subdatasets for intuitively structured and scalable
-  datasets
-* Benchmarks for dataset sizes: up to 200k files pre dataset (beyond this: dataset nesting) <!-- .element: class="fragment fade-in-then-semi-out"  -->
-![](../pics/virtual_dstree_short.svg)  <!-- .element: class="fragment" data-fragment-index="1" -->
-![](../pics/virtual_dstree_largeoutput.svg)  <!-- .element: class="fragment" data-fragment-index="2"-->
-* any standalone component  <!-- .element: class="fragment" data-fragment-index="1" -->
-* too large components (>100-200k files)  <!-- .element: class="fragment" data-fragment-index="2"-->
-</script>
+<section data-transition="None">
+    <h2>Datasets for yourself and others</h2>
+    <ul>
+        <li>DataLad is built to maximize interoperability and use with hosting and
+            storage technology: Share datasets with the services you use anyway</li>
+    </ul>
+    <img class="fragment fade-in" src="../pics/services_only.png" height="650">
 </section>
 
-<section data-markdown> <script type="text/template">
-## Provenance capture
-* Capture where data(sets) come from or how they were computed and re-obtain or
-  recompute them on demand
-![](../pics/provenance.svg)
-</script>
+<section data-transition="None">
+    <h2>Datasets for yourself and others</h2>
+    <ul>
+        <li>DataLad is built to maximize interoperability and use with hosting and
+            storage technology: Share datasets with the services you use anyway</li>
+    </ul>
+    <img src="../pics/services_connected.png" height="650">
 </section>
 
+<section data-transition="None">
+    <h2>Why share stuff as a dataset?</h2>
+    <ul>
+        <li>Disk-usage magic: Have access to more data than your hard drive has space</li>
+        <li>Collaboration and updating mechanisms: Alice shares her data with Bob. Alice fixes a mistake and pushes the fix.
+        Bob says "datalad update" and gets her changes. And vice-versa.</li>
+        <li>Transparency: Shared datasets keep their history </li>
+    </ul>
+</section>
+
+
+<section>
+    <h2>Plenty of data, but little disk-usage</h2>
+    <ul>
+        <li class="fragment fade-in-then-semi-out">Cloned datasets are lean.
+            "Meta data" (file names, availability) are present, but <b>no file content</b>:</li>
+<pre class="fragment fade-in"><code>$ datalad clone git@github.com:psychoinformatics-de/studyforrest-data-phase2.git
+install(ok): /tmp/studyforrest-data-phase2 (dataset)
+$ cd studyforrest-data-phase2 && du -sh
+18M	.</code></pre>
+<pre class="fragment fade-in"><code>$ ls
+code/
+src/
+stimuli
+sub-01/
+sub-02/
+sub-03/
+sub-04/
+[...]</code></pre>
+
+<li class="fragment fade-in-then-semi-out">  file's contents can be retrieved & dropped on demand:</li>
+    </ul>
+<pre class="fragment fade-in"><code>$ datalad get sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
+get(ok): /tmp/studyforrest-data-phase2/sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz (file) [from mddatasrc...]</code></pre>
+<pre class="fragment fade-in-then-semi-out"><code>$ datalad drop sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
+drop(ok): /tmp/studyforrest-data-phase2/sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz (file) [checking https://arxiv.org/pdf/0904.3664v1.pdf...]</code></pre>
+</section>
+
+
+
 <section data-markdown> <script type="text/template">
-## Disk-space aware computations
-* After installations, datasets are light-weight:
-  "Meta data" (file names, availability) are present, but **no file content**
+## Plenty of data, but little disk-usage
+* Examples of fairly large neuroimaging dataset:
 <pre><code># eNKI dataset (1.5TB, 34k files):
 $ du -sh
   1.5G	.
-</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
-
-<pre><code># HCP dataset (80TB, 15 million files)
+# HCP dataset (80TB, 15 million files)
 $ du -sh
 48G	.
-</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
-
-File content can be retrieved with datalad get: <!-- .element: class="fragment fade-in" -->
-
-<pre><code>$ datalad get 100307/MNINonLinear/T1w.nii.gz
-get(ok):HCP1200/ /.../HCP/HCP1200/100307/MNINonLinear/T1w.nii.gz (file) [from datalad...]
-action summary:
-  get (ok: 1)
-</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
-
-</script></section>
+</code></pre>
 
 
-<section data-markdown> <script type="text/template">
-## Disk-space aware computations
-* File contents can be dropped to remove them from your computer and free up
-  disk space - only their "meta data" stays behind.
-  They can be re-obtained on demand with datalad get. <!-- .element: class="fragment fade-in-then-semi-out" -->
+When files are dropped, only "meta data" stays behind, and they can be re-obtained on demand.
+  This allows disk-space aware computations: <!-- .element: class="fragment fade-in" -->
 
-<pre><code>$ la -lhL HCP1200/100307/MNINonLinear/T1w.nii.gz
-... 72M ...	HCP1200/100307/MNINonLinear/T1w.nii.gz
 
-$ datalad drop HCP1200/100307/MNINonLinear/T1w.nii.gz
-drop(ok): /tmp/HCP/HCP1200/100307/MNINonLinear/T1w.nii.gz (file)
-
-$ ls -lh HCP1200/100307/MNINonLinear/T1w.nii.gz
-... 136 ...	HCP1200/100307/MNINonLinear/T1w.nii.gz
-</code></pre> <!-- .element: class="fragment fade-in-then-semi-out" -->
-
-Install input data <!-- .element: class="fragment fade-in" -->
+Install your input data <!-- .element: class="fragment fade-in" -->
   *➡ get the data you need* <!-- .element: class="fragment fade-in" -->
   *➡ compute your results* <!-- .element: class="fragment fade-in" -->
   *➡ drop input data (and potentially all automatically re-computable results)* <!-- .element: class="fragment fade-in" -->
 
 </script></section>
+
+<section data-transition="None">
+    <h2>Collaboration and updating mechanisms</h2>
+    <ul>
+        <img style="box-shadow: 5px 5px 3px #888888"  height="330"  src="../pics/artwork/src/collaboration.svg">
+        <li>Share data with others and keep them up to date, or get data from someone and stay up to date</li>
+        <li>Have all updates in your dataset history, but pick the version you want to work with</li>
+        <img style="box-shadow: 5px 5px 3px #888888"  src="../pics/datahistory.png">
+    </ul>
+</section>
+
+
+<section data-transition="None">
+    <h2>Transparency</h2>
+    <ul>
+        <li>No need to ask colleagues what they did, you can ask the files how they came to be:</li>
+        <pre><code style="max-height:none">$ git log some_result_file
+commit 593aa8018116ca9d198ce4bfd9e09af3476c7a9b
+Author: Elena Piscopia elena@example.net
+Date:   Thu Sep 3 13:35:51 2020 +0200
+
+    [DATALAD RUNCMD] Re-create the results with most recent data
+
+    === Do not change lines below ===
+    {
+     "chain": [
+      "38e18c0cd73627e10b620b1ba08e4be2caba18e7"
+     ],
+     "cmd": "bash code/mycode.sh",
+     "dsid": "57ce4457-a29b-4bd0-be6f-a9da8d46aee3",
+     "exit": 0,
+     "extra_inputs": [],
+     "inputs": data/input_data/*.nii.gz,
+     "outputs": [],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+</code></pre>
+        <li>... and then have a machine re-do it:</li>
+        <pre><code>$ datalad rerun 593aa8018116ca</code></pre>
+    </ul>
+</section>
+
+
+
+
+
+<section data-markdown> <script type="text/template">
+## Dataset nesting
+* Modularize datasets into super- and subdatasets for transparency and reuse
+
+<img height="330"  src="../pics/artwork/src/linkage_subds.svg">
+
+![](../pics/virtual_dstree_short.svg)  <!-- .element: class="fragment" data-fragment-index="1" -->
+
+</script>
+</section>
+
+<section data-markdown> <script type="text/template">
+## Dataset nesting
+* Capture where data(sets) come from or how they were computed and re-obtain or
+  recompute them on demand
+![](../pics/linkage.svg)
+</script>
+</section>
+
+<section data-transition="None" data-markdown> <script type="text/template">
+## Datasets scale!
+* Maximum file size for a dataset? 🤷
+* Maximum number of files in a dataset? up to 200k files
+    * beyond this: dataset nesting <!-- .element: class="fragment fade-in"  -->
+
+![](../pics/virtual_dstree_largeoutput.svg)  <!-- .element: class="fragment" -->
+</script>
+</section>
+
+<section data-transition="None">
+    <h2>Datasets scale!</h2>
+        <li class="fragment fade-in" data-fragment-index="2">Nesting overcomes scaling issues with large amounts of files.
+        Largest dataset so far: 80TB, 15 million files.</li>
+        <pre  class="fragment fade-in" data-fragment-index="2"><code>adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
+15530572 annex'd files (77.9 TB recorded total size)
+nothing to save, working tree clean</code></pre>
+        <small><a class="fragment fade-in" data-fragment-index="2" href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
+</section>
 
 
 
