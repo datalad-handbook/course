@@ -1,0 +1,131 @@
+say "Requirements"
+run 'datalad --version'
+run 'git config --global --add user.name "Adina Wagner"
+git config --global --add user.email "adina.wagner@t-online.de"'
+
+
+say "Command line tool and python API"
+run 'ipython'
+run 'import datalad.api as dl'
+run 'exit'
+
+say "DataLad datasets"
+run 'datalad create -c yoda myanalysis'
+run 'cd myanalysis
+tree'
+run 'ls -a    # show also hidden files'
+
+say "Now edit the README"
+run '# we delete placeholders in README
+echo " " >| README.md'
+run 'datalad status'
+run 'git diff'
+run 'echo " " >| code/README.md'
+run 'git diff'
+run 'datalad save -m "Replace placeholder in README"'
+run 'nano README.md'
+run 'git diff'
+run 'datalad save -m "Add project information to README" README.md'
+
+say 'RESEARCH LOG'
+run 'git log README.md'
+
+say "I WILL HIDE AN EASTEREGG NOW"
+run 'datalad download-url -m "add motivational comic to my dataset"  \
+-O .easteregg  \
+https://imgs.xkcd.com/comics/fuck_grapefruit.png'
+run 'xdg-open .easteregg'
+
+say 'DROP DATA'
+run 'datalad drop .easteregg'
+run 'xdg-open .easteregg    # its gone :(!'
+run 'datalad get .easteregg'
+run 'xdg-open .easteregg'
+
+say 'Now do it with really large data!'
+run 'cd ../
+datalad clone git@github.com:OpenNeuroDatasets/ds000221.git MPI-Leipzig_Mind-Brain-Body'
+run 'cd MPI-Leipzig_Mind-Brain-Body
+ls'
+run 'du -sh'
+run 'datalad status --annex'
+run 'datalad get sub-010002/ses-01/anat/'
+run 'datalad status --annex all'
+
+say "NOW SUBDATASETS"
+run 'cd ../myanalysis'
+run 'datalad clone -d . git@github.com:datalad-handbook/iris_data.git input/'
+
+run 'cat << EOT > code/script.py
+
+import pandas as pd
+import seaborn as sns
+import datalad.api as dl
+from sklearn import model_selection
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+
+data = "input/iris.csv"
+
+# make sure that the data are obtained (get will also install linked sub-ds!):
+dl.get(data)
+
+# prepare the data as a pandas dataframe
+df = pd.read_csv(data)
+attributes = ["sepal_length", "sepal_width", "petal_length","petal_width", "class"]
+df.columns = attributes
+
+# create a pairplot to plot pairwise relationships in the dataset
+plot = sns.pairplot(df, hue='"'"'class'"'"', palette='"'"'muted'"'"')
+plot.savefig('"'"'pairwise_relationships.png'"'"')
+
+# perform a K-nearest-neighbours classification with scikit-learn
+# Step 1: split data in test and training dataset (20:80)
+array = df.values
+X = array[:,0:4]
+Y = array[:,4]
+test_size = 0.20
+seed = 7
+X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y,
+                                                                    test_size=test_size,
+                                                                    random_state=seed)
+# Step 2: Fit the model and make predictions on the test dataset
+knn = KNeighborsClassifier()
+knn.fit(X_train, Y_train)
+predictions = knn.predict(X_test)
+
+# Step 3: Save the classification report
+report = classification_report(Y_test, predictions, output_dict=True)
+df_report = pd.DataFrame(report).transpose().to_csv('"'"'prediction_report.csv'"'"')
+
+EOT'
+run 'datalad status'
+run 'datalad save -m "add script for kNN classification and plotting" --version-tag ready4analysis code/script.py'
+run 'datalad status'
+run 'datalad run -m "analyze iris data with classification analysis" \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+run 'git log -n 1'
+
+run 'cd /demo
+datalad clone git@github.com:adswa/myanalysis.git analysis_clone'
+run 'cd analysis_clone'
+run 'datalad rerun 71cb8c5'
+run 'git log pairwise_relationships.png'
+
+say 'COMPUTATIONAL REPRODUCIBILITY'
+run 'cd ../myanalysis'
+run '# This requires installing datalad-container (via pip)
+datalad containers-add software --url shub://adswa/resources:2'
+run 'datalad containers-run -m "rerun analysis in container" \
+  --container-name software \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+
+run '# Thanks for your attention!'
+run '# :)'
+run '#'
