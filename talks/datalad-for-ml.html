@@ -120,7 +120,7 @@
     <td>
         Comprehensive user documentation in the<br>
         DataLad Handbook
-       <a href="http://handbook.datalad.org">(handbook.datalad.org)</a>
+       <a href="http://handbook.datalad.org" target="_blank">(handbook.datalad.org)</a>
     </td>
     <td>
       <img src="../pics/logo.svg" height="150">
@@ -173,7 +173,7 @@
     <ul>
         <li>DataLad ML example: <br>
             <a href="http://handbook.datalad.org/en/latest/usecases/ml-analysis.html" target="_blank">handbook.datalad.org/r.html?ml-usecase</a></li>
-        <li>DataLad versus DVC comparison: <a href="http://handbook.datalad.org/en/latest/beyond_basics/101-168-dvc.html" target="_blank">handbook.datalad.org/r.html?dl-for-ml</a></li>
+        <li>Code list with further links: <a href="http://handbook.datalad.org/en/latest/code_from_chapters/usecase_ml_code.html" target="_blank">handbook.datalad.org/r.html?FZJmlcode</a></li>
     </ul>
     <br>
     <li>Not-text-based resources:</li>
@@ -202,6 +202,24 @@
         <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8i8jvqUUgxCLuaFlwU0nFt6VBVC",
             style="border: 0", width="930", height="900"></iframe>
 </section>
+
+<section>
+    <h2>Live coding</h2>
+    <ul>
+        <li>Live-demonstration of DataLad examples and workflows throughout the talk</li>
+        <li>Code along with copy-paste code snippets: <a href="https://handbook.datalad.org/r.html?FZJmlcode" target="_blank">handbook.datalad.org/r.html?FZJmlcode</a> </li>
+        <li>Requirements:
+        <ul>
+            <li>DataLad version >= 0.12 (installation instructions at
+            <a href="https://handbook.datalad.org/en/latest/intro/installation.html" target="_blank">
+                handbook.datalad.org</a>) </li>
+            <li>For containerized analyses: DataLad extension <a href="http://handbook.datalad.org/en/latest/extension_pkgs.html#extensions-intro" target="_blank">
+                datalad-containers</a> (available via pip) + <a href="https://sylabs.io/guides/3.6/user-guide/" target="_blank">
+                Singularity
+            </a> </li>
+        </ul></li>
+    </ul>
+</section>
 </section>
 
 <!--...Datalad tech facts...-->
@@ -211,14 +229,18 @@
     <section>
     <h2> <img src="../pics/datalad_logo_wide.svg"></h2>
     <ul>
-        <li>A command-line tool, available for all major operating systems (Linux, macOS/OSX, Windows)</li>
+        <li>A command-line tool, available for all major operating systems
+            (Linux, macOS/OSX, Windows), MIT-licensed</li>
         <li>Build on top of <a href="https://git-scm.com/" target="_blank">Git</a>
             and <a href="https://git-annex.branchable.com/" target="_blank">Git-annex</a></li>
         <dt><li>Allows...</li></dt>
-        <dd>... version-controlling arbitrarily large content,</dd>
-        <dd>... transport mechanisms for sharing and obtaining data,</dd>
-        <dd>... (computationally) reproducible data analysis,
-        <dd>... and <i>much</i> more </dd>
+        <dt>... version-controlling arbitrarily large content </dt>
+        <dd>version control data and software alongside to code!</dd>
+        <dt>... transport mechanisms for sharing and obtaining data </dt>
+        <dd>consume and collaborate on data (analyses) like software</dd>
+        <dt>... (computationally) reproducible data analysis</dt>
+        <dd>Track and share provenance of all digital objects</dd>
+        <dt>... and <i>much</i> more </dt>
         <li>Completely domain-agnostic</li>
             <br>
     </ul>
@@ -287,14 +309,56 @@
 
 <section>
     <h2>Seamless nesting and dataset linkage</h2>
+
     <img src="../pics/artwork/src/linkage_subds.svg" width="900"> <br>
+    <ul>
+        <li class="fragment fade-in" data-fragment-index="2">Overcomes scaling issues with large amounts of files</li>
+        <pre  class="fragment fade-in" data-fragment-index="2"><code>adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
+15530572 annex'd files (77.9 TB recorded total size)
+nothing to save, working tree clean</code></pre>
+        <small><a class="fragment fade-in" data-fragment-index="2" href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
+        <li class="fragment fade-in">Modularizes research components for transparency, reuse, and access management</li>
+    </ul>
 </section>
 
 <section>
     <h2>Third party integrations</h2>
     <img src="../pics/artwork/src/thirdparty.svg" width="900"> <br>
+    <small>Apart from <b>local computing infrastructure</b> (from private laptops to computational clusters),
+        datasets can be hosted in major <b>third party repository hosting and cloud storage</b> services.
+        More info: Chapter on <a href="http://handbook.datalad.org/en/latest/basics/basics-thirdparty.html" target="_blank">
+            Third party infrastructure</a>.</small>
 </section>
 
+<section data-transition="None">
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+    <li class="fragment fade-in-then-semi-out"> <b>Publish or consume datasets</b> via GitHub, GitLab, OSF, or similar services</li>
+    <img height="850" class="fragment fade-in" src="../pics/clonedata.gif" alt="a screenrecording of cloning studyforrest data from github">
+</ul>
+</section>
+
+<section data-transition="None">
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+        <li class="fragment fade-in-then-semi-out"> <b>Creating and sharing reproducible, open science</b>: Sharing data, software, code, and provenance </li>
+        <img height="850" class="fragment fade-in" src="../pics/shareresearch2.gif" alt="a screenrecording of cloning REMODNAV paper dataset from github">
+</ul>
+</section>
+
+<section data-transition="None">
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+        <li class="fragment fade-in-then-semi-out"><b>Central data management</b> and archival system</li>
+        <img height="850" class="fragment fade-in" src="../pics/centralmanagement.gif">
+</ul>
+</section>
 </section>
 
 
@@ -303,7 +367,12 @@
 
 <section>
 <section>
-    <h2>DataLad Basics</h2>
+    <h2>Live demo Basics</h2>
+
+    Code to follow along:
+    <a href="http://handbook.datalad.org/r.html?FZJmlcode" target="_blank">
+        handbook.datalad.org/r.html?FZJmlcode
+    </a>
 </section>
 
 
@@ -327,13 +396,36 @@
 </section>
 
 <section>
-    <h2>Experience a DataLad dataset</h2>
-
-    Code to follow along:
-    <a href="http://handbook.datalad.org/en/latest/code_from_chapters/01_dataset_basics_code.html" target="_blank">
-        handbook.datalad.org/en/latest/code_from_chapters/01_dataset_basics_code.html
-    </a>
+    <h2>Questions!</h2>
+        <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8i8jvqUUgxCLuaFlwU0nFt6VBVC",
+            style="border: 0", width="930", height="900"></iframe>
 </section>
+
+<section>
+    <h2>Why version control?</h2>
+    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+    <ul>
+        <li class="fragment fade-in">keep things organized</li>
+        <li class="fragment fade-in">keep track of changes</li>
+        <li class="fragment fade-in">revert changes or go back to previous states</li>
+    </ul>
+<aside class="notes">
+<li>Not only manuscripts, but also data!</li>
+</aside>
+</section>
+
+<section>
+    <h2>Version Control</h2>
+
+    <ul>
+        <li>DataLad knows two things: Datasets and files</li>
+        <img class="fragment fade-in" data-fragment-index="1" style="box-shadow: 5px 5px 3px #888888" src="../pics/artwork/src/dataset.svg" height="330"> <img style="box-shadow: 5px 5px 3px #888888" height="330" class="fragment fade-in" data-fragment-index="2" src="../pics/artwork/src/local_wf.svg">
+     </ul><br>
+    <li class="fragment fade-in">
+        Every file you put into a in a dataset can be easily version-controlled,
+        regardless of size, with the same command. </li>
+</section>
+
 
 <section>
     <h2>Local version control</h2>
@@ -349,6 +441,46 @@
     </ul>
 </section>
 
+<section data-markdown><script type="text/template" >
+
+### This means: You can also version control data! <!-- .element: class="fragment" -->
+
+<pre><code class="bash" style="max-height:none">$ datalad save \
+   -m "Adding raw data from neuroimaging study 1" \
+   sub-*
+add(ok): sub-1/anat/T1w.json (file)
+add(ok): sub-1/anat/T1w.nii.gz (file)
+add(ok): sub-1/anat/T2w.json (file)
+add(ok): sub-1/anat/T2w.nii.gz (file)
+add(ok): sub-1/func/sub-1-run-1_bold.json (file)
+add(ok): sub-1/func/sub-1-run-1_bold.nii.gz (file)
+add(ok): sub-10/anat/T1w.json (file)
+add(ok): sub-10/anat/T1w.nii.gz (file)
+add(ok): sub-10/anat/T2w.json (file)
+add(ok): sub-10/anat/T2w.nii.gz (file)
+  [110 similar messages have been suppressed]
+save(ok): . (dataset)
+action summary:
+  add (ok: 120)
+  save (ok: 1)
+</code></pre>  <!-- .element: class="fragment" -->
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+## Version Control
+* Your dataset can be a complete research log, capturing everything that was done, when, by whom, and how
+![](../pics/researchlog.png)
+* Interact with the history:
+  * reset your dataset (or subset of it) to a previous state,
+  * throw out changes or bring them back,
+  * find out what was done when, how, why, and by whom
+  * Identify precise versions: Use data in the most recent version, or the one from 2018, or...
+  * ...
+</script>
+</section>
+
   <section>
     <h3>Summary - Local version control</h3>
 
@@ -361,7 +493,8 @@
       <br>
       <dt class="fragment fade-in"><code>datalad download-url</code> obtains web content and records its origin. </dt><dd class="fragment fade-in">It even takes care of saving the change.</dd>
       <br>
-      <dt class="fragment fade-in"><code>datalad status</code> reports the current state of the dataset.</dt> <dd class="fragment fade-in">A clean dataset status is good practice.</dd>
+      <dt class="fragment fade-in"><code>datalad status</code> reports the current state of the dataset.</dt>
+    <dd class="fragment fade-in">A clean dataset status (no modifications, not untracked files) is good practice.</dd>
     </dl>
 </section>
 
@@ -385,52 +518,86 @@
 </section>
 
 <section>
+
+<section data-markdown><script type="text/template" >
+## Consuming datasets
+* A dataset can be created from scratch/existing directories:
+<pre><code class="bash" style="max-height:none">$ datalad create mydataset
+[INFO   ] Creating a new annex repo at /home/adina/mydataset
+create(ok): /home/adina/mydataset (dataset)
+</code></pre>
+* but datasets can also be installed from paths or from URLs:
+<pre><code class="bash" style="max-height:none">$ datalad clone \
+   https://github.com/datalad-datasets/human-connectome-project-openaccess \
+   HCP
+install(ok): /tmp/HCP (dataset)
+</code></pre>
+</script>
+</section>
 <section>
     <h2>Consuming datasets</h2>
-    <img class="fragment fade-in" src="../pics/virtual_dstree_dl101.svg" height="600">
+
   <ul>
+    <li class="fragment fade-in">Here's how a dataset looks after installation:</li>
+      <img class="fragment fade-in" src="../pics/getdata.gif" height="700">
     <li class="fragment fade-in">Datasets are light-weight: Upon installation, only small
     files and meta data about file availability are retrieved.</li>
-    <li class="fragment fade-in">Content can be obtained on demand via <code>datalad get</code>.</li>
   </ul>
 </section>
 
 <section>
-    <h2>Dataset nesting</h2>
-    <img src="../pics/linkage.svg" height="500">
-</section>
-
-<section>
-    <h3>Summary - Dataset consumption & nesting</h3>
-
+    <h2>Plenty of data, but little disk-usage</h2>
     <ul>
-      <dt class="fragment fade-in"><code>datalad clone</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
-      Specify the source (url, path, ...) of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
-      <br>
-      <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
-      <br>
-      <dt class="fragment fade-in">Only small files and metadata about file availability are present locally after an install. </dt><dd class="fragment fade-in">To retrieve actual file content of larger files, <code>datalad get </code> downloads large file content on demand.</dd>
-      <br>
-      <dt class="fragment fade-in"><code>datalad status</code> can report on total and retrieved repository size</dt> <dd class="fragment fade-in">using <code>--annex</code> and <code>--annex all</code> options.</dd>
-      <br>
-      <dt class="fragment fade-in">Datasets preserve their history.</dt> <dd class="fragment fade-in">The superdataset records only the <i>version state</i> of the subdataset.</dd>
+        <li class="fragment fade-in-then-semi-out">Cloned datasets are lean.
+            "Meta data" (file names, availability) are present, but <b>no file content</b>:</li>
+<pre class="fragment fade-in"><code>$ datalad clone git@github.com:psychoinformatics-de/studyforrest-data-phase2.git
+install(ok): /tmp/studyforrest-data-phase2 (dataset)
+$ cd studyforrest-data-phase2 && du -sh
+18M	.</code></pre>
 
+<li class="fragment fade-in-then-semi-out">  file's contents can be retrieved on demand:</li>
     </ul>
+<pre class="fragment fade-in"><code>$ datalad get sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
+get(ok): /tmp/studyforrest-data-phase2/sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz (file) [from mddatasrc...]</code></pre>
+
+<li class="fragment fade-in">Have more access to your computer than you have disk-space:</li>
+<pre class="fragment fade-in"><code># eNKI dataset (1.5TB, 34k files):
+$ du -sh
+  1.5G	.
+# HCP dataset (80TB, 15 million files)
+$ du -sh
+48G	.
+</code></pre>
 </section>
 
-<section>
-    <h2>Questions!</h2>
-        <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8i8jvqUUgxCLuaFlwU0nFt6VBVC",
-            style="border: 0", width="930", height="900"></iframe>
-</section>
+<section data-markdown> <script type="text/template">
+## Plenty of data, but little disk-usage
+
+Drop file content that is not needed:
+<pre class="fragment fade-in-then-semi-out"><code>$ datalad drop sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
+drop(ok): /tmp/studyforrest-data-phase2/sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz (file) [checking https://arxiv.org/pdf/0904.3664v1.pdf...]</code></pre>
+When files are dropped, only "meta data" stays behind, and they can be re-obtained on demand.
+  This allows disk-space aware computations: <!-- .element: class="fragment fade-in" -->
+
+
+Install your input data <!-- .element: class="fragment fade-in" -->
+  *➡ get the data you need* <!-- .element: class="fragment fade-in" -->
+  *➡ compute your results* <!-- .element: class="fragment fade-in" -->
+  *➡ drop input data (and potentially all automatically re-computable results)* <!-- .element: class="fragment fade-in" -->
+
+</script></section>
 
 <section>
     <h2>Git versus Git-annex</h2>
     <dl>
         <dt>Data in datasets is either stored in Git or git-annex</dt>
-        <dd>By default, everything is stored in git-annex</dd>
+        <dd>By default, everything is <i>annexed</i>, i.e., stored in a dataset annex by git-annex</dd><br>
+        <li class="fragment fade-in-then-semi-out">With annexed data, only content identity (hash)
+            and location information is put into Git, rather than file content.
+            The annex, and transport to and from it is managed with <b>git-annex</b>
         <br>
         <br>
+        <small>
         <table>
             <tr>
                 <td><b>Git</b></td>
@@ -454,6 +621,7 @@
                 <td>Useful: Large files, private files</td>
             </tr>
         </table>
+            </small>
     </dl>
 </section>
 
@@ -504,11 +672,70 @@
     <ul>
         Users can decide which files are annexed:
         <br><br>
-        <li>Pre-made run-procedures, provided by DataLad (e.g., <code>text2git</code>, <code>yoda</code>)
+        <li><b>Pre-made run-procedures</b>, provided by DataLad (e.g., <code>text2git</code>, <code>yoda</code>)
             or created and shared by users
-            (<a href="http://handbook.datalad.org/en/latest/basics/101-124-procedures.html" target="_blank">Tutorial at handbook.datalad.org</a>) </li>
-        <li>Self-made configurations in <code>.gitattributes</code> (e.g., based on file type, file/path name, size, ...)</li>
+            (<a href="http://handbook.datalad.org/en/latest/basics/101-124-procedures.html" target="_blank">Tutorial</a>) </li>
+        <li>Self-made configurations in <code>.gitattributes</code> (e.g., based on file type,
+            file/path name, size, ...; <a href="http://handbook.datalad.org/en/latest/basics/101-123-config2.html#gitattributes" target="_blank">
+                rules and examples
+            </a> )</li>
         <li>Per-command basis (e.g., via <code>datalad save --to-git</code>)</li>
+    </ul>
+</section>
+
+
+<section data-transition="None">
+    <h2>Version Control: Nesting</h2>
+
+    <ul>
+        <li>Seamless nesting mechanisms:
+                <img height="330"  src="../pics/artwork/src/linkage_subds.svg">
+        <br>
+        <li class="fragment fade-in" data-fragment-index="2">Overcomes scaling issues with large amounts of files</li>
+        <pre  class="fragment fade-in" data-fragment-index="2"><code>adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
+15530572 annex'd files (77.9 TB recorded total size)
+nothing to save, working tree clean</code></pre>
+        <small><a class="fragment fade-in" data-fragment-index="2" href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
+        <li class="fragment fade-in">Modularizes research components for transparency, reuse, and access management</li>
+    </ul>
+
+
+
+    <aside class="notes">
+        Two advantages:
+        <ul>
+            <li>Scalable, size-independent version control</li>
+            <li>Modularization of research components to increase transparency
+                and aid component reuse, as individual components can be flexibly
+            puzzled together into new research objects, while being uniquely identified and versioned</li>
+        </ul>
+
+        At this point: Fixed data management, layed a foundation for updating data
+    </aside>
+</section>
+
+
+
+<section>
+    <h2>Dataset nesting</h2>
+    <img src="../pics/linkage.svg" height="500">
+</section>
+
+<section>
+    <h3>Summary - Dataset consumption & nesting</h3>
+
+    <ul>
+      <dt class="fragment fade-in"><code>datalad clone</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
+      Specify the source (url, path, ...) of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
+      <br>
+      <dt class="fragment fade-in">Only small files and metadata about file availability are present locally after an install. </dt>
+        <dd class="fragment fade-in">To retrieve actual file content of annexed files,
+            <code>datalad get </code> downloads file content on demand.</dd>
+      <br>
+      <dt class="fragment fade-in">Datasets preserve their history.</dt> <dd class="fragment fade-in">The superdataset records only the <i>version state</i> of the subdataset.</dd>
+
     </ul>
 </section>
 
@@ -522,13 +749,9 @@
 <section>
 <section data-transition="fade">
     <h2>reproducible data analysis</h2>
+     Your past self is the worst collaborator:
     <img src="../pics/ownlegacycode_phd.png" height="500">
   <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1689">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
-
-    <p class="fragment fade-in">Code to follow along:
-    <a href="http://handbook.datalad.org/en/latest/code_from_chapters/10_yoda_code.html" target="_blank">
-        handbook.datalad.org/en/latest/code_from_chapters/10_yoda_code.html
-    </a>
     </p>
 </section>
 
@@ -632,7 +855,8 @@
       <br>
       <dt class="fragment fade-in"><code>datalad containers-run</code> can be used
           to capture the software environment as provenance.</dt>
-        <dd class="fragment fade-in">Its ensures computations are ran in the desired software set up.</dd>
+        <dd class="fragment fade-in">Its ensures computations are ran in the desired software set up.
+            Supports Docker and Singularity containers</dd>
       <br>
       <dt class="fragment fade-in"><code>datalad rerun</code> can automatically re-execute run-records later.</dt>
         <dd class="fragment fade-in">They can be identified with any commit-ish (hash, tag, range, ...)</dd>
@@ -652,10 +876,6 @@
 <section>
 <section>
     <h2>A machine-learning example</h2>
-        Code to follow along:
-    <a href="http://handbook.datalad.org/en/latest/code_from_chapters/usecase_ml_code.html" target="_blank">
-       handbook.datalad.org/en/latest/code_from_chapters/usecase_ml_code.html
-    </a>
 </section>
 
 <section>
@@ -668,7 +888,7 @@
         <li class="fragment fade-in">Configure and setup an analysis dataset</li>
         <li class="fragment fade-in">Prepare data</li>
         <li class="fragment fade-in">Train models and evaluate them</li>
-        <li class="fragment fade-in">Compare different models</li>
+        <li class="fragment fade-in">Compare different models, repeat with updated data</li>
                 </ul>
             </td>
             <td>
@@ -677,6 +897,46 @@
             </td>
         </tr>
     </table>
+</section>
+
+<section>
+    <h2>Prepare an input dataset</h2>
+    <ul>
+        <li>Create a stand-alone input dataset</li>
+        <li>Either add data and <code>datalad save</code> it, or use commands such as <code>datalad download-url</code>
+    or <code>datalad add-urls</code> to retrieve it from web-sources</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Configure and setup an analysis dataset</h2>
+    <ul>
+        <li>Given the purpose of an analysis dataset, configurations can make it easier to use:</li>
+            <ul>
+                <li><code>-c yoda</code> prepares a useful structure</li>
+                <li><code>-c text2git</code> keeps text files such as scripts in Git</li>
+            </ul>
+        <li>The input dataset is installed as a subdataset</li>
+        <li>Required software is containerized and added to the dataset</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Prepare data</h2>
+    <ul>
+        <li>Add a script for data preparation (labels train and validation images)</li>
+        <li>Execute it using <code>datalad containers-run</code></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Train models and evaluate them</h2>
+    <ul>
+        <li>Add scripts for training and evaluation.
+            This dataset state can be tagged to identify it easily at a later point</li>
+        <li>Execute the scripts using <code>datalad containers-run</code></li>
+        <li>By dumping a trained model as a joblib object the trained classifier stays reusable</li>
+    </ul>
 </section>
 
 <section>
@@ -698,9 +958,24 @@
         </li>
     </ul>
 </section>
+</section>
 
 <section>
-    <h2>Questions!</h2>
+    <section data-transition="None">
+    <h2>Why use DataLad?</h2>
+    <ul>
+        <li class="fragment fade-in">Mistakes are not forever anymore: Easy version control, regardless of file size</li>
+        <li class="fragment fade-in">Who needs short-term memory when you can have run-records?</li>
+        <li class="fragment fade-in">Disk-usage magic: Have access to more data than your hard drive has space</li>
+        <li class="fragment fade-in">Collaboration and updating mechanisms: Alice shares her data with Bob. Alice fixes a mistake and pushes the fix.
+        Bob says "datalad update" and gets her changes. And vice-versa.</li>
+        <li class="fragment fade-in">Transparency: Shared datasets keep their history. No need to track down a former student,
+        ask their project what was done.</li>
+    </ul>
+</section>
+<section>
+    <h2>Thank you for your attention!</h2>
+    <h3>Questions!</h3>
         <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8i8jvqUUgxCLuaFlwU0nFt6VBVC",
             style="border: 0", width="930", height="900"></iframe>
 </section>
