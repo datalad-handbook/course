@@ -1,27 +1,151 @@
-run '### Code snippet 195
+run 'datalad --version'
+run 'git config --global --add user.name "Adina Wagner"
+git config --global --add user.email "adina.wagner@t-online.de"'
+
+
+say "Command line tool and python API"
+run 'ipython'
+run 'import datalad.api as dl'
+run 'exit'
+
+say "DataLad datasets"
+run 'datalad create -c yoda myanalysis'
+run 'cd myanalysis
+tree'
+run 'ls -a    # show also hidden files'
+
+say "Now edit the README"
+run '# we delete placeholders in README
+echo " " >| README.md'
+run 'datalad status'
+run 'git diff'
+run 'echo " " >| code/README.md'
+run 'git diff'
+run 'datalad save -m "Replace placeholder in README"'
+run 'nano README.md'
+run 'git diff'
+run 'wget https://imgs.xkcd.com/comics/compiling.png'
+run 'datalad status'
+run 'datalad save -m "Add project information to README" README.md'
+run 'datalad save -m "Add a motivational webcomic"'
+
+say 'RESEARCH LOG'
+run 'git log README.md'
+
+say "I WILL HIDE AN EASTEREGG NOW"
+run 'datalad download-url -m "add motivational comic to my dataset"  \
+-O .easteregg  \
+https://imgs.xkcd.com/comics/fuck_grapefruit.png'
+run 'xdg-open .easteregg'
+
+say 'CONSUME DATASETS'
+run 'cd ../
+datalad clone git@github.com:datalad-datasets/machinelearning-books.git'
+run 'cd machinelearning-books'
+run 'ls'
+run 'datalad get D*'
+run 'datalad drop D.C.C.MacKay-Information_Theory_Inference_and_Learning_Algorithms.pdf'
+
+say 'DROP DATA'
+run 'cd ../myanalysis'
+run 'datalad drop .easteregg'
+run 'xdg-open .easteregg    # its gone :(!'
+run 'datalad get .easteregg'
+run 'xdg-open .easteregg'
+
+say "NOW SUBDATASETS"
+run 'datalad clone -d . git@github.com:datalad-handbook/iris_data.git input/'
+
+run 'cat << EOT > code/script.py
+
+import pandas as pd
+import seaborn as sns
+import datalad.api as dl
+from sklearn import model_selection
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+
+data = "input/iris.csv"
+
+# make sure that the data are obtained (get will also install linked sub-ds!):
+dl.get(data)
+
+# prepare the data as a pandas dataframe
+df = pd.read_csv(data)
+attributes = ["sepal_length", "sepal_width", "petal_length","petal_width", "class"]
+df.columns = attributes
+
+# create a pairplot to plot pairwise relationships in the dataset
+plot = sns.pairplot(df, hue='"'"'class'"'"', palette='"'"'muted'"'"')
+plot.savefig('"'"'pairwise_relationships.png'"'"')
+
+# perform a K-nearest-neighbours classification with scikit-learn
+# Step 1: split data in test and training dataset (20:80)
+array = df.values
+X = array[:,0:4]
+Y = array[:,4]
+test_size = 0.20
+seed = 7
+X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y,
+                                                                    test_size=test_size,
+                                                                    random_state=seed)
+# Step 2: Fit the model and make predictions on the test dataset
+knn = KNeighborsClassifier()
+knn.fit(X_train, Y_train)
+predictions = knn.predict(X_test)
+
+# Step 3: Save the classification report
+report = classification_report(Y_test, predictions, output_dict=True)
+df_report = pd.DataFrame(report).transpose().to_csv('"'"'prediction_report.csv'"'"')
+
+EOT'
+run 'datalad status'
+run 'datalad save -m "add script for kNN classification and plotting" --version-tag ready4analysis code/script.py'
+run 'datalad status'
+run 'datalad run -m "analyze iris data with classification analysis" \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+run 'git log -n 1'
+
+run 'cd ../
+datalad clone git@github.com:adswa/myanalysis.git analysis_clone'
+run 'cd analysis_clone'
+run 'datalad rerun 71cb8c5'
+run 'git log pairwise_relationships.png'
+
+say 'COMPUTATIONAL REPRODUCIBILITY'
+run 'cd ../myanalysis'
+run '# This requires installing datalad-container (via pip) and Singularity
+datalad containers-add software --url shub://adswa/resources:2'
+run 'datalad containers-run -m "rerun analysis in container" \
+  --container-name software \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+
+say 'ML EXAMPLE NOW'
+run 'cd ../
 datalad create imagenette'
-run '### Code snippet 196
-cd imagenette
+run 'cd imagenette
 # 0.12.2 <= datalad < 0.13.4  needs the configuration option -c datalad.runtime.use-patool=1 to handle .tgz
 datalad -c datalad.runtime.use-patool=1 download-url \
   --archive \
   --message "Download Imagenette dataset" \
-  '"'"'https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz'"'"' \'
-run '### Code snippet 197
-cd ../
+  '"'"'https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz'"'"' '
+run '#'
+run 'cd ../
 datalad create -c text2git -c yoda ml-project'
-run '### Code snippet 198
-cd ml-project
+run 'cd ml-project
 mkdir -p data
 # install the dataset into data/
 datalad clone -d . ../imagenette data/raw'
-run '### Code snippet 199
-# show the directory hierarchy
+run '# show the directory hierarchy
 tree -d'
-run '### Code snippet 200
-datalad containers-add software --url shub://adswa/python-ml:1'
-run '### Code snippet 201
-cat << EOT > code/prepare.py
+run 'datalad containers-add software --url shub://adswa/python-ml:1'
+run 'cat << EOT > code/prepare.py
 #!/usr/bin/env python3
 
 import pandas as pd
@@ -64,12 +188,9 @@ if __name__ == "__main__":
     repo_path = Path(__file__).parent.parent
     main(repo_path)
 EOT'
-run '### Code snippet 202
-datalad status'
-run '### Code snippet 203
-datalad save -m "Add script for data preparation for 2 categories" code/prepare.py'
-run '### Code snippet 204
-datalad containers-run -n software \
+run 'datalad status'
+run 'datalad save -m "Add script for data preparation for 2 categories" --version-tag "ready4prepping" code/prepare.py'
+run 'datalad containers-run -n software \
   -m "Prepare the data for categories golf balls and parachutes" \
   --input '"'"'data/raw/imagenette2-160/train/n03445777'"'"' \
   --input '"'"'data/raw/imagenette2-160/val/n03445777'"'"' \
@@ -78,8 +199,7 @@ datalad containers-run -n software \
   --output '"'"'data/train.csv'"'"' \
   --output '"'"'data/test.csv'"'"' \
   "python3 code/prepare.py"'
-run '### Code snippet 205
-cat << EOT > code/train.py
+run 'cat << EOT > code/train.py
 #!/usr/bin/env python3
 
 from joblib import dump
@@ -130,10 +250,8 @@ if __name__ == "__main__":
     repo_path = Path(__file__).parent.parent
     main(repo_path)
 EOT'
-run '### Code snippet 206
-datalad save -m "Add SGD classification script" code/train.py'
-run '### Code snippet 207
-cat << EOT > code/evaluate.py
+run 'datalad save -m "Add SGD classification script" code/train.py'
+run 'cat << EOT > code/evaluate.py
 
 #!/usr/bin/env python3
 
@@ -162,30 +280,22 @@ if __name__ == "__main__":
     repo_path = Path(__file__).parent.parent
     main(repo_path)
 EOT'
-run '### Code snippet 208
-datalad save -m "Add script to evaluate model performance" --version-tag "ready4analysis" code/evaluate.py'
-run '### Code snippet 209
-datalad containers-run -n software \
+run 'datalad save -m "Add script to evaluate model performance" --version-tag "ready4analysis" code/evaluate.py'
+run 'datalad containers-run -n software \
   -m "Train an SGD classifier on the data" \
   --input '"'"'data/raw/imagenette2-160/train/*'"'"' \
   --output '"'"'model.joblib'"'"' \
   "python3 code/train.py"'
-run '### Code snippet 210
-datalad containers-run -n software \
+run 'datalad containers-run -n software \
   -m "Evaluate SGD classifier on test data" \
   --input '"'"'data/raw/imagenette2-160/val/*'"'"' \
   --output '"'"'accuracy.json'"'"' \
   "python3 code/evaluate.py"'
-run '### Code snippet 211
-sed -i '"'"'s/SGDClassifier(max_iter=10)/SGDClassifier(max_iter=100)/g'"'"' code/train.py'
-run '### Code snippet 212
-git diff'
-run '### Code snippet 213
-datalad save -m "Increase the amount of iterations to 100" --version-tag "SGD-100" code/train.py'
-run '### Code snippet 214
-datalad rerun -m "Recompute classification with more iterations" ready4analysis..SGD-100'
-run '### Code snippet 215
-cat << EOT >| code/train.py
+run 'sed -i '"'"'s/SGDClassifier(max_iter=10)/SGDClassifier(max_iter=100)/g'"'"' code/train.py'
+run 'git diff'
+run 'datalad save -m "Increase the amount of iterations to 100" --version-tag "SGD-100" code/train.py'
+run 'datalad rerun -m "Recompute classification with more iterations" ready4analysis..SGD-100'
+run 'cat << EOT >| code/train.py
 #!/usr/bin/env python3
 
 from joblib import dump
@@ -230,12 +340,25 @@ if __name__ == "__main__":
     repo_path = Path(__file__).parent.parent
     main(repo_path)
 EOT'
-run '### Code snippet 216
-datalad save -m "Switch to random forest classification" --version-tag "random-forest" code/train.py'
-run '### Code snippet 217
-datalad rerun --branch="randomforest" -m "Recompute classification with random forest classifier" ready4analysis..SGD-100'
-run '### Code snippet 218
-git diff master -- accuracy.json'
-run '### Code snippet 219
-git checkout master
+run 'git diff'
+run 'datalad save -m "Switch to random forest classification" --version-tag "random-forest" code/train.py'
+run 'datalad rerun --branch="randomforest" -m "Recompute classification with random forest classifier" ready4analysis..SGD-100'
+run 'git diff master -- accuracy.json'
+run 'git checkout master
 cat accuracy.json'
+
+say 'CHANGE DATA'
+run 'cd ../imagenette
+rm imagenette2-160/train/n03445777/ILSVRC2012_val_00002314.JPEG'
+run 'datalad status'
+run 'datalad save -m "remove faulty image"'
+run 'cd ../ml-project/data/raw
+datalad update --merge'
+run 'git log'
+run 'cd ../../
+datalad status'
+run 'datalad save -m "Update input data - we removed a file"'
+run 'datalad rerun -m "Recompute classification with fewer data" ready4prepping..SGD-100'
+run '#'
+run '# Done!'
+run '# Thanks for your attention!'
