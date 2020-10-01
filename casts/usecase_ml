@@ -49,6 +49,7 @@ run 'datalad drop D.C.C.MacKay-Information_Theory_Inference_and_Learning_Algorit
 say 'DROP DATA'
 run 'cd ../myanalysis'
 run 'datalad drop .easteregg'
+run 'datalad drop compiling.png'
 run 'xdg-open .easteregg    # its gone :(!'
 run 'datalad get .easteregg'
 run 'xdg-open .easteregg'
