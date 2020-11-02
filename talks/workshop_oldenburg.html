@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title> Data storage and retrieval </title>
+  <meta name="description" content=" ...Lad ">
+  <meta name="author" content=" Michael Hanke & Adina Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+<h1>Data ... <strong>Lad</strong></h1>
+  <p>Michael Hanke &amp; Adina Wagner</p>
+  <p style="margin-top:50px"><img style="height:100px;margin-right:100px" data-src="../pics/fzj_logo.svg" />
+  <img style="height:100px" data-src="../pics/hhu_logo.svg" /><br/>
+</section>
+
+<section data-transition="None">
+<h2>Use cases in data storage and retrieval</h2>
+
+<ul>
+    <li>DataLad: Joint management of digital objects through their entire life cycle</li> <br>
+DataLad's features,
+</ul>
+        <li>Version control</li>
+        <li>Transport logistics</li>
+        <li>Interoperability</li>
+        <li>Provenance capture</li>
+<ul><br>
+
+enable a range of common use cases for storing and retrieving data
+</ul>
+</section>
+
+<section>
+<section data-transition="None">
+    <h2>Data sharing & consumption</h2>
+    <table>
+        <tr>
+            <td>
+                <img src="../pics/services_only.png" height="600">
+            </td>
+            <td>
+            <ul>
+                <li class="fragment fade-in-then-semi-out">Many options for sharing <br>
+                and storing data</li>
+                <li class="fragment fade-in-then-semi-out">Often university-/lab-wide <br>
+                standards, but lack of generic <br>
+                and interoperable workflows</li>
+
+            </ul>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section data-transition="None">
+    <h2>Data sharing & consumption</h2>
+    <table>
+        <tr>
+            <td>
+                <img src="../pics/services_connected.png" height="600">
+            </td>
+            <td>
+            <ul>
+                <li>Generic interface to a<br>variety of third party<br>services & storage providers</li>
+                <li class="fragment fade-in">Enables interoperable<br>workflows independent of<br>the chosen service </li>
+            </ul>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section data-transition="None">
+    <h2>Data sharing & consumption</h2>
+    <img src="../pics/artwork/src/collaboration.svg" height="600">
+</section>
+
+<section data-transition="None">
+    <h2>Data sharing & consumption</h2>
+    <ul>
+    <li class="fragment fade-in-then-semi-out"> <b>Publish (or consume) datasets</b> via GitHub, GitLab, Gin, OSF, or similar services</li>
+    </ul>
+    <img height="850" class="fragment fade-in" src="../pics/clonedata.gif" alt="a screenrecording of cloning studyforrest data from github">
+</section>
+
+<section data-transition="None">
+    <h2>Data sharing & consumption</h2>
+    <ul>
+    <li> <b>Publish (or consume) datasets</b> via GitHub, GitLab, Gin, OSF, or similar services</li>
+    </ul>
+    <img height="850" src="../pics/randomginrepo.png">
+</section>
+
+<section data-transition="None">
+    <h2>Data sharing & consumption</h2>
+    <ul>
+    <li> <b>Publish (or consume) datasets</b> via GitHub, GitLab, Gin, OSF, or similar services</li>
+    </ul>
+    <img height="550" src="../pics/datalad-osf.png">
+</section>
+
+<section data-transition="None">
+        <h2>Data sharing & consumption</h2>
+    <ul>
+        <li class="fragment fade-in-then-semi-out">Special Case: <b>Central data management</b> and archival system</li>
+    </ul>
+        <img height="850" class="fragment fade-in" src="../pics/centralmanagement.gif">
+</section>
+</section>
+
+<section>
+<section data-transition="None">
+    <h2>Beyond data: Provenance</h2>
+    <table>
+        <tr>
+            <td>
+                <img src="../pics/Provenance_alpha.png">
+                <imgcredit>CC-BY Scriberia and The Turing Way</imgcredit>
+            </td>
+            <td>
+            <ul>
+                <li class="fragment fade-in">Create, share & use
+                provenance of research objects</li>
+                <li class="fragment fade-in">Link code, data, software
+                    container and re-executable
+                    analysis records
+                </li>
+            </ul>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section data-transition="None">
+    <h2>Beyond data: Provenance</h2>
+    <ul>
+        <li class="fragment fade-in-then-semi-out"> <b>Creating and sharing reproducible, open science</b>: Sharing data, software, code, and provenance </li>
+        </ul>
+        <img height="850" class="fragment fade-in" src="../pics/shareresearch2.gif" alt="a screenrecording of cloning REMODNAV paper dataset from github">
+</section>
+
+<section data-transition="None">
+    <h2>Containerized workflows</h2>
+    <img src="../pics/containers-run.svg">
+</section>
+
+<section data-transition="None">
+    <h2>Containerized workflows</h2>
+    <img src="../pics/containersrun.gif">
+</section>
+<section data-transition="None">
+    <h2>Large-scale, containerized workflows</h2>
+    <img src="../pics/enkichapter.gif">
+</section>
+</section>
+
+<section>
+<section>
+    <h2>Concepts: Data sharing without privacy breach</h2>
+    <ul>
+        <li>Expose (sensitive) file content versus anonymized metadata on a per-file basis</li>
+    </ul>
+<img src="../pics/gdpr_anon_dataset.svg">
+</section>
+
+<section>
+    <h2>Concepts: Computation to data</h2>
+    <ul>
+        <li>Expose sufficient anonymized metadata to allow code development,
+            but don't share raw data, only results</li>
+    </ul>
+    <img src="../pics/datalad_hospital.svg">
+</section>
+</section>
+
+<section>
+    <section>
+        <h2>Find out more</h2>
+<table>
+  <tr>
+    <td>
+        More use cases & comprehensive user documentation in the<br>
+        DataLad Handbook
+       <a href="http://handbook.datalad.org">(handbook.datalad.org)</a>
+    </td>
+    <td>
+      <img src="../pics/logo.svg" height="150">
+    </td>
+  </tr>
+</table>
+
+  <table>
+      <tr>
+          <td><img src="../pics/artwork/src/enter.svg" height="100"></a></td>
+          <td>
+            <ul>
+              <li>High-level function/command overviews, <br>
+                  Installation, Configuration, Cheatsheet</li>
+            </ul>
+          </td>
+      </tr>
+      <tr>
+          <td><img src="../pics/artwork/src/basics.svg" height="100"></td>
+          <td>
+            <ul>
+              <li>Narrative-based code-along course</li>
+              <li>Independent on background/skill level, <br>
+                  suitable for data management novices</li>
+            </ul>
+          </td>
+     </tr>
+      <tr>
+          <td><img src="../pics/artwork/src/usecases.svg" height="100"></td>
+          <td>
+            <ul>
+              <li>Step-by-step solutions to common <br>
+                  data management problems</li>
+            </ul>
+          </td>
+      </tr>
+  </table>
+
+<aside class="notes">
+- what is in it?
+- how is it structured?
+- who and what is it aiming for?
+- show "big picture" figure
+- claim data management demands of science map well onto datalad functionality
+- summarize remaining principles (obsoletion insurance, etc.)
+</aside>
+</script>
+    </section>
+</section>
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
