@@ -154,6 +154,63 @@ enable a range of common use cases for storing and retrieving data
     <img src="../pics/containers-run.svg">
 </section>
 
+
+<section data-transition="None">
+    <h2>Provenance capture</h2>
+    <ul>
+        <li><b>Computational provenance</b>: Datasets can track <b>software containers</b>,
+            and perform and record computations inside it:
+        </li>
+            <pre><code class="bash" style="max-height:none">$ datalad containers-run -n neuroimaging-container \
+  --input 'mri/*_bold.nii --output 'sub-*/LC_timeseries_run-*.csv' \
+  "bash -c 'for sub in sub-*; do for run in run-1 ... run-8;
+     do python3 code/extract_lc_timeseries.py \$sub \$run; done; done'"
+
+-- Git commit -- Michael Hanke < ... @gmail.com>; Fri Jul 6 11:02:28 2019
+    [DATALAD RUNCMD] singularity exec --bind {pwd} .datalad/e...
+    === Do not change lines below ===
+    {
+     "cmd": "singularity exec --bind {pwd} .datalad/environments/nilearn.simg bash..",
+     "dsid": "92ea1faa-632a-11e8-af29-a0369f7c647e",
+     "inputs": [
+      "mri/*.bold.nii.gz",
+      ".datalad/environments/nilearn.simg"
+     ],
+     "outputs": ["sub-*/LC_timeseries_run-*.csv"],
+     ...
+    }
+    ^^^ Do not change lines above ^^^
+---
+ sub-01/LC_timeseries_run-1.csv | 1 +
+...</code></pre>
+    </ul>
+</section>
+
+<section data-transition="None">
+    <h2>Provenance capture</h2>
+    <ul>
+         <li>All recorded transformations can be re-computed automatically</li>
+            <pre><code class="bash" style="max-height:none">$ datalad rerun eee1356bb7e8f921174e404c6df6aadcc1f158f0
+[INFO] == Command start (output follows) =====
+[INFO] == Command exit (modification check follows) =====
+add(ok): sub-01/LC_timeseries_run-1.csv (file)
+...
+save(ok): . (dataset)
+action summary:
+  add (ok: 45)
+  save (notneeded: 45, ok: 1)
+  unlock (notneeded: 45)
+...</code></pre>
+
+    <ul>
+        <li>Aid with the reproducibility of a result and verify it (via content hash)</li>
+        <li>Use complete capture and automatic re-computation as alternative to storage and transport</li>
+</li></li>
+    </ul>
+
+    </ul>
+</section>
+
 <section data-transition="None">
     <h2>Containerized workflows</h2>
     <img src="../pics/containersrun.gif">
