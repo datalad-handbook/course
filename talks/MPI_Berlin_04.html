@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Lennart Wittkuhn ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+  <!-- DATA PUBLICATION -->
+
+  <section>
+  <section>
+      <h2>Publishing data</h2>
+      <ul>
+          <li class="fragment-fade-in-then-semi-out">
+
+          </li>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Transport logistics</h2>
+      <ul>
+          <li>Share data like source code</li>
+          <li class="fragment fade-in-then-semi-out" data-fragment-index="1">Datasets can be cloned, pushed, and updated from and to local paths,
+          remote hosting services, external special remotes</li>
+      </ul>
+      <img class="fragment fade-in" data-fragment-index="1" style="box-shadow: 5px 5px 3px #888888"  height="330" src="../pics/artwork/src/collaboration.svg">
+      <ul>
+      <li class="fragment fade-in" data-fragment-index="2">Flexible data access management for annexed file contents based on storage location</li>
+      </ul>
+  <aside class="notes">
+  Idea behind datalad: Enable a similar level of tooling and culture for the distribution and version control of data as it is present for open source software development
+  </aside>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Interoperability</h2>
+      <ul>
+          <li>DataLad is built to maximize interoperability and use with hosting and
+              storage technology</li>
+      </ul>
+      <img class="fragment fade-in" src="../pics/services_only.png" height="650">
+  </section>
+
+  <section data-transition="None">
+      <h2>Interoperability</h2>
+      <ul>
+          <li>DataLad is built to maximize interoperability and use with hosting and
+              storage technology</li>
+      </ul>
+      <img src="../pics/services_connected.png" height="650">
+  </section>
+
+
+  <section>
+      <h2>Publishing datasets</h2>
+      I have a dataset on my computer. How can I share it, or collaborate on it?
+      <img height="900" src="../pics/artwork/src/publishing/startingpoint.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul>
+          <li>Most public datasets separate content in Git versus git-annex behind the scenes</li>
+      </ul>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_gitvsannex.svg">
+
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishparts.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishparts2.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      Typical case:
+      <ul>
+          <li class="fragment fade-in">
+              Datasets are exposed via a private or public repository on a
+              repository hosting service
+          </li>
+          <li class="fragment fade-in">
+              Data can't be stored in the repository hosting service, but can be
+              kept in almost any third party storage
+          </li>
+          <li class="fragment fade-in">
+              Publication dependencies automate pushing to the correct place
+          </li>
+      </ul>
+      <img src="../pics/artwork/src/publishing/publishing_network_publishdepends.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <pre><code style="bash">$ git config --local remote.github.datalad-publish-depends gdrive </code></pre>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishdepends.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul>
+      <li>Real-life example:</li>
+      <img height="850" class="fragment fade-in" src="../pics/clonedata.gif" alt="a screenrecording of cloning studyforrest data from github">
+  </ul>
+  </section>
+
+
+  <section>
+      <h2>Cloning datasets datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_local.svg">
+  </section>
+
+  <section>
+      <h2>Cloning datasets datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_server.svg">
+  </section>
+
+  <section>
+      <h2>Cloning datasets datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_url.svg">
+  </section>
+  </section>
+
+
+  <!-- COLLABORATION -->
+
+  <section>
+
+  <section>
+      <h2>HEADING</h2>
+      <ul>
+          <li class="fragment-fade-in-then-semi-out">
+
+          </li>
+      </ul>
+  </section>
+
+  <section>
+      <h2>HEADING</h2>
+      <ul>
+          <li class="fragment-fade-in-then-semi-out">
+
+          </li>
+      </ul>
+  </section>
+
+  </section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>

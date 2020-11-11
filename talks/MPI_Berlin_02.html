@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Lennart Wittkuhn ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+  <!--...Datalad Basics...-->
+
+  <section>
+  <section>
+      <h2>Live demo Basics</h2>
+
+      Code to follow along:
+      <a href="http://handbook.datalad.org/r.html?FZJmlcode" target="_blank">
+          handbook.datalad.org/r.html?FZJmlcode
+      </a>
+  </section>
+
+
+  <section>
+      <h2>DataLad Datasets</h2>
+
+      <ul>
+          <li>DataLad's core data structure</li>
+          <ul>
+              <li class="fragment fade-in">Dataset = A directory managed by DataLad</li>
+              <li class="fragment fade-in">Any directory of your computer can be managed by DataLad.</li>
+              <li class="fragment fade-in">Datasets can be <i>created</i> (from scratch) or <i>installed</i></li>
+              <li class="fragment fade-in">Datasets can be nested: <i>linked subdirectories</i></li>
+          </ul>
+      </ul>
+
+  <aside class="notes">
+      <li>anything can be managed: CV, website, music library, phd</li>
+      <li>show this on the manuscript repo: history, looks/feels</li>
+  </aside>
+  </section>
+
+  <section>
+      <h2>Questions!</h2>
+          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
+
+  <section>
+      <h2>Why version control?</h2>
+      <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+      <ul>
+          <li class="fragment fade-in">keep things organized</li>
+          <li class="fragment fade-in">keep track of changes</li>
+          <li class="fragment fade-in">revert changes or go back to previous states</li>
+      </ul>
+  <aside class="notes">
+  <li>Not only manuscripts, but also data!</li>
+  </aside>
+  </section>
+
+  <section>
+      <h2>Version Control</h2>
+
+      <ul>
+          <li>DataLad knows two things: Datasets and files</li>
+          <img class="fragment fade-in" data-fragment-index="1" style="box-shadow: 5px 5px 3px #888888" src="../pics/artwork/src/dataset.svg" height="330"> <img style="box-shadow: 5px 5px 3px #888888" height="330" class="fragment fade-in" data-fragment-index="2" src="../pics/artwork/src/local_wf.svg">
+       </ul><br>
+      <li class="fragment fade-in">
+          Every file you put into a in a dataset can be easily version-controlled,
+          regardless of size, with the same command. </li>
+  </section>
+
+
+  <section>
+      <h2>Local version control</h2>
+
+      <p>Procedurally, version control is easy with DataLad!</p>
+      <img class="fragment fade-in" src="../pics/local_wf.svg" height="500"> <!-- .element: class="fragment" -->
+      <br>
+
+      <b class="fragment fade-in">Advice:</b>
+      <ul>
+        <li class="fragment fade-in">Save <i>meaningful</i> units of change</li>
+        <li class="fragment fade-in">Attach helpful commit messages</li>
+      </ul>
+  </section>
+
+  <section data-markdown><script type="text/template" >
+
+  ### This means: You can also version control data! <!-- .element: class="fragment" -->
+
+  <pre><code class="bash" style="max-height:none">$ datalad save \
+     -m "Adding raw data from neuroimaging study 1" \
+     sub-*
+  add(ok): sub-1/anat/T1w.json (file)
+  add(ok): sub-1/anat/T1w.nii.gz (file)
+  add(ok): sub-1/anat/T2w.json (file)
+  add(ok): sub-1/anat/T2w.nii.gz (file)
+  add(ok): sub-1/func/sub-1-run-1_bold.json (file)
+  add(ok): sub-1/func/sub-1-run-1_bold.nii.gz (file)
+  add(ok): sub-10/anat/T1w.json (file)
+  add(ok): sub-10/anat/T1w.nii.gz (file)
+  add(ok): sub-10/anat/T2w.json (file)
+  add(ok): sub-10/anat/T2w.nii.gz (file)
+    [110 similar messages have been suppressed]
+  save(ok): . (dataset)
+  action summary:
+    add (ok: 120)
+    save (ok: 1)
+  </code></pre>  <!-- .element: class="fragment" -->
+
+  </script>
+  </section>
+
+  <section data-markdown><script type="text/template" >
+  ## Version Control
+  * Your dataset can be a complete research log, capturing everything that was done, when, by whom, and how
+  ![](../pics/researchlog.png)
+  * Interact with the history:
+    * reset your dataset (or subset of it) to a previous state,
+    * throw out changes or bring them back,
+    * find out what was done when, how, why, and by whom
+    * Identify precise versions: Use data in the most recent version, or the one from 2018, or...
+    * ...
+  </script>
+  </section>
+
+    <section>
+      <h3>Summary - Local version control</h3>
+
+  <dl>
+        <dt class="fragment fade-in"><code>datalad create</code> creates an empty dataset.</dt> <dd class="fragment fade-in">Configurations (<b>-c yoda</b>, <b>-c text2git</b>) are useful (details soon).</dd>
+        <br>
+        <dt class="fragment fade-in">A dataset has a <i>history</i> to track files and their modifications. </dt><dd class="fragment fade-in">Explore it with Git (<b>git log</b>) or external tools (e.g., <b>tig</b>).</dd>
+        <br>
+        <dt class="fragment fade-in"><code>datalad save</code> records the dataset or file state to the history. </dt><dd class="fragment fade-in">Concise <b>commit messages</b> should summarize the change for future you and others.</dd>
+        <br>
+        <dt class="fragment fade-in"><code>datalad download-url</code> obtains web content and records its origin. </dt><dd class="fragment fade-in">It even takes care of saving the change.</dd>
+        <br>
+        <dt class="fragment fade-in"><code>datalad status</code> reports the current state of the dataset.</dt>
+      <dd class="fragment fade-in">A clean dataset status (no modifications, not untracked files) is good practice.</dd>
+      </dl>
+  </section>
+
+
+  <section data-markdown><script type="text/template">
+  ## From here <span class="fragment" data-fragment-index="1" style="margin-left:350px">to this:</span>
+  ![](../pics/finaldoc_comic.gif)<!-- .element: height="780" style="box-shadow: 10px 10px 8px #888888" -->
+  ![](../pics/gitflow.png)<!-- .element: class="fragment" data-fragment-index="1" height="780" style="box-shadow: 10px 10px 8px #888888" -->
+
+  <p class="fragment" data-fragment-index="2">BUT: Version control is only one aspect of data management</p>
+
+  </script>
+  </section>
+
+
+  <section>
+      <h2>Questions!</h2>
+          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
+  </section>
+
+  <section>
+
+  <section data-markdown><script type="text/template" >
+  ## Consuming datasets
+  * A dataset can be created from scratch/existing directories:
+  <pre><code class="bash" style="max-height:none">$ datalad create mydataset
+  [INFO   ] Creating a new annex repo at /home/adina/mydataset
+  create(ok): /home/adina/mydataset (dataset)
+  </code></pre>
+  * but datasets can also be installed from paths or from URLs:
+  <pre><code class="bash" style="max-height:none">$ datalad clone \
+     https://github.com/datalad-datasets/human-connectome-project-openaccess \
+     HCP
+  install(ok): /tmp/HCP (dataset)
+  </code></pre>
+  </script>
+  </section>
+  <section>
+      <h2>Consuming datasets</h2>
+
+    <ul>
+      <li class="fragment fade-in">Here's how a dataset looks after installation:</li>
+        <img class="fragment fade-in" src="../pics/getdata.gif" height="700">
+      <li class="fragment fade-in">Datasets are light-weight: Upon installation, only small
+      files and meta data about file availability are retrieved.</li>
+    </ul>
+  </section>
+
+  <section>
+      <h2>Plenty of data, but little disk-usage</h2>
+      <ul>
+          <li class="fragment fade-in-then-semi-out">Cloned datasets are lean.
+              "Meta data" (file names, availability) are present, but <b>no file content</b>:</li>
+  <pre class="fragment fade-in"><code>$ datalad clone git@github.com:psychoinformatics-de/studyforrest-data-phase2.git
+  install(ok): /tmp/studyforrest-data-phase2 (dataset)
+  $ cd studyforrest-data-phase2 && du -sh
+  18M	.</code></pre>
+
+  <li class="fragment fade-in-then-semi-out">  file's contents can be retrieved on demand:</li>
+      </ul>
+  <pre class="fragment fade-in"><code>$ datalad get sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
+  get(ok): /tmp/studyforrest-data-phase2/sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz (file) [from mddatasrc...]</code></pre>
+
+  <li class="fragment fade-in">Have more access to your computer than you have disk-space:</li>
+  <pre class="fragment fade-in"><code># eNKI dataset (1.5TB, 34k files):
+  $ du -sh
+    1.5G	.
+  # HCP dataset (80TB, 15 million files)
+  $ du -sh
+  48G	.
+  </code></pre>
+  </section>
+
+  <section data-markdown> <script type="text/template">
+  ## Plenty of data, but little disk-usage
+
+  Drop file content that is not needed:
+  <pre class="fragment fade-in-then-semi-out"><code>$ datalad drop sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
+  drop(ok): /tmp/studyforrest-data-phase2/sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz (file) [checking https://arxiv.org/pdf/0904.3664v1.pdf...]</code></pre>
+  When files are dropped, only "meta data" stays behind, and they can be re-obtained on demand.
+    This allows disk-space aware computations: <!-- .element: class="fragment fade-in" -->
+
+
+  Install your input data <!-- .element: class="fragment fade-in" -->
+    *➡ get the data you need* <!-- .element: class="fragment fade-in" -->
+    *➡ compute your results* <!-- .element: class="fragment fade-in" -->
+    *➡ drop input data (and potentially all automatically re-computable results)* <!-- .element: class="fragment fade-in" -->
+
+  </script></section>
+
+  <section>
+      <h2>Git versus Git-annex</h2>
+      <dl>
+          <dt>Data in datasets is either stored in Git or git-annex</dt>
+          <dd>By default, everything is <i>annexed</i>, i.e., stored in a dataset annex by git-annex</dd><br>
+          <li class="fragment fade-in-then-semi-out">With annexed data, only content identity (hash)
+              and location information is put into Git, rather than file content.
+              The annex, and transport to and from it is managed with <b>git-annex</b>
+          <br>
+          <br>
+          <small>
+          <table>
+              <tr>
+                  <td><b>Git</b></td>
+                  <td><b>git-annex</b></td>
+              </tr>
+              <tr>
+                  <td>handles <b>small</b> files well (text, code)</td>
+                  <td>handles <b>all</b> types and sizes of files well</td>
+              </tr>
+              <tr>
+                  <td>file contents are in the Git history
+                      and will be <b>shared</b> upon git/datalad push</td>
+                  <td>file contents are in the annex. Not necessarily shared</td>
+              </tr>
+              <tr>
+                  <td>Shared with every dataset clone</td>
+                  <td><b>Can be kept private</b> on a per-file level when sharing the dataset</td>
+              </tr>
+              <tr>
+                  <td>Useful: Small, non-binary, frequently modified, need-to-be-accessible (DUA, README) files </td>
+                  <td>Useful: Large files, private files</td>
+              </tr>
+          </table>
+              </small>
+      </dl>
+  </section>
+
+
+  <section>
+      <h2>Git versus Git-annex</h2>
+      <small>Useful background information for demo later. Read
+          <a href="http://handbook.datalad.org/en/latest/basics/101-115-symlinks.html" target="_blank">
+          this handbook chapter</a> for details
+      </a> </small><br>
+      Git and Git-annex handle files differently: annexed files are stored in an annex.
+      File content is hashed & only content-identity is committed to Git.
+      <ul>
+        <table>
+            <tr>
+                <td>
+                    <li>Files stored in Git are modifiable, files stored in Git-annex are content-locked</li>
+                </td>
+                <td width="60%">
+                    <img src="../pics/git_vs_gitannex.svg" height="500">
+                </td>
+            </tr>
+                  </table>
+
+         <li>Annexed contents are not available right after cloning,
+             only content- and availability information (as they are stored in Git)</li>
+      </ul>
+  </section>
+
+
+  <section>
+      <h2>Git versus Git-annex</h2>
+      <ul>
+          When sharing datasets with someone without access to the same computational
+          infrastructure, annexed data is not necessarily stored together with the rest
+          of the dataset.
+      </ul>
+      <img src="../pics/services_connected.png" height="500">
+      <ul>
+          Transport logistics exist to interface with all major storage providers.
+          If the one you use isn't supported, let us know!
+      </ul>
+  </section>
+
+
+  <section>
+      <h2>Git versus Git-annex</h2>
+      <ul>
+          Users can decide which files are annexed:
+          <br><br>
+          <li><b>Pre-made run-procedures</b>, provided by DataLad (e.g., <code>text2git</code>, <code>yoda</code>)
+              or created and shared by users
+              (<a href="http://handbook.datalad.org/en/latest/basics/101-124-procedures.html" target="_blank">Tutorial</a>) </li>
+          <li>Self-made configurations in <code>.gitattributes</code> (e.g., based on file type,
+              file/path name, size, ...; <a href="http://handbook.datalad.org/en/latest/basics/101-123-config2.html#gitattributes" target="_blank">
+                  rules and examples
+              </a> )</li>
+          <li>Per-command basis (e.g., via <code>datalad save --to-git</code>)</li>
+      </ul>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Transport logistics</h2>
+      <ul>
+          <li class="fragment fade-in-then-semi-out">Disk-space aware workflows: Cloned datasets are lean (only Git):</li>
+                  <pre class="fragment fade-in"><code>$ datalad clone git@github.com:datalad-datasets/machinelearning-books.git
+  install(ok): /tmp/machinelearning-books (dataset)
+  $ cd machinelearning-books && du -sh
+  348K	.</code></pre>
+          <pre class="fragment fade-in"><code>$ ls
+  A.Shashua-Introduction_to_Machine_Learning.pdf
+  B.Efron_T.Hastie-Computer_Age_Statistical_Inference.pdf
+  C.E.Rasmussen_C.K.I.Williams-Gaussian_Processes_for_Machine_Learning.pdf
+  D.Barber-Bayesian_Reasoning_and_Machine_Learning.pdf
+  [...]</code></pre>
+          <li  class="fragment fade-in-then-semi-out"> annexed file's contents can
+          be retrieved & dropped on demand:</li>
+      </ul>
+  <pre class="fragment fade-in"><code>$ datalad get A.Shashua-Introduction_to_Machine_Learning.pdf
+  get(ok): /tmp/machinelearning-books/A.Shashua-Introduction_to_Machine_Learning.pdf (file) [from web...]</code></pre>
+  <pre class="fragment fade-in-then-semi-out"><code>$ datalad drop A.Shashua-Introduction_to_Machine_Learning.pdf
+  drop(ok): /tmp/machinelearning-books/A.Shashua-Introduction_to_Machine_Learning.pdf (file) [checking https://arxiv.org/pdf/0904.3664v1.pdf...]</code></pre>
+
+  <aside class="notes">
+  Idea behind datalad: Enable a similar level of tooling and culture for the distribution and version control of data as it is present for open source software development
+  </aside>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Dataset nesting</h2>
+
+      <ul>
+          <li>Seamless nesting mechanisms:
+                  <img height="330"  src="../pics/artwork/src/linkage_subds.svg">
+          <br>
+          <li class="fragment fade-in" data-fragment-index="2">Overcomes scaling issues with large amounts of files</li>
+          <pre  class="fragment fade-in" data-fragment-index="2"><code>adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
+  15530572 annex'd files (77.9 TB recorded total size)
+  nothing to save, working tree clean</code></pre>
+          <small><a class="fragment fade-in" data-fragment-index="2" href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
+          <li class="fragment fade-in">Modularizes research components for transparency, reuse, and access management</li>
+      </ul>
+
+
+
+      <aside class="notes">
+          Two advantages:
+          <ul>
+              <li>Scalable, size-independent version control</li>
+              <li>Modularization of research components to increase transparency
+                  and aid component reuse, as individual components can be flexibly
+              puzzled together into new research objects, while being uniquely identified and versioned</li>
+          </ul>
+
+          At this point: Fixed data management, layed a foundation for updating data
+      </aside>
+  </section>
+
+
+
+  <section>
+      <h2>Dataset nesting</h2>
+      <img src="../pics/linkage.svg" height="500">
+  </section>
+
+  <section>
+      <h3>Summary - Dataset consumption & nesting</h3>
+
+      <ul>
+        <dt class="fragment fade-in"><code>datalad clone</code> installs a dataset.</dt><dd class="fragment fade-in"> It can be installed “on its own”:
+        Specify the source (url, path, ...) of the dataset, and an optional <b>path</b> for it to be installed to.</dd>
+        <br>
+        <dt class="fragment fade-in">Datasets can be installed as subdatasets within an existing dataset. </dt> <dd class="fragment fade-in"> The <b>--dataset/-d</b> option needs a path to the root of the superdataset.</dd>
+        <br>
+        <dt class="fragment fade-in">Only small files and metadata about file availability are present locally after an install. </dt>
+          <dd class="fragment fade-in">To retrieve actual file content of annexed files,
+              <code>datalad get </code> downloads file content on demand.</dd>
+        <br>
+        <dt class="fragment fade-in">Datasets preserve their history.</dt> <dd class="fragment fade-in">The superdataset records only the <i>version state</i> of the subdataset.</dd>
+
+      </ul>
+  </section>
+
+  <section>
+      <h2>Questions!</h2>
+          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
+  </section>
+
+  <section>
+  <section data-transition="fade">
+      <h2>reproducible data analysis</h2>
+       Your past self is the worst collaborator:
+      <img src="../pics/ownlegacycode_phd.png" height="500">
+    <imgcredit>Full comic at <a href="http://phdcomics.com/comics.php?f=1689">http://phdcomics.com/comics.php?f=1979</a></imgcredit>
+      </p>
+  </section>
+
+  <section>
+      <h2>Basic organizational principles for datasets</h2>
+      <dl>
+          <dt>Keep everything clean and modular</dt>
+          <li>An analysis is a superdataset, its components are subdatasets, and its structure modular</li>
+          <table>
+              <tr>
+                  <td><img src="../pics/dataset_modules.png" height="400"></td>
+                  <td><pre><code class="bash" style="max-height:none">├── code/
+  │   ├── tests/
+  │   └── myscript.py
+  ├── docs
+  │   ├── build/
+  │   └── source/
+  ├── envs
+  │   └── Singularity
+  ├── inputs/
+  │   └─── data/
+  │       ├── dataset1/
+  │       │   └── datafile_a
+  │       └── dataset2/
+  │           └── datafile_a
+  ├── outputs/
+  │   └── important_results/
+  │       └── figures/
+  └── README.md</code></pre></td>
+              </tr>
+          </table>
+
+      </dl>
+      <ul>
+      <li>do not touch/modify raw data: save any results/computations <i>outside</i> of input datasets</li>
+      <li>Keep a superdataset self-contained: Scripts reference subdatasets or files with <i>relative paths</i></li>
+      </ul>
+  </section>
+
+  <section>
+      <h2>Basic organizational principles for datasets</h2>
+      <dl>
+          <dt>Record where you got it from, where it is now, and what you do to it</dt>
+          <li>Link datasets (as subdatasets), record data origin</li>
+          <li>Collect and store provenance of all contents of a dataset that you create</li>
+              <table style="verticala-lign:middle">
+                  <tr><img src="../pics/dataset_linkage_provenance.png"></tr>
+              </table>
+          <dl>
+              <dt>Document everything:</dt>
+              <li>Which script produced which output? From which data? In which software environment? ... </li>
+          </dl>
+      </dl>
+      <note>Find out more about organizational principles in
+          <a href="" target="_blank">the YODA principles</a>!</note>
+  </section>
+
+  <section>
+      <h2>A classification analysis on the iris flower dataset</h2>
+      <img src="../pics/iris-machinelearning.png" height="300">
+      <img src="../pics/iris_cluster.png" height="450">
+  </section>
+
+  <section>
+      <h2>Reproducible execution & provenance capture</h2>
+
+      <p>datalad run</p>
+      <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
+  </section>
+
+  <section>
+      <h2>Computational reproducibility</h2>
+      <ul>
+          <li>Code may fail (to reproduce) if run with different software</li>
+          <li>Datasets can store (and share) software environments (Docker or Singularity containers)
+          and reproducibly execute code inside of the software container, capturing software as additional
+          provenance</li>
+          <li>DataLad extension: <code>datalad-container</code></li>
+      </ul>
+
+      <p>datalad-containers run</p>
+      <img class="fragment fade-in" src="../pics/containers-run.svg" height="600"> <!-- .element: class="fragment" -->
+  </section>
+
+  <section>
+      <h3>Summary - Reproducible execution</h3>
+
+      <ul>
+        <dt class="fragment fade-in"><code>datalad run</code> records a command and
+            its impact on the dataset.</dt>
+          <dd class="fragment fade-in">All dataset modifications are saved - use it
+              in a clean dataset.</dd>
+        <br>
+        <dt class="fragment fade-in">Data/directories specified as <code>--input</code>
+            are retrieved prior to command execution.</dt>
+          <dd class="fragment fade-in"> Use one flag per input.</dd>
+        <br>
+        <dt class="fragment fade-in">Data/directories specified as <code>--output</code>
+            will be unlocked for modifications prior to a rerun of the command. </dt>
+          <dd class="fragment fade-in">Its optional to specify, but helpful for recomputations.</dd>
+        <br>
+        <dt class="fragment fade-in"><code>datalad containers-run</code> can be used
+            to capture the software environment as provenance.</dt>
+          <dd class="fragment fade-in">Its ensures computations are ran in the desired software set up.
+              Supports Docker and Singularity containers</dd>
+        <br>
+        <dt class="fragment fade-in"><code>datalad rerun</code> can automatically re-execute run-records later.</dt>
+          <dd class="fragment fade-in">They can be identified with any commit-ish (hash, tag, range, ...)</dd>
+
+      </ul>
+  </section>
+
+  <section>
+      <h2>Questions!</h2>
+          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
+  </section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
