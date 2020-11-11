@@ -143,6 +143,68 @@
   </section>
   </section>
 
+  <!-- SEAFILE -->
+
+  <section>
+
+  <section data-markdown><script type="text/template" >
+
+  ### Create a dataset
+
+  Create new dataset for your cartoon collection:
+
+  <!-- .element: class="fragment" -->
+  <pre><code class="bash" style="max-height:none">$ datalad create cartoon-collection
+  [INFO] Creating a new annex repo at /Users/wittkuhn/Desktop/cartoon-collection
+  [INFO] Scanning for unlocked files (this may take some time)
+  create(ok): /Users/wittkuhn/Desktop/cartoon-collection (dataset)
+  </code></pre>
+  <!-- .element: class="fragment" -->
+
+  <!-- .element: class="fragment" -->
+  <pre><code class="bash" style="max-height:none">$ cd cartoon-collection
+$ wget https://imgs.xkcd.com/comics/compiling.png
+    --2020-11-11 14:04:27--  https://imgs.xkcd.com/comics/compiling.png
+    Resolving imgs.xkcd.com (imgs.xkcd.com)... 2a04:4e42:3::67, 151.101.12.67
+    Connecting to imgs.xkcd.com (imgs.xkcd.com)|2a04:4e42:3::67|:443... connected.
+    HTTP request sent, awaiting response... 200 OK
+    Length: 28315 (28K) [image/png]
+    Saving to: ‘compiling.png’
+    compiling.png
+    100%[========================================================>]  27.65K  --.-KB/s    in 0.02s
+    2020-11-11 14:04:28 (1.50 MB/s) - ‘compiling.png’ saved [28315/28315]
+  </code></pre>
+  <!-- .element: class="fragment" -->
+
+  <!-- .element: class="fragment" -->
+  <pre><code class="bash" style="max-height:none">$ datalad save -m "add funny xkcd comic"
+  add(ok): compiling.png (file)
+  save(ok): . (dataset)
+  action summary:
+    add (ok: 1)
+    save (ok: 1)
+  </code></pre>
+  <!-- .element: class="fragment" -->
+
+  </script>
+  </section>
+
+  <section>
+      <h2>Creating a remote repository</h2>
+      On GitLab (here, of the MPIB) ...
+      <img height="700" src="../pics/create_mpib_gitlab_repo.png">
+  </section>
+
+  <section>
+      <h2>Creating a remote repository</h2>
+      ... or on GitHub: <br>
+      <img height="650" src="../pics/create_github_repo.png">
+  </section>
+
+  </section>
+
+
+
 
   <!-- COLLABORATION -->
 
