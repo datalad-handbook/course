@@ -154,7 +154,7 @@
   Create new dataset for your cartoon collection:
 
   <!-- .element: class="fragment" -->
-  <pre><code class="bash" style="max-height:none">$ datalad create cartoon-collection
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1">$ datalad create cartoon-collection
   [INFO] Creating a new annex repo at /Users/wittkuhn/Desktop/cartoon-collection
   [INFO] Scanning for unlocked files (this may take some time)
   create(ok): /Users/wittkuhn/Desktop/cartoon-collection (dataset)
@@ -162,7 +162,7 @@
   <!-- .element: class="fragment" -->
 
   <!-- .element: class="fragment" -->
-  <pre><code class="bash" style="max-height:none">$ cd cartoon-collection
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1">$ cd cartoon-collection
 $ wget https://imgs.xkcd.com/comics/compiling.png
     --2020-11-11 14:04:27--  https://imgs.xkcd.com/comics/compiling.png
     Resolving imgs.xkcd.com (imgs.xkcd.com)... 2a04:4e42:3::67, 151.101.12.67
@@ -177,7 +177,7 @@ $ wget https://imgs.xkcd.com/comics/compiling.png
   <!-- .element: class="fragment" -->
 
   <!-- .element: class="fragment" -->
-  <pre><code class="bash" style="max-height:none">$ datalad save -m "add funny xkcd comic"
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1">$ datalad save -m "add funny xkcd comic"
   add(ok): compiling.png (file)
   save(ok): . (dataset)
   action summary:
@@ -201,10 +201,248 @@ $ wget https://imgs.xkcd.com/comics/compiling.png
       <img height="650" src="../pics/create_github_repo.png">
   </section>
 
+  <section data-markdown><script type="text/template" >
+
+  ### Configure an rclone remote for Seafile
+  Run rclone config and create a new remote <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,3,9,10">$ rclone config
+  e) Edit existing remote
+  n) New remote
+  d) Delete remote
+  r) Rename remote
+  c) Copy remote
+  s) Set configuration password
+  q) Quit config
+  e/n/d/r/c/s/q> n # enter n and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  Enter the name of the rclone configuration <br>
+  ("seafile" or "keeper" could be a good idea) <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1"> name> seafile # enter name and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  </script>
   </section>
 
+  <section data-markdown><script type="text/template" >
+  Select "Seafile" as the typo of storage
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1-3,22-24">Type of storage to configure.
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+ 1 / 1Fichier
+   \ "fichier"
+ 2 / Alias for an existing remote
+   \ "alias"
+ 3 / Amazon Drive
+   \ "amazon cloud drive"
+ 4 / Amazon S3 Compliant Storage Provider (AWS, Alibaba, Ceph, Digital Ocean, Dreamhost, IBM COS, Minio, etc)
+   \ "s3"
+ 5 / Backblaze B2
+   \ "b2"
+ 6 / Box
+   \ "box"
+ 7 / Cache a remote
+   \ "cache"
+ 8 / Citrix Sharefile
+   \ "sharefile"
+ 9 / Dropbox
+   \ "dropbox"
+38 / seafile
+   \ "seafile"
+Storage> seafile # enter 'seafile' or '38' and press enter
+** See help for seafile backend at: https://rclone.org/seafile/ **
+  </code></pre>
+
+  (Notice, the many storage systems you can configure! 😻 <br>
+  A few options had to removed because the list is so long.)
+
+</script>
+</section>
+
+  <section data-markdown><script type="text/template">
+
+  Enter the URL of the Seafile host (here, Keeper) <!-- .element: class="fragment data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,6">URL of seafile host to connect to
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+ 1 / Connect to cloud.seafile.com
+   \ "https://cloud.seafile.com/"
+url> https://keeper.mpdl.mpg.de/
+</code></pre> <!-- .element: class="fragment data-fragment-index="1" -->
+
+  Enter the email address of your Seafile / Keeper account <!-- .element: class="fragment data-fragment-index="2" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,3">User name (usually email address)
+Enter a string value. Press Enter for the default ("").
+user> wittkuhn@mpib-berlin.mpg.de # enter YOUR email address!
+</code></pre> <!-- .element: class="fragment data-fragment-index="2" -->
+
+Enter your Keeper password <!-- .element: class="fragment data-fragment-index="3" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,5,7,9">Password
+y) Yes type in my own password
+g) Generate random password
+n) No leave this optional password blank (default)
+y/g/n> y # every Keeper account should have a password
+Enter the password:
+password: # enter password here
+Confirm the password:
+password: # enter password again
+</code></pre> <!-- .element: class="fragment data-fragment-index="3" -->
+
+</script>
+</section>
 
 
+<section data-markdown><script type="text/template" >
+
+Enable two-factor authentication if used for Keeper
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Two-factor authentication ('true' if the account has 2FA enabled)
+Enter a boolean value (true or false). Press Enter for the default ("false").
+2fa> # just press enter if you don't use 2FA
+</code></pre>
+
+Don't enter a Keeper library name! Here, we will configure one Seafile rclone remote that you can re-use across your projects.
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Name of the library. Leave blank to access all non-encrypted libraries.
+Enter a string value. Press Enter for the default ("").
+library> # leave blank and press enter
+</code></pre>
+
+Enable library encryption if desired
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,5">Library password (for encrypted libraries only). Leave blank if you pass it through the command line.
+y) Yes type in my own password
+g) Generate random password
+n) No leave this optional password blank (default)
+y/g/n> # leave blank (or type 'n') and press enter to continue without encryption
+</code></pre>
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+  Edit advanced configuration
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Edit advanced config? (y/n)
+  y) Yes
+  n) No (default)
+  y/n> y
+  </code></pre>
+
+Allow rclone to create non-existing libaries on Keeper
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Should rclone create a library if it doesn't existing
+Enter a boolean value (true or false). Press Enter for the default ("false").
+create_library> true
+</code></pre>
+
+Keep the encoding at the default
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,4">This sets the encoding for the backend.
+See: the [encoding section in the overview](/overview/#encoding) for more info.
+Enter a encoder.MultiEncoder value. Press Enter for the default ("Slash,DoubleQuote,BackSlash,Ctl,InvalidUtf8").
+encoding> # press enter to keep the default
+</code></pre>
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+You successfully configured your Seafile / Keeper rclone remote! 👏🍾🏆
+
+<pre><code class="bash" style="max-height:none">Remote config
+Two-factor authentication is not enabled on this account.
+--------------------
+[seafile]
+type = seafile
+url = https://keeper.mpdl.mpg.de/
+user = wittkuhn@mpib-berlin.mpg.de
+pass = *** ENCRYPTED ***
+create_library = true
+--------------------
+y) Yes this is OK (default)
+e) Edit this remote
+d) Delete this remote
+y/e/d> y # leave blank (or enter 'y') and press enter to confirm
+</code></pre>
+
+<pre><code class="bash" style="max-height:none">Current remotes:
+Name                 Type
+====                 ====
+seafile   seafile
+</code></pre>
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+### Alternative: Create Seafile library manually
+
+Enter the name for the rclone configuration <br>
+(good idea to name it like your repo) <!-- .element: class="fragment" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1"> name> cartoon-collection # enter name and press enter
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Edit advanced config? (y/n)
+y) Yes
+n) No (default)
+y/n> n
+</code></pre>
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Remote config
+Two-factor authentication is not enabled on this account.
+--------------------
+[cartoon-collection]
+type = seafile
+url = https://keeper.mpdl.mpg.de/
+user = wittkuhn@mpib-berlin.mpg.de
+pass = *** ENCRYPTED ***
+library = cartoon-collection
+--------------------
+y) Yes this is OK (default)
+e) Edit this remote
+d) Delete this remote
+y/e/d> y # leave blank (or enter 'y') and press enter to confirm
+</code></pre>
+
+<pre><code class="bash" style="max-height:none">Current remotes:
+Name                 Type
+====                 ====
+cartoon-collection   seafile
+</code></pre>
+
+</script>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
 
   <!-- COLLABORATION -->
 
