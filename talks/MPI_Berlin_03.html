@@ -17,11 +17,171 @@
 <div class="reveal">
 <div class="slides">
 
+  <section>
+      <h1>Reproducible Research</h1>
+      <img height="500" src="../pics/Provenance_alpha.png">
+      <imgcredit>CC-BY-SA Scriberia and The Turing Way</imgcredit>
+      <ul>
+          <li class="fragment-fade-in-then-semi-out">
+
+          </li>
+      </ul>
+  </section>
+
+  <section  data-background-image="https://alchetron.com/cdn/jon-claerbout-c970ff70-1e60-4ccc-92ca-583bba1b56b-resize-750.jpeg",
+  data-background-opacity="0.5">
+      <q cite="Jon Claerbout (paraphrased)">
+          An article about computational science in a scientific publication
+          is not the scholarship itself, it is merely advertising of the scholarship.
+          The actual scholarship is the complete software development environment
+          and the complete set of instructions which generated the figures.
+      </q>
+      <br><small>
+      Jon Claerbout (paraphrased)</small>
+  </section>
+
+  <section>
+      <h2>A PDF is not enough</h2>
+
+      ... neither for others, nor for your future self
+  </section>
+
+  <section>
+    <h2>Some definitions first...</h2>
+      <img src="../pics/ReproducibleMatrixTuring.jpg">
+      <br><small><a href="https://the-turing-way.netlify.app/reproducible-research/overview/overview-definitions.html#rr-overview-definitions" target="_blank">
+      (The Turing Way)</a> </small>
+
+  </section>
 
 
+  <section>
+      <h2>What do we need apart from a PDF?</h2>
+      <ul>
+          <li>code</li>
+          <li>data</li>
+          <li>software</li>
+      </ul>
+  </section>
+
+<section>
+    <h2>Why share software?</h2>
+    <ul>
+        <li>
+            difficult or impossible to install (e.g. conflicts with existing software,
+            or on HPC)
+        </li>
+        <li>
+            different software versions/operating systems can produce different results
+        </li>
+    </ul>
+</section>
+
+  <section>
+      <h2>Software containers</h2>
+      <ul>
+          <li class="fragment fade-in">
+              Software containers encapsulate a software environment and isolate it from
+              a surrounding operating system
+          </li>
+          <li class="fragment fade-in">
+              Includes: Code, runtime, system tools, system libraries, settings <br>
+              Does not include: Resource management
+          </li>
+          <li class="fragment fade-in">
+              Put simple, a cut-down virtual machine that is a portable and shareable
+              bundle of software libraries and their dependencies
+          </li>
+      </ul>
+  </section>
 
 
+  <section>
+      <h2>Glossary</h2>
+      <dl>
+          <dt>recipe</dt>
+          <dd>A text file template that lists all required components of the
+              computational environment, e.g. a <i>Dockerfile</i> or <i>.def</i> file.
+          </dd>
+          <dt>image</dt>
+          <dd>A static file system inside a file, populated with software specified in the recipe.
+              "Describes everything we run"
+          </dd>
+          <dt>container</dt>
+          <dd>A running instance of an Image</dd>
+          <dt>Hub</dt>
+          <dd>A storage resource to share and consume images, e.g.
+              <a href="https://hub.docker.com/" target="_blank">Docker-Hub</a>  or
+              <a href="https://singularity-hub.org/" target="_blank">Singularity-Hub</a>
+          </dd>
+      </dl>
+  </section>
 
+  <section>
+      <h2>Docker versus Singularity</h2>
+      <ul>
+          <li>Main disadvantage of Docker: requires "sudo" (i.e., admin) privileges</li>
+          <li>"Scientific alternative": Singularity </li>
+          <ul>
+              <li>built to run on computational clusters</li>
+              <li>same user inside image than outside (no root)</li>
+              <li>easier to access GPUs and run graphical applications</li>
+          </ul>
+          <li>Singularity can use and build Docker Images</li>
+          <li>DataLad can register Docker and Singularity Images to a dataset</li>
+      </ul>
+  </section>
+
+  <section>
+      <h2>The datalad-container extension</h2>
+      <pre><code>pip install datalad-container</code></pre>
+  </section>
+
+  <section>
+      <h2>Adding software to datasets</h2>
+      <li>Can be added from a local path or a URL</li>
+      <li>Advice: Put your image on a Hub, and register it from a public URL</li>
+
+  </section>
+
+  <section>
+      <h2>Adding a Singularity Image</h2>
+      from a path:
+
+      from a URL:
+            <li>Singularity Images are a single file</li>
+  </section>
+
+  <section>
+      <h2>Adding a Docker Image</h2>
+      from a path:
+
+      from a URL:
+      <li></li>
+  </section>
+
+  <section>
+    <h2>Software containers</h2>
+      <ul>
+          Helpful resources for working with software containers:
+          <li>
+              <a href="https://github.com/jupyterhub/repo2docker" target="_blank">
+                  repo2docker</a> can fetch a Git repository/DataLad dataset and builds
+              a container image from configuration files
+          </li>
+          <li>
+              <a href="https://github.com/ReproNim/neurodocker" target="_blank">
+                  neurodocker</a> can generate custom Dockerfiles and Singularity recipes
+              for neuroimaging.
+              </a>
+          </li>
+          <li>
+              <a href="https://github.com/repronim/containers" target="_blank">
+                  The ReproNim container collection</a>, a DataLad dataset that
+              includes common neuroimaging software as configured singularity containers.
+          </li>
+      </ul>
+  </section>
 
 </div> <!-- /.slides -->
 </div> <!-- /.reveal -->
