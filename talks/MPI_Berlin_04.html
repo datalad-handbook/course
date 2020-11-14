@@ -183,44 +183,78 @@
 
   <section>
 
+    <section>
+        <h2>Data sharing using Seafile / Keeper</h2>
+        <img src="../pics/artwork/src/thirdparty.svg" width="900"> <br>
+        <br>
+            More info: DataLad Handbook chapter on <a href="http://handbook.datalad.org/en/latest/basics/basics-thirdparty.html" target="_blank">
+                Third party infrastructure</a>
+    </section>
+
   <section data-markdown><script type="text/template" >
 
   ### Create a dataset
 
-  Create new dataset for your cartoon collection:
+  Create a new DataLad dataset for your cartoon collection: <!-- .element: class="fragment" data-fragment-index="1" -->
 
-  <!-- .element: class="fragment" -->
-  <pre><code class="bash" style="max-height:none" data-line-numbers="1">$ datalad create cartoon-collection
-  [INFO] Creating a new annex repo at /Users/wittkuhn/Desktop/cartoon-collection
-  [INFO] Scanning for unlocked files (this may take some time)
-  create(ok): /Users/wittkuhn/Desktop/cartoon-collection (dataset)
-  </code></pre>
-  <!-- .element: class="fragment" -->
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,4">$ datalad create cartoon-collection
+[INFO] Creating a new annex repo at /Users/wittkuhn/Desktop/cartoon-collection
+[INFO] Scanning for unlocked files (this may take some time)
+create(ok): /Users/wittkuhn/Desktop/cartoon-collection (dataset)
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
 
-  <!-- .element: class="fragment" -->
-  <pre><code class="bash" style="max-height:none" data-line-numbers="1">$ cd cartoon-collection
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1-2">$ cd cartoon-collection
 $ wget https://imgs.xkcd.com/comics/compiling.png
-    --2020-11-11 14:04:27--  https://imgs.xkcd.com/comics/compiling.png
-    Resolving imgs.xkcd.com (imgs.xkcd.com)... 2a04:4e42:3::67, 151.101.12.67
-    Connecting to imgs.xkcd.com (imgs.xkcd.com)|2a04:4e42:3::67|:443... connected.
-    HTTP request sent, awaiting response... 200 OK
-    Length: 28315 (28K) [image/png]
-    Saving to: ‘compiling.png’
-    compiling.png
-    100%[========================================================>]  27.65K  --.-KB/s    in 0.02s
-    2020-11-11 14:04:28 (1.50 MB/s) - ‘compiling.png’ saved [28315/28315]
-  </code></pre>
-  <!-- .element: class="fragment" -->
+--2020-11-11 14:04:27--  https://imgs.xkcd.com/comics/compiling.png
+Resolving imgs.xkcd.com (imgs.xkcd.com)... 2a04:4e42:3::67, 151.101.12.67
+Connecting to imgs.xkcd.com (imgs.xkcd.com)|2a04:4e42:3::67|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 28315 (28K) [image/png]
+Saving to: ‘compiling.png’
+compiling.png
+100%[========================================================>]  27.65K  --.-KB/s    in 0.02s
+2020-11-11 14:04:28 (1.50 MB/s) - ‘compiling.png’ saved [28315/28315]
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-  <!-- .element: class="fragment" -->
   <pre><code class="bash" style="max-height:none" data-line-numbers="1">$ datalad save -m "add funny xkcd comic"
-  add(ok): compiling.png (file)
-  save(ok): . (dataset)
-  action summary:
-    add (ok: 1)
-    save (ok: 1)
-  </code></pre>
-  <!-- .element: class="fragment" -->
+add(ok): compiling.png (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  save (ok: 1)
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+  "How can I share my cartoon-collection with my friend Adina?" 🤔 <!-- .element: class="fragment" data-fragment-index="4" -->
+
+  </script>
+  </section>
+
+  <section>
+      <h2>Keeper (Seafile): A flexible DataLad sibling</h2>
+      <small><a href="https://keeper.mpdl.mpg.de/" target="_blank">https://keeper.mpdl.mpg.de/</a></small><br>
+
+      <a href="https://keeper.mpdl.mpg.de/" target="_blank">Keeper</a> offers <b>1TB</b> flexible storage to all Max Planck employees *
+
+      <iframe src="https://giphy.com/embed/5VKbvrjxpVJCM" width="100" height="80" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+      <img height="500" src="../pics/keeper_homepage.png"><br>
+
+      <small>* Even if you end up not using DataLad, you might want to check Keeper out and get those 1TB of storage space!<br>
+      * Data are stored on servers of the Max Planck Society - your data protection officer will be pleased!</small>
+
+  </section>
+
+  <section data-markdown><script type="text/template" >
+
+  ### Ok, show me how it's done! 💪
+
+  (see the [DataLad Handbook chapter "Beyond shared infrastructure"](http://handbook.datalad.org/en/latest/basics/101-138-sharethirdparty.html)):
+
+  1. Sign-up to [Keeper](https://keeper.mpdl.mpg.de/) / Seafile
+  1. Create a GitHub / GitLab repository to host meta data of your dataset and all content that is not stored in `git-annex`
+  1. Install [`rclone`](https://rclone.org/install/) and the [`git-annex-remote-rclone`](https://github.com/DanielDent/git-annex-remote-rclone) wrapper to make `rclone` usable with `git-annex`
+
+  <small>Disclaimer: Yes, things can go wrong here, but given that installation is platform-dependent we don't get into details</small>
 
   </script>
   </section>
@@ -239,7 +273,7 @@ $ wget https://imgs.xkcd.com/comics/compiling.png
 
   <section data-markdown><script type="text/template" >
 
-  ### Configure an rclone remote for Seafile
+  ### Configure an rclone remote for Keeper / Seafile
   Run rclone config and create a new remote <!-- .element: class="fragment" data-fragment-index="1" -->
 
   <pre><code class="bash" style="max-height:none" data-line-numbers="1,3,9,10">$ rclone config
@@ -263,7 +297,7 @@ $ wget https://imgs.xkcd.com/comics/compiling.png
   </section>
 
   <section data-markdown><script type="text/template" >
-  Select "Seafile" as the typo of storage
+  Select "seafile" as the type of storage to configure
   <pre><code class="bash" style="max-height:none" data-line-numbers="1-3,22-24">Type of storage to configure.
 Enter a string value. Press Enter for the default ("").
 Choose a number from below, or type in your own value
@@ -291,15 +325,16 @@ Storage> seafile # enter 'seafile' or '38' and press enter
 ** See help for seafile backend at: https://rclone.org/seafile/ **
   </code></pre>
 
-  (Notice, the many storage systems you can configure! 😻 <br>
-  A few options had to removed because the list is so long.)
+  <small>Notice the many storage types you can configure with rclone! 😻 <br>
+  You can also configure Dropbox, Google Drive, and more as DataLad remotes. <br>
+  Quite a few options had to be removed because the list is so long ...</small>
 
 </script>
 </section>
 
   <section data-markdown><script type="text/template">
 
-  Enter the URL of the Seafile host (here, Keeper) <!-- .element: class="fragment data-fragment-index="1" -->
+  Enter the URL of the Seafile host (here, Keeper) <!-- .element: class="fragment" data-fragment-index="1" -->
 
   <pre><code class="bash" style="max-height:none" data-line-numbers="1,6">URL of seafile host to connect to
 Enter a string value. Press Enter for the default ("").
@@ -307,27 +342,27 @@ Choose a number from below, or type in your own value
  1 / Connect to cloud.seafile.com
    \ "https://cloud.seafile.com/"
 url> https://keeper.mpdl.mpg.de/
-</code></pre> <!-- .element: class="fragment data-fragment-index="1" -->
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
 
-  Enter the email address of your Seafile / Keeper account <!-- .element: class="fragment data-fragment-index="2" -->
+  Enter the email address of your Seafile / Keeper account <!-- .element: class="fragment" data-fragment-index="2" -->
 
   <pre><code class="bash" style="max-height:none" data-line-numbers="1,3">User name (usually email address)
 Enter a string value. Press Enter for the default ("").
 user> wittkuhn@mpib-berlin.mpg.de # enter YOUR email address!
-</code></pre> <!-- .element: class="fragment data-fragment-index="2" -->
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Enter your Keeper password <!-- .element: class="fragment data-fragment-index="3" -->
+Enter your Keeper password <!-- .element: class="fragment" data-fragment-index="3" -->
 
   <pre><code class="bash" style="max-height:none" data-line-numbers="1,5,7,9">Password
 y) Yes type in my own password
 g) Generate random password
 n) No leave this optional password blank (default)
-y/g/n> y # every Keeper account should have a password
+y/g/n> y # type 'y' and press enter
 Enter the password:
 password: # enter password here
 Confirm the password:
 password: # enter password again
-</code></pre> <!-- .element: class="fragment data-fragment-index="3" -->
+</code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 </script>
 </section>
@@ -335,56 +370,56 @@ password: # enter password again
 
 <section data-markdown><script type="text/template" >
 
-Enable two-factor authentication if used for Keeper
+Enable two-factor authentication if used for Keeper <!-- .element: class="fragment" data-fragment-index="1" -->
 
 <pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Two-factor authentication ('true' if the account has 2FA enabled)
 Enter a boolean value (true or false). Press Enter for the default ("false").
 2fa> # just press enter if you don't use 2FA
-</code></pre>
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
 
-Don't enter a Keeper library name! Here, we will configure one Seafile rclone remote that you can re-use across your projects.
+Don't enter a Keeper library name! Here, we will configure one Seafile rclone remote that you can re-use across your projects 😎<!-- .element: class="fragment" data-fragment-index="2" -->
 
 <pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Name of the library. Leave blank to access all non-encrypted libraries.
 Enter a string value. Press Enter for the default ("").
 library> # leave blank and press enter
-</code></pre>
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Enable library encryption if desired
+Enable library encryption if desired <!-- .element: class="fragment" data-fragment-index="3" -->
 
 <pre><code class="bash" style="max-height:none" data-line-numbers="1,5">Library password (for encrypted libraries only). Leave blank if you pass it through the command line.
 y) Yes type in my own password
 g) Generate random password
 n) No leave this optional password blank (default)
 y/g/n> # leave blank (or type 'n') and press enter to continue without encryption
-</code></pre>
+</code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 </script>
 </section>
 
 <section data-markdown><script type="text/template" >
 
-  Edit advanced configuration
+  Edit advanced configuration <!-- .element: class="fragment" data-fragment-index="1" -->
 
   <pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Edit advanced config? (y/n)
   y) Yes
   n) No (default)
-  y/n> y
-  </code></pre>
+  y/n> y # type 'y' and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
 
-Allow rclone to create non-existing libaries on Keeper
+Allow rclone to create non-existing libaries on Keeper <!-- .element: class="fragment" data-fragment-index="2" -->
 
 <pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Should rclone create a library if it doesn't existing
 Enter a boolean value (true or false). Press Enter for the default ("false").
-create_library> true
-</code></pre>
+create_library> true # type 'true' and press enter
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Keep the encoding at the default
+Keep the encoding at the default <!-- .element: class="fragment" data-fragment-index="3" -->
 
-<pre><code class="bash" style="max-height:none" data-line-numbers="1,4">This sets the encoding for the backend.
+<pre><code class="bash" style="max-height:none" data-line-numbers="4">This sets the encoding for the backend.
 See: the [encoding section in the overview](/overview/#encoding) for more info.
 Enter a encoder.MultiEncoder value. Press Enter for the default ("Slash,DoubleQuote,BackSlash,Ctl,InvalidUtf8").
 encoding> # press enter to keep the default
-</code></pre>
+</code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 </script>
 </section>
@@ -410,13 +445,146 @@ y/e/d> y # leave blank (or enter 'y') and press enter to confirm
 </code></pre>
 
 <pre><code class="bash" style="max-height:none">Current remotes:
-Name                 Type
-====                 ====
-seafile   seafile
+Name               Type
+====               ====
+seafile            seafile
 </code></pre>
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template" >
+
+  ### Initialize the rclone special remote
+
+  In our dataset, we run the `git annex initremote` command:
+
+  <pre><code class="bash" style="max-height:none">$ git annex initremote seafile \
+type=external externaltype=rclone chunk=50MiB encryption=none \
+target=seafile prefix=cartoon-collection
+  </code></pre>
+
+  - it's helpful if the name of the remote and the `target` are the same <br> <small>(we name both 'seafile' in this example)</small>
+  - the `prefix` will be the name of the library on Keeper and should be the same as our dataset
+
+  <pre><code class="bash" style="max-height:none">initremote seafile ok
+  (recording state in git...)
+  lip-osx-003854:cartoon-collection wittkuhn$ datalad siblings
+.: here(+) [git]
+.: seafile(+) [rclone]
+  </code></pre>
 
 </script>
 </section>
+
+<section data-markdown><script type="text/template" >
+
+  ### Add the GitLab / GitHub sibling
+
+  Let's add our GitLab / GitHub sibling and configure the Seafile / Keeper siblings as a publication dependency: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none" data-line-numbers="1-3,7">$ datalad siblings add --name origin \
+  --url git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git \
+  --publish-depends seafile
+[INFO] Configure additional publication dependency on "seafile"
+[INFO] Could not enable annex remote origin. This is expected if origin is a pure Git remote, or happens if it is not accessible.
+[WARNING] Could not detect whether origin carries an annex. If origin is a pure Git remote, this is expected. Remote was marked by annex as annex-ignore. Edit .git/config to reset if you think that was done by mistake due to absent connection etc
+.: origin(-) [git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git (git)]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none">$ datalad siblings
+  .: here(+) [git]
+  .: seafile(+) [rclone]
+  .: origin(-) [git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git (git)]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Quiz question: "Why did Lennart call the GitLab sibling 'origin'?" 🤔 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+  ### The moment of truth: datalad push
+
+  Let's add our GitLab / GitHub sibling, configure the Seafile / Keeper siblings as a publication dependency and publish our dataset: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none">$ datalad push --to origin
+copy(ok): compiling.png (file) [to seafile...]
+publish(ok): . (dataset) [refs/heads/master->origin:refs/heads/master [new branch]]
+publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex [new branch]]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+- DataLad succesfully published our dataset to GitLab and pushed the annexed contents to Seafile / Keeper 🍾🤩🥳 <!-- .element: class="fragment" data-fragment-index="2" -->
+</script>
+</section>
+
+<section>
+    <h3>Our comic collection is published!</h3>
+    <img height="120" src="../pics/keeper_libraries.png">
+    <img height="170" src="../pics/keeper_library_content.png">
+    <img height="450" src="../pics/keeper_gitlab_content.png">
+</section>
+
+<section data-markdown><script type="text/template" >
+
+  ### For the person whom we share the dataset with
+
+  If the repository is publicly available, a datalad clone with the URL will install the dataset: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none" data-line-numbers="1,5-6">$ datalad clone https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git
+[INFO] Scanning for unlocked files (this may take some time)
+[INFO] Unable to parse git config from https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git/config
+[INFO] Remote origin not usable by git-annex; setting annex-ignore
+[INFO] access to 1 dataset sibling seafile not auto-enabled, enable with:
+| datalad siblings -d "/Users/wittkuhn/Desktop/cartoon-collection" enable -s seafile
+install(ok): /Users/wittkuhn/Desktop/cartoon-collection (dataset)
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  ⚠️ Pay attention to one crucial information in this output: ⚠️ <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  <pre><code data-trim class="bash" style="max-height:none">[INFO] access to 1 dataset sibling seafile not auto-enabled, enable with:
+| datalad siblings -d "/Users/wittkuhn/Desktop/cartoon-collection" enable -s seafile
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Someone who wants to access the data from Keeper / Seafile needs to enable the special rclone remote (using the same configuration)! <!-- .element: class="fragment" data-fragment-index="2" -->
+
+And you need to give them access to the Keeper library (see next slide) <!-- .element: class="fragment" data-fragment-index="2" -->
+
+</script>
+</section>
+
+<section>
+    Sharing the Keeper library with your collaborators ...
+    <img height="300" src="../pics/keeper_library_share.png"><br>
+
+    ... will allow them to access the annexed contents of your dataset!<br>
+    <small>(after they successfully configured the seafile rclone special remote)</small>
+
+    <pre><code data-trim class="bash" style="max-height:none">$ datalad siblings -d "/Users/wittkuhn/Desktop/cartoon-collection" enable -s seafile
+.: seafile(?) [git]
+  </code></pre>
+
+  <pre><code data-trim class="bash" style="max-height:none">$ datalad siblings # just checking if all siblings are configured
+.: here(+) [git]
+.: seafile(+) [rclone]
+.: origin(-) [https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git (git)]
+</code></pre>
+
+<pre><code data-trim class="bash" style="max-height:none">$ datalad get compiling.png
+get(ok): compiling.png (file) [from seafile...]
+</code></pre>
+
+
+</section>
+
+
+
+
+
+
+
+
 
 <section data-markdown><script type="text/template" >
 
