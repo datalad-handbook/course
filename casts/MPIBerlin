@@ -1,0 +1,303 @@
+run 'datalad --version'
+run 'git config --global --add user.name "Adina Wagner"
+git config --global --add user.email "adina.wagner@t-online.de"'
+
+
+say "DataLad datasets"
+run 'datalad create -c yoda myanalysis'
+run 'cd myanalysis
+tree'
+run 'ls -a    # show also hidden files'
+
+say "Now edit the README"
+run '# we delete placeholders in README
+echo " " >| README.md'
+run 'datalad status'
+run 'git diff'
+run 'echo " " >| code/README.md'
+run 'git diff'
+run 'datalad save -m "Replace placeholder in README"'
+run 'nano README.md'
+run 'git diff'
+run 'wget https://imgs.xkcd.com/comics/compiling.png'
+run 'datalad status'
+run 'datalad save -m "Add project information to README" README.md'
+run 'datalad save -m "Add a motivational webcomic"'
+
+say 'RESEARCH LOG'
+run 'git log README.md'
+
+say "I WILL HIDE AN EASTEREGG NOW"
+run 'datalad download-url -m "add motivational comic to my dataset"  \
+-O .easteregg  \
+https://imgs.xkcd.com/comics/fuck_grapefruit.png'
+run 'xdg-open .easteregg'
+
+say 'CONSUME DATASETS'
+run 'cd ../
+datalad clone git@github.com:datalad-datasets/machinelearning-books.git'
+run 'cd machinelearning-books'
+run 'ls'
+run 'datalad get D*'
+run 'datalad drop D.C.C.MacKay-Information_Theory_Inference_and_Learning_Algorithms.pdf'
+
+say 'DROP DATA'
+run 'cd ../myanalysis'
+run 'datalad drop .easteregg'
+run 'datalad drop compiling.png'
+run 'xdg-open .easteregg    # its gone :(!'
+run 'datalad get .easteregg'
+run 'xdg-open .easteregg'
+
+say "NOW SUBDATASETS"
+run 'datalad clone -d . git@github.com:datalad-handbook/iris_data.git input/'
+
+run 'cat << EOT > code/script.py
+
+import pandas as pd
+import seaborn as sns
+import datalad.api as dl
+from sklearn import model_selection
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+
+data = "input/iris.csv"
+
+# make sure that the data are obtained (get will also install linked sub-ds!):
+dl.get(data)
+
+# prepare the data as a pandas dataframe
+df = pd.read_csv(data)
+attributes = ["sepal_length", "sepal_width", "petal_length","petal_width", "class"]
+df.columns = attributes
+
+# create a pairplot to plot pairwise relationships in the dataset
+plot = sns.pairplot(df, hue='"'"'class'"'"', palette='"'"'muted'"'"')
+plot.savefig('"'"'pairwise_relationships.png'"'"')
+
+# perform a K-nearest-neighbours classification with scikit-learn
+# Step 1: split data in test and training dataset (20:80)
+array = df.values
+X = array[:,0:4]
+Y = array[:,4]
+test_size = 0.20
+seed = 7
+X_train, X_test, Y_train, Y_test = model_selection.train_test_split(X, Y,
+                                                                    test_size=test_size,
+                                                                    random_state=seed)
+# Step 2: Fit the model and make predictions on the test dataset
+knn = KNeighborsClassifier()
+knn.fit(X_train, Y_train)
+predictions = knn.predict(X_test)
+
+# Step 3: Save the classification report
+report = classification_report(Y_test, predictions, output_dict=True)
+df_report = pd.DataFrame(report).transpose().to_csv('"'"'prediction_report.csv'"'"')
+
+EOT'
+run 'datalad status'
+run 'datalad save -m "add script for kNN classification and plotting" --version-tag ready4analysis code/script.py'
+run 'datalad status'
+run 'datalad run -m "analyze iris data with classification analysis" \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+run 'git log -n 1'
+
+run 'cd ../
+datalad clone git@github.com:adswa/myanalysis.git analysis_clone'
+run 'cd analysis_clone'
+run 'datalad rerun 71cb8c5'
+run 'git log pairwise_relationships.png'
+
+say 'COMPUTATIONAL REPRODUCIBILITY'
+run 'cd ../myanalysis'
+run 'datalad containers-add software --url shub://adswa/resources:2'
+run 'datalad containers-run -m "rerun analysis in container" \
+  --container-name software \
+  --input "input/iris.csv" \
+  --output "prediction_report.csv" \
+  --output "pairwise_relationships.png" \
+  "python3 code/script.py"'
+
+say 'ML EXAMPLE NOW'
+run 'cd ../
+datalad create imagenette'
+run 'cd imagenette
+# 0.12.2 <= datalad < 0.13.4  needs the configuration option -c datalad.runtime.use-patool=1 to handle .tgz
+datalad -c datalad.runtime.use-patool=1 download-url \
+  --archive \
+  --message "Download Imagenette dataset" \
+  '"'"'https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz'"'"' '
+run '#'
+run 'cd ../
+datalad create -c text2git -c yoda ml-project'
+run 'cd ml-project
+mkdir -p data
+# install the dataset into data/
+datalad clone -d . ../imagenette data/raw'
+run '# show the directory hierarchy
+tree -d'
+run 'datalad download-url -m "Add Python project .gitignore template" \
+ https://raw.githubusercontent.com/toptal/gitignore/master/templates/Python.gitignore \
+ -O .gitignore'
+run 'datalad containers-add software --url shub://adswa/python-ml:1'
+run 'cat << EOT > code/prepare.py
+#!/usr/bin/env python3
+
+from pathlib import Path
+
+FOLDERS_TO_LABELS = {"n03445777": "golf ball",
+                     "n03888257": "parachute"}
+
+
+def files2labels(source, label, out):
+    for image_path in source.rglob("*.JPEG"):
+        out.write("{},{}\n".format(image_path, label))
+
+
+if __name__ == "__main__":
+    data_path = Path("data")
+    fileheader = "filename,label\n"
+    for part, labelfname in (("train", "train.csv"),
+                             ("val", "test.csv")):
+        with Path("data", labelfname).open("w") as labelfile:
+            labelfile.write(fileheader)
+            for imgfolder, label in FOLDERS_TO_LABELS.items():
+                files2labels(
+                    Path("data", "raw", "imagenette2-160", part, imgfolder),
+                    label,
+                    labelfile)
+EOT'
+run 'datalad status'
+run 'datalad save -m "Add script for data preparation for 2 categories" --version-tag "ready4prepping" code/prepare.py'
+run 'datalad -c datalad.runtime.max-annex-jobs=5 containers-run -n software \
+  -m "Prepare the data for categories golf balls and parachutes" \
+  --input '"'"'data/raw/imagenette2-160/train/n03445777'"'"' \
+  --input '"'"'data/raw/imagenette2-160/val/n03445777'"'"' \
+  --input '"'"'data/raw/imagenette2-160/train/n03888257'"'"' \
+  --input '"'"'data/raw/imagenette2-160/val/n03888257'"'"' \
+  --output '"'"'data/train.csv'"'"' \
+  --output '"'"'data/test.csv'"'"' \
+  "python3 code/prepare.py"'
+run 'cat << EOT > code/train.py
+#!/usr/bin/env python3
+
+from joblib import dump
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+from skimage.io import imread_collection
+from skimage.transform import resize
+from sklearn.linear_model import SGDClassifier
+
+
+def load_images(data_frame, column_name):
+    filelist = data_frame[column_name].to_list()
+    image_list = imread_collection(filelist)
+    return image_list
+
+
+def load_labels(data_frame, column_name):
+    label_list = data_frame[column_name].to_list()
+    return label_list
+
+
+def preprocess(image):
+    resized = resize(image, (100, 100, 3))
+    reshaped = resized.reshape((1, 30000))
+    return reshaped
+
+
+def load_data(data_path):
+    df = pd.read_csv(data_path)
+    labels = load_labels(data_frame=df, column_name="label")
+    raw_images = load_images(data_frame=df, column_name="filename")
+    processed_images = [preprocess(image) for image in raw_images]
+    data = np.concatenate(processed_images, axis=0)
+    return data, labels
+
+
+def main(repo_path):
+    train_csv_path = repo_path / "data/train.csv"
+    train_data, labels = load_data(train_csv_path)
+    clf = SGDClassifier(max_iter=10)
+    trained_model = clf.fit(train_data, labels)
+    dump(trained_model, repo_path / "model.joblib")
+
+
+if __name__ == "__main__":
+    repo_path = Path(__file__).parent.parent
+    main(repo_path)
+EOT'
+run 'datalad save -m "Add SGD classification script" code/train.py'
+run 'cat << EOT > code/evaluate.py
+
+#!/usr/bin/env python3
+
+from joblib import load
+import json
+from pathlib import Path
+
+from sklearn.metrics import accuracy_score
+
+from train import load_data
+
+
+def main(repo_path):
+    test_csv_path = repo_path / "data/test.csv"
+    test_data, labels = load_data(test_csv_path)
+    model = load(repo_path / "model.joblib")
+    predictions = model.predict(test_data)
+    accuracy = accuracy_score(labels, predictions)
+    metrics = {"accuracy": accuracy}
+    print(metrics)
+    accuracy_path = repo_path / "accuracy.json"
+    accuracy_path.write_text(json.dumps(metrics))
+
+
+if __name__ == "__main__":
+    repo_path = Path(__file__).parent.parent
+    main(repo_path)
+EOT'
+run 'datalad save -m "Add script to evaluate model performance" --version-tag "ready4analysis" code/evaluate.py'
+run 'datalad containers-run -n software \
+  -m "Train an SGD classifier on the data" \
+  --input '"'"'data/raw/imagenette2-160/train/n03445777'"'"' \
+  --input '"'"'data/raw/imagenette2-160/train/n03888257'"'"' \
+  --output '"'"'model.joblib'"'"' \
+  "python3 code/train.py"'
+run 'datalad containers-run -n software \
+  -m "Evaluate SGD classifier on test data" \
+  --input '"'"'data/raw/imagenette2-160/val/n03445777'"'"' \
+  --input '"'"'data/raw/imagenette2-160/val/n03888257'"'"' \
+  --output '"'"'accuracy.json'"'"' \
+  "python3 code/evaluate.py"'
+run 'sed -i '"'"'s/SGDClassifier(max_iter=10)/SGDClassifier(max_iter=100)/g'"'"' code/train.py'
+run 'git diff'
+run 'datalad save -m "Increase the amount of iterations to 100" --version-tag "SGD-100" code/train.py'
+run 'datalad rerun -m "Recompute classification with more iterations" ready4analysis..SGD-100'
+run 'sed -i '"'"'s/linear_model import SGDClassifier/ensemble import RandomForestClassifier/g'"'"' code/train.py'
+run 'sed -i '"'"'s/SGDClassifier(max_iter=100)/RandomForestClassifier()/g'"'"' code/train.py'
+
+run 'git diff'
+run 'datalad save -m "Switch to random forest classification" --version-tag "random-forest" code/train.py'
+run 'datalad rerun --branch="randomforest" -m "Recompute classification with random forest classifier" ready4analysis..SGD-100'
+run 'git diff master -- accuracy.json'
+run 'git checkout master
+cat accuracy.json'
+
+say 'CHANGE DATA'
+run 'cd ../imagenette
+rm imagenette2-160/train/n03445777/ILSVRC2012_val_00002314.JPEG'
+run 'datalad status'
+run 'datalad save -m "remove faulty image"'
+run 'cd ../ml-project/data/raw
+datalad update --merge'
+run 'git log'
+run 'cd ../../
+datalad status'
+run 'datalad save -m "Update input data - we removed a file"'
+run 'datalad rerun -m "Recompute classification with fewer data" ready4prepping..SGD-100'
