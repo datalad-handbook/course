@@ -808,19 +808,166 @@ get(ok): compiling.png (file) [from seafile...]
 </section>
 
 <section>
+    <h2>🎉</h2>
     <img src="../pics/compiling.png">
 </section>
 
 
   <section>
-      <h2>HEADING</h2>
-      <ul>
-          <li class="fragment-fade-in-then-semi-out">
+      <h2>But wait... I also know cool comics!</h2>
+      <h3>From data sharing to collaboration</h3>
+  </section>
 
-          </li>
+  <section>
+     <h2>Add a collaborator on GitLab</h2>
+          TODO Lennart
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      Typical collaborative workflow:
+      <ul>
+          <dt class="fragment fade-in">Optional: Create an issue</dt>
+          <dl class="fragment fade-in">It is good practice to let you collaborators know what you are working
+          on. Creating an issue on GitLab is a good way to give them a heads-up
+          and discuss plans</dl>
+          <img class="fragment fade-in" src="../pics/createissuegitlab.png">
       </ul>
   </section>
 
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      Typical collaborative workflow:
+      <ul>
+          <dt>Optional: Create an issue</dt>
+          <dl>It is good practice to let you collaborators know what you are working
+          on. Creating an issue on GitLab is a good way to give them a heads-up
+          and discuss plans</dl>
+          <img src="../pics/respondissuegitlab.png">
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Step 1: Create a new branch in your dataset</dt>
+          <dl class="fragment fade-in">It is good practice to develop a new
+              feature/add data/extend code/... in a new branch</dl>
+          <div class="fragment fade-in"><pre><code class="bash">$ git checkout -b morecomics
+Switched to a new branch 'morecomics'</code></pre>
+          </div>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Step 2: Make a change, and save it</dt>
+          <div class="fragment fade-in"><pre><code class="bash" style="max-height:none" data-line-numbers="1,13">$ wget https://imgs.xkcd.com/comics/interdisciplinary.png
+--2020-11-15 12:23:22--  https://imgs.xkcd.com/comics/interdisciplinary.png
+Resolving imgs.xkcd.com (imgs.xkcd.com)... 2a04:4e42:1b::67, 151.101.112.67
+Connecting to imgs.xkcd.com (imgs.xkcd.com)|2a04:4e42:1b::67|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 27246 (27K) [image/png]
+Saving to: ‘interdisciplinary.png’
+
+interdisciplinary.p 100%[===================>]  26.61K  --.-KB/s    in 0.001s
+
+2020-11-15 12:23:23 (29.4 MB/s) - ‘interdisciplinary.png’ saved [27246/27246]
+
+$ datalad save -m "Add another fun comic" interdisciplinary.png
+add(ok): interdisciplinary.png (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  save (ok: 1)</code></pre>
+          </div>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Optional: Configure a publication dependency to seafile</dt>
+          <dl class="fragment fade-in">With a publication dependency, <code>datalad push</code> pushes
+          annexed data to seafile, and the rest to GitLab</dl>
+          <div class="fragment fade-in"><pre><code class="bash" style="max-height:none" data-line-numbers="1,3-4,5">$ datalad siblings
+.: here(+) [git]
+.: origin(-) [https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git (git)]
+.: seafile(+) [rclone]
+$ git config --local remote.origin.datalad-publish-depends seafile</code></pre>
+              <br>
+              This translates to: When pushing anything to the sibling/remote "origin",
+              push changes to the sibling "seafile" first!
+          </div>
+
+      </ul>
+  </section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <img src="../pics/artwork/src/publishing/publishing_network_publishdepends.svg">
+</section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Step 4: Push your change and create a merge request</dt>
+          <div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ datalad push --to origin
+Push to 'origin':  25%|████▎            | 1.00/4.00 [00:00<00:00, 11.6k Steps/s]
+Username for 'https://git.mpib-berlin.mpg.de': adina.wagner
+Password for 'https://adina.wagner@git.mpib-berlin.mpg.de':
+copy(ok): interdisciplinary.png (file) [to seafile...]
+Update availability for 'origin':  75%|▊| 3.00/4.00 [00:00<00:00, 7.48k Steps/s]
+Username for 'https://git.mpib-berlin.mpg.de': adina.wagner<00:01, 1.31 Steps/s]
+Password for 'https://adina.wagner@git.mpib-berlin.mpg.de':
+publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex 048e2c4..595f30a]
+publish(ok): . (dataset) [refs/heads/morecomics->origin:refs/heads/morecomics [new branch]]
+</code></pre>
+          </div>
+      </ul>
+  </section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <ul>
+        <dt>Step 4: Push your change and create a merge request</dt>
+        <img class="fragment fade-in" src="../pics/gitlabmerge1.png">
+</section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <ul>
+        <dt>Step 4: Push your change and create a merge request</dt>
+        <img  src="../pics/gitlabmerge2.png">
+</section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <ul>
+        <dt>Step 4: Push your change and create a merge request</dt>
+        <img  src="../pics/gitlabmerge3.png">
+</section>
+
+  <section>
+      <h2>Collaboration!</h2>
+      Overview of a typical collaborative workflow:
+      <ul>
+          <dt>Optional: Create an issue</dt>
+          <dl>It is good practice to let you collaborators know what you are working
+          on. Creating an issue on GitLab is a good way to give them a heads-up
+          and discuss plans</dl>
+          <dt>Step 1: Create a new branch in your dataset</dt>
+          <dl>It is good practice to develop a new feature/data point/code in a
+          new branch</dl>
+          <dt>Step 2: Make a change, and save it</dt>
+          <dt>Step 3: (optional) Configure a publication dependency</dt>
+          <dl>With a publication dependency, <code>datalad push</code> pushes
+          annexed data to a special remote, and the rest to GitLab</dl>
+          <dt>Step 4: Push your change and create a merge request</dt>
+      </ul>
+  </section>
+      
   <section>
       <h2>HEADING</h2>
       <ul>
