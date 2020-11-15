@@ -21,12 +21,50 @@
 
   <section>
   <section>
-      <h2>Live demo Basics</h2>
+      <h2>DataLad Basics</h2>
 
       Code to follow along:
-      <a href="http://handbook.datalad.org/r.html?FZJmlcode" target="_blank">
-          handbook.datalad.org/r.html?FZJmlcode
+      <a href="http://handbook.datalad.org/r.html?MPIB" target="_blank">
+          handbook.datalad.org/r.html?MPIB
       </a>
+  </section>
+
+  <section>
+    <h2>Prerequisites: Installation and Configuration</h2>
+          <div class="fragment fade-in">
+          <li>Your installed version of DataLad should be recent</li>
+          <pre><code>datalad --version
+0.13.5</code></pre></div>
+          <div class="fragment fade-in">
+          <li>You should have a configured Git identity</li>
+          <pre><code class="bash">$ git config --list
+user.name=Adina Wagner
+user.email=adina.wagner@t-online.de
+[...]
+</code></pre></div>
+      <div class="fragment fade-in">Else, find installation and configuration
+      instructions at <a href="http://handbook.datalad.org/en/latest/intro/installation.html" target="_blank">
+              handbook.datalad.org</a> </div>
+  </section>
+
+  <section>
+      <h2>Using DataLad</h2>
+
+      <ul>
+          <div>
+          <li>DataLad can be used from the command line</li>
+          <pre><code>datalad create mydataset</code></pre></div>
+          <div>
+          <li>... or with its Python API</li>
+          <pre><code class="python">import datalad.api as dl
+dl.create(path="mydataset")</code></pre></div>
+          <div class="fragment fade-in">
+          <li>... and other programming languages can use it via system call</li>
+          <pre><code class="python"># in R
+> system("datalad create mydataset")
+</code></pre></div>
+      </ul>
+      </ul>
   </section>
 
 
@@ -36,11 +74,12 @@
       <ul>
           <li>DataLad's core data structure</li>
           <ul>
-              <li class="fragment fade-in">Dataset = A directory managed by DataLad</li>
-              <li class="fragment fade-in">Any directory of your computer can be managed by DataLad.</li>
+              <li>Dataset = A directory managed by DataLad</li>
+              <li>Any directory of your computer can be managed by DataLad.</li>
               <li class="fragment fade-in">Datasets can be <i>created</i> (from scratch) or <i>installed</i></li>
               <li class="fragment fade-in">Datasets can be nested: <i>linked subdirectories</i></li>
           </ul>
+          <li class="fragment fade-in">Let's start by creating a dataset</li>
       </ul>
 
   <aside class="notes">
@@ -49,11 +88,11 @@
   </aside>
   </section>
 
-  <section>
-      <h2>Questions!</h2>
-          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
-              style="border: 0", width="930", height="900"></iframe>
-  </section>
+<section>
+    <h2>DataLad Datasets</h2>
+    A DataLad dataset is a joined Git + git-annex repository
+    <img src="../pics/slides/pics/datalad_sandwhich_tuned/sandwhich03.svg">
+</section>
 
   <section>
       <h2>Why version control?</h2>
@@ -227,11 +266,11 @@
   <section data-markdown> <script type="text/template">
   ## Plenty of data, but little disk-usage
 
-  Drop file content that is not needed:
+  Drop file content that is not needed:<!-- .element: class="fragment fade-in" -->
   <pre class="fragment fade-in-then-semi-out"><code>$ datalad drop sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz
   drop(ok): /tmp/studyforrest-data-phase2/sub-01/ses-movie/func/sub-01_ses-movie_task-movie_run-1_bold.nii.gz (file) [checking https://arxiv.org/pdf/0904.3664v1.pdf...]</code></pre>
   When files are dropped, only "meta data" stays behind, and they can be re-obtained on demand.
-    This allows disk-space aware computations: <!-- .element: class="fragment fade-in" -->
+  This allows disk-space aware computations: <!-- .element: class="fragment fade-in" -->
 
 
   Install your input data <!-- .element: class="fragment fade-in" -->
@@ -279,6 +318,10 @@
       </dl>
   </section>
 
+  <section>
+      <h2>Git versus Git-annex</h2>
+      <img height="500" src="../pics/artwork/src/publishing/publishing_gitvsannex.svg">
+  </section>
 
   <section>
       <h2>Git versus Git-annex</h2>
@@ -311,7 +354,7 @@
       <ul>
           When sharing datasets with someone without access to the same computational
           infrastructure, annexed data is not necessarily stored together with the rest
-          of the dataset.
+          of the dataset (more in the <b>session on publishing</b>).
       </ul>
       <img src="../pics/services_connected.png" height="500">
       <ul>
@@ -378,7 +421,10 @@
   15530572 annex'd files (77.9 TB recorded total size)
   nothing to save, working tree clean</code></pre>
           <small><a class="fragment fade-in" data-fragment-index="2" href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
-          <li class="fragment fade-in">Modularizes research components for transparency, reuse, and access management</li>
+          <li class="fragment fade-in">
+              Modularizes research components for transparency, reuse, and access
+              management (more on this in the <b>section on reproducible science</b>)
+          </li>
       </ul>
 
 
