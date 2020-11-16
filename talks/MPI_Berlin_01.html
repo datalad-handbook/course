@@ -297,10 +297,156 @@
 <!--..Research data management in general..-->
 
 <section>
-    <h2>Research data management</h2>
 
-    TODO Lennart
+<section>
+    <h2>Motivation & concepts</h2>
 </section>
+
+<!--..
+- git concepts:
+- decentralized workflow:
+- the git way of thinkig
+- difference between git and github
+- how can research data management make your life easier?
+- not an additional strain but a help
+
+- publication workflow:
+- basics: git checkout commit hash
+..-->
+
+<section>
+    <h3>Real world examples for Research Data Managament gone wrong ...</h3>
+    <img src="../pics/guardian_excel_corona_screen1.png" style="box-shadow: 10px 10px 8px #888888;height=250px" height="250"><br>
+    <img src="../pics/guardian_excel_corona_screen2.png" style="box-shadow: 10px 10px 8px #888888;height=400px" height="400"><br>
+    <small>https://www.theguardian.com/politics/2020/oct/05/how-excel-may-have-caused-loss-of-16000-covid-tests-in-england</small>
+</section>
+
+<section>
+    <h3>Real world examples for Research Data Managament gone wrong ...</h3>
+    <img src="../pics/newconversation_economics_excel_screen1.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="170"><br>
+    <img src="../pics/newconversation_economics_excel_screen2.png" style="box-shadow: 10px 10px 8px #888888;height=300px" height="150">
+    <img src="../pics/newconversation_economics_excel_screen3.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="120"><br>
+    <img src="../pics/newconversation_economics_excel_screen4.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="200"><br>
+    <small>https://theconversation.com/the-reinhart-rogoff-error-or-how-not-to-excel-at-economics-13646</small>
+</section>
+
+<section>
+    <h3>Real world examples for Research Data Managament gone wrong ...</h3>
+    <img src="../pics/theverge_excel_genetics_screen1.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="200"><br>
+    <img src="../pics/theverge_excel_genetics_screen2.gif" style="box-shadow: 10px 10px 8px #888888;height=300px" height="300"><br>
+    <img src="../pics/theverge_excel_genetics_screen3.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="200"><br>
+    <small>https://www.theverge.com/2020/8/6/21355674/human-genes-rename-microsoft-excel-misreading-dates</small>
+</section>
+
+<section>
+<h2>Defining replicability</h2>
+
+<table>
+    <tr>
+        <td></td>
+        <td><b>Same data</b></td>
+        <td><b>New data</b></td>
+    </tr>
+    <tr>
+        <td><b>Same methods</b></td>
+        <td><p style="color:red">Reproducibility</p></td>
+        <td>Replication</td>
+    </tr>
+    <tr>
+        <td><b>New methods</b></td>
+        <td>Robustness</td>
+        <td>Generalization</td>
+    </tr>
+</table>
+
+<br><small>see e.g., Freese & Peterson, 2017</small>
+</section>
+
+<section>
+    <h2>Why version control?</h2>
+    <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+    <ul>
+        <li class="fragment fade-in">keep things organized</li>
+        <li class="fragment fade-in">keep track of changes</li>
+        <li class="fragment fade-in">revert changes or go back to previous states</li>
+    </ul>
+<aside class="notes">
+<li>Not only manuscripts, but also data!</li>
+</aside>
+</section>
+
+<section>
+    <h2>Data change!</h2>
+    <img src="../pics/phd052810s.gif" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+    <ul>
+        <li class="fragment fade-in">New data are added and old data removed</li>
+        <li class="fragment fade-in">Erros are detected, fixed and introduced again 👻</li>
+        <li class="fragment fade-in">Separate data versions are created or merged</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Methods documentation and provenance</h2>
+    Analytic flexibility leads to sizeable variations in results
+    <br><small>(see e.g., Carp. 2012 and Botvinik-Nezer, 2020 for examples from neuroimaging)</small><br>
+    <img src="../pics/sidney_harris_miracle.jpg" style="box-shadow: 10px 10px 8px #888888;height=500px" height="500"><br>
+    <ul>
+        <li class="fragment fade-in">provide information on how data came into existence</li>
+        <li class="fragment fade-in">change data through documented code, not manually</li>
+        <li class="fragment fade-in">relate changes in data to changes in code</li>
+    </ul>
+</section>
+
+<section>
+    <h2>What's holding you back?</h2>
+    Hand on heart: Have you heard / said / thought these statements* before?
+    <table>
+        <tr>
+            <td>
+              <ol>
+                  <li>"It's only the paper / results that matters"</li>
+                  <li>"I'd rather do real science than tidy up my data"</li>
+                  <li>"Mind your own business! I document my data the way I want!"</li>
+                  <li>"Reproducibility sounds alright, but my code and data are spread over so many hard drives and directories that it would just be too much work to collect them all in one place"</li>
+                  <li>"We can always sort out the code and data after submission"</li>
+                  <li>"My field is very competitive and I can't risk wasting time"</li>
+              </ol>
+              <br><br><small>* cf. Markowetz, 2015</small>
+            </td>
+            <td>
+              <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+                    style="border: 0" width="1500" height="700"></iframe>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h3>But what's in it for me? "Selfish" reasons for reproducibility</h3>
+    <small>"[...] science is all about more publications, more impact factor, more money and more career. More, more, more ...<br>So how does working reproducibly help me achieve more as a scientist." - Markowetz, 2015</small><br><br>
+    <ul>
+        <li>You want to avoid the disaster of publishing "a miracle"</li>
+        <li>You will be faster (in the long run)
+            <ul>
+              <li>Finding and fixing errors will be faster</li>
+              <li>Progress on new projects will happen faster</li>
+            </ul>
+        </li>
+        <li>Researchers (reviewers!) will have more trust in your findings</li>
+        <li>Data sharing can foster collaboration (with your past self, inside and outside your institution) and lead to new projects and publications</li>
+        <li>You acquire (technical) skills that will likely become increasingly important for your career, either in academia or industry</li>
+        <li><i>... and more!</i></li>
+    </ul>
+    <br><br><small>see e.g., Markowetz, 2015, <i>Genome Biology</i>; Poldrack, 2019, <i>Neuron</i></small>
+</section>
+
+
+
+
+
+
+</section>
+
 <!--...WHAT IS DATALAD...-->
 
 <section>
