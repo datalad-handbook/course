@@ -597,6 +597,23 @@ get(ok): compiling.png (file) [from seafile...]
     <img class="fragment fade-in" src="../pics/gitlab_sharedlib.png">
 </section>
 
+<section data-markdown><script type="text/template" >
+    <h2>We're set up - let's get the repo</h2>
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,6">$ datalad clone https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git
+[INFO   ] Scanning for unlocked files (this may take some time)
+[INFO   ] Unable to parse git config from https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git/config
+| Remote origin not usable by git-annex; setting annex-ignore
+[INFO   ] access to 1 dataset sibling seafile not auto-enabled, enable with:
+| datalad siblings -d "/tmp/collaboration/cartoon-collection" enable -s seafile
+install(ok): /tmp/collaboration/cartoon-collection (dataset)
+</code></pre>
+<pre><code class="bash" style="max-height:none">$ cd cartoon-collection
+$ ls
+compiling.png   # only a "filename" - note actual file content!
+</code></pre>
+</script>
+</section>
+
   <section data-transition="None" data-markdown><script type="text/template" >
   ### Configure the same rclone remote
 
@@ -714,24 +731,14 @@ d) Delete this remote
 </script>
 </section>
 
-<section data-markdown><script type="text/template" >
-    <h2>We're set up - let's get the repo</h2>
-<pre><code class="bash" style="max-height:none" data-line-numbers="1,6">$ datalad clone https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git
-[INFO   ] Scanning for unlocked files (this may take some time)
-[INFO   ] Unable to parse git config from https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git/config
-| Remote origin not usable by git-annex; setting annex-ignore
-[INFO   ] access to 1 dataset sibling seafile not auto-enabled, enable with:
-| datalad siblings -d "/tmp/collaboration/cartoon-collection" enable -s seafile
-install(ok): /tmp/collaboration/cartoon-collection (dataset)
-</code></pre>
-<pre><code class="bash" style="max-height:none">$ cd cartoon-collection
-$ ls
-compiling.png   # only a "filename" - note actual file content!
-</code></pre>
-    <p class="fragment fade-in">Before I can <code>get</code> the comic, I need to enable the special remote</p>
+<section data-markdown><script type="text/template">
+
+### Aaaaaand its time to get the comic!
+
+<p class="fragment fade-in">Before I can <code>get</code> the comic, I need to enable the special remote</p>
 <pre><code class="bash; fragment fade-in" style="max-height:none" data-line-numbers="1,3">$ datalad siblings -d "/tmp/collaboration/cartoon-collection" enable -s seafile
-.: seafile(?) [git]
-$ datalad get compiling.png
+.: seafile(?) [git]</code></pre>
+<pre><code class="bash; fragment fade-in" style="max-height:none" data-line-numbers="1,3">$ datalad get compiling.png
 get(ok): compiling.png (file) [from seafile...]
 </code></pre>
 </script>
@@ -741,7 +748,9 @@ get(ok): compiling.png (file) [from seafile...]
     <h2>🎉</h2>
     <img src="../pics/compiling.png">
 </section>
+</section>
 
+<section>
   <section>
       <h2>But wait... I also know cool comics!</h2>
       <h3>From data sharing to collaboration</h3>
