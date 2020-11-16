@@ -71,7 +71,7 @@
   <section data-transition="None">
     <h2>Common problems in science</h2>
           <div class="fragment fade-in" data-fragment-index="1">
-              A graduate student approaches his supervisor, complaining that the
+              A graduate student approaches their supervisor, complaining that the
               supervisors research idea does not work. After weeks of discussion,
               it becomes apparent that oral communication doesn't suffice - the
               student can't sufficiently explain the environment (data, algorithms,
@@ -137,14 +137,47 @@
       </ul>
       </ul>
   </section>
-
+</section>
 
 <!--YODA principles-->
+
+<section>
+    <section>
+  <h2>DataLad Datasets for data analysis</h2>
+
+  <ul>
+      <li>A DataLad dataset can have <i>any</i> structure, and use as many or few
+          features of a dataset as required.</li>
+
+      <li>However, for <b>data analyses</b> it is beneficial to make
+          use of DataLad features and structure datasets according to the <b>YODA principles</b>:</li>
+  </ul>
+
+  <img style="" data-src="../pics/yoda.png" height="400">
+  <dl>
+      <dt>P1: One thing, one dataset</dt>
+      <dt>P2: Record where you got it from, and where it is now</dt>
+      <dt>P3: Record what you did to it, and with what</dt>
+  </dl>
+</section>
+
+    <section data-markdown>
+## P1: One thing, one dataset
+![](../pics/dataset_modules.png)
+
+- Bundle all components of one analysis into one superdataset.
+- Whenever a particular collection of files could anyhow be useful in more
+  than one context (e.g. data), put them in their own dataset, and install it as
+  a subdataset.
+- Keep everything clean and modular: Within an analysis, separate code, data, output, execution environments.
+
+</section>
+
 
 <section data-markdown><script type="text/template">
 # Modularity
 
-Need for meaningful units of data that are clearly recognizable for anyone. Only then we have a handle on the *what* in "what is important?"
+Need for meaningful units of data that are clearly recognizable for anyone.
 <aside class="notes">
 Note to self
 </aside>
@@ -152,7 +185,7 @@ Note to self
 </section>
 
 <section>
-<h2>Easily lost modularity through obfuscation</h2>
+<h2>Why?</h2>
 Original
 <pre><code class="sh" style="max-height:none" data-trim>
 /dataset
@@ -177,6 +210,7 @@ After applied transform (preprocessing, analysis, ...)
 Without expert/domain knowledge no distinction between original and derived data possible anymore.
 </div>
 </section>
+
 
 <section>
 <h2>Preserved modularity</h2>
@@ -209,6 +243,44 @@ After applied transform (preprocessing, analysis, ...)
 Clearer separation of semantics, through use of pristine version of original dataset within a
 <em>new, additional</em> dataset holding the outputs.
 </div>
+</section>
+
+
+<section data-markdown><script type="text/template">
+## When to modularize?
+
+- Target audience is different
+  - public vs. private
+  - domain specific vs. domain general
+
+- Pace of evolution is different
+  - "factual" raw data vs. choices of (pre-)processing
+  - completed acquisition vs. ongoing study
+
+- Size impacts I/O and logistics
+  - Git can struggle with 1M+ files
+  - filesystems (licensing) can struggle with large numbers of inodes
+  - More infos: [Go Big or Go Home chapter](http://handbook.datalad.org/en/latest/beyond_basics/basics-scaling.html)
+
+- Legal/Access constraints
+  - personal vs. anonymized data
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section data-markdown>
+## P2: Record where you got it from, and where it is now
+![](../pics/data_origin.png)
+
+- Link individual datasets to declare data-dependencies (e.g. as subdatasets).
+- Record data's orgin with appropriate commands, for example
+  to record access URLs for individual files obtained from (unstructured) sources "in the cloud".
+- Keep a dataset self-contained with relative paths in scripts to subdatasets or files.
+- Share and publish datasets to collaborate.
+
 </section>
 
 
@@ -247,30 +319,15 @@ Each (sub)dataset is a separately, but jointly version-controlled entity.
     <aside class="notes">dataset linkage is pairwise, i.e. cheap</aside>
 </section>
 
-<section data-markdown><script type="text/template">
-## When to modularize?
 
-- Target audience is different
-  - public vs. private
-  - domain specific vs. domain general
+    <section data-markdown>
+## P3: Record what you did to it, and with what
+![](../pics/dataset_linkage_provenance.png)
 
-- Pace of evolution is different
-  - "factual" raw data vs. choices of (pre-)processing
-  - completed acquisition vs. ongoing study
+- Collect and store provenance of all contents of a dataset that you create.
 
-- Size impacts I/O and logistics
-  - Git can struggle with 1M+ files
-  - filesystems (licensing) can struggle with large numbers of inodes
-  - More infos: [Go Big or Go Home chapter](http://handbook.datalad.org/en/latest/beyond_basics/basics-scaling.html)
-
-- Legal/Access constraints
-  - personal vs. anonymized data
-
-<aside class="notes">
-Note to self
-</aside>
-</script>
 </section>
+
 </section>
 
 <!-- Reproducible paper -->
@@ -326,32 +383,45 @@ Note to self
           </a> </li>
           <li>
               Team up in break-out rooms, and follow the instructions in the README
-              to make a paper, adjust the code, and re-make an updated paper (
-              <a href="https://adswa.github.io/mpi-datamanagement-ws/content/reproduciblescience/#hands-on" target="_blank">
-                  Hands-on 1 on the website</a>).
+              to make a paper, adjust the code, and re-make an updated paper
+              (<a href="https://adswa.github.io/mpi-datamanagement-ws/content/reproduciblescience/#hands-on"
+                 target="_blank">Hands-on 1 on the website</a>).
           </li>
       </ul>
-
   </section>
-
 
 
   <section>
       <h2>An alternative with RMarkdown</h2>
-      demo by Lennart
+      demo by Lennart (at the end of the workshop)
   </section>
 
   <section>
   <h2>Summary: Reproducible Papers</h2>
       <ul>
-          <li class="fragment fade-in"></li>
+          <li class="fragment fade-in">
+              There are many tools that allow you to create a reproducible paper
+          </li>
+          <li class="fragment fade-in">
+              The setup has a number of advantages
+          </li>
+          <ul class="fragment fade-in">
+              <li>Save time</li>
+              <li>Have a framework for collaboration</li>
+              <li>Gain confidence in the validity of your results</li>
+              <li>Make a more convincing case with your research</li>
+              <li>Make your research accessible and adaptable for everyone</li>
+          </ul>
       </ul>
   </section>
-
-  <section>
-
-  </section>
 </section>
+
+
+
+<section>
+  <section>
+    <h2>Sharing software environments</h2>
+  </section>
 
 <section>
     <h2>Why share software?</h2>
@@ -363,6 +433,7 @@ Note to self
         <li>
             different software versions/operating systems can produce different results
         </li>
+        <iframe width="1200"  height="500" src="https://doi.org/10.3389/fninf.2015.00012"></iframe>
     </ul>
 </section>
 
@@ -371,15 +442,38 @@ Note to self
       <ul>
           <li class="fragment fade-in">
               Software containers encapsulate a software environment and isolate it from
-              a surrounding operating system
+              a surrounding operating system. Common solutions: Docker, Singularity
+          </li>
+          <li class="fragment fade-in">
+              How familiar are you with software containers?
+          </li>
+              <iframe class="fragment fade-in" src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0" width="800" height="600"></iframe>
+      </ul>
+  </section>
+
+
+  <section>
+      <h2>Software containers</h2>
+      <ul>
+          <table>
+              <tr>
+                  <td>
+          <img src="../pics/dockerexplain.png" height="500">
+                  </td>
+                  <td><img height="100" src="../pics/blog_docker.png"><br>
+                  <img height="100" src="../pics/singularitylogo.jpg"> </td>
+              </tr>
+
+              </table>
+          </img>
+          <li class="fragment fade-in">
+              Put simple, a cut-down virtual machine that is a portable and shareable
+              bundle of software libraries and their dependencies
           </li>
           <li class="fragment fade-in">
               Includes: Code, runtime, system tools, system libraries, settings <br>
               Does not include: Resource management
-          </li>
-          <li class="fragment fade-in">
-              Put simple, a cut-down virtual machine that is a portable and shareable
-              bundle of software libraries and their dependencies
           </li>
       </ul>
   </section>
@@ -423,31 +517,223 @@ Note to self
 
   <section>
       <h2>The datalad-container extension</h2>
+      <ul>
+      <li>
+          DataLad extensions are Python packages that equip DataLad with additional
+          functionality
+      </li>
+      <li>
+          Examples: <code>datalad-osf</code> for publishing and cloning dataset to and from
+          the Open Science Framework, <code>datalad-hirni</code> for transforming
+          neuroimaging datasets to BIDS, ... Full overview at
+          <a href="http://handbook.datalad.org/en/latest/extension_pkgs.html" target="_blank">
+              the DataLad handbook</a>
+      </li>
+      <li>
+          <code>datalad-container</code> gives DataLad commands to add, track, retrieve, and
+          execute Docker or Singularity containers.
+      </li>
       <pre><code>pip install datalad-container</code></pre>
+      </ul>
   </section>
 
   <section>
       <h2>Adding software to datasets</h2>
-      <li>Can be added from a local path or a URL</li>
-      <li>Advice: Put your image on a Hub, and register it from a public URL</li>
+      <ul>
+          <li>
+              DataLad can register software containers as "just another file" to your
+              dataset
+          </li>
+          <li>
+              This allows you to include software in your analyses!
+          </li>
+          <li>
+              Containers can be added from a local path or a URL.
+              <b>Advice:</b> Put your image on a Hub, and register it from a public URL</li>
+</ul>
 
   </section>
 
   <section>
-      <h2>Adding a Singularity Image</h2>
-      from a path:
-
-      from a URL:
-            <li>Singularity Images are a single file</li>
+      <h2>Adding a Singularity Image from a path</h2>
+      <ul>
+          <li>You can get Singularity images by "pulling" them from Singularity or
+          Dockerhub:</li>
+          <pre><code class="bash">$ singularity pull docker://nipy/heudiconv:0.5.4</code></pre>
+          <pre><code class="bash">$ singularity pull shub://adswa/python-ml:1
+INFO:    Downloading shub image
+ 265.56 MiB / 265.56 MiB [==================================================] 100.00% 10.23 MiB/s 25s</code></pre>
+          <li>You can also take/write a recipe file and build a container on your computer:
+          <pre><code class="bash">$ sudo singularity build myimage Singularity.2                                                           255 !
+INFO:    Starting build...
+Getting image source signatures
+Copying blob 831751213a61 done
+[...]
+INFO:    Creating SIF file...
+INFO:    Build complete: myimage
+</code></pre></li>
+      <li>pulled or build images lie around as <i>.sif</i> or <i>.simg</i> files:
+      <pre><code class="bash">$ ls
+heudiconv_0.5.4.sif
+python-ml_1.sif</code></pre></li>
+                </ul>
   </section>
 
   <section>
-      <h2>Adding a Docker Image</h2>
-      from a path:
-
-      from a URL:
-      <li></li>
+      <h2>Adding a Singularity Image from a path</h2>
+      <ul>
+          <li>Adding a container from a local path (inside of a dataset):</li>
+          <pre><code class="bash">$ datalad containers-add software --url /home/me/singularity/myimage
+[INFO   ] Copying local file myimage to /home/adina/repos/resources/.datalad/environments/software/image
+add(ok): .datalad/environments/software/image (file)
+add(ok): .datalad/config (file)
+save(ok): . (dataset)
+containers_add(ok): /home/adina/repos/resources/.datalad/environments/software/image (file)
+action summary:
+  add (ok: 2)
+  containers_add (ok: 1)
+  save (ok: 1)
+ </code></pre>
+          <pre><code class="bash">$ datalad containers-list
+software -> .datalad/environments/software/image</code></pre>
+     <li>Note: Singularity Images are a single file</li>
+                </ul>
   </section>
+
+   <section>
+      <h2>Adding a Singularity Image from a URL</h2>
+      <ul>
+          <li>
+          Tip: If you add Images from public URLs (e.g., Dockerhub or Singularity Hub),
+          others can retrieve your Image easily
+          </li>
+      <pre><code>$ datalad containers-add software --url shub://adswa/python-ml:1
+add(ok): .datalad/config (file)
+save(ok): . (dataset)
+containers_add(ok): /tmp/bla/.datalad/environments/software/image (file)
+action summary:
+  add (ok: 1)
+  containers_add (ok: 1)
+  save (ok: 1)
+</code></pre>
+          <li class="fragment fade-in">
+              My workflow: Create a repository/dataset.
+              Use <a href="https://github.com/ReproNim/neurodocker" target="_blank">
+              Neurodocker</a> with <code>datalad run</code>
+              to create a Singurarity recipe and link the repository to Singularity hub.
+              Singularity-hub takes care of building the Image, and I can add from
+              its URL: <a href="https://github.com/adswa/resources/" target="_blank">
+              demo
+          </a>
+          </li>
+      </ul>
+
+  </section>
+
+  <section>
+      <h2>Adding a Docker Image from a path</h2>
+      <ul>
+          <li>You can get Docker images by "pulling" them from Dockerhub:</li>
+          <pre><code class="bash">$ docker pull repronim/neurodocker:latest                                   1 !
+latest: Pulling from repronim/neurodocker</code></pre>
+          <li>You can also take/write a Dockerfile and build a container on your computer:
+          <pre><code class="bash">$ sudo docker build -t adwagner/somedockercontainer .
+Sending build context to Docker daemon  6.656kB
+Step 1/4 : FROM python:3.6
+[...]
+Successfully built 31d6acc37184
+Successfully tagged adwagner/somedockercontainer:latest
+</code></pre></li>
+      <li>Show docker images:
+      <pre><code class="bash">$ docker images
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+repronim/neurodocker            latest              84b9023f0019        7 months ago        81.5MB
+adwagner/min_preproc            latest              fca4a144b61f        8 months ago        5.96GB
+[...]</code></pre></li>
+                </ul>
+  </section>
+
+
+
+  <section>
+      <h2>Adding a Docker Image from a path</h2>
+      <ul>
+          <li>Adding a container from a local path (inside of a dataset):</li>
+          <pre><code class="bash">$ python -m datalad_container.adapters.docker save "name in daemon" "directory"
+ </code></pre>
+          <pre><code class="bash" style="max-height:None">$ python -m datalad_container.adapters.docker save repronim/reproin .datalad/environments/software/image
+[INFO] Saved repronim/reproin to .datalad/environments/software/image
+Saved repronim/reproin to .datalad/environments/software/image
+
+(base) C:\Users\datalad\testing\aaa>ls .datalad/environments/software/image
+02cd13878b20ca9cccdfab0d73c87a467f9ea965125a352fbfccbdb46043e7d6
+068273365c4505771cfd3e1ffb292673889b4f792e2fc91303448d8832020eab
+069a82d9c7f078de63301593d09fdf4f51fb1e58c280dc922431f7d41e27f8f1
+0fec81ff401a959451a2bfebd7af49035d888fb9577f3fd43d2975c1618da448
+28d31e3b3a93f6528117e38ab7271eeb16e9716a37d8c1c6e5b13168e1aa0ad8
+2aca27f848715b7ac5f4d5d6cc87136c397a222c5c71766995842ff8f7dcc560
+6b53e6712719aa8814cb3d39e158f283dd3c4b8f2122b90d40a366540d5b4f69.json
+7e48036709652e90f6202d388bfa259066508fd2bd6f64d4ab294e4a04160a6a
+7ed206d7a113117d0e9338d4c4f05ef16f3abbf19c5aa5ff2a9f5bc746408d53
+863616985ea493481d472032e93da2e438c140666447dacead1807eff180f98d
+87f8a6b2d12826df2c2594eec9c9ccc7e80b75c91b57ae3c0819c7d5d8e865c3
+8ac7a3d23e2c63f64840d839d27b8c3733c79cb5c8d01ee29ce3baa887fc34d1
+970da47868d0b5398fde2c7082fd652915a79af2e95cfbcc4ea204130a49f3ad
+b5bd46a132a72be8e1e6ec5a0967db62915123b50e9c2257186b0a83948621f1
+e974ab19d8b2fd1ea6cb9683649e9bb407b306149442d47e54344c221a706e18
+manifest.json
+repositories</code></pre>
+          <li>Note: A Docker image is not a single file, but its extracted layers</li>
+                </ul>
+  </section>
+
+  <section>
+      <h2>Adding a Docker image from a URL</h2>
+      <ul>
+          <li>
+              <pre><code>$ datalad containers-add --url dhub://busybox:1.30 bb
+[INFO] Saved busybox:1.30 to C:\Users\datalad\testing\blablablabla\.datalad\environments\bb\image
+add(ok): .datalad\environments\bb\image\64f5d945efcc0f39ab11b3cd4ba403cc9fefe1fa3613123ca016cf3708e8cafb.json (file)
+add(ok): .datalad\environments\bb\image\a57c26390d4b78fd575fac72ed31f16a7a2fa3ebdccae4598513e8964dace9b2\VERSION (file)
+add(ok): .datalad\environments\bb\image\a57c26390d4b78fd575fac72ed31f16a7a2fa3ebdccae4598513e8964dace9b2\json (file)
+add(ok): .datalad\environments\bb\image\a57c26390d4b78fd575fac72ed31f16a7a2fa3ebdccae4598513e8964dace9b2\layer.tar (file)
+add(ok): .datalad\environments\bb\image\manifest.json (file)
+add(ok): .datalad\environments\bb\image\repositories (file)
+add(ok): .datalad\config (file)
+save(ok): . (dataset)
+containers_add(ok): C:\Users\datalad\testing\blablablabla\.datalad\environments\bb\image (file)
+action summary:
+  add (ok: 7)
+  containers_add (ok: 1)
+  save (ok: 1)</code></pre>
+          </li>
+      </ul>
+  </section>
+
+
+<section>
+    <h2>Configure containers</h2>
+    <ul>
+        <li>
+            <code>datalad containers-run</code> executes any command inside of the
+        specified container. How does it work?
+        </li>
+        <pre><code>$ cat .datalad/config
+[datalad "containers.midterm-software"]
+	updateurl = shub://adswa/resources:1
+	image = .datalad/environments/midterm-software/image
+	cmdexec = singularity exec {img} {cmd}</code></pre>
+        <li class="fragment fade-in">
+            You can configure the command execution however you like:
+        <pre><code>$ datalad containers-add fmriprep \
+--url shub://ReproNim/containers:bids-fmriprep--20.1.1 \
+--call-fmt 'singurity run --cleanenv -B $PWD,$PWD/.tools/license.txt {img} {cmd}'</code></pre><br>
+        <small>workflow demonstration fMRIprep: <a href="https://youtu.be/xlb_moXe48E?t=200" target="_blank">
+            OHBM 2020 Open Science Room presentation
+        </a> </small></li>
+    </ul>
+</section>
+
 
   <section>
     <h2>Software containers</h2>
