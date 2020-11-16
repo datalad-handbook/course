@@ -45,7 +45,7 @@
       (The Turing Way)</a> </small>
   </section>
 
-  <section>
+  <section data-transition="None">
     <h2>Common problems in science</h2>
           <div class="fragment fade-in" data-fragment-index="1">
               You write a paper about an algorithm, stay up
@@ -58,7 +58,7 @@
           <imgcredit>Illustration adapted from Scriberia and The Turing Way</imgcredit>
   </section>
 
-  <section>
+  <section data-transition="None">
     <h2>Common problems in science</h2>
           <div class="fragment fade-in" data-fragment-index="1">
               Your research project produces phenomenal results, but your laptop,
@@ -68,7 +68,7 @@
           <imgcredit>https://co.pinterest.com/pin/551128073121451139//imgcredit>
   </section>
 
-  <section>
+  <section data-transition="None">
     <h2>Common problems in science</h2>
           <div class="fragment fade-in" data-fragment-index="1">
               A graduate student approaches his supervisor, complaining that the
@@ -82,7 +82,7 @@
       <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
   </section>
 
-  <section>
+  <section data-transition="None">
     <h2>Common problems in science</h2>
           <div class="fragment fade-in" data-fragment-index="1">
               A Post-doc wrote a script during the PhD that applied a specific
@@ -93,7 +93,7 @@
       <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
   </section>
 
-  <section>
+  <section data-transition="None">
     <h2>common problems in science</h2>
           <div class="fragment fade-in" data-fragment-index="1">
               You try to recreate results from another lab's published paper.
@@ -114,6 +114,9 @@
       <div class="fragment fade-in">Isn't it time to get better?</div>
       <div class="fragment fade-in">Both for you and your future self, as well as
           for science as a whole?</div>
+      <div class="fragment fade-in">The tools exist, and are getting easier and
+          easier to use. Sometimes, you only need to know that something exists
+          to get started with it.</div>
   </section>
 
 
@@ -128,6 +131,7 @@
               can help:
           </li>
       <ul class="fragment fade-in">
+          <li>Details of the YODA principles for reproducible analyses</li>
           <li>DataLad as a component in reproducible papers</li>
           <li>The <code>datalad-container</code> extension to add and use software containers</li>
       </ul>
@@ -135,23 +139,217 @@
   </section>
 
 
+<!--YODA principles-->
 
+<section data-markdown><script type="text/template">
+# Modularity
+
+Need for meaningful units of data that are clearly recognizable for anyone. Only then we have a handle on the *what* in "what is important?"
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section>
+<h2>Easily lost modularity through obfuscation</h2>
+Original
+<pre><code class="sh" style="max-height:none" data-trim>
+/dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+</code></pre>
+<div class="fragment">
+After applied transform (preprocessing, analysis, ...)
+<pre><code class="sh" style="max-height:none" data-trim>
+/dataset
+├── sample1
+│   ├── ps34t.dat
+│   └── a001.dat
+├── sample2
+│   ├── ps34t.dat
+│   └── a001.dat
+...
+</code></pre>
+Without expert/domain knowledge no distinction between original and derived data possible anymore.
+</div>
+</section>
+
+<section>
+<h2>Preserved modularity</h2>
+Original
+<pre><code class="sh" style="max-height:none" data-trim>
+/raw_dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+</code></pre>
+<div class="fragment">
+After applied transform (preprocessing, analysis, ...)
+<pre><code class="sh" style="max-height:none" data-trim>
+/derived_dataset
+├── sample1
+│   └── ps34t.dat
+├── sample2
+│   └── ps34t.dat
+├── ...
+└── inputs
+    └── raw
+        ├── sample1
+        │   └── a001.dat
+        ├── sample2
+        │   └── a001.dat
+        ...
+</code></pre>
+Clearer separation of semantics, through use of pristine version of original dataset within a
+<em>new, additional</em> dataset holding the outputs.
+</div>
+</section>
+
+
+<section>
+<h2>DataLad: Dataset linkage</h2>
+<img data-src="../pics/dataset_linkage.png">
+<pre><code class="bash" style="font-size:115%;max-height:none">$ datalad clone --dataset . http://example.com/ds inputs/rawdata
+</code></pre>
+
+<pre><code class="diff" style="max-height:none">$ git diff HEAD~1
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..c3370ba
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "inputs/rawdata"]
++       path = inputs/rawdata
++       url = http://example.com/importantds
+diff --git a/inputs/rawdata b/inputs/rawdata
+new file mode 160000
+index 0000000..fabf852
+--- /dev/null
++++ b/inputs/rawdata
+@@ -0,0 +1 @@
++Subproject commit fabf8521130a13986bd6493cb33a70e580ce8572
+</code></pre>
+Each (sub)dataset is a separately, but jointly version-controlled entity.
+    <aside class="notes">weighs just a few bytes</aside>
+</section>
+
+<section>
+  <h2>Example modular data structure</h2>
+  <img style="" height="750px" data-src="../pics/virtual_dirtree.png">
+  <p style="margin-top:-.5em">Link precisely versioned inputs to version-controlled outputs</p>
+    <aside class="notes">dataset linkage is pairwise, i.e. cheap</aside>
+</section>
+
+<section data-markdown><script type="text/template">
+## When to modularize?
+
+- Target audience is different
+  - public vs. private
+  - domain specific vs. domain general
+
+- Pace of evolution is different
+  - "factual" raw data vs. choices of (pre-)processing
+  - completed acquisition vs. ongoing study
+
+- Size impacts I/O and logistics
+  - Git can struggle with 1M+ files
+  - filesystems (licensing) can struggle with large numbers of inodes
+  - More infos: [Go Big or Go Home chapter](http://handbook.datalad.org/en/latest/beyond_basics/basics-scaling.html)
+
+- Legal/Access constraints
+  - personal vs. anonymized data
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+</section>
+
+<!-- Reproducible paper -->
+<section>
   <section>
       <h2>A PDF is not enough</h2>
 
-      ... neither for others, nor for your future self
-  </section>
-
-
-
-
-  <section>
-      <h2>What do we need apart from a PDF?</h2>
+      ... neither for others, nor for your future self. <br>
+      What do we need apart from a PDF? <br>
       <ul>
           <li>code</li>
           <li>data</li>
           <li>software</li>
       </ul>
+  </section>
+
+  <section>
+      <h2>Going beyond a PDF: A reproducible paper</h2>
+      Let's take a look into a reproducible paper:
+      <a href="https://github.com/psychoinformatics-de/paper-remodnav/" target="_blank">
+          github.com/psychoinformatics-de/paper-remodnav/
+      </a>
+      <br>
+      <br>
+      <b>Disclaimer</b>
+            <ul>
+          <li>
+              This is not the only way to create a reproducible paper
+          </li>
+          <li>
+              This is certainly not the easiest way to do it
+          </li>
+          <li>
+              But it is <i>one</i> way of connecting established tools into a functional
+              solution
+          </li>
+          <li>
+              You could redo this with the tools that you are familiar with
+          </li>
+          <li>
+              A hands-on explanation and a demo of an alternative approach will follow
+          </li>
+      </ul>
+  </section>
+
+
+  <section>
+    <h2>A reproducible paper sketch</h2>
+      <ul>
+          <li>We have created a template to recreate this analysis at
+          <a href="https://github.com/datalad-handbook/repro-paper-sketch" target="_blank">
+              github.com/datalad-handbook/repro-paper-sketch
+          </a> </li>
+          <li>
+              Team up in break-out rooms, and follow the instructions in the README
+              to make a paper, adjust the code, and re-make an updated paper (
+              <a href="https://adswa.github.io/mpi-datamanagement-ws/content/reproduciblescience/#hands-on" target="_blank">
+                  Hands-on 1 on the website</a>).
+          </li>
+      </ul>
+
+  </section>
+
+
+
+  <section>
+      <h2>An alternative with RMarkdown</h2>
+      demo by Lennart
+  </section>
+
+  <section>
+  <h2>Summary: Reproducible Papers</h2>
+      <ul>
+          <li class="fragment fade-in"></li>
+      </ul>
+  </section>
+
+  <section>
+
   </section>
 </section>
 
