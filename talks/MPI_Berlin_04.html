@@ -498,7 +498,7 @@ target=seafile prefix=cartoon-collection
   .: origin(-) [git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git (git)]
 </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-Quiz question: "Why did Lennart call the GitLab sibling 'origin'?" 🤔 <!-- .element: class="fragment" data-fragment-index="3" -->
+Quiz question: "Why did Lennart name the GitLab sibling 'origin'?" 🤔 <!-- .element: class="fragment" data-fragment-index="3" -->
 
 </script>
 </section>
@@ -575,76 +575,7 @@ And you need to give them access to the Keeper library (see next slide) <!-- .el
 get(ok): compiling.png (file) [from seafile...]
 </code></pre>
 
-
 </section>
-
-
-
-
-
-
-
-
-
-<section data-markdown><script type="text/template" >
-
-### Alternative: Create Seafile library manually
-
-Enter the name for the rclone configuration <br>
-(good idea to name it like your repo) <!-- .element: class="fragment" -->
-
-<pre><code class="bash" style="max-height:none" data-line-numbers="1"> name> cartoon-collection # enter name and press enter
-</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
-
-<pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Edit advanced config? (y/n)
-y) Yes
-n) No (default)
-y/n> n
-</code></pre>
-
-<pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Remote config
-Two-factor authentication is not enabled on this account.
---------------------
-[cartoon-collection]
-type = seafile
-url = https://keeper.mpdl.mpg.de/
-user = wittkuhn@mpib-berlin.mpg.de
-pass = *** ENCRYPTED ***
-library = cartoon-collection
---------------------
-y) Yes this is OK (default)
-e) Edit this remote
-d) Delete this remote
-y/e/d> y # leave blank (or enter 'y') and press enter to confirm
-</code></pre>
-
-<pre><code class="bash" style="max-height:none">Current remotes:
-Name                 Type
-====                 ====
-cartoon-collection   seafile
-</code></pre>
-
-</script>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </section>
 
@@ -666,7 +597,6 @@ cartoon-collection   seafile
     <img class="fragment fade-in" src="../pics/gitlab_sharedlib.png">
 </section>
 
-
   <section data-transition="None" data-markdown><script type="text/template" >
   ### Configure the same rclone remote
 
@@ -684,7 +614,7 @@ cartoon-collection   seafile
   <pre><code class="bash" style="max-height:none" data-line-numbers="1"> name> seafile # enter name and press enter
   </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-  <pre><code class="bash" style="max-height:none" data-line-numbers="1,5-6">Type of storage to configure.
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,5-7">Type of storage to configure.
 Enter a string value. Press Enter for the default ("").
 Choose a number from below, or type in your own value
 [...]
@@ -796,7 +726,7 @@ install(ok): /tmp/collaboration/cartoon-collection (dataset)
 </code></pre>
 <pre><code class="bash" style="max-height:none">$ cd cartoon-collection
 $ ls
-compiling.png   # only a "filename"
+compiling.png   # only a "filename" - note actual file content!
 </code></pre>
     <p class="fragment fade-in">Before I can <code>get</code> the comic, I need to enable the special remote</p>
 <pre><code class="bash; fragment fade-in" style="max-height:none" data-line-numbers="1,3">$ datalad siblings -d "/tmp/collaboration/cartoon-collection" enable -s seafile
@@ -812,7 +742,6 @@ get(ok): compiling.png (file) [from seafile...]
     <img src="../pics/compiling.png">
 </section>
 
-
   <section>
       <h2>But wait... I also know cool comics!</h2>
       <h3>From data sharing to collaboration</h3>
@@ -820,7 +749,8 @@ get(ok): compiling.png (file) [from seafile...]
 
   <section>
      <h2>Add a collaborator on GitLab</h2>
-          TODO Lennart
+          <img src="../pics/gitlab_add_collaborators.png">
+      And don't forget to add your collaborators to your Seafile / Keeper library!
   </section>
 
   <section data-transition="None">
@@ -949,9 +879,54 @@ publish(ok): . (dataset) [refs/heads/morecomics->origin:refs/heads/morecomics [n
         <img  src="../pics/gitlabmerge3.png">
 </section>
 
+<section data-transition="None" data-markdown><script type="text/template">
+
+## Review the merge request
+
+Get the branch with the new data / code / feature: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pre><code class="bash" style="max-height:none">$ git fetch # fetch latest changes from 'origin' (here, GitLab)
+$ git checkout morecomics # switch to the new branch that your collaborator created!
+Branch 'morecomics' set up to track remote branch 'morecomics' from 'origin'.
+Switched to a new branch 'morecomics'
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Look at the new data / code / features on this branch: <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none">$ ls
+compiling.png         interdisciplinary.png
+$ datalad get interdisciplinary.png
+get(ok): interdisciplinary.png (file) [from seafile...]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<img src="../pics/interdisciplinary.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+<section data-transition="None" data-markdown><script type="text/template">
+
+## Merge into the master branch
+
+Happy with the proposed changes? Merge into your master branch!
+
+<img width=800 src="../pics/gitlab_merge_approved.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3,5-6">$ git checkout master
+[...]
+$ datalad update --merge
+[...]
+$ ls
+compiling.png         interdisciplinary.png
+</code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+
   <section>
       <h2>Collaboration!</h2>
-      Overview of a typical collaborative workflow:
+      <h3>Overview of a typical collaborative workflow:</h3>
       <ul>
           <dt>Optional: Create an issue</dt>
           <dl>It is good practice to let you collaborators know what you are working
@@ -967,18 +942,6 @@ publish(ok): . (dataset) [refs/heads/morecomics->origin:refs/heads/morecomics [n
           <dt>Step 4: Push your change and create a merge request</dt>
       </ul>
   </section>
-
-  <section>
-      <h2>HEADING</h2>
-      <ul>
-          <li class="fragment-fade-in-then-semi-out">
-
-          </li>
-      </ul>
-  </section>
-
-  </section>
-
 
 </div> <!-- /.slides -->
 </div> <!-- /.reveal -->
