@@ -17,16 +17,13 @@
 <div class="reveal">
 <div class="slides">
 
+<section>
   <section>
       <h1>Reproducible Research</h1>
       <img height="500" src="../pics/Provenance_alpha.png">
       <imgcredit>CC-BY-SA Scriberia and The Turing Way</imgcredit>
-      <ul>
-          <li class="fragment-fade-in-then-semi-out">
-
-          </li>
-      </ul>
   </section>
+
 
   <section  data-background-image="https://alchetron.com/cdn/jon-claerbout-c970ff70-1e60-4ccc-92ca-583bba1b56b-resize-750.jpeg",
   data-background-opacity="0.5">
@@ -41,18 +38,111 @@
   </section>
 
   <section>
+    <h2>Some definitions first...</h2>
+      <img src="../pics/turingway/ReproducibleDefinitionGrid.png">
+      <imgcredit>Illustration by Scriberia and The Turing Way</imgcredit>
+      <br><small><a href="https://the-turing-way.netlify.app/reproducible-research/overview/overview-definitions.html#rr-overview-definitions" target="_blank">
+      (The Turing Way)</a> </small>
+  </section>
+
+  <section>
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              You write a paper about an algorithm, stay up
+              late to generate good-looking figures, but you have to tweak parameters and
+              display options to make it work AND look good. The next morning, you have no
+              idea which parameters produced which figures, and which of the figures
+              fits to what you report in the paper.<br>
+          <img height="400" src="../pics/turingway/findfiles.png">
+              <img height="400" src="../pics/turingway/projectstack.png"</div>
+          <imgcredit>Illustration adapted from Scriberia and The Turing Way</imgcredit>
+  </section>
+
+  <section>
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              Your research project produces phenomenal results, but your laptop,
+              the only place that stores the source code for the results, is
+              stolen/breaks<br>
+          <img height="700" src="../pics/stolenlaptop.jpg"></div>
+          <imgcredit>https://co.pinterest.com/pin/551128073121451139//imgcredit>
+  </section>
+
+  <section>
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              A graduate student approaches his supervisor, complaining that the
+              supervisors research idea does not work. After weeks of discussion,
+              it becomes apparent that oral communication doesn't suffice - the
+              student can't sufficiently explain the environment (data, algorithms,
+              ...) they constructed, and if the supervisor can't enter and use the
+              students project there's no way to find a fix.
+              <br>
+          <img height="500" src="../pics/badsupervision.gif"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
+
+  <section>
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              A Post-doc wrote a script during the PhD that applied a specific
+              method to a dataset. Now, with new data and a new project, they
+              try to reuse the script, but forgot how it worked.
+              <br>
+          <img height="500" src="../pics/frustration.jpg"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
+
+  <section>
+    <h2>common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              You try to recreate results from another lab's published paper.
+              You base your re-implementation on everything reported in their paper,
+              but the results you obtain look nowhere like the original.
+              <br>
+          <img height="500" src="../pics/turingway/ReadableCode.png"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
+
+  <section>
+    <h2><strike>common</strike> old problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              All these problems were paraphrased from
+              <a href="https://sci-hub.se/https://link.springer.com/chapter/10.1007%2F978-1-4612-2544-7_5" target="_blank">
+                  Buckheit & Donoho, <b>1995</b></a>
+              <br></div>
+      <div class="fragment fade-in">Isn't it time to get better?</div>
+      <div class="fragment fade-in">Both for you and your future self, as well as
+          for science as a whole?</div>
+  </section>
+
+
+  <section>
+      <h2>Reproducible Research</h2>
+      <ul>
+          <li class="fragment fade-in-then-semi-out">
+              DataLad is one tool that can make reproducible research easier
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+              Let's take a more detailed look into some ways in which DataLad
+              can help:
+          </li>
+      <ul class="fragment fade-in">
+          <li>DataLad as a component in reproducible papers</li>
+          <li>The <code>datalad-container</code> extension to add and use software containers</li>
+      </ul>
+      </ul>
+  </section>
+
+
+
+  <section>
       <h2>A PDF is not enough</h2>
 
       ... neither for others, nor for your future self
   </section>
 
-  <section>
-    <h2>Some definitions first...</h2>
-      <img src="../pics/ReproducibleMatrixTuring.jpg">
-      <br><small><a href="https://the-turing-way.netlify.app/reproducible-research/overview/overview-definitions.html#rr-overview-definitions" target="_blank">
-      (The Turing Way)</a> </small>
 
-  </section>
 
 
   <section>
@@ -63,6 +153,7 @@
           <li>software</li>
       </ul>
   </section>
+</section>
 
 <section>
     <h2>Why share software?</h2>
@@ -181,6 +272,41 @@
               includes common neuroimaging software as configured singularity containers.
           </li>
       </ul>
+  </section>
+
+  <section>
+      <h2>Summary</h2>
+      Where can DataLad help?
+      <table>
+          <tr>
+              <td>
+                <img src="../pics/turingway/ReproducibleDefinitionGrid.png">
+                <imgcredit>Illustration by Scriberia and The Turing Way</imgcredit>
+              </td>
+              <td>
+                  <table>
+                      <tr>
+                         <b>Reproducible</b><br>
+                          automatic recompute <br>
+                          and identity checks<br>
+                          <b>Replicable</b><br>
+                          Easily exchange <br>
+                          input data<br>
+                          <b>Robust</b><br>
+                          Reuse data & change<br>
+                          code, update paper <br>
+                          <b>Generalisable</b><br>
+                          Share analysis in an<br>
+                          easily reusable and<br>
+                          adaptable framework
+                      </tr>
+                  </table>
+
+              </td>
+          </tr>
+      </table>
+
+  </section>
   </section>
 
 </div> <!-- /.slides -->
