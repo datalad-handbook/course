@@ -381,19 +381,21 @@
 <section>
     <h3>But what's in it for me? "Selfish" reasons for reproducibility</h3>
     <small>"[...] science is all about more publications, more impact factor, more money and more career. More, more, more ...<br>So how does working reproducibly help me achieve more as a scientist." - Markowetz, 2015</small><br><br>
-    <ul>
-        <li>You want to avoid the disaster of publishing "a miracle"</li>
-        <li>You will be faster (in the long run)
-            <ul>
-              <li>Finding and fixing errors will be faster</li>
-              <li>Progress on new projects will happen faster</li>
-            </ul>
-        </li>
-        <li>Researchers (reviewers!) will have more trust in your findings</li>
-        <li>Data sharing can foster collaboration (with your past self, inside and outside your institution) and lead to new projects and publications</li>
-        <li>You acquire (technical) skills that will likely become increasingly important for your career, either in academia or industry</li><br>
-        <i><b>It's just useful for your everyday work and makes your life easier!</i></b>
-    </ul>
+    <div class="fragment fade-in" data-fragment-index="1">
+        <ul>
+            <li>You want to avoid the disaster of publishing "a miracle"</li>
+            <li>You will be faster (in the long run)
+                <ul>
+                  <li>Finding and fixing errors will be faster</li>
+                  <li>Progress on new projects will happen faster</li>
+                </ul>
+            </li>
+            <li>Researchers (reviewers!) will have more trust in your findings</li>
+            <li>Data sharing can foster collaboration (with your past self, inside and outside your institution) and lead to new projects and publications</li>
+            <li>You acquire (technical) skills that will likely become increasingly important for your career, either in academia or industry</li><br>
+        </ul></div>
+      <div class="fragment fade-in" data-fragment-index="2">
+      <i><b>It's just useful for your everyday work and makes your life easier!</i></b><br>(see next slides ...)</div>
     <br><br><small>see e.g., Markowetz, 2015, <i>Genome Biology</i>; Poldrack, 2019, <i>Neuron</i></small>
 </section>
 
@@ -469,7 +471,8 @@
       <div class="fragment fade-in">The tools exist, and are getting easier and
           easier to use.</div>
       <div class="fragment fade-in">Sometimes, you only need to know that something exists and ...</div><br>
-      <div class="fragment fade-in"><b>👏 just 👏 get 👏 started! 👏</b></div>
+      <div class="fragment fade-in"><b>👏 just 👏 get 👏 started! 👏</b></div><br>
+      <div class="fragment fade-in">... but also don't be too hard on yourself! 🤗</div>
   </section>
 
   </section>
@@ -481,7 +484,7 @@
   </section>
 
   <section>
-  <h2>Defining replicability</h2>
+  <h3>Defining replicability</h3>
 
   <table>
       <tr>
@@ -500,22 +503,72 @@
           <td>Generalization</td>
       </tr>
   </table>
-
-  <br><small>see e.g., Freese & Peterson, 2017</small>
+  <br><small>see e.g., Freese & Peterson, 2017</small><br><br>
+  <i>"Authors provide all the necessary data and the computer codes to run the analysis again, re-creating the results."</i> <a href="https://library.seg.org/doi/abs/10.1190/1.1822162" target="_blank"> - Claerbout & Karrenbach, <b>1992</b></a>
   </section>
 
   <section>
-      <h2>What is version control?</h2>
-      <img src="../pics/final.png" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+      <h3>What is version control?</h3>
+      <img height="400" src="../pics/turingway/VersionControl.svg">
+      <img height="400" src="../pics/turingway/ProjectHistory.svg"</div>
+      <imgcredit>Illustration adapted from Scriberia and The Turing Way</imgcredit>
       <ul>
           <li class="fragment fade-in">keep things organized</li>
           <li class="fragment fade-in">keep track of changes</li>
           <li class="fragment fade-in">revert changes or go back to previous states</li>
       </ul>
-  <aside class="notes">
-  <li>Not only manuscripts, but also data!</li>
-  </aside>
   </section>
+
+
+
+  <section>
+      <h3>What is git? - A crash course in code</h3>
+      <div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git init my_project # create a new git repo
+Initialized empty Git repository in /Users/wittkuhn/Desktop/my_project/.git/</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ cd my_project # go into the my_project directory</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ echo "hello world" >> README.md # create a README.md file</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ ls # show the contents of the directory
+README.md</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git add README.md # allow git to track changes in the README.md file</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git commit -m "initial commit" # commit the changes to your repo's history
+[master (root-commit) 5118725] initial commit
+1 file changed, 1 insertion(+)
+create mode 100644 README.md</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ echo "goodbye world" >> README.md # add a new line to your README.md
+$ git add README.md # allow git to track this recent change
+$ git commit -m "update README.md" # commit the change to history
+[master c56c4c0] update README.md
+ 1 file changed, 1 insertion(+)
+</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git log --oneline # show the commit history
+c56c4c0 (HEAD -> master) update README.md
+5118725 initial commit
+</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git status
+On branch master
+nothing to commit, working tree clean</code></pre></div>
+  </section>
+
+  <section>
+      <h3>Quiz question: What is inside README.md?</h3>
+      <div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ vim README.md
+
+hello world
+goodbye world</code></pre></div>
+
+  <div class="fragment fade-in"><img style="height:500px;margin:20px" data-src="../pics/git_example_filestructure.png"/></div>
+  </section>
+
+  <section>
+      <h3><img style="height:50px;margin:10px" data-src="../pics/GitHub.png"/>What are GitHub and GitLab?<img style="height:50px;margin:10px" data-src="../pics/GitLab_Logo.svg"/></h3>
+      GitHub and GitLab are platforms to host the contents of your Git repo
+      <img height="650" src="https://docs.inm7.de/img/git_PR.png">
+      <imgcredit>https://docs.inm7.de/img/git_PR.png</imgcredit>
+      <br>
+      We will present workflows that share data and code via these platforms
+  </section>
+
+</code></pre>
 
 </section>
 
@@ -737,53 +790,6 @@ nothing to save, working tree clean</code></pre>
         <img height="850" class="fragment fade-in" src="../pics/centralmanagement.gif">
 </ul>
 </section>
-</section>
-
-
-<section>
-
-
-
-
-<!--...CONCEPTS...-->
-
-<section>
-    <h2>Concepts</h2>
-</section>
-
-<section>
-  <h3>What is version control?</h3>
-  <ul>
-      <li><i>What have I done?</i> 🤔</li>
-      <ul>
-        <li> Version control tracks the history of changes in files</li>
-      </ul>
-      <li><i>Who made the changes? Who else worked on the file?</i> 🤔</li>
-      <ul>
-        <li>Version control tracks who made which changes when</li>
-      </ul>
-      <li><i>What's the difference between analysis.py and analysis_new.py?</i> 🤔</li>
-      <ul>
-        <li>Version control enables work on separate versions of a file</li>
-      </ul>
-  </ul>
-</section>
-
-
-<!--..
-- git concepts:
-- decentralized workflow:
-- the git way of thinkig
-- difference between git and github
-- how can research data management make your life easier?
-- not an additional strain but a help
-
-- publication workflow:
-- basics: git checkout commit hash
-..-->
-
-
-
 
 <section data-transition="None">
 
@@ -792,20 +798,6 @@ nothing to save, working tree clean</code></pre>
     Let's have a ☕, and then get started
 </section>
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </div> <!-- /.slides -->
 </div> <!-- /.reveal -->
