@@ -440,11 +440,20 @@ d) Delete this remote
 y/e/d> y # leave blank (or enter 'y') and press enter to confirm
 </code></pre>
 
+List of your configured rclone remotes:
+
 <pre><code class="bash" style="max-height:none">Current remotes:
 Name               Type
 ====               ====
 seafile            seafile
 </code></pre>
+
+Impatient? Configure rclone in one line of code: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pre><code class="bash" style="max-height:none">rclone config create seafile seafile url https://keeper.mpdl.mpg.de/ \
+user wittkuhn@mpib-berlin.mpg.de pass Maga2020! create-library true
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
 </script>
 </section>
 
