@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Lennart Wittkuhn ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+
+
+  <section>
+  <section>
+  <h2>Research data management<br  />👩‍💻👨‍💻<br  />with DataLad</h2>
+    <div style="margin-top:1em;text-align:center">
+    <table style="border: none;">
+    <tr>
+  	<td>
+          Adina Wagner<br><small><a href="https://twitter.com/AdinaKrik" target="_blank">
+  		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />@AdinaKrik</a></small>
+      </td>
+  	<td>
+          Lennart Wittkuhn<br><small><a href="https://twitter.com/lnnrtwttkhn" target="_blank">
+  		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />@lnnrtwttkhn</a></small>
+      </td>
+    </tr>
+    <tr>
+      <td>
+          <img style="height:70px;margin-right:10px" data-src="../pics/fzj_logo.svg" /><br>
+          <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
+              <br> Institute of Neuroscience and Medicine (INM-7)<br>
+                   Research Center Jülich</small><br>
+      </td>
+      <td>
+          <img style="height:80px;margin-right:0px" data-src="../pics/mpi_logo.jpg" /><br>
+          <small><a href="https://www.mps-ucl-centre.mpg.de/" target="_blank">Max Planck Research Group NeuroCode</a>,
+              <br> Max Planck Institute for Human Development, Berlin <br>
+                 IMPRS COMP2PSYCH</small><br>
+      </td>
+    </tr>
+    </table>
+    </div>
+
+  <br><br><small>
+      Slides: <a href="https://github.com/datalad-handbook/course/blob/master/talks/PDFs/DL-for-ML.pdf" target="_blank">
+      https://github.com/datalad-handbook/course/</a></small>
+  </a>
+  </section>
+  </section>
+
+  <!--...WORKSHOP INTRODUCTION...-->
+
+  <section>
+
+  <section>
+  <h2>welcome!</h2>
+      A few logistical things first:
+  <ul>
+      <li class="fragment fade-in-then-semi-out">
+          An approximate schedule for today is
+          <a href="https://adswa.github.io/mpi-datamanagement-ws/content/welcome/" target="_blank">
+          on our companion workshop website</a> (link is in the public notes). We'll try to stick to it
+      </li>
+      <li class="fragment fade-in-then-semi-out">
+          Let us introduce the workshop organizers...
+      </li>
+      <li class="fragment fade-in-then-semi-out">
+          Let us introduce the virtual workshop venue...
+      </li>
+      <ul>
+          <li class="fragment fade-in">Public and private chats</li>
+          <li class="fragment fade-in">Shared notes</li>
+          <li class="fragment fade-in">Break-out rooms</li>
+          <li class="fragment fade-in">Drop out and re-join as you please,
+              make use of your status setting</li>
+      </ul>
+  </ul>
+  </section>
+
+  <section data-background-image="https://www.repronim.org/images/logo-square-256.png"
+           data-background-opacity="0.2" data-background-size="350px">
+      <h2>Why are we here? ReproNim</h2>
+      <img src=>
+      <ul>
+          <li class="fragment fade-in-then-semi-out"><a href="https://www.repronim.org/" target="_blank">ReproNim</a> is
+              an initiative to improve the reproducibility and efficiency in
+              neuroimaging
+          </li>
+          <li class="fragment fade-in-then-semi-out">It's goal is "to improve the reproducibility of neuroimaging science
+              and extend the value of our national investment in neuroimaging research,
+              while making the process easier and more efficient for investigators."
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+              ReproNim develops <a href="https://www.repronim.org/teach.html" target="_blank">
+              free training materials</a>, supports <a href="https://www.repronim.org/community.html" target="_blank">
+              tool development</a>, and offers
+              <a href="https://www.repronim.org/webinar-series.html" target="_blank"> training activities</a>.
+              ReproNim <a href="https://www.repronim.org/fellowship" target="_blank">fellows</a>
+              teach their peers in independent courses, workshops, or Hackathons about
+              tools or methods that increase the reproducibility of their research.
+          </li>
+      </ul>
+  </section>
+
+  <section data-background-image="https://www.datalad.org/theme/img/logo/datalad_nav_wide.png"
+           data-background-opacity="0.1" data-background-size="400px">
+      <h2>What will we do today?</h2>
+      <ul>
+          <li class="fragment fade-in-then-semi-out">
+              The workshop centers around
+              <a href="http://handbook.datalad.org/r.html?about" target="_blank">DataLad</a>
+          </li>
+          <li class="fragment fade-in-then-semi-out">
+              We aim to do more than a standard introduction by providing in-depth explanations,
+              hands-on exercises, and discussions throughout the day
+          </li>
+          <small><li class="fragment fade-in-then-semi-out">
+              (this will be much harder in this virtual setting - please bear with us)
+          </li></small>
+      </ul>
+  </section>
+
+  <section>
+      <h2>Let's do the splits</h2>
+      <img src="../pics/splits.jpg">
+  </section>
+
+
+  <section>
+      <h2>Questions/interaction throughout the workshop</h2>
+      <ul>
+          <li>
+              If you have a question during a lecture, please first type your questions in the chat.
+              There are no stupid questions :)
+          </li>
+          <li>
+              It would be great to have lively discussions - unless its interrupting a speaker,
+              please feel encouraged to unmute/turn on your video to interact with us.
+          </li>
+          <li>
+              We're happy to discuss specific use cases at the end. Please make a note about them in
+              the "Shared notes" of BigBlueButton
+          </li>
+          <li>
+              <a href="https://adswa.github.io/mpi-datamanagement-ws/content/welcome/#video_recordings" target="_blank">
+              We are recording the lectures and will make them available online</a>
+          </li>
+      </ul>
+  </section>
+
+
+  <section>
+      <h2>Questions/interaction after the workshop</h2>
+      <ul>
+              If you have a question after the workshop, you can reach out for help:
+          <br>
+          <ul>
+              <dt>Reach out to to the <b>DataLad</b> team via</dt>
+            <li>
+                <a href="https://app.element.io/#/room/#datalad:matrix.org" target="_blank">
+                    Matrix</a> (free, decentralized communication app, no app needed)
+            </li>
+            <li>
+                or <a href="https://github.com/datalad/datalad" target="_blank">
+                the development repository on GitHub</a>
+            </li>
+              <br>
+              <dt>Reach out to the user community with</dt>
+              <li>A question on <a href="https://neurostars.org/" target="_blank">neurostars.org</a>
+              with a <code>datalad</code> tag</li>
+              <br>
+              <dt>Find more user tutorials and workshop recordings</dt>
+              <li>On <a href="https://www.youtube.com/channel/UCB8-Zf7D0DSzAsREoIt0Bvw" target="_blank">
+                  DataLad's YouTube channel</a>
+              </li>
+              <li>
+                  In the <a href="http://handbook.datalad.org/en/latest/" target="_blank">
+                  DataLad Handbook </a>
+              </li>
+          </ul>
+      </ul>
+  </section>
+
+  <section>
+      <h2>Resources and Further Reading</h2>
+      <table>
+    <tr>
+      <td>
+          Comprehensive user documentation in the<br>
+          DataLad Handbook
+         <a href="http://handbook.datalad.org" target="_blank">(handbook.datalad.org)</a>
+      </td>
+      <td>
+        <img src="../pics/logo.svg" height="150">
+      </td>
+    </tr>
+  </table>
+
+    <table>
+        <tr>
+            <td><img src="../pics/artwork/src/enter.svg" height="100"></a></td>
+            <td>
+              <ul>
+                <li>High-level function/command overviews, <br>
+                    Installation, Configuration, Cheatsheet</li>
+              </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><img src="../pics/artwork/src/basics.svg" height="100"></td>
+            <td>
+              <ul>
+                <li>Narrative-based code-along course</li>
+                <li>Independent on background/skill level, <br>
+                    suitable for data management novices</li>
+              </ul>
+            </td>
+       </tr>
+        <tr>
+            <td><img src="../pics/artwork/src/usecases.svg" height="100"></td>
+            <td>
+              <ul>
+                <li>Step-by-step solutions to common <br>
+                    data management problems, like<br />how to
+                    make a reproducible paper</li>
+              </ul>
+            </td>
+        </tr>
+    </table>
+
+  </section>
+
+
+  <section>
+      <h2>Live polling system</h2>
+          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0" width="800" height="800"></iframe>
+  </section>
+
+
+  <section>
+      <h2>What's your mood today?</h2>
+      <img src="../pics/sheepscale.png" height="600"><iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0" width="400" height="600"></iframe>
+  </section>
+
+  <section>
+      <h2>What's your mood today?</h2>
+      <img src="../pics/rubberduckscale.png" height="600"><iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0" width="400" height="600"></iframe>
+  </section>
+
+  <section>
+      <h2>Help us learn more about our audience</h2>
+          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0" width="800" height="800"></iframe>
+  </section>
+
+  <section>
+      <h2>Live coding + hands-on</h2>
+      <ul>
+          <li>
+              Live-demonstration of DataLad examples and workflows
+          </li>
+          <li>
+              Code along with copy-paste code snippets and hands-on exercises on the
+              <a href="https://adswa.github.io/mpi-datamanagement-ws/" target="_blank">
+                  workshop website</a>
+          </li>
+          <li>Requirements:
+          <ul>
+              <li>
+                  Most recent DataLad version for your OS (installation instructions at
+              <a href="https://handbook.datalad.org/en/latest/intro/installation.html" target="_blank">
+                  handbook.datalad.org</a>)
+              </li>
+              <li>
+                  For containerized analyses: DataLad extension <a href="http://handbook.datalad.org/en/latest/extension_pkgs.html#extensions-intro" target="_blank">
+                  datalad-containers</a> (available via pip) + <a href="https://sylabs.io/guides/3.6/user-guide/" target="_blank">
+                  Singularity</a> or <a href="https://www.docker.com/get-started" target="_blank"> Docker</a>
+              </li>
+          </ul></li>
+      </ul>
+  </section>
+  </section>
+
+<!--..Research data management in general..-->
+
+<section>
+
+<section>
+    <h2>Motivation</h2>
+</section>
+
+<section>
+    <h3>Real world examples for Research Data Management gone wrong ...</h3>
+    <img src="../pics/guardian_excel_corona_screen1.png" style="box-shadow: 10px 10px 8px #888888;height=250px" height="250"><br>
+    <img src="../pics/guardian_excel_corona_screen2.png" style="box-shadow: 10px 10px 8px #888888;height=400px" height="400"><br>
+    <small>https://www.theguardian.com/politics/2020/oct/05/how-excel-may-have-caused-loss-of-16000-covid-tests-in-england</small>
+</section>
+
+<section>
+    <h3>Real world examples for Research Data Managament gone wrong ...</h3>
+    <img src="../pics/newconversation_economics_excel_screen1.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="170"><br>
+    <img src="../pics/newconversation_economics_excel_screen2.png" style="box-shadow: 10px 10px 8px #888888;height=300px" height="150">
+    <img src="../pics/newconversation_economics_excel_screen3.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="120"><br>
+    <img src="../pics/newconversation_economics_excel_screen4.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="200"><br>
+    <small>https://theconversation.com/the-reinhart-rogoff-error-or-how-not-to-excel-at-economics-13646</small>
+</section>
+
+<section>
+    <h3>Real world examples for Research Data Managament gone wrong ...</h3>
+    <img src="../pics/theverge_excel_genetics_screen1.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="200"><br>
+    <img src="../pics/theverge_excel_genetics_screen2.gif" style="box-shadow: 10px 10px 8px #888888;height=300px" height="300"><br>
+    <img src="../pics/theverge_excel_genetics_screen3.png" style="box-shadow: 10px 10px 8px #888888;height=200px" height="200"><br>
+    <small>https://www.theverge.com/2020/8/6/21355674/human-genes-rename-microsoft-excel-misreading-dates</small>
+</section>
+
+<section>
+    <h3>Real world example closer to home:<br>"Replication crisis" in Psychology / Neuroscience</h3>
+    <img src="../pics/munafo_nathumbehav_screenshot.png" style="box-shadow: 10px 10px 8px #888888;height=400px" height="400"><br>
+    <small>taken from "A manifesto for reproducible science" by Munafò et al., 2017, <i>Nature Human Behavior</i></small>
+</section>
+
+<section>
+    <h2>Data change!</h2>
+    <img src="../pics/phd052810s.gif" style="box-shadow: 10px 10px 8px #888888;height=600px" height="600"><br>
+    <ul>
+        <li class="fragment fade-in">New data are added and old data removed</li>
+        <li class="fragment fade-in">Erros are detected, fixed and introduced again 👻</li>
+        <li class="fragment fade-in">Separate data versions are created or merged</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Methods documentation and provenance</h2>
+    Analytic flexibility leads to sizeable variations in results
+    <br><small>(see e.g., Carp. 2012 and Botvinik-Nezer, 2020 for examples from neuroimaging)</small><br>
+    <img src="../pics/sidney_harris_miracle.jpg" style="box-shadow: 10px 10px 8px #888888;height=500px" height="500"><br>
+    <ul>
+        <li class="fragment fade-in">provide information on how data came into existence</li>
+        <li class="fragment fade-in">change data through documented code, not manually</li>
+        <li class="fragment fade-in">relate changes in data to changes in code</li>
+    </ul>
+</section>
+
+<section>
+    <h2>What's holding you back?</h2>
+    Hand on heart: Have you heard / said / thought these statements* before?
+    <table>
+        <tr>
+            <td>
+              <ol>
+                  <li>"It's only the paper / results that matters"</li>
+                  <li>"I'd rather do real science than tidy up my data"</li>
+                  <li>"Mind your own business! I document my data the way I want!"</li>
+                  <li>"Reproducibility sounds alright, but my code and data are spread over so many hard drives and directories that it would just be too much work to collect them all in one place"</li>
+                  <li>"We can always sort out the code and data after submission"</li>
+                  <li>"My field is very competitive and I can't risk wasting time"</li>
+              </ol>
+              <br><br><small>* cf. Markowetz, 2015</small>
+            </td>
+            <td>
+              <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+                    style="border: 0" width="1500" height="700"></iframe>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h3>But what's in it for me? "Selfish" reasons for reproducibility</h3>
+    <small>"[...] science is all about more publications, more impact factor, more money and more career. More, more, more ...<br>So how does working reproducibly help me achieve more as a scientist." - Markowetz, 2015</small><br><br>
+    <div class="fragment fade-in" data-fragment-index="1">
+        <ul>
+            <li>You want to avoid the disaster of publishing "a miracle"</li>
+            <li>You will be faster (in the long run)
+                <ul>
+                  <li>Finding and fixing errors will be faster</li>
+                  <li>Progress on new projects will happen faster</li>
+                </ul>
+            </li>
+            <li>Researchers (reviewers!) will have more trust in your findings</li>
+            <li>Data sharing can foster collaboration (with your past self, inside and outside your institution) and lead to new projects and publications</li>
+            <li>You acquire (technical) skills that will likely become increasingly important for your career, either in academia or industry</li><br>
+        </ul></div>
+      <div class="fragment fade-in" data-fragment-index="2">
+      <i><b>It's just useful for your everyday work and makes your life easier!</i></b><br>(see next slides ...)</div>
+    <br><br><small>see e.g., Markowetz, 2015, <i>Genome Biology</i>; Poldrack, 2019, <i>Neuron</i></small>
+</section>
+
+
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              You write a paper about an algorithm, stay up
+              late to generate good-looking figures, but you have to tweak parameters and
+              display options to make it work AND look good. The next morning, you have no
+              idea which parameters produced which figures, and which of the figures
+              fits to what you report in the paper.<br>
+          <img height="400" src="../pics/turingway/findfiles.png">
+              <img height="400" src="../pics/turingway/projectstack.png"</div>
+          <imgcredit>Illustration adapted from Scriberia and The Turing Way</imgcredit>
+  </section>
+
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              Your research project produces phenomenal results, but your laptop,
+              the only place that stores the source code for the results, is
+              stolen/breaks<br>
+          <img height="700" src="../pics/stolenlaptop.jpg"></div>
+          <imgcredit>https://co.pinterest.com/pin/551128073121451139//imgcredit>
+  </section>
+
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              A graduate student approaches their supervisor, complaining that the
+              supervisors research idea does not work. After weeks of discussion,
+              it becomes apparent that oral communication doesn't suffice - the
+              student can't sufficiently explain the environment (data, algorithms,
+              ...) they constructed, and if the supervisor can't enter and use the
+              students project there's no way to find a fix.
+              <br>
+          <img height="500" src="../pics/badsupervision.gif"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
+
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              A Post-doc wrote a script during the PhD that applied a specific
+              method to a dataset. Now, with new data and a new project, they
+              try to reuse the script, but forgot how it worked.
+              <br>
+          <img height="500" src="../pics/frustration.jpg"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
+
+  <section data-transition="None">
+    <h2>common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              You try to recreate results from another lab's published paper.
+              You base your re-implementation on everything reported in their paper,
+              but the results you obtain look nowhere like the original.
+              <br>
+          <img height="500" src="../pics/turingway/ReadableCode.png"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
+
+  <section>
+    <h2><strike>common</strike> old problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              All these problems were paraphrased from
+              <a href="https://sci-hub.se/https://link.springer.com/chapter/10.1007%2F978-1-4612-2544-7_5" target="_blank">
+                  Buckheit & Donoho, <b>1995</b></a>
+              <br></div>
+      <div class="fragment fade-in">Why don't we make our live easier?</div>
+      <div class="fragment fade-in">Both for you and your future self, as well as for science as a whole?</div>
+      <div class="fragment fade-in">The tools exist, and are getting easier and
+          easier to use.</div>
+      <div class="fragment fade-in">Sometimes, you only need to know that something exists and ...</div><br>
+      <div class="fragment fade-in"><b>👏 just 👏 get 👏 started! 👏</b></div><br>
+      <div class="fragment fade-in">... but also don't be too hard on yourself! 🤗</div>
+  </section>
+
+  </section>
+
+  <section>
+
+  <section>
+      <h2>Concepts</h2>
+  </section>
+
+  <section>
+  <h3>Defining replicability</h3>
+
+  <table>
+      <tr>
+          <td></td>
+          <td><b>Same data</b></td>
+          <td><b>New data</b></td>
+      </tr>
+      <tr>
+          <td><b>Same methods</b></td>
+          <td><p style="color:red">Reproducibility</p></td>
+          <td>Replication</td>
+      </tr>
+      <tr>
+          <td><b>New methods</b></td>
+          <td>Robustness</td>
+          <td>Generalization</td>
+      </tr>
+  </table>
+  <br><small>see e.g., Freese & Peterson, 2017</small><br><br>
+  <i>"Authors provide all the necessary data and the computer codes to run the analysis again, re-creating the results."</i> <a href="https://library.seg.org/doi/abs/10.1190/1.1822162" target="_blank"> - Claerbout & Karrenbach, <b>1992</b></a>
+  </section>
+
+  <section>
+      <h3>What is version control?</h3>
+      <img height="400" src="../pics/turingway/VersionControl.svg">
+      <img height="400" src="../pics/turingway/ProjectHistory.svg"</div>
+      <imgcredit>Illustration adapted from Scriberia and The Turing Way</imgcredit>
+      <ul>
+          <li class="fragment fade-in">keep things organized</li>
+          <li class="fragment fade-in">keep track of changes</li>
+          <li class="fragment fade-in">revert changes or go back to previous states</li>
+      </ul>
+  </section>
+
+
+
+  <section>
+      <h3>What is git? - A crash course in code</h3>
+      <div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git init my_project # create a new git repo
+Initialized empty Git repository in /Users/wittkuhn/Desktop/my_project/.git/</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ cd my_project # go into the my_project directory</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ echo "hello world" >> README.md # create a README.md file</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ ls # show the contents of the directory
+README.md</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git add README.md # allow git to track changes in the README.md file</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git commit -m "initial commit" # commit the changes to your repo's history
+[master (root-commit) 5118725] initial commit
+1 file changed, 1 insertion(+)
+create mode 100644 README.md</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ echo "goodbye world" >> README.md # add a new line to your README.md
+$ git add README.md # allow git to track this recent change
+$ git commit -m "update README.md" # commit the change to history
+[master c56c4c0] update README.md
+ 1 file changed, 1 insertion(+)
+</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git log --oneline # show the commit history
+c56c4c0 (HEAD -> master) update README.md
+5118725 initial commit
+</code></pre></div>
+<div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ git status
+On branch master
+nothing to commit, working tree clean</code></pre></div>
+  </section>
+
+  <section>
+      <h3>Quiz question: What is inside README.md?</h3>
+      <div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ vim README.md
+
+hello world
+goodbye world</code></pre></div>
+
+  <div class="fragment fade-in"><img style="height:500px;margin:20px" data-src="../pics/git_example_filestructure.png"/></div>
+  </section>
+
+  <section>
+      <h3><img style="height:50px;margin:10px" data-src="../pics/GitHub.png"/>What are GitHub and GitLab?<img style="height:50px;margin:10px" data-src="../pics/GitLab_Logo.svg"/></h3>
+      GitHub and GitLab are platforms to host the contents of your Git repo
+      <img height="650" src="https://docs.inm7.de/img/git_PR.png">
+      <imgcredit>https://docs.inm7.de/img/git_PR.png</imgcredit>
+      <br>
+      We will present workflows that share data and code via these platforms
+  </section>
+
+</code></pre>
+
+</section>
+
+<!--...WHAT IS DATALAD...-->
+
+<section>
+
+<section data-transition="fade">
+    <div><table>
+    <tr><dl>
+    <img src="../pics/datalad_logo_wide.svg" height="150"><br>
+        <b><a href="https://www.datalad.org/" target="_blank"> DataLad</a>
+            can help <br> with small or large-scale <br> data management </b>
+    <dt></dt>
+    </dl></tr>
+        <tr><dl class="fragment fade-in">Free, <br> open source, <br> command line tool & Python API </dl></tr>
+    </table>
+    </div>
+    <ul style="vertical-align:middle">
+        <br>
+        <dt></dt>
+    </ul>
+</section>
+<section>
+    <h2> <img src="../pics/datalad_logo_wide.svg"></h2>
+    <ul>
+        <li>A command-line tool, available for all major operating systems
+            (Linux, macOS/OSX, Windows), MIT-licensed</li>
+        <li>Build on top of <a href="https://git-scm.com/" target="_blank">Git</a>
+            and <a href="https://git-annex.branchable.com/" target="_blank">Git-annex</a></li>
+        <dt><li>Allows...</li></dt>
+        <dt>... version-controlling arbitrarily large content </dt>
+        <dd>version control data and software alongside to code!</dd>
+        <dt>... transport mechanisms for sharing and obtaining data </dt>
+        <dd>consume and collaborate on data (analyses) like software</dd>
+        <dt>... (computationally) reproducible data analysis</dt>
+        <dd>Track and share provenance of all digital objects</dd>
+        <dt>... and <i>much</i> more </dt>
+        <li>Completely domain-agnostic</li>
+            <br>
+    </ul>
+</section>
+
+<section>
+  <h2>Acknowledgements</h2>
+  <table>
+  <tr style="vertical-align:middle">
+    <td style="vertical-align:middle">
+      <dl>
+        <dt>Software</dt>
+        <dd style="margin-left:5px!important">
+          <ul style="margin-left:5px!important">
+              <li>Michael Hanke (INM-7)</li>
+              <li>Yaroslav Halchenko</li>
+              <li>Joey Hess (git-annex)</li>
+              <li>Kyle Meyer</li>
+              <li>Benjamin Poldrack (INM-7)</li>
+              <li><em>26 additional contributors</em></li>
+          </ul>
+        </dd>
+        <dt style="margin-top:20px">Documentation project </dt>
+        <dd style="margin-left:5px!important">
+          <ul style="margin-left:5px!important">
+              <li>Michael Hanke (INM-7)</li>
+              <li>Laura Waite (INM-7)</li>
+              <li><em>28 additional contributors</em></li>
+          </ul>
+        </dd>
+      </dl>
+    </td>
+    <td style="vertical-align:middle">
+  <div style="margin-bottom:-20px;text-align:center"><strong>Funders</strong></div>
+  <img style="height:150px;margin-right:50px" data-src="../pics/nsf.png" />
+  <img style="height:150px;margin-right:50pxi;margin-left:50px" data-src="../pics/binc.png" />
+  <img style="height:150px;margin-left:50px" data-src="../pics/bmbf.png" />
+  <br />
+  <img style="height:80px;margin-top:-40px;margin-left:auto;margin-right:auto;width:100%" data-src="../pics/fzj_logo.svg" />
+  <div style="margin-top:-20px">
+  <img style="height:60px;margin-right:20px" data-src="../pics/erdf.png" />
+  <img style="height:60px;margin-right:20px" data-src="../pics/cbbs_logo.png" />
+  <img style="height:60px" data-src="../pics/LSA-Logo.png" />
+  </div>
+  <div style="margin-top:40px;margin-bottom:20px;text-align:center"><strong>Collaborators</strong></div>
+  <div style="margin-top:-20px">
+  <img style="height:100px;margin:20px" data-src="../pics/hbp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/conp_logo.png" />
+  <img style="height:100px;margin:20px" data-src="../pics/vbc_logo.png" />
+  </div>
+  <div style="margin-top:-40px">
+  <img style="height:120px;margin:20px" data-src="../pics/openneuro_logo.png" />
+  <img style="height:120px;margin:20px" data-src="../pics/cbrain_logo.png" />
+  <img style="height:140px;margin:20px" data-src="../pics/brainlife_logo.png" />
+  </div>
+  </td>
+  </tr>
+  </table>
+</section>
+
+<section>
+    <h2>Core concepts & features</h2>
+</section>
+
+<section>
+    <h2>Everything happens in DataLad datasets</h2>
+    <img src="../pics/artwork/src/dataset.svg" width="600"> <br>
+</section>
+
+<section>
+    <h2>Dataset = Git/git-annex repository</h2>
+    <ul>
+        <li>content agnostic</li>
+        <li>no custom data structures</li>
+        <li>complete decentralization</li>
+        <li>Looks and feels like a directory on your computer:</li>
+    </ul>
+    <br>
+    <br>
+    <img src="../pics/remodnav-ds-nautilus.png" width="500"> <img src="../pics/remodnav-ds-terminal.png" width="500">
+    <small>File viewer and terminal view of a DataLad dataset</small>
+</section>
+
+<section>
+    <h2>version control arbitrarily large files</h2>
+    <img src="../pics/artwork/src/local_wf.svg" width="600"> <br>
+
+    <ul><p class="fragment fade-in">
+    Stay flexible:
+        <li class="fragment fade-in">Non-complex DataLad core API (easy for data management novices)</li>
+        <li class="fragment fade-in">Pure Git or git-annex commands (for regular Git or git-annex users, or to use specific functionality)</li>
+    </ul></p>
+</section>
+
+<section>
+    <h2>Use a datasets' history</h2>
+    <img src="../pics/researchlog.png">
+<ul>
+    <li class="fragment fade-in"> reset your dataset (or subset of it) to a previous state, </li>
+    <li class="fragment fade-in"> revert changes or bring them back, </li>
+    <li class="fragment fade-in"> find out what was done when, how, why, and by whom </li>
+    <li class="fragment fade-in"> Identify precise versions: Use data in the most recent version, or the one from 2018, or... </li>
+</ul>
+</section>
+
+<section>
+    <h2>Consume and collaborate</h2>
+    <img src="../pics/artwork/src/collaboration.svg" width="900"> <br>
+</section>
+
+<section>
+    <h2>machine-readable, re-executable provenance</h2>
+    <img src="../pics/artwork/src/reproducible_execution.svg" width="900"> <br>
+</section>
+
+<section>
+    <h2>Seamless nesting and dataset linkage</h2>
+
+    <img src="../pics/artwork/src/linkage_subds.svg" width="900"> <br>
+<!--    <ul>
+        <li class="fragment fade-in" data-fragment-index="2">Overcomes scaling issues with large amounts of files</li>
+        <pre  class="fragment fade-in" data-fragment-index="2"><code>adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
+15530572 annex'd files (77.9 TB recorded total size)
+nothing to save, working tree clean</code></pre>
+        <small><a class="fragment fade-in" data-fragment-index="2" href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
+        <li class="fragment fade-in">Modularizes research components for transparency, reuse, and access management</li>
+    </ul>
+    -->
+</section>
+
+<section>
+    <h2>Third party integrations</h2>
+    <img src="../pics/artwork/src/thirdparty.svg" width="900"> <br>
+    <small>Apart from <b>local computing infrastructure</b> (from private laptops to computational clusters),
+        datasets can be hosted in major <b>third party repository hosting and cloud storage</b> services.
+        More info: Chapter on <a href="http://handbook.datalad.org/en/latest/basics/basics-thirdparty.html" target="_blank">
+            Third party infrastructure</a>.</small>
+</section>
+
+<section data-transition="None">
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+    <li class="fragment fade-in-then-semi-out"> <b>Publish or consume datasets</b> via GitHub, GitLab, OSF, or similar services</li>
+    <img height="850" class="fragment fade-in" src="../pics/clonedata.gif" alt="a screenrecording of cloning studyforrest data from github">
+</ul>
+</section>
+
+<section data-transition="None">
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+        <li class="fragment fade-in-then-semi-out">
+        Behind-the-scenes <b>infrastructure component for data transport and versioning</b>
+        (e.g., used by <a href="https://openneuro.org/" target="_blank"> OpenNeuro</a>,
+        <a href="https://brainlife.io/" target="_blank"> brainlife.io </a>,
+        the <a href="https://conp.ca/" target="_blank">Canadian Open Neuroscience Platform (CONP)</a>,
+        <a href="https://mcin.ca/technology/cbrain/" target="_blank"> CBRAIN</a>)</li>
+        <img height="850" class="fragment fade-in" src="../pics/openneuro2.gif" alt="a screenrecording of browsing open neuro">
+</ul>
+</section>
+
+<section data-transition="None">
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+        <li class="fragment fade-in-then-semi-out"> <b>Creating and sharing reproducible, open science</b>: Sharing data, software, code, and provenance </li>
+        <img height="850" class="fragment fade-in" src="../pics/shareresearch2.gif" alt="a screenrecording of cloning REMODNAV paper dataset from github">
+</ul>
+</section>
+
+<section data-transition="None">
+    <h3>
+        Examples of what DataLad can be used for:
+    </h3>
+    <ul>
+        <li class="fragment fade-in-then-semi-out"><b>Central data management</b> and archival system</li>
+        <img height="850" class="fragment fade-in" src="../pics/centralmanagement.gif">
+</ul>
+</section>
+
+<section data-transition="None">
+
+    <h3>... and many more!</h3>
+    <br><br><br>
+    Let's have a ☕, and then get started
+</section>
+</section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>

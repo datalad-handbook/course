@@ -1,0 +1,1090 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Lennart Wittkuhn ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+  <!-- DATA PUBLICATION -->
+
+  <section>
+  <section>
+      <h2>Publishing data</h2>
+      <img src="../pics/services_connected.png" height="650">
+  </section>
+
+  <section data-transition="None">
+      <h2>Transport logistics</h2>
+      <ul>
+          <li>Share data like source code</li>
+          <li class="fragment fade-in-then-semi-out" data-fragment-index="1">Datasets can be cloned, pushed, and updated from and to local paths,
+          remote hosting services, external special remotes</li>
+      </ul>
+      <img class="fragment fade-in" data-fragment-index="1" style="box-shadow: 5px 5px 3px #888888"  height="330" src="../pics/artwork/src/collaboration.svg">
+      <ul>
+      <li class="fragment fade-in" data-fragment-index="2">Flexible data access management for annexed file contents based on storage location</li>
+      </ul>
+  <aside class="notes">
+  Idea behind datalad: Enable a similar level of tooling and culture for the distribution and version control of data as it is present for open source software development
+  </aside>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Interoperability</h2>
+      <ul>
+          <li>DataLad is built to maximize interoperability and use with hosting and
+              storage technology</li>
+      </ul>
+      <img class="fragment fade-in" src="../pics/services_only.png" height="650">
+  </section>
+
+  <section data-transition="None">
+      <h2>Interoperability</h2>
+      <ul>
+          <li>DataLad is built to maximize interoperability and use with hosting and
+              storage technology</li>
+      </ul>
+      <img src="../pics/services_connected.png" height="650">
+  </section>
+
+
+  <section>
+      <h2>Publishing datasets</h2>
+      I have a dataset on my computer. How can I share it, or collaborate on it?
+      <img height="900" src="../pics/artwork/src/publishing/startingpoint.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul>
+          <li>Most public datasets separate content in Git versus git-annex behind the scenes</li>
+      </ul>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_gitvsannex.svg">
+
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishparts.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishparts2.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      Typical case:
+      <ul>
+          <li class="fragment fade-in">
+              Datasets are exposed via a private or public repository on a
+              repository hosting service
+          </li>
+          <li class="fragment fade-in">
+              Data can't be stored in the repository hosting service, but can be
+              kept in almost any third party storage
+          </li>
+          <li class="fragment fade-in">
+              Publication dependencies automate pushing to the correct place
+          </li>
+      </ul>
+      <img src="../pics/artwork/src/publishing/publishing_network_publishdepends.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <pre><code style="bash">$ git config --local remote.github.datalad-publish-depends gdrive </code></pre>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishdepends.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul>
+      <li>Real-life example:</li>
+      <img height="850" class="fragment fade-in" src="../pics/clonedata.gif" alt="a screenrecording of cloning studyforrest data from github">
+  </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+            Special case 1: repositories with annex support
+      <img height="850" class="fragment fade-in" src="../pics/artwork/src/publishing/publishing_network_publishgin.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+            Special case 2: Special remotes with repositories
+      <img height="850" src="../pics/artwork/src/publishing/publishing_network_publishosf.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+            Special case 1: repositories with annex support
+      <img height="850" class="fragment fade-in" src="../pics/ginpublishing.gif">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+            Special case 2: Special remotes with repositories
+      <img height="850" src="../pics/publishosf.gif">
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_local.svg">
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_server.svg">
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_url.svg">
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      Let's take a look at the special cases:
+      <img height="900" src="../pics/clonegin.gif">
+  </section>
+
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      Let's take a look at the special cases:
+      <img height="900" src="../pics/cloneosf.gif">
+  </section>
+  </section>
+
+  <!-- SEAFILE -->
+
+  <section>
+
+    <section>
+        <h2>Data sharing using Seafile / Keeper</h2>
+        <img src="../pics/artwork/src/thirdparty.svg" width="900"> <br>
+        <br>
+            More info: DataLad Handbook chapter on <a href="http://handbook.datalad.org/en/latest/basics/basics-thirdparty.html" target="_blank">
+                Third party infrastructure</a>
+    </section>
+
+  <section data-markdown><script type="text/template" >
+
+  ### Create a dataset
+
+  Create a new DataLad dataset for your cartoon collection: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,4">$ datalad create cartoon-collection
+[INFO] Creating a new annex repo at /Users/wittkuhn/Desktop/cartoon-collection
+[INFO] Scanning for unlocked files (this may take some time)
+create(ok): /Users/wittkuhn/Desktop/cartoon-collection (dataset)
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1-2">$ cd cartoon-collection
+$ wget https://imgs.xkcd.com/comics/compiling.png
+--2020-11-11 14:04:27--  https://imgs.xkcd.com/comics/compiling.png
+Resolving imgs.xkcd.com (imgs.xkcd.com)... 2a04:4e42:3::67, 151.101.12.67
+Connecting to imgs.xkcd.com (imgs.xkcd.com)|2a04:4e42:3::67|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 28315 (28K) [image/png]
+Saving to: ‘compiling.png’
+compiling.png
+100%[========================================================>]  27.65K  --.-KB/s    in 0.02s
+2020-11-11 14:04:28 (1.50 MB/s) - ‘compiling.png’ saved [28315/28315]
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1">$ datalad save -m "add funny xkcd comic"
+add(ok): compiling.png (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  save (ok: 1)
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+  "How can I share my cartoon-collection with my friend Adina?" 🤔 <!-- .element: class="fragment" data-fragment-index="4" -->
+
+  </script>
+  </section>
+
+  <section>
+      <h2>Keeper (Seafile): A flexible DataLad sibling</h2>
+      <small><a href="https://keeper.mpdl.mpg.de/" target="_blank">https://keeper.mpdl.mpg.de/</a></small><br>
+
+      <a href="https://keeper.mpdl.mpg.de/" target="_blank">Keeper</a> offers <b>1TB</b> flexible storage to all Max Planck employees *
+
+      <iframe src="https://giphy.com/embed/5VKbvrjxpVJCM" width="100" height="80" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+
+      <img height="500" src="../pics/keeper_homepage.png"><br>
+
+      <small>* Even if you end up not using DataLad, you might want to check Keeper out and get those 1TB of storage space!<br>
+      * Data are stored on servers of the Max Planck Society - your data protection officer will be pleased!</small>
+
+  </section>
+
+  <section data-markdown><script type="text/template" >
+
+  ### Ok, show me how it's done! 💪
+
+  (see the [DataLad Handbook chapter "Beyond shared infrastructure"](http://handbook.datalad.org/en/latest/basics/101-138-sharethirdparty.html)):
+
+  1. Sign-up to [Keeper](https://keeper.mpdl.mpg.de/) / Seafile
+  1. Create a GitHub / GitLab repository to host meta data of your dataset and all content that is not stored in `git-annex`
+  1. Install [`rclone`](https://rclone.org/install/) and the [`git-annex-remote-rclone`](https://github.com/DanielDent/git-annex-remote-rclone) wrapper to make `rclone` usable with `git-annex`
+
+  <small>Disclaimer: Yes, things can go wrong here, but given that installation is platform-dependent we don't get into details</small>
+
+  </script>
+  </section>
+
+  <section>
+      <h2>Creating a remote repository</h2>
+      On GitLab (here, of the MPIB) ...
+      <img height="700" src="../pics/create_mpib_gitlab_repo.png">
+  </section>
+
+  <section>
+      <h2>Creating a remote repository</h2>
+      ... or on GitHub: <br>
+      <img height="650" src="../pics/create_github_repo.png">
+  </section>
+
+  <section data-markdown><script type="text/template" >
+
+  ### Configure an rclone remote for Keeper / Seafile
+  Run rclone config and create a new remote <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,3,9,10">$ rclone config
+  e) Edit existing remote
+  n) New remote
+  d) Delete remote
+  r) Rename remote
+  c) Copy remote
+  s) Set configuration password
+  q) Quit config
+  e/n/d/r/c/s/q> n # enter n and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  Enter the name of the rclone configuration <br>
+  ("seafile" or "keeper" could be a good idea) <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1"> name> seafile # enter name and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  </script>
+  </section>
+
+  <section data-markdown><script type="text/template" >
+  Select "seafile" as the type of storage to configure
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1-3,22-24">Type of storage to configure.
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+ 1 / 1Fichier
+   \ "fichier"
+ 2 / Alias for an existing remote
+   \ "alias"
+ 3 / Amazon Drive
+   \ "amazon cloud drive"
+ 4 / Amazon S3 Compliant Storage Provider (AWS, Alibaba, Ceph, Digital Ocean, Dreamhost, IBM COS, Minio, etc)
+   \ "s3"
+ 5 / Backblaze B2
+   \ "b2"
+ 6 / Box
+   \ "box"
+ 7 / Cache a remote
+   \ "cache"
+ 8 / Citrix Sharefile
+   \ "sharefile"
+ 9 / Dropbox
+   \ "dropbox"
+38 / seafile
+   \ "seafile"
+Storage> seafile # enter 'seafile' or '38' and press enter
+** See help for seafile backend at: https://rclone.org/seafile/ **
+  </code></pre>
+
+  <small>Notice the many storage types you can configure with rclone! 😻 <br>
+  You can also configure Dropbox, Google Drive, and more as DataLad remotes. <br>
+  Quite a few options had to be removed because the list is so long ...</small>
+
+</script>
+</section>
+
+  <section data-markdown><script type="text/template">
+
+  Enter the URL of the Seafile host (here, Keeper) <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,6">URL of seafile host to connect to
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+ 1 / Connect to cloud.seafile.com
+   \ "https://cloud.seafile.com/"
+url> https://keeper.mpdl.mpg.de/
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  Enter the email address of your Seafile / Keeper account <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,3">User name (usually email address)
+Enter a string value. Press Enter for the default ("").
+user> wittkuhn@mpib-berlin.mpg.de # enter YOUR email address!
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Enter your Keeper password <!-- .element: class="fragment" data-fragment-index="3" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,5,7,9">Password
+y) Yes type in my own password
+g) Generate random password
+n) No leave this optional password blank (default)
+y/g/n> y # type 'y' and press enter
+Enter the password:
+password: # enter password here
+Confirm the password:
+password: # enter password again
+</code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template" >
+
+Enable two-factor authentication if used for Keeper <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Two-factor authentication ('true' if the account has 2FA enabled)
+Enter a boolean value (true or false). Press Enter for the default ("false").
+2fa> # just press enter if you don't use 2FA
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Don't enter a Keeper library name! Here, we will configure one Seafile rclone remote that you can re-use across your projects 😎<!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Name of the library. Leave blank to access all non-encrypted libraries.
+Enter a string value. Press Enter for the default ("").
+library> # leave blank and press enter
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Enable library encryption if desired <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,5">Library password (for encrypted libraries only). Leave blank if you pass it through the command line.
+y) Yes type in my own password
+g) Generate random password
+n) No leave this optional password blank (default)
+y/g/n> # leave blank (or type 'n') and press enter to continue without encryption
+</code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+  Edit advanced configuration <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Edit advanced config? (y/n)
+  y) Yes
+  n) No (default)
+  y/n> y # type 'y' and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Allow rclone to create non-existing libaries on Keeper <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Should rclone create a library if it doesn't existing
+Enter a boolean value (true or false). Press Enter for the default ("false").
+create_library> true # type 'true' and press enter
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Keep the encoding at the default <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="4">This sets the encoding for the backend.
+See: the [encoding section in the overview](/overview/#encoding) for more info.
+Enter a encoder.MultiEncoder value. Press Enter for the default ("Slash,DoubleQuote,BackSlash,Ctl,InvalidUtf8").
+encoding> # press enter to keep the default
+</code></pre> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+You successfully configured your Seafile / Keeper rclone remote! 👏🍾🏆
+
+<pre><code class="bash" style="max-height:none">Remote config
+Two-factor authentication is not enabled on this account.
+--------------------
+[seafile]
+type = seafile
+url = https://keeper.mpdl.mpg.de/
+user = wittkuhn@mpib-berlin.mpg.de
+pass = *** ENCRYPTED ***
+create_library = true
+--------------------
+y) Yes this is OK (default)
+e) Edit this remote
+d) Delete this remote
+y/e/d> y # leave blank (or enter 'y') and press enter to confirm
+</code></pre>
+
+List of your configured rclone remotes:
+
+<pre><code class="bash" style="max-height:none">Current remotes:
+Name               Type
+====               ====
+seafile            seafile
+</code></pre>
+
+Impatient? Configure rclone in one line of code: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pre><code class="bash" style="max-height:none">rclone config create seafile seafile url https://keeper.mpdl.mpg.de/ \
+user wittkuhn@mpib-berlin.mpg.de pass Maga2020! create-library true
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+</script>
+</section>
+
+
+<section data-markdown><script type="text/template" >
+
+  ### Initialize the rclone special remote
+
+  In our dataset, we run the `git annex initremote` command:
+
+  <pre><code class="bash" style="max-height:none">$ git annex initremote seafile \
+type=external externaltype=rclone chunk=50MiB encryption=none \
+target=seafile prefix=cartoon-collection
+  </code></pre>
+
+  - it's helpful if the name of the remote and the `target` are the same <br> <small>(we name both 'seafile' in this example)</small>
+  - the `prefix` will be the name of the library on Keeper and should be the same as our dataset
+
+  <pre><code class="bash" style="max-height:none">initremote seafile ok
+  (recording state in git...)
+  lip-osx-003854:cartoon-collection wittkuhn$ datalad siblings
+.: here(+) [git]
+.: seafile(+) [rclone]
+  </code></pre>
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+  ### Add the GitLab / GitHub sibling
+
+  Let's add our GitLab / GitHub sibling and configure the Seafile / Keeper siblings as a publication dependency: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none" data-line-numbers="1-3,7">$ datalad siblings add --name origin \
+  --url git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git \
+  --publish-depends seafile
+[INFO] Configure additional publication dependency on "seafile"
+[INFO] Could not enable annex remote origin. This is expected if origin is a pure Git remote, or happens if it is not accessible.
+[WARNING] Could not detect whether origin carries an annex. If origin is a pure Git remote, this is expected. Remote was marked by annex as annex-ignore. Edit .git/config to reset if you think that was done by mistake due to absent connection etc
+.: origin(-) [git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git (git)]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none">$ datalad siblings
+  .: here(+) [git]
+  .: seafile(+) [rclone]
+  .: origin(-) [git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git (git)]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Quiz question: "Why did Lennart name the GitLab sibling 'origin'?" 🤔 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+
+  ### The moment of truth: datalad push
+
+  Let's add our GitLab / GitHub sibling, configure the Seafile / Keeper siblings as a publication dependency and publish our dataset: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none">$ datalad push --to origin
+copy(ok): compiling.png (file) [to seafile...]
+publish(ok): . (dataset) [refs/heads/master->origin:refs/heads/master [new branch]]
+publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex [new branch]]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  - DataLad succesfully published our dataset to GitLab and pushed the annexed contents to Seafile / Keeper 🍾🤩🥳 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<img src="../pics/in_case_of_fire.png" style="border:20px; margin:0px; float:center; width:500px;"/> <!-- .element: class="fragment" data-fragment-index="3" -->
+<img src="../pics/stolenlaptop.jpg" style="border:0px; margin:0px; float:center; height:200px;"></div> <!-- .element: class="fragment" data-fragment-index="4" -->
+<imgcredit>https://co.pinterest.com/pin/551128073121451139//imgcredit>
+
+⬆️ That's another backup of your precious data right there! ⬆️ <!-- .element: class="fragment" data-fragment-index="4" -->
+
+</script>
+</section>
+
+<section>
+    <h3>Our comic collection is published!</h3>
+    <img height="120" src="../pics/keeper_libraries.png">
+    <img height="170" src="../pics/keeper_library_content.png">
+    <img height="450" src="../pics/keeper_gitlab_content.png">
+</section>
+
+<section data-markdown><script type="text/template" >
+
+  ### For the person whom we share the dataset with
+
+  If the repository is publicly available, a datalad clone with the URL will install the dataset: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code data-trim class="bash" style="max-height:none" data-line-numbers="1,5-6">$ datalad clone https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git
+[INFO] Scanning for unlocked files (this may take some time)
+[INFO] Unable to parse git config from https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git/config
+[INFO] Remote origin not usable by git-annex; setting annex-ignore
+[INFO] access to 1 dataset sibling seafile not auto-enabled, enable with:
+| datalad siblings -d "/Users/wittkuhn/Desktop/cartoon-collection" enable -s seafile
+install(ok): /Users/wittkuhn/Desktop/cartoon-collection (dataset)
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  ⚠️ Pay attention to one crucial information in this output: ⚠️ <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  <pre><code data-trim class="bash" style="max-height:none">[INFO] access to 1 dataset sibling seafile not auto-enabled, enable with:
+| datalad siblings -d "/Users/wittkuhn/Desktop/cartoon-collection" enable -s seafile
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+Someone who wants to access the data from Keeper / Seafile needs to enable the special rclone remote (using the same configuration)! <!-- .element: class="fragment" data-fragment-index="2" -->
+
+And you need to give them access to the Keeper library (see next slide) <!-- .element: class="fragment" data-fragment-index="2" -->
+
+</script>
+</section>
+
+<section>
+    Sharing the Keeper library with your collaborators ...
+    <img height="300" src="../pics/keeper_library_share.png"><br>
+
+    ... will allow them to access the annexed contents of your dataset!<br>
+    <small>(after they successfully configured the seafile rclone special remote)</small>
+
+    <pre><code data-trim class="bash" style="max-height:none">$ datalad siblings -d "/Users/wittkuhn/Desktop/cartoon-collection" enable -s seafile
+.: seafile(?) [git]
+  </code></pre>
+
+  <pre><code data-trim class="bash" style="max-height:none">$ datalad siblings # just checking if all siblings are configured
+.: here(+) [git]
+.: seafile(+) [rclone]
+.: origin(-) [https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git (git)]
+</code></pre>
+
+<pre><code data-trim class="bash" style="max-height:none">$ datalad get compiling.png
+get(ok): compiling.png (file) [from seafile...]
+</code></pre>
+
+</section>
+
+</section>
+
+  <!-- COLLABORATION -->
+
+  <section>
+  <section data-transition="None" data-markdown><script type="text/template" >
+
+  ### Collaborating on the cartoon collection
+
+  ![](../pics/artwork/src/collaboration_sketch.svg)
+      "Hey, Adina! Wanna join me in acquiring comics?"
+  </script>
+  </section>
+
+<section>
+    <b>Step 1:</b> Share the special remote and the repository<br>
+    <img class="fragment fade-in-then-semi-out" src="../pics/keeper_sharedlib.png">
+    <img class="fragment fade-in" src="../pics/gitlab_sharedlib.png">
+</section>
+
+<section data-markdown><script type="text/template" >
+    <h2>We're set up - let's get the repo</h2>
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,6">$ datalad clone https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git
+[INFO   ] Scanning for unlocked files (this may take some time)
+[INFO   ] Unable to parse git config from https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git/config
+| Remote origin not usable by git-annex; setting annex-ignore
+[INFO   ] access to 1 dataset sibling seafile not auto-enabled, enable with:
+| datalad siblings -d "/tmp/collaboration/cartoon-collection" enable -s seafile
+install(ok): /tmp/collaboration/cartoon-collection (dataset)
+</code></pre>
+<pre><code class="bash" style="max-height:none">$ cd cartoon-collection
+$ ls
+compiling.png   # only a "filename" - note actual file content!
+</code></pre>
+</script>
+</section>
+
+  <section data-transition="None" data-markdown><script type="text/template" >
+  ### Configure the same rclone remote
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,3,9,10">$ rclone config
+  e) Edit existing remote
+  n) New remote
+  d) Delete remote
+  r) Rename remote
+  c) Copy remote
+  s) Set configuration password
+  q) Quit config
+  e/n/d/r/c/s/q> n # enter n and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1"> name> seafile # enter name and press enter
+  </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,5-7">Type of storage to configure.
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+[...]
+38 / seafile
+   \ "seafile"
+Storage> seafile # enter 'seafile' or '38' and press enter
+** See help for seafile backend at: https://rclone.org/seafile/ **
+  </code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,6">URL of seafile host to connect to
+Enter a string value. Press Enter for the default ("").
+Choose a number from below, or type in your own value
+ 1 / Connect to cloud.seafile.com
+   \ "https://cloud.seafile.com/"
+url> https://keeper.mpdl.mpg.de/
+</code></pre><!-- .element: class="fragment" data-fragment-index="4" -->
+  </script>
+  </section>
+
+  <section data-transition="None" data-markdown><script type="text/template">
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,3">User name (usually email address)
+Enter a string value. Press Enter for the default ("").
+user> adina.wagner@t-online.de # enter YOUR email address!
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,5,7,9">Password
+y) Yes type in my own password
+g) Generate random password
+n) No leave this optional password blank (default)
+y/g/n> y # every Keeper account should have a password
+Enter the password:
+password: # enter password here
+Confirm the password:
+password: # enter password again
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Two-factor authentication ('true' if the account has 2FA enabled)
+Enter a boolean value (true or false). Press Enter for the default ("false").
+2fa> # just press enter if you don't use 2FA
+</code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Name of the library. Leave blank to access all non-encrypted libraries.
+Enter a string value. Press Enter for the default ("").
+library> # leave blank and press enter
+</code></pre><!-- .element: class="fragment" data-fragment-index="4" -->
+</script>
+</section>
+
+
+<section data-transition="None" data-markdown><script type="text/template" >
+
+  <pre><code class="bash" style="max-height:none" data-line-numbers="1,4">Edit advanced config? (y/n)
+  y) Yes
+  n) No (default)
+  y/n> y
+  </code></pre>
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,3">Should rclone create a library if it doesn't existing
+Enter a boolean value (true or false). Press Enter for the default ("false").
+create_library> true
+</code></pre>
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,4">This sets the encoding for the backend.
+See: the [encoding section in the overview](/overview/#encoding) for more info.
+Enter a encoder.MultiEncoder value. Press Enter for the default ("Slash,DoubleQuote,BackSlash,Ctl,InvalidUtf8").
+encoding> # press enter to keep the default
+</code></pre>
+
+<pre><code class="bash" style="max-height:none">Remote config
+--------------------
+[seafile]
+type = seafile
+url = https://keeper.mpdl.mpg.de
+user = adina.wagner@t-online.de
+pass = *** ENCRYPTED ***
+create_library = true
+--------------------
+y) Yes this is OK (default)
+e) Edit this remote
+d) Delete this remote
+</code></pre>
+
+
+<div class="fragment fade-in">Tip: You can edit configurations manually in <br>
+    <code>~/.config/rclone/rclone.conf</code></div>
+</script>
+</section>
+
+<section data-markdown><script type="text/template" >
+    <h3>List available files</h3>
+    <code>rclone lsd remotename:</code> can list the directories on keeper
+
+<pre><code>$ rclone lsd seafile:
+215837  2020-11-13 09:17:03  -1 cartoon-collection
+</code></pre>
+</script>
+</section>
+
+<section data-markdown><script type="text/template">
+
+### Aaaaaand its time to get the comic!
+
+<p class="fragment fade-in">Before I can <code>get</code> the comic, I need to enable the special remote</p>
+<pre><code class="bash; fragment fade-in" style="max-height:none" data-line-numbers="1,3">$ datalad siblings -d "/tmp/collaboration/cartoon-collection" enable -s seafile
+.: seafile(?) [git]</code></pre>
+<pre><code class="bash; fragment fade-in" style="max-height:none" data-line-numbers="1,3">$ datalad get compiling.png
+get(ok): compiling.png (file) [from seafile...]
+</code></pre>
+</script>
+</section>
+
+<section>
+    <h2>🎉</h2>
+    <img src="../pics/compiling.png">
+</section>
+</section>
+
+<section>
+  <section>
+      <h2>But wait... I also know cool comics!</h2>
+      <h3>From data sharing to collaboration</h3>
+  </section>
+
+  <section>
+     <h2>Add a collaborator on GitLab</h2>
+          <img src="../pics/gitlab_add_collaborators.png">
+      And don't forget to add your collaborators to your Seafile / Keeper library!
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      Typical collaborative workflow:
+      <ul>
+          <dt class="fragment fade-in">Optional: Create an issue</dt>
+          <dl class="fragment fade-in">It is good practice to let you collaborators know what you are working
+          on. Creating an issue on GitLab is a good way to give them a heads-up
+          and discuss plans</dl>
+          <img class="fragment fade-in" src="../pics/createissuegitlab.png">
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      Typical collaborative workflow:
+      <ul>
+          <dt>Optional: Create an issue</dt>
+          <dl>It is good practice to let you collaborators know what you are working
+          on. Creating an issue on GitLab is a good way to give them a heads-up
+          and discuss plans</dl>
+          <img src="../pics/respondissuegitlab.png">
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Step 1: Create a new branch in your dataset</dt>
+          <dl class="fragment fade-in">It is good practice to develop a new
+              feature/add data/extend code/... in a new branch</dl>
+          <div class="fragment fade-in"><pre><code class="bash">$ git checkout -b morecomics
+Switched to a new branch 'morecomics'</code></pre>
+          </div>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Step 2: Make a change, and save it</dt>
+          <div class="fragment fade-in"><pre><code class="bash" style="max-height:none" data-line-numbers="1,13">$ wget https://imgs.xkcd.com/comics/interdisciplinary.png
+--2020-11-15 12:23:22--  https://imgs.xkcd.com/comics/interdisciplinary.png
+Resolving imgs.xkcd.com (imgs.xkcd.com)... 2a04:4e42:1b::67, 151.101.112.67
+Connecting to imgs.xkcd.com (imgs.xkcd.com)|2a04:4e42:1b::67|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 27246 (27K) [image/png]
+Saving to: ‘interdisciplinary.png’
+
+interdisciplinary.p 100%[===================>]  26.61K  --.-KB/s    in 0.001s
+
+2020-11-15 12:23:23 (29.4 MB/s) - ‘interdisciplinary.png’ saved [27246/27246]
+
+$ datalad save -m "Add another fun comic" interdisciplinary.png
+add(ok): interdisciplinary.png (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  save (ok: 1)</code></pre>
+          </div>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Optional: Configure a publication dependency to seafile</dt>
+          <dl class="fragment fade-in">With a publication dependency, <code>datalad push</code> pushes
+          annexed data to seafile, and the rest to GitLab</dl>
+          <div class="fragment fade-in"><pre><code class="bash" style="max-height:none" data-line-numbers="1,3-4,5">$ datalad siblings
+.: here(+) [git]
+.: origin(-) [https://git.mpib-berlin.mpg.de/wittkuhn/cartoon-collection.git (git)]
+.: seafile(+) [rclone]
+$ git config --local remote.origin.datalad-publish-depends seafile</code></pre>
+              <br>
+              This translates to: When pushing anything to the sibling/remote "origin",
+              push changes to the sibling "seafile" first!
+          </div>
+
+      </ul>
+  </section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <img src="../pics/artwork/src/publishing/publishing_network_publishdepends.svg">
+</section>
+
+  <section data-transition="None">
+      <h2>Collaboration!</h2>
+      <ul>
+          <dt class="fragment fade-in">Step 4: Push your change and create a merge request</dt>
+          <div class="fragment fade-in"><pre><code class="bash" style="max-height:none">$ datalad push --to origin
+Push to 'origin':  25%|████▎            | 1.00/4.00 [00:00<00:00, 11.6k Steps/s]
+Username for 'https://git.mpib-berlin.mpg.de': adina.wagner
+Password for 'https://adina.wagner@git.mpib-berlin.mpg.de':
+copy(ok): interdisciplinary.png (file) [to seafile...]
+Update availability for 'origin':  75%|▊| 3.00/4.00 [00:00<00:00, 7.48k Steps/s]
+Username for 'https://git.mpib-berlin.mpg.de': adina.wagner<00:01, 1.31 Steps/s]
+Password for 'https://adina.wagner@git.mpib-berlin.mpg.de':
+publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex 048e2c4..595f30a]
+publish(ok): . (dataset) [refs/heads/morecomics->origin:refs/heads/morecomics [new branch]]
+</code></pre>
+          </div>
+      </ul>
+  </section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <ul>
+        <dt>Step 4: Push your change and create a merge request</dt>
+        <img class="fragment fade-in" src="../pics/gitlabmerge1.png">
+</section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <ul>
+        <dt>Step 4: Push your change and create a merge request</dt>
+        <img  src="../pics/gitlabmerge2.png">
+</section>
+
+<section data-transition="None">
+    <h2>Collaboration!</h2>
+    <ul>
+        <dt>Step 4: Push your change and create a merge request</dt>
+        <img  src="../pics/gitlabmerge3.png">
+</section>
+
+<section data-transition="None" data-markdown><script type="text/template">
+
+## Review the merge request
+
+Get the branch with the new data / code / feature: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pre><code class="bash" style="max-height:none">$ git fetch # fetch latest changes from 'origin' (here, GitLab)
+$ git checkout morecomics # switch to the new branch that your collaborator created!
+Branch 'morecomics' set up to track remote branch 'morecomics' from 'origin'.
+Switched to a new branch 'morecomics'
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
+Look at the new data / code / features on this branch: <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none">$ ls
+compiling.png         interdisciplinary.png
+$ datalad get interdisciplinary.png
+get(ok): interdisciplinary.png (file) [from seafile...]
+</code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<img src="../pics/interdisciplinary.png" height=500> <!-- .element: class="fragment" data-fragment-index="3" -->
+
+</script>
+</section>
+
+<section data-transition="None" data-markdown><script type="text/template">
+
+### Merge into the master branch
+
+Happy with the proposed changes? Merge into your master branch!<br>
+
+<img width=600 src="../pics/gitlab_merge_approved.png">
+<img height="320" src="../pics/gitlab_cartoon_collection_history.png"><br><br>
+
+<pre><code class="bash" style="max-height:none">$ git checkout master
+$ datalad update --merge
+$ ls
+compiling.png         interdisciplinary.png
+</code></pre>
+
+And look at the transparent commit history:
+
+<pre><code class="bash" style="max-height:none">$ tig
+2020-11-15 13:01 +0100 Lennart Wittkuhn M─┐ [master] {origin/master} {gin/master} {origin/HEAD} Merge branch 'morecomics' into 'master'
+2020-11-15 12:24 +0100 Adina Wagner     │ o Add another fun comic
+2020-11-11 14:04 +0100 Lennart Wittkuhn o─┘ add funny xkcd comic
+2020-11-11 14:03 +0100 Lennart Wittkuhn I [DATALAD] new dataset
+</code></pre>
+
+</script>
+</section>
+
+<section>
+    Great! 🎉<br><br>
+    <img src="https://media.giphy.com/media/FqdruC6cJYXxC/source.gif" height=300><br><br>
+    But, <i>phewww</i>, isn't there an "easier" way?
+</section>
+
+<section>
+
+</script>
+</section>
+
+<section data-transition="None" data-markdown><script type="text/template">
+
+## Publishing to Gin
+
+<small>https://gin.g-node.org/</small>
+
+We first create a new repository on the GIN website. Then ... <!-- .element: class="fragment" data-fragment-index="1" -->
+
+1. ... we add a new sibling for the GIN remote (use SSH!) 🧐 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1-2">$ datalad siblings add -s gin \
+--url git@gin.g-node.org:/lnnrtwttkhn/cartoon-collection.git
+[INFO   ] Could not enable annex remote gin. This is expected if gin is a pure Git remote, or happens if it is not accessible.
+[WARNING] Could not detect whether gin carries an annex. If gin is a pure Git remote, this is expected.
+.: gin(-) [git@gin.g-node.org:/lnnrtwttkhn/cartoon-collection.git (git)]
+</code></pre><!-- .element: class="fragment" data-fragment-index="2" -->
+
+2. ... we configure two publication dependencies 😮 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,2">$ datalad siblings configure -s origin \
+--publish-depends seafile --publish-depends gin
+[INFO   ] Configure additional publication dependency on "seafile"
+[INFO   ] Configure additional publication dependency on "gin"
+.: origin(-) [git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git (git)]
+</code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
+
+3. ... and push content to all remotes at the same time! 🤩 <!-- .element: class="fragment" data-fragment-index="4" -->
+
+<pre><code class="bash" style="max-height:none">$ datalad push --to origin
+publish(ok): . (dataset) [refs/heads/master->gin:refs/heads/master [new branch]]
+Push to 'origin':  25%|█████████| 1.00/4.00 [00:10<00:31, 10.4s/ Steps]
+Transfer data to 'seafile':  50%|█████████| 1.00/4.00 [00:08<00:08, 4.33s/ Steps]
+Transfer data to 'gin':  25%|█████████| 1.00/4.00 [00:00<00:00, 10.5k Steps/s]
+</code></pre><!-- .element: class="fragment" data-fragment-index="4" -->
+
+<pre><code class="bash" style="max-height:none">publish(ok): . (dataset) [refs/heads/master->gin:refs/heads/master [new branch]]
+publish(ok): . (dataset) [refs/heads/git-annex->gin:refs/heads/git-annex [new branch]]
+publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex 595f30a..62fe614]
+</code></pre><!-- .element: class="fragment" data-fragment-index="4" -->
+
+<small>More details on dataset publishing to GIN can be found in the DataLad handbook:<br>https://handbook.datalad.org/en/latest/basics/101-139-gin.html</small>
+
+</script>
+</section>
+
+<section>
+    <h3>"My collaborators don't want to deal with DataLad" 😢</h3>
+    <div class="fragment fade-in" data-fragment-index="1">
+      Don't worry, just let them download the dataset:
+      <img height="400" src="../pics/gin_repo_cartoon_collection.png">
+      <img height="300" src="../pics/gin_repo_download.png"><br>
+    <div class="fragment fade-in" data-fragment-index="2">
+    But tell them they are missing out on learning an awesome tool! 😜
+    (Admittedly, if you publish publicly, not everyone will consume your dataset through DataLad, so the download option is nice to have!) <!-- .element: class="fragment" data-fragment-index="4" -->
+</section>
+
+</section>
+
+
+  <section>
+      <h2>Collaboration!</h2>
+      <h3>Overview of a typical collaborative workflow:</h3>
+      <ul>
+          <dt>Optional: Create an issue</dt>
+          <dl>It is good practice to let you collaborators know what you are working
+          on. Creating an issue on GitLab is a good way to give them a heads-up
+          and discuss plans</dl>
+          <dt>Step 1: Create a new branch in your dataset</dt>
+          <dl>It is good practice to develop a new feature/data point/code in a
+          new branch</dl>
+          <dt>Step 2: Make a change, and save it</dt>
+          <dt>Step 3: (optional) Configure a publication dependency</dt>
+          <dl>With a publication dependency, <code>datalad push</code> pushes
+          annexed data to a special remote, and the rest to GitLab</dl>
+          <dt>Step 4: Push your change and create a merge request</dt>
+      </ul>
+  </section>
+
+  <section>
+      <h2>Questions!</h2>
+          <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
