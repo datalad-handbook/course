@@ -174,6 +174,26 @@ dl.create(path="mydataset")</code></pre></div>
   </script>
   </section>
 
+  <section>
+      <h2>Start to record provenance</h2>
+      <ul>
+          <li>
+              Have you ever saved a PDF to read later onto your computer, but forgot
+              where you got it from?
+          </li>
+          <li class="fragment fade-in">
+              Digital Provenance = <i>"The tools and processes used to create a
+              digital file, the responsible entity, and when and where the process
+              events occurred"</i>
+          </li>
+          <li class="fragment fade-in">
+              The history of a dataset already contains provenance, but there is more
+              to record - for example: Where does a file come from?
+              <code>datalad download-url</code> is helpful
+          </li>
+      </ul>
+  </section>
+
     <section>
       <h3>Summary - Local version control</h3>
 
@@ -220,9 +240,7 @@ dl.create(path="mydataset")</code></pre></div>
   create(ok): /home/adina/mydataset (dataset)
   </code></pre>
   * but datasets can also be installed from paths or from URLs:
-  <pre><code class="bash" style="max-height:none">$ datalad clone \
-     https://github.com/datalad-datasets/human-connectome-project-openaccess \
-     HCP
+  <pre><code class="bash" style="max-height:none">$ datalad clone https://github.com/datalad-datasets/human-connectome-project-openaccess HCP
   install(ok): /tmp/HCP (dataset)
   </code></pre>
   </script>
@@ -277,7 +295,10 @@ dl.create(path="mydataset")</code></pre></div>
     *➡ get the data you need* <!-- .element: class="fragment fade-in" -->
     *➡ compute your results* <!-- .element: class="fragment fade-in" -->
     *➡ drop input data (and potentially all automatically re-computable results)* <!-- .element: class="fragment fade-in" -->
-
+<pre><code class="python">dl.get('input/sub-01')
+    [really complex analysis]
+    dl.drop('input/sub-01')
+</code></pre><!-- .element: class="fragment fade-in" -->
   </script></section>
 
   <section>
@@ -285,12 +306,9 @@ dl.create(path="mydataset")</code></pre></div>
       <dl>
           <dt>Data in datasets is either stored in Git or git-annex</dt>
           <dd>By default, everything is <i>annexed</i>, i.e., stored in a dataset annex by git-annex</dd><br>
-          <li class="fragment fade-in-then-semi-out">With annexed data, only content identity (hash)
-              and location information is put into Git, rather than file content.
-              The annex, and transport to and from it is managed with <b>git-annex</b>
+
           <br>
-          <br>
-          <small>
+                    <small>
           <table>
               <tr>
                   <td><b>Git</b></td>
@@ -315,6 +333,10 @@ dl.create(path="mydataset")</code></pre></div>
               </tr>
           </table>
               </small>
+          <br><br>
+          <li class="fragment fade-in-then-semi-out">With annexed data, only content identity (hash)
+              and location information is put into Git, rather than file content.
+              The annex, and transport to and from it is managed with <b>git-annex</b>
       </dl>
   </section>
 
@@ -344,7 +366,9 @@ dl.create(path="mydataset")</code></pre></div>
                   </table>
 
          <li>Annexed contents are not available right after cloning,
-             only content- and availability information (as they are stored in Git)</li>
+             only content identity and availability information (as they are stored in Git).
+             Everything that is annexed needs to be retrieved with <code>datalad get</code> from whereever it is stored.
+         </li>
       </ul>
   </section>
 
@@ -406,6 +430,30 @@ dl.create(path="mydataset")</code></pre></div>
   <aside class="notes">
   Idea behind datalad: Enable a similar level of tooling and culture for the distribution and version control of data as it is present for open source software development
   </aside>
+  </section>
+
+  <section>
+      <h2>git-annex protects your files</h2>
+      <ul>
+          <li>
+              If git-annex does not know any other storage location for a file it will <br>
+              warn you and refuse to drop content (can be configured)
+          </li>
+          <li class="fragment fade-in" data-fragment-index="1">Here is a file with a registered remote location (the web)</li>
+      </ul>
+          <pre class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">$ datalad drop .easteregg
+drop(ok): /demo/myanalysis/.easteregg (file) [checking https://imgs.xkcd.com/comics/fuck_grapefruit.png...]
+</code></pre>
+      <ul>
+          <li class="fragment fade-in" data-fragment-index="2">Here is a file without a registered remote location (the web)</li>
+      </ul>
+          <pre class="fragment fade-in" data-fragment-index="2"><code class="fragment fade-in" data-fragment-index="2">$ datalad drop compiling.png
+[WARNING] Running drop resulted in stderr output: git-annex: drop: 1 failed
+[ERROR  ] unsafe; Could only verify the existence of 0 out of 1 necessary copies; Rather than dropping this file, try using: git annex move; (Use --force to override this check, or adjust numcopies.) [drop(/demo/myanalysis/compiling.png)]
+drop(error): /demo/myanalysis/compiling.png (file) [unsafe; Could only verify the existence of 0 out of 1 necessary copies; Rather than dropping this file, try using: git annex move; (Use --force to override this check, or adjust numcopies.)]</code></pre>
+      </ul>
+      <li class="fragment fade-in">If a different location for file content is known,
+          <code>datalad get</code> can retrieve file content after dropping</li>
   </section>
 
 
@@ -620,6 +668,28 @@ index 0000000..fabf852
   </section>
 
   <section>
+      <h2>datalad rerun</h2>
+      <ul>
+          <li>
+              <code>datalad rerun</code> is helpful to spare others and yourself
+              the short- or long-term memory task, or the forensic skills to figure
+              out how you performed an analysis
+          </li>
+          <li>
+              But it is also a digital and machine-reable provenance record
+          </li>
+          <li>
+              Important: The better the run command is specified, the better the
+              provenance record
+          </li>
+          <li>
+              Note: run and rerun only create an entry in the history if the command execution
+              leads to a change.
+          </li>
+      </ul>
+  </section>
+
+  <section>
       <h2>Questions!</h2>
           <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
               style="border: 0", width="930", height="900"></iframe>
@@ -744,9 +814,110 @@ action summary:
           </a>
       </li>
   </section>
-
-
   </section>
+
+
+<section>
+<section>
+    <h2>A machine-learning example</h2>
+</section>
+
+<section>
+    <h2>Analysis layout</h2>
+    <table>
+        <tr>
+            <td>
+                <ul>
+        <li>Prepare an input data set</li>
+        <li class="fragment fade-in">Configure and setup an analysis dataset</li>
+        <li class="fragment fade-in">Prepare data</li>
+        <li class="fragment fade-in">Train models and evaluate them</li>
+        <li class="fragment fade-in">Compare different models, repeat with updated data</li>
+                </ul>
+            </td>
+            <td>
+    <img src="../pics/imagenette.png" width="800">
+                <small>Imagenette dataset</small>
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Prepare an input dataset</h2>
+    <ul>
+        <li>Create a stand-alone input dataset</li>
+        <li>Either add data and <code>datalad save</code> it, or use commands such as <code>datalad download-url</code>
+    or <code>datalad add-urls</code> to retrieve it from web-sources</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Configure and setup an analysis dataset</h2>
+    <ul>
+        <li>Given the purpose of an analysis dataset, configurations can make it easier to use:</li>
+            <ul>
+                <li><code>-c yoda</code> prepares a useful structure</li>
+                <li><code>-c text2git</code> keeps text files such as scripts in Git</li>
+            </ul>
+        <li>The input dataset is installed as a subdataset</li>
+        <li>Required software is containerized and added to the dataset</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Prepare data</h2>
+    <ul>
+        <li>Add a script for data preparation (labels train and validation images)</li>
+        <li>Execute it using <code>datalad containers-run</code></li>
+    </ul>
+</section>
+
+<section>
+    <h2>Train models and evaluate them</h2>
+    <ul>
+        <li>Add scripts for training and evaluation.
+            This dataset state can be tagged to identify it easily at a later point</li>
+        <li>Execute the scripts using <code>datalad containers-run</code></li>
+        <li>By dumping a trained model as a joblib object the trained classifier stays reusable</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Tips and tricks for ML applications</h2>
+    <ul>
+        <dt class="fragment fade-in">Standalone input datasets keep input data extendable and reusable</dt>
+        <dd class="fragment fade-in">Subdatasets can be registered in precise versions, and updated to the newest state</dd>
+        <br>
+        <dt class="fragment fade-in">Software containers aid greatly with reproducibility</dt>
+        <dd class="fragment fade-in">The correct software environment is preserved and can be shared</dd>
+        <br>
+        <dt class="fragment fade-in">Re-executable run-records can capture all provenance</dt>
+        <dd class="fragment fade-in">This can also capture command-line parametrization</dd>
+        <br>
+        <dt class="fragment fade-in">Git workflows can be helpful elements in ML workflows</dt>
+        <dd class="fragment fade-in">DataLad is no workflow manager, but by checking out out tags
+            or branches one can switch easy and fast between results of different models</dd>
+
+        </li>
+    </ul>
+</section>
+</section>
+
+<section>
+    <section data-transition="None">
+    <h2>Why use DataLad?</h2>
+    <ul>
+        <li class="fragment fade-in">Mistakes are not forever anymore: Easy version control, regardless of file size</li>
+        <li class="fragment fade-in">Who needs short-term memory when you can have run-records?</li>
+        <li class="fragment fade-in">Disk-usage magic: Have access to more data than your hard drive has space</li>
+        <li class="fragment fade-in">Collaboration and updating mechanisms: Alice shares her data with Bob. Alice fixes a mistake and pushes the fix.
+        Bob says "datalad update" and gets her changes. And vice-versa.</li>
+        <li class="fragment fade-in">Transparency: Shared datasets keep their history. No need to track down a former student,
+        ask their project what was done.</li>
+    </ul>
+</section>
+</section>
 
 
 </div> <!-- /.slides -->
