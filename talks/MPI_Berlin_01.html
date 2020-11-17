@@ -303,7 +303,7 @@
 </section>
 
 <section>
-    <h3>Real world examples for Research Data Managament gone wrong ...</h3>
+    <h3>Real world examples for Research Data Management gone wrong ...</h3>
     <img src="../pics/guardian_excel_corona_screen1.png" style="box-shadow: 10px 10px 8px #888888;height=250px" height="250"><br>
     <img src="../pics/guardian_excel_corona_screen2.png" style="box-shadow: 10px 10px 8px #888888;height=400px" height="400"><br>
     <small>https://www.theguardian.com/politics/2020/oct/05/how-excel-may-have-caused-loss-of-16000-covid-tests-in-england</small>
@@ -434,45 +434,80 @@
     <br><br><small>see e.g., Markowetz, 2015, <i>Genome Biology</i>; Poldrack, 2019, <i>Neuron</i></small>
 </section>
 
-<!--...CONCEPTS...-->
 
-<section>
-    <h2>Concepts</h2>
-</section>
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              You write a paper about an algorithm, stay up
+              late to generate good-looking figures, but you have to tweak parameters and
+              display options to make it work AND look good. The next morning, you have no
+              idea which parameters produced which figures, and which of the figures
+              fits to what you report in the paper.<br>
+          <img height="400" src="../pics/turingway/findfiles.png">
+              <img height="400" src="../pics/turingway/projectstack.png"</div>
+          <imgcredit>Illustration adapted from Scriberia and The Turing Way</imgcredit>
+  </section>
 
-<section>
-  <h3>What is version control?</h3>
-  <ul>
-      <li><i>What have I done?</i> 🤔</li>
-      <ul>
-        <li> Version control tracks the history of changes in files</li>
-      </ul>
-      <li><i>Who made the changes? Who else worked on the file?</i> 🤔</li>
-      <ul>
-        <li>Version control tracks who made which changes when</li>
-      </ul>
-      <li><i>What's the difference between analysis.py and analysis_new.py?</i> 🤔</li>
-      <ul>
-        <li>Version control enables work on separate versions of a file</li>
-      </ul>
-  </ul>
-</section>
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              Your research project produces phenomenal results, but your laptop,
+              the only place that stores the source code for the results, is
+              stolen/breaks<br>
+          <img height="700" src="../pics/stolenlaptop.jpg"></div>
+          <imgcredit>https://co.pinterest.com/pin/551128073121451139//imgcredit>
+  </section>
 
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              A graduate student approaches their supervisor, complaining that the
+              supervisors research idea does not work. After weeks of discussion,
+              it becomes apparent that oral communication doesn't suffice - the
+              student can't sufficiently explain the environment (data, algorithms,
+              ...) they constructed, and if the supervisor can't enter and use the
+              students project there's no way to find a fix.
+              <br>
+          <img height="500" src="../pics/badsupervision.gif"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
 
-<!--..
-- git concepts:
-- decentralized workflow:
-- the git way of thinkig
-- difference between git and github
-- how can research data management make your life easier?
-- not an additional strain but a help
+  <section data-transition="None">
+    <h2>Common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              A Post-doc wrote a script during the PhD that applied a specific
+              method to a dataset. Now, with new data and a new project, they
+              try to reuse the script, but forgot how it worked.
+              <br>
+          <img height="500" src="../pics/frustration.jpg"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
 
-- publication workflow:
-- basics: git checkout commit hash
-..-->
+  <section data-transition="None">
+    <h2>common problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              You try to recreate results from another lab's published paper.
+              You base your re-implementation on everything reported in their paper,
+              but the results you obtain look nowhere like the original.
+              <br>
+          <img height="500" src="../pics/turingway/ReadableCode.png"></div>
+      <imgcredit>http://phdcomics.com/comics.php?f=1693</imgcredit>
+  </section>
 
-
-
+  <section>
+    <h2><strike>common</strike> old problems in science</h2>
+          <div class="fragment fade-in" data-fragment-index="1">
+              All these problems were paraphrased from
+              <a href="https://sci-hub.se/https://link.springer.com/chapter/10.1007%2F978-1-4612-2544-7_5" target="_blank">
+                  Buckheit & Donoho, <b>1995</b></a>
+              <br></div>
+      <div class="fragment fade-in">Why don't we make our live easier?</div>
+      <div class="fragment fade-in">Both for you and your future self, as well as
+          for science as a whole?</div>
+      <div class="fragment fade-in">The tools exist, and are getting easier and
+          easier to use. Sometimes, you only need to know that something exists
+          to get started with it.</div>
+  </section>
 
 </section>
 
@@ -695,6 +730,53 @@ nothing to save, working tree clean</code></pre>
         <img height="850" class="fragment fade-in" src="../pics/centralmanagement.gif">
 </ul>
 </section>
+</section>
+
+
+<section>
+
+
+
+
+<!--...CONCEPTS...-->
+
+<section>
+    <h2>Concepts</h2>
+</section>
+
+<section>
+  <h3>What is version control?</h3>
+  <ul>
+      <li><i>What have I done?</i> 🤔</li>
+      <ul>
+        <li> Version control tracks the history of changes in files</li>
+      </ul>
+      <li><i>Who made the changes? Who else worked on the file?</i> 🤔</li>
+      <ul>
+        <li>Version control tracks who made which changes when</li>
+      </ul>
+      <li><i>What's the difference between analysis.py and analysis_new.py?</i> 🤔</li>
+      <ul>
+        <li>Version control enables work on separate versions of a file</li>
+      </ul>
+  </ul>
+</section>
+
+
+<!--..
+- git concepts:
+- decentralized workflow:
+- the git way of thinkig
+- difference between git and github
+- how can research data management make your life easier?
+- not an additional strain but a help
+
+- publication workflow:
+- basics: git checkout commit hash
+..-->
+
+
+
 
 <section data-transition="None">
 
