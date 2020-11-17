@@ -927,23 +927,27 @@ get(ok): interdisciplinary.png (file) [from seafile...]
 
 <section data-transition="None" data-markdown><script type="text/template">
 
-## Merge into the master branch
+### Merge into the master branch
 
 Happy with the proposed changes? Merge into your master branch!
 
-<img width=800 src="../pics/gitlab_merge_approved.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
+<img width=600 src="../pics/gitlab_merge_approved.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
 
-<pre><code class="bash" style="max-height:none" data-line-numbers="1,3,5-6">$ git checkout master
+<pre><code class="bash" style="max-height:none">$ git checkout master
 $ datalad update --merge
 $ ls
 compiling.png         interdisciplinary.png
 </code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
+Look at the transparent commit history:<!-- .element: class="fragment" data-fragment-index="4" -->
 
-<img src="https://media.giphy.com/media/FqdruC6cJYXxC/source.gif" height=200>  <!-- .element: class="fragment" data-fragment-index="4" -->
-
-Uff! Isn't there an easier way? <!-- .element: class="fragment" data-fragment-index="4" -->
-
+<img height="300" src="../pics/gitlab_cartoon_collection_history.png"><br><br> <!-- .element: class="fragment" data-fragment-index="4" -->
 </script>
+</section>
+
+<section>
+    Great! 🎉<br><br>
+    <img src="https://media.giphy.com/media/FqdruC6cJYXxC/source.gif" height=300><br><br>
+    But, <i>phewww</i>, isn't there an "easier" way?
 </section>
 
 <section>
@@ -998,11 +1002,13 @@ publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex 595f
 
 <section>
     <h3>"My collaborators don't want to deal with DataLad" 😢</h3>
-    Don't worry, just let them download the dataset:
-    <img height="400" src="../pics/gin_repo_cartoon_collection.png">
-    <img height="300" src="../pics/gin_repo_download.png"><br>
+    <div class="fragment fade-in" data-fragment-index="1">
+      Don't worry, just let them download the dataset:
+      <img height="400" src="../pics/gin_repo_cartoon_collection.png">
+      <img height="300" src="../pics/gin_repo_download.png"><br>
+    <div class="fragment fade-in" data-fragment-index="2">
     But tell them they are missing out on learning an awesome tool! 😜
-    (Admittedly, if you publish publicly, not everyone will consume your dataset through DataLad, so the download option is nice to have!)
+    (Admittedly, if you publish publicly, not everyone will consume your dataset through DataLad, so the download option is nice to have!) <!-- .element: class="fragment" data-fragment-index="4" -->
 </section>
 
 </section>
