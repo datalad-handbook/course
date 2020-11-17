@@ -22,11 +22,7 @@
   <section>
   <section>
       <h2>Publishing data</h2>
-      <ul>
-          <li class="fragment-fade-in-then-semi-out">
-
-          </li>
-      </ul>
+      <img src="../pics/services_connected.png" height="650">
   </section>
 
   <section data-transition="None">
@@ -444,11 +440,20 @@ d) Delete this remote
 y/e/d> y # leave blank (or enter 'y') and press enter to confirm
 </code></pre>
 
+List of your configured rclone remotes:
+
 <pre><code class="bash" style="max-height:none">Current remotes:
 Name               Type
 ====               ====
 seafile            seafile
 </code></pre>
+
+Impatient? Configure rclone in one line of code: <!-- .element: class="fragment" data-fragment-index="1" -->
+
+<pre><code class="bash" style="max-height:none">rclone config create seafile seafile url https://keeper.mpdl.mpg.de/ \
+user wittkuhn@mpib-berlin.mpg.de pass Maga2020! create-library true
+</code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
+
 </script>
 </section>
 
@@ -515,7 +520,14 @@ publish(ok): . (dataset) [refs/heads/master->origin:refs/heads/master [new branc
 publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex [new branch]]
 </code></pre> <!-- .element: class="fragment" data-fragment-index="1" -->
 
-- DataLad succesfully published our dataset to GitLab and pushed the annexed contents to Seafile / Keeper 🍾🤩🥳 <!-- .element: class="fragment" data-fragment-index="2" -->
+  - DataLad succesfully published our dataset to GitLab and pushed the annexed contents to Seafile / Keeper 🍾🤩🥳 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<img src="../pics/in_case_of_fire.png" style="border:20px; margin:0px; float:center; width:500px;"/> <!-- .element: class="fragment" data-fragment-index="3" -->
+<img src="../pics/stolenlaptop.jpg" style="border:0px; margin:0px; float:center; height:200px;"></div> <!-- .element: class="fragment" data-fragment-index="4" -->
+<imgcredit>https://co.pinterest.com/pin/551128073121451139//imgcredit>
+
+⬆️ That's another backup of your precious data right there! ⬆️ <!-- .element: class="fragment" data-fragment-index="4" -->
+
 </script>
 </section>
 
