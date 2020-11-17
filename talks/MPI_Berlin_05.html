@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Lennart Wittkuhn ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<section>
+    <section>
+        <h1>You made it!</h1>
+        <img src="https://media.giphy.com/media/hrQbn1Ss9ALlGHkwx9/giphy.gif" height="600">
+    </section>
+
+    <section>
+        <h2>Time for questions</h2>
+        <li>Any questions to the workshop, or DataLad in general?</li>
+        <li>Any concrete use cases you want to discuss?</li>
+    </section>
+
+    <section>
+        <h2>What have we done today?</h2>
+
+        <ul>
+            First and foremost:
+            <li class="fragment fade-in">
+                We all lost another 0.1 diopters of vision because we stared at
+                a screen the whole day
+            </li>
+            <li class="fragment fade-in">
+               Adina and Lennart talked to much that they will stop now for a
+                week
+            </li>
+            <li class="fragment fade-in">
+                If you're not used to working with a Terminal, changes are high
+                that you'll dream of one tonight. (sorry)
+            </li>
+            <li class="fragment fade-in">
+                If DataLad would be cake, then we would have had so much of it today
+                that we would be diabetic
+            </li>
+        </ul>
+    </section>
+
+
+    <section>
+        <h2>What have we done today?</h2>
+
+        <ul>
+            What else:
+
+            <li>
+               Today was an incredibly intensive day. We hope that we were able to
+               show you a good selection of things that DataLad can do, and also
+               how we use DataLad day-to-day in our science
+            </li>
+            <li class="fragment fade-in">
+               Beyond DataLad, we've also touched a range of other useful tools and
+               concepts.
+            </li>
+            <ul class="fragment fade-in">
+                <li>Version control concepts</li>
+                <li>Collaborative workflows</li>
+                <li>Different types of provenance and ways to computational reproducibility</li>
+                <li>Software containers and how to use them</li>
+                <li>Places to store or share your data, and how to do it in practice</li>
+                <li>...</li>
+            </ul>
+        </ul>
+    </section>
+
+    <section>
+        <h2>If that's your current status...</h2>
+        <img src="../pics/toomuch.jpg">
+        <br>
+        aaaaaahhhhhh I need sleep...
+        <div class="fragment fade-in">Then that's okay</div>
+    </section>
+
+    <section>
+        <h2>A few take home messages</h2>
+        <ul>
+            <li>
+                There are many tools that make RDM and science in general easier,
+                more transparent, and more reproducible. DataLad is one of them
+            </li>
+            <li>
+                DataLad is a flexible and extendable tool, and can be combined with
+                much that you may be using anyways
+            </li>
+            <li>
+                If much of what we talked about is new for you: No start will be
+                perfect. Things are hard to do. But: There is documentation and a
+                community for help.
+            </li>
+            <li>
+                If you want to get started with DataLad:</li>
+            <ul>
+                <li> Take small steps</li>
+                <li> Take your time</li>
+                <li>Use whatever feature is useful for you</li>
+            </ul>
+            <li>
+                If you need help, have a question, feedback, or a feature request,
+                then get in touch :) We are happy to hear about it, either at
+                <a href="https://github.com/datalad-handbook/book/" target="_blank">the DataLad Handbook</a> or at
+                <a href="https://github.com/datalad/datalad/" target="_blank">DataLad</a>
+            </li>
+        </ul>
+    </section>
+
+
+</section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
