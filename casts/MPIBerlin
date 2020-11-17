@@ -121,6 +121,10 @@ run 'datalad containers-run -m "rerun analysis in container" \
   --output "pairwise_relationships.png" \
   "python3 code/script.py"'
 
+say 'REMOVING DATASETS'
+run 'cd ..'
+run 'datalad remove -d analysis_clone --recursive'
+
 say 'ML EXAMPLE NOW'
 run 'cd ../
 datalad create imagenette'
