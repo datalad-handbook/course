@@ -38,6 +38,8 @@ run 'cd ../
 datalad clone git@github.com:datalad-datasets/machinelearning-books.git'
 run 'cd machinelearning-books'
 run 'ls'
+run 'du -sh'
+run 'datalad status --annex'
 run 'datalad get D*'
 run 'datalad drop D.C.C.MacKay-Information_Theory_Inference_and_Learning_Algorithms.pdf'
 
@@ -121,13 +123,14 @@ run 'datalad containers-run -m "rerun analysis in container" \
   --output "pairwise_relationships.png" \
   "python3 code/script.py"'
 
+say 'DEMONSTRATE ANNEX'
+
 say 'REMOVING DATASETS'
 run 'cd ..'
-run 'datalad remove -d analysis_clone --recursive'
+run 'datalad remove -d analysis_clone --recursive --nocheck'
 
 say 'ML EXAMPLE NOW'
-run 'cd ../
-datalad create imagenette'
+run 'datalad create imagenette'
 run 'cd imagenette
 # 0.12.2 <= datalad < 0.13.4  needs the configuration option -c datalad.runtime.use-patool=1 to handle .tgz
 datalad -c datalad.runtime.use-patool=1 download-url \
@@ -305,3 +308,5 @@ run 'cd ../../
 datalad status'
 run 'datalad save -m "Update input data - we removed a file"'
 run 'datalad rerun -m "Recompute classification with fewer data" ready4prepping..SGD-100'
+run '#'
+run '#'
