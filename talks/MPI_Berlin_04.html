@@ -929,18 +929,26 @@ get(ok): interdisciplinary.png (file) [from seafile...]
 
 ### Merge into the master branch
 
-Happy with the proposed changes? Merge into your master branch!
+Happy with the proposed changes? Merge into your master branch!<br>
 
-<img width=600 src="../pics/gitlab_merge_approved.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
+<img width=600 src="../pics/gitlab_merge_approved.png">
+<img height="320" src="../pics/gitlab_cartoon_collection_history.png"><br><br>
 
 <pre><code class="bash" style="max-height:none">$ git checkout master
 $ datalad update --merge
 $ ls
 compiling.png         interdisciplinary.png
-</code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
-Look at the transparent commit history:<!-- .element: class="fragment" data-fragment-index="4" -->
+</code></pre>
 
-<img height="300" src="../pics/gitlab_cartoon_collection_history.png"><br><br> <!-- .element: class="fragment" data-fragment-index="4" -->
+And look at the transparent commit history:
+
+<pre><code class="bash" style="max-height:none">$ tig
+2020-11-15 13:01 +0100 Lennart Wittkuhn M─┐ [master] {origin/master} {gin/master} {origin/HEAD} Merge branch 'morecomics' into 'master'
+2020-11-15 12:24 +0100 Adina Wagner     │ o Add another fun comic
+2020-11-11 14:04 +0100 Lennart Wittkuhn o─┘ add funny xkcd comic
+2020-11-11 14:03 +0100 Lennart Wittkuhn I [DATALAD] new dataset
+</code></pre>
+
 </script>
 </section>
 
