@@ -920,7 +920,7 @@ $ datalad get interdisciplinary.png
 get(ok): interdisciplinary.png (file) [from seafile...]
 </code></pre> <!-- .element: class="fragment" data-fragment-index="2" -->
 
-<img src="../pics/interdisciplinary.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
+<img src="../pics/interdisciplinary.png" height=500> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 </script>
 </section>
@@ -934,14 +934,77 @@ Happy with the proposed changes? Merge into your master branch!
 <img width=800 src="../pics/gitlab_merge_approved.png"> <!-- .element: class="fragment" data-fragment-index="3" -->
 
 <pre><code class="bash" style="max-height:none" data-line-numbers="1,3,5-6">$ git checkout master
-[...]
 $ datalad update --merge
-[...]
 $ ls
 compiling.png         interdisciplinary.png
 </code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
 
+<img src="https://media.giphy.com/media/FqdruC6cJYXxC/source.gif" height=200>  <!-- .element: class="fragment" data-fragment-index="4" -->
+
+Uff! Isn't there an easier way? <!-- .element: class="fragment" data-fragment-index="4" -->
+
 </script>
+</section>
+
+<section>
+
+</script>
+</section>
+
+<section data-transition="None" data-markdown><script type="text/template">
+
+## Publishing to Gin
+
+<small>https://gin.g-node.org/</small>
+
+We first create a new repository on the GIN website. Then ... <!-- .element: class="fragment" data-fragment-index="1" -->
+
+1. ... we add a new sibling for the GIN remote (use SSH!) 🧐 <!-- .element: class="fragment" data-fragment-index="2" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1-2">$ datalad siblings add -s gin \
+--url git@gin.g-node.org:/lnnrtwttkhn/cartoon-collection.git
+[INFO   ] Could not enable annex remote gin. This is expected if gin is a pure Git remote, or happens if it is not accessible.
+[WARNING] Could not detect whether gin carries an annex. If gin is a pure Git remote, this is expected.
+.: gin(-) [git@gin.g-node.org:/lnnrtwttkhn/cartoon-collection.git (git)]
+</code></pre><!-- .element: class="fragment" data-fragment-index="2" -->
+
+2. ... we configure two publication dependencies 😮 <!-- .element: class="fragment" data-fragment-index="3" -->
+
+<pre><code class="bash" style="max-height:none" data-line-numbers="1,2">$ datalad siblings configure -s origin \
+--publish-depends seafile --publish-depends gin
+[INFO   ] Configure additional publication dependency on "seafile"
+[INFO   ] Configure additional publication dependency on "gin"
+.: origin(-) [git@git.mpib-berlin.mpg.de:wittkuhn/cartoon-collection.git (git)]
+</code></pre><!-- .element: class="fragment" data-fragment-index="3" -->
+
+3. ... and push content to all remotes at the same time! 🤩 <!-- .element: class="fragment" data-fragment-index="4" -->
+
+<pre><code class="bash" style="max-height:none">$ datalad push --to origin
+publish(ok): . (dataset) [refs/heads/master->gin:refs/heads/master [new branch]]
+Push to 'origin':  25%|█████████| 1.00/4.00 [00:10<00:31, 10.4s/ Steps]
+Transfer data to 'seafile':  50%|█████████| 1.00/4.00 [00:08<00:08, 4.33s/ Steps]
+Transfer data to 'gin':  25%|█████████| 1.00/4.00 [00:00<00:00, 10.5k Steps/s]
+</code></pre><!-- .element: class="fragment" data-fragment-index="4" -->
+
+<pre><code class="bash" style="max-height:none">publish(ok): . (dataset) [refs/heads/master->gin:refs/heads/master [new branch]]
+publish(ok): . (dataset) [refs/heads/git-annex->gin:refs/heads/git-annex [new branch]]
+publish(ok): . (dataset) [refs/heads/git-annex->origin:refs/heads/git-annex 595f30a..62fe614]
+</code></pre><!-- .element: class="fragment" data-fragment-index="4" -->
+
+<small>More details on dataset publishing to GIN can be found in the DataLad handbook:<br>https://handbook.datalad.org/en/latest/basics/101-139-gin.html</small>
+
+</script>
+</section>
+
+<section>
+    <h3>"My collaborators don't want to deal with DataLad" 😢</h3>
+    Don't worry, just let them download the dataset:
+    <img height="400" src="../pics/gin_repo_cartoon_collection.png">
+    <img height="300" src="../pics/gin_repo_download.png"><br>
+    But tell them they are missing out on learning an awesome tool! 😜
+    (Admittedly, if you publish publicly, not everyone will consume your dataset through DataLad, so the download option is nice to have!)
+</section>
+
 </section>
 
 
