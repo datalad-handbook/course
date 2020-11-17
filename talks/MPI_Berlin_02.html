@@ -597,6 +597,128 @@ dl.create(path="mydataset")</code></pre></div>
           <iframe src="https://directpoll.com/r?XDbzPBd3ixYqg8p6wRBqfe5tLIzeHqInMYLnBb2kAc",
               style="border: 0", width="930", height="900"></iframe>
   </section>
+
+  <section>
+      <h2>Unlocking things</h2>
+      <ul>
+          <li><code>datalad run</code> "unlocks" everything specified as <code>--output</code></li>
+          <li class="fragment fade-in" data-fragment-index="1">Outside of <code>datalad run</code>, you can use <code>datalad unlock</code></li>
+          <li class="fragment fade-in" data-fragment-index="1">This makes annex'ed files <i>writeable</i>:</li>
+      </ul>
+          <pre class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">$ ls -l myfile
+lrwxrwxrwx 1 adina adina  108 Nov 17 07:08 myfile -> .git/annex/objects/22/Gw/MD5E-s7--f447b20a7fcbf53a5d5be013ea0b15af/MD5E-s7--f447b20a7fcbf53a5d5be013ea0b15af
+
+# unlocking
+$ datalad unlock myfile
+unlock(ok): myfile (file)
+$ ls -l myfile
+-rw-r--r-- 1 adina adina    7 Nov 17 07:08 myfile  # not a symlink anymore!
+</code></pre>
+      <ul>
+          <li class="fragment fade-in" data-fragment-index="2"><code>datalad save</code> "locks" the file again</li>
+      </ul>
+          <pre class="fragment fade-in" data-fragment-index="2"><code class="fragment fade-in" data-fragment-index="2">$ datalad save
+add(ok): myfile (file)
+action summary:
+  add (ok: 1)
+  save (notneeded: 1)
+
+$ ls -l myfile
+lrwxrwxrwx 1 adina adina 108 Nov 17 07:08 myfile -> .git/annex/objects/22/Gw/MD5E-s7--f447b20a7fcbf53a5d5be013ea0b15af/MD5E-s7--f447b20a7fcbf53a5d5be013ea0b15af</code></pre>
+  <div class="fragment fade-in" data-fragment-index="3">Some tools (e.g., MatLab) don't like
+  symlinks. Unlocking or running matlab with "datalad run" helps!</div>
+  </section>
+
+
+  <section>
+      <h2>Removing datasets</h2>
+      <ul>
+          <li>
+              As mentioned before, annexed data is write-protected.
+              So when you try to <code>rm -rf</code> a dataset, this happens:
+          </li>
+      </ul>
+<pre class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">$ rm -rf mydataset
+rm: cannot remove 'mydataset/.git/annex/objects/70/GM/MD5E-s27246--8b7ea027f6db1cda7af496e97d4eb7c9.png/MD5E-s27246--8b7ea027f6db1cda7af496e97d4eb7c9.png': Permission denied
+rm: cannot remove 'mydataset/.git/annex/objects/70/GM/MD5E-s35756--af496e97d4eb7c98b7ea027f6db1cda7.png/MD5E-s27246--af496e97d4eb7c98b7ea027f6db1cda7.png': Permission denied
+[...]
+</code></pre>
+      😱
+
+      <li class="fragment fade-in">
+          (If you accidentally ever do this, you need to apply write permissions recursively to
+          all files)
+          <pre><code>$ chmod -R +w mydataset
+$ rm -rf mydataset              # success!
+</code></pre>
+      </li>
+  </section>
+
+  <section>
+      <h2>Removing datasets</h2>
+      <li>
+          The correct way to remove a dataset is using <code>datalad remove</code>:
+      </li>
+      <pre><code>$ datalad remove -d ds001241
+remove(ok): . (dataset)
+action summary:
+  drop (notneeded: 1)
+  remove (ok: 1)
+</code></pre>
+      <li class="fragment fade-in" data-fragment-index="2">
+          If a dataset contains file for which no other remote copy is known, you'll
+          get a warning:
+      </li>
+      <pre class="fragment fade-in"  data-fragment-index="2"><code class="fragment fade-in"  data-fragment-index="2">$ datalad remove -d mydataset
+[WARNING] Running drop resulted in stderr output: git-annex: drop: 1 failed
+
+[ERROR  ] unsafe; Could only verify the existence of 0 out of 1 necessary copies; Rather than dropping this file, try using: git annex move; (Use --force to override this check, or adjust numcopies.) [drop(/tmp/mydataset/interdisciplinary.png)]
+drop(error): interdisciplinary.png (file) [unsafe; Could only verify the existence of 0 out of 1 necessary copies; Rather than dropping this file, try using: git annex move; (Use --force to override this check, or adjust numcopies.)]
+[WARNING] could not drop some content in /tmp/mydataset ['/tmp/mydataset/interdisciplinary.png'] [drop(/tmp/mydataset)]
+drop(impossible): . (directory) [could not drop some content in /tmp/mydataset ['/tmp/mydataset/interdisciplinary.png']]
+action summary:
+  drop (error: 1, impossible: 1)</code></pre>
+      <li class="fragment fade-in" data-fragment-index="3">
+          In that case, use <code>--nocheck</code> to force removal:
+      </li>
+      <pre class="fragment fade-in"  data-fragment-index="3"><code class="fragment fade-in"  data-fragment-index="2">$ datalad remove -d mydataset --nocheck                                     1 !
+remove(ok): . (dataset)
+</code></pre>
+  </section>
+
+  <section>
+      <h2>Removing datasets</h2>
+      <li>
+          If a dataset contains subdatasets, <code>datalad remove</code> will also error:
+      </li>
+      <pre class="fragment fade-in"  data-fragment-index="1"><code class="fragment fade-in"  data-fragment-index="1">$ datalad remove -d myds
+drop(ok): README.md (file) [locking gin...]
+drop(ok): . (directory)
+[ERROR  ] to be uninstalled dataset Dataset(/tmp/myds) has present subdatasets, forgot --recursive? [remove(/tmp/myds)]
+remove(error): . (dataset) [to be uninstalled dataset Dataset(/tmp/myds) has present subdatasets, forgot --recursive?]
+action summary:
+  drop (ok: 3)
+  remove (error: 1)</code></pre>
+      <li class="fragment fade-in" data-fragment-index="2">
+          In that case, use <code>--recursive</code> to remove all subdatasets, too:
+      </li>
+      <pre class="fragment fade-in"  data-fragment-index="2"><code class="fragment fade-in"  data-fragment-index="2">$ datalad remove -d myds --recursive
+uninstall(ok): input (dataset)
+remove(ok): . (dataset)
+action summary:
+  drop (notneeded: 2)
+  remove (ok: 1)
+  uninstall (ok: 1)
+</code></pre>
+      <li class="fragment fade-in">
+          A complete overview of file system operations is in
+          <a href="http://handbook.datalad.org/en/latest/basics/101-136-filesystem.html" target="_blank">
+              handbook.datalad.org/en/latest/basics/101-136-filesystem.html
+          </a>
+      </li>
+  </section>
+
+
   </section>
 
 
