@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title> Training for a FAIR future </title>
+  <meta name="description" content=" DataLad ">
+  <meta name="author" content=" Adina Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+<section>
+<section>
+    <h2><br>🧠💻<br>Educating and Training for a <strong>FAIR</strong> future</h2>
+
+  <div style="margin-top:1em;text-align:center">
+  <table style="border: none;">
+  <tr>
+	<td>Adina Wagner
+	  <br><small>
+		<a href="https://twitter.com/AdinaKrik" target="_blank">
+		  <img data-src="../pics/twitter.png" style="height:30px;margin:0px" />
+		  @AdinaKrik</a></small></td>
+    <td><img style="height:100px;margin-right:10px" data-src="../pics/fzj_logo.svg" />
+	  <br></td>
+  </tr>
+  <tr>
+    <td>
+        <small><a href="http://psychoinformatics.de" target="_blank">Psychoinformatics lab</a>,
+          <br> Institute of Neuroscience and
+          Medicine, Brain &amp; Behavior (INM-7)<br>
+       Research Center Jülich<br>
+        <a href="https://repronim.org" target="_blank">ReproNim/INCF fellow</a></small><br>
+
+    </td>
+    <td>
+    </td>
+  </tr>
+  </table>
+  </div>
+
+        <p style="z-index: 100;position: fixed;background-color:#ede6d5;font-size:35px;box-shadow: 10px 10px 8px #888888;margin-top:0px;margin-bottom:100px;margin-left:1000px">
+        <img src="../pics/NWGQR" height="200">
+    </p>
+<br><br><small>
+
+    Slides: <a href="https://doi.org/10.5281/zenodo.4541323" target="_blank">
+    DOI 10.5281/zenodo.4541323</a> (Scan the QR code)
+    <br>
+    Sources: <a
+    href="https://github.com/datalad-handbook/datalad-course"
+    target="_blank"> github.com/datalad-handbook/datalad-course</a>
+</small>
+</a>
+</section>
+
+<section data-transition="fade">
+    <h2>Training for a FAIR future in Neuroscience</h2>
+    <br>
+    <table style="border-bottom-width:0">
+        <tr>
+            <td style="border-bottom-width:0">
+                Neuroscience strives from interdisciplinarity and collaboration
+            </td>
+            <td style="border-bottom-width:0" class="fragment fade-in" data-fragment-index="2">
+                ... but training groups with a diversity of skill sets is difficult
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom-width:0">
+                <img class="fragment fade-in" data-fragment-index="1" src="../pics/neurohackademy.jpg" height="280" style="box-shadow: 10px 10px 8px #888888"><br>
+            </td>
+            <td style="border-bottom-width:0">
+                <img class="fragment fade-in" data-fragment-index="2" src="../pics/reprotraining.png" width="400" style="box-shadow: 10px 10px 8px #888888">
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom-width:0">
+                <img class="fragment fade-in" data-fragment-index="1" src="../pics/ohbmhack.png" height="280" style="box-shadow: 10px 10px 8px #888888">
+            </td>
+            <td style="border-bottom-width:0">
+                <img class="fragment fade-in" data-fragment-index="2" src="../pics/ohbmtraining.png" width="400" style="box-shadow: 10px 10px 8px #888888">
+            </td>
+        </tr>
+
+    </table>
+</section>
+
+<section data-transition="None" data-background="../pics/datahelp.jpg" data-background-opacity="20%">
+    <h2>Research data management (RDM)</h2><br>
+        <img src="../pics/RDMopenaire.png">
+    <imgcredit><a href="https://www.openaire.eu/blogs/4-challenges-for-institutional-research-data-management-support">openaire.eu</a></imgcredit>
+    </dl>
+</section>
+
+
+<section data-transition="None" data-background="../pics/datahelp.jpg" data-background-opacity="20%">
+ <h2>... typical difficulties</h2>
+    <dl>
+        <dt class="fragment fade-in" data-fragment-index="1">
+            Lack of formal training
+        </dt>
+        <dd class="fragment fade-in" data-fragment-index="1">
+            Rarely included in primary/graduate/post-graduate studies.
+            Rather: Learning "on the job" and inheriting project
+            management from the previous person
+        </dd>
+        <dt class="fragment fade-in" data-fragment-index="2">
+            "Science alone is hard already".
+        </dt>
+        <dd class="fragment fade-in" data-fragment-index="2">
+            RDM comes on top of everything else, in usually tight, competitive
+            graduate programs or jobs
+        </dd>
+        <dt class="fragment fade-in" data-fragment-index="3">
+            Too much to know and too little guidance </dt>
+        <dd class="fragment fade-in" data-fragment-index="3">
+            Rather than a motivational problem, young researchers face the
+            difficulty of finding out which tools exist and are helpful
+        </dd>
+        <dt class="fragment fade-in" data-fragment-index="4">
+            Late RDM = little benefit
+        </dt>
+        <dd class="fragment fade-in" data-fragment-index="4">
+            If RDM is only incentivized, required, or tackled as the very
+            last step, researchers can not benefit (fully) from RDM
+        </dd>
+    </dl>
+    <br><br>
+    <dd class="fragment fade-in">How can we overcome this?</dd>
+</section>
+
+<section>
+    <h2>
+    <img src="../pics/carrotsandsticks.png" height="150"><br>
+    Personal insights from RDM training
+    </h2>
+        <imgcredit><a href="http://soarperformancegroup.com/quit-with-the-carrot-and-stick-analogy-sales-team-motivation/">
+        soarperformancegroup.com
+    </a></imgcredit>
+    <table>
+        <tr>
+            <td style="border-bottom-width:0; text-align:center" class="fragment fade-in" data-fragment-index="1">
+                <img src="../pics/INM7.png" height="100">
+                <br>
+                RDM overhaul in an institute
+            </td>
+            <td style="border-bottom-width:0; text-align:center" class="fragment fade-in" data-fragment-index="3">
+                <img src="../pics/logo.svg" height="100"><br>
+                User-focused software documentation
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom-width:0" class="fragment fade-in" data-fragment-index="2">
+                    <img style="box-shadow: 10px 10px 8px #888888" src="../pics/reallifeexample.png">
+            </td>
+            <td style="border-bottom-width:0" class="fragment fade-in" data-fragment-index="4">
+                    <img style="box-shadow: 10px 10px 8px #888888" src="../pics/create-help-ipython.png">
+            </td>
+        </tr>
+    </table>
+
+    <ul class="fragment fade-in">
+        <strong>Aim:</strong> Researchers turn to RDM because it improves their science and work,
+        not because they are forced to
+    </ul>
+</section>
+
+<section data-markdown data-transition="None"><script type="text/template">
+## RDM overhaul in an institute
+![](../pics/loj_head.png)<!-- .element: class="ackimg" -->
+![](../pics/laura.png) <!-- .element: width="950" style="box-shadow: 10px 10px 8px #888888;margin-top:-20px;margin-bottom: -10px -->
+
+* System-wide DataLad deployment
+* All large datasets are managed and accessed via DataLad (to avoid duplication,
+  for provenance-tracked, reproducible transformations)
+* Effort led by Laura Waite
+</script>
+</section>
+
+<section>
+    <h2>Training an institute</h2>
+    <table>
+        <tr>
+            <td>
+                <img src="../pics/datalad_course.jpg" width="400">
+                <ul style="font-size:30px">
+                    <li>In-person and <br>virtual training</li>
+                    <li>On-demand user <br>documentation at <br>
+                        <a href="https://handbook.datalad.org" target="_blank">
+                            handbook.datalad.org
+                        </a> </li>
+                </ul>
+            </td>
+            <td>
+                <img src="../pics/handbook.gif" width="1000">
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>The DataLad Handbook</h2>
+
+    Its structure reflects different needs of different stakeholders in science:
+    <br><br>
+    <table>
+    <tr>
+        <td style="border-bottom-width:0"><img src="../pics/artwork/src/enter.svg" height="100"></a></td>
+        <td style="border-bottom-width:0">
+          <ul>
+              <strong>Starting must be easy</strong>
+            <li>High-level function/command overviews, <br>
+                Installation, Configuration, Cheatsheet</li>
+          </ul>
+        </td>
+    </tr>
+    <tr>
+        <td style="border-bottom-width:0"><img src="../pics/artwork/src/basics.svg" height="100"></td>
+        <td style="border-bottom-width:0">
+          <ul>
+              <strong>Tutorials for everyone</strong>
+            <li>Narrative-based code-along course</li>
+            <li>Independent on background/skill level, <br>
+                suitable for data management novices</li>
+          </ul>
+        </td>
+    </tr>
+    <tr>
+        <td style="border-bottom-width:0"><img src="../pics/artwork/src/advanced.svg" height="100"></td>
+        <td style="border-bottom-width:0">
+          <ul>
+              <strong>Tutorials for experts</strong>
+            <li>Complex functionality and workflows</li>
+            <li>Examples: Computationally reproducible <br>
+                analysis on big data</li>
+          </ul>
+        </td>
+   </tr>
+    <tr>
+        <td style="border-bottom-width:0"><img src="../pics/artwork/src/usecases.svg" height="100"></td>
+        <td style="border-bottom-width:0">
+          <ul>
+              <strong>Overviews for decision makers</strong>
+            <li>Step-by-step solutions to common <br>
+                data management problems, like<br />how to
+                make a reproducible paper</li>
+          </ul>
+        </td>
+    </tr>
+</table>
+</section>
+
+<section>
+    <h2>Take Home Messages</h2>
+    <ul>
+
+        <li> Complex software tools need accessible documentation</li>
+        <li> Way to adoption of tools or principles via requirements/force/external incentives,
+            or through immediate, personal benefits of good RDM (the latter keeps trainers sane) </li>
+    </ul>
+<br>
+<br>
+    <ul class="fragment fade-in">
+        <strong>A few Handbook metrics:</strong>
+        <li>Three Handbook releases</li>
+        <li>36 coauthors</li>
+        <img src="../pics/zenodorecord.png" height="300">
+        <li>500 pages of content</li>
+        <li>dozens of openly shared slides, code lists, and other training
+            materials</li>
+        <li>about 250 unique views per day</li>
+
+    </ul>
+</section>
+
+
+<section>
+  <h2>Acknowledgements</h2>
+    <img src="../pics/handbook-contributors.png" height="700">
+</section>
+</section>
+
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
