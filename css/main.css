@@ -87,3 +87,10 @@ imgcredit
   -webkit-background-clip: text;
   background-clip: text;
 }
+
+.ackimg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  box-shadow: 10px 10px 8px #888888 !important;
+}
