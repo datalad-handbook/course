@@ -74,7 +74,7 @@ function instruct () {
     wait "$@"
 }
 function type () {
-	xdt $xterm_window type --clearmodifiers --delay 40  "$1"
+	xdt $xterm_window type --clearmodifiers --delay 50  "$1"
 }
 function key () {
 	xdt $xterm_window key --clearmodifiers  $*
@@ -85,7 +85,7 @@ function sleep () {
 function execute () {
     xdt $this_window
     read -p "Hit enter when any previous command has finished"
-	xdt $xterm_window sleep 0.5 key Return
+	xdt $xterm_window sleep 0.1 key Return
 	#while [ x"$xterm_pstree" != x"$(pstree -p $xterm_pid)" ]; do
 	#	sleep 0.1
 	#done
@@ -101,7 +101,7 @@ function say()
 	key Return
 }
 function show () {
-    xdt $xterm_window type --clearmodifiers --delay 0 "$(printf "\n$1\n\n" | sed -e 's/^/# /g')"
+    xdt $xterm_window type --clearmodifiers --delay 2 "$(printf "\n$1\n\n" | sed -e 's/^/# /g')"
     key Return
 }
 function run () {
@@ -124,7 +124,7 @@ function run_expfail () {
 	run "$1"
 }
 
-xdt $xterm_window sleep 0.1
+xdt $xterm_window sleep 0.3
 
 echo "xterm PID $xterm_pid (window $xterm_window)  this window $this_window"
 
