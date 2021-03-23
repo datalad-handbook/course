@@ -1,0 +1,62 @@
+
+run 'datalad --version'
+run 'git config --global --add user.name "Adina Wagner"
+git config --global --add user.email "adina.wagner@t-online.de"'
+
+run 'datalad create -c text2git bids-data'
+run 'cd bids-data'
+run 'echo "# A BIDS structured dataset for my input data" > README'
+run 'datalad status'
+run 'datalad save -m "Add a short README"'
+
+
+run 'cd ../
+datalad clone https://github.com/psychoinformatics-de/studyforrest-data-phase2.git'
+run 'cd studyforrest-data-phase2
+ls'
+run '# print the size of the directory in human readable sizes
+du -sh'
+run 'datalad get sub-01/ses-localizer/func/sub-01_ses-localizer_task-objectcategories_run-*.nii.gz'
+run 'datalad drop sub-01/ses-localizer/func/sub-01_ses-localizer_task-objectcategories_run-4_bold.nii.gz'
+run 'datalad get sub-01/ses-localizer/func/sub-01_ses-localizer_task-objectcategories_run-4_bold.nii.gz'
+
+
+run 'cd ../bids-data'
+run 'datalad clone --dataset . \
+ https://github.com/datalad/example-dicom-functional.git  \
+ inputs/rawdata'
+run 'datalad clone -d . \
+   https://github.com/ReproNim/containers.git \
+   code/containers'
+run 'datalad containers-list --recursive'
+run 'datalad subdatasets'
+run 'datalad containers-run -m "Convert subject 02 to BIDS" \
+   --container-name code/containers/repronim-reproin \
+   --input inputs/rawdata/dicoms \
+   --output sub-02 \
+   "-f reproin -s 02 --bids -l '"'"''"'"' --minmeta -o . --files inputs/rawdata/dicoms"'
+run 'datalad diff -f HEAD~1'
+run 'git log -n 1'
+run '$ datalad siblings add -d . \
+  --name gin \
+  --url git@gin.g-node.org:/adswa/bids-data.git'
+run 'datalad siblings'
+run 'datalad push --to gin'
+
+
+run 'cd ../
+datalad create -c yoda myanalysis'
+run 'cd myanalysis'
+run 'datalad clone -d . \
+  https://gin.g-node.org/adswa/bids-data \
+  input'
+run 'datalad download-url -m "Download code for brain masking from Github" \
+  -O code/get_brainmask.py \
+  https://raw.githubusercontent.com/datalad-handbook/resources/master/get_brainmask.py'
+run 'datalad containers-add nilearn --url TODO'
+run 'datalad containers-run -m "Compute brain mask" \
+  --inputs input/sub-02 \
+  --outputs figures/ \
+  --outputs sub-02* \
+  "python code/get_brainmask.py"'
+
