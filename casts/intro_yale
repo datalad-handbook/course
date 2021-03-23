@@ -53,10 +53,17 @@ run 'datalad clone -d . \
 run 'datalad download-url -m "Download code for brain masking from Github" \
   -O code/get_brainmask.py \
   https://raw.githubusercontent.com/datalad-handbook/resources/master/get_brainmask.py'
-run 'datalad containers-add nilearn --url TODO'
+run 'datalad containers-add nilearn \
+  --url shub://adswa/nilearn-container:latest \
+  --call-fmt "singularity exec {img} {cmd}"'
 run 'datalad containers-run -m "Compute brain mask" \
-  --inputs input/sub-02 \
-  --outputs figures/ \
-  --outputs sub-02* \
+  -n nilearn \
+  --input input/sub-02/func/sub-02_task-oneback_run-01_bold.nii.gz \
+  --output figures/ \
+  --output "sub-02*" \
   "python code/get_brainmask.py"'
+run 'git log sub-02_brain-mask.nii.gz'
+run 'datalad rerun'
+run '# done!'
+run '# thanks!'
 
