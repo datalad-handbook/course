@@ -5,10 +5,13 @@ git config --global --add user.email "adina.wagner@t-online.de"'
 
 run 'datalad create -c text2git bids-data'
 run 'cd bids-data'
-run 'echo "# A BIDS structured dataset for my input data" > README'
+run 'echo "# A BIDS structured dataset for my input data" > README.md'
 run 'datalad status'
 run 'datalad save -m "Add a short README"'
-
+run 'echo "Contains functional data of one subject who underwent a localizer task" >> README.md'
+run 'datalad status'
+run 'datalad save -m "Add information on the dataset contents to the README"'
+run 'git log'
 
 run 'cd ../
 datalad clone https://github.com/psychoinformatics-de/studyforrest-data-phase2.git'
