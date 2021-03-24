@@ -68,5 +68,8 @@ run 'datalad containers-run -m "Compute brain mask" \
 run 'git log sub-02_brain-mask.nii.gz'
 run 'datalad rerun'
 run '# done!'
-run '# thanks!'
-
+run '# in preparations of the next section, please run the following command!'
+run 'datalad clone ///adhd200/RawDataBIDS/Brown
+cd Brown
+datalad get .'
+run '#'
