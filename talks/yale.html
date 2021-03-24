@@ -704,11 +704,10 @@ index 0000000..fabf852
     <h2>Step-by-Step: Webinterface</h2>
     <ul>
         <li>Log into Gin</li>
-        <img src="../pics/screenshot-gin2-png">
         <li>Upload your SSH key</li>
-        <img src="../pics/screenshot-gin3.png">
+        <img src="../pics/screenshot-gin3.png" height="300">
         <li>Create a new repository</li>
-        <img src="TODO">
+        <img src="../pics/screenshot-gin4.png" height="750">
     </ul>
 </section>
 
@@ -717,14 +716,20 @@ index 0000000..fabf852
     <h2>Step-by-Step: Command line</h2>
     <ul>
         <li>Add the Gin repository</li>
-         <pre class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">$ datalad siblings add TODO
-</code></pre>
+        <img src="../pics/screenshot-gin5.png">
+         <pre><code>$ datalad siblings add -d . \
+ --name gin \
+ --url git@gin.g-node.org:/adswa/bids-data.git</code></pre>
         <li>Push your data</li>
-        <pre class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">$ datalad push --to gin
-            TODO
+        <pre><code>$ datalad push --to gin
 </code></pre>
+    </ul>
+</section>
+<section>
+        <ul>
+            <img src="../pics/screenshot-gin6.png">
         <li>Share it with your collaborators</li>
-         <pre class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">$ datalad clone TODO
+         <pre><code >$ datalad clone https://gin.g-node.org/adswa/bids-data
 </code></pre>
     </ul>
 </section>
