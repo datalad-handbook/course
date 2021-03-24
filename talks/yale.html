@@ -608,7 +608,14 @@ index 0000000..fabf852
 
 
   <section>
-      <h2>Computational reproducibility</h2>
+      <h2>Reproducible execution & provenance capture</h2>
+
+      <p>datalad run</p>
+      <img class="fragment fade-in" src="../pics/run_prov.svg" height="600"> <!-- .element: class="fragment" -->
+  </section>
+
+  <section>
+      <h2>Computationally reproducible execution & provenance capture</h2>
       <ul>
           <li>Code may fail (to reproduce) if run with different software</li>
           <li>Datasets can store (and share) software environments (Docker or Singularity containers)
@@ -649,27 +656,6 @@ index 0000000..fabf852
       </ul>
   </section>
 
-  <section>
-      <h2>datalad rerun</h2>
-      <ul>
-          <li>
-              <code>datalad rerun</code> is helpful to spare others and yourself
-              the short- or long-term memory task, or the forensic skills to figure
-              out how you performed an analysis
-          </li>
-          <li>
-              But it is also a digital and machine-reable provenance record
-          </li>
-          <li>
-              Important: The better the run command is specified, the better the
-              provenance record
-          </li>
-          <li>
-              Note: run and rerun only create an entry in the history if the command execution
-              leads to a change.
-          </li>
-      </ul>
-  </section>
 </section>
 
 <section>
@@ -743,7 +729,27 @@ index 0000000..fabf852
     </ul>
 </section>
 
-
+  <section>
+      <h2>datalad rerun</h2>
+      <ul>
+          <li>
+              <code>datalad rerun</code> is helpful to spare others and yourself
+              the short- or long-term memory task, or the forensic skills to figure
+              out how you performed an analysis
+          </li>
+          <li>
+              But it is also a digital and machine-reable provenance record
+          </li>
+          <li>
+              Important: The better the run command is specified, the better the
+              provenance record
+          </li>
+          <li>
+              Note: run and rerun only create an entry in the history if the command execution
+              leads to a change.
+          </li>
+      </ul>
+  </section>
 
 </section>
 
