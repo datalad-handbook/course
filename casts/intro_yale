@@ -42,7 +42,7 @@ run 'datalad diff -f HEAD~1'
 run 'git log -n 1'
 run '$ datalad siblings add -d . \
   --name gin \
-  --url git@gin.g-node.org:/adswa/bids-data.git'
+  --url git@gin.g-node.org:/adswa/bids-data2.git'
 run 'datalad siblings'
 run 'datalad push --to gin'
 
