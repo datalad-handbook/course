@@ -9,6 +9,8 @@ PDFs of the slides are in ``talks/PDFs``.
 
 ## Advice for creating presentations
 
+- ``clone`` the repository to your local computer. From the root of the dataset, run ``git submodule update`` on relevant submodules. Those will be ``reveal.js``, and, if you want to access all images, ``pics/artwork`` Afterwards, you should be able to open the HTML's in a web browser and see them nicely rendered
+- to generate a PDF from your slides, open the HTML of your talk in Chrome or Chromium, and append ``?print-pdf`` to the URL. Afterwards, you should be able to print to PDF from your browser.
 - The tool [directpoll](https://directpoll.com/) works fantastic for virtual talks. See [#34](https://github.com/datalad-handbook/course/issues/34) for info on how to use it
 - We have made good experiences with live code demonstrations. The ``tools/cast_live`` script is used for this. It is highly advised to test whether this script works on your set-up beforehand! You can write custom casts if you want to. Everything thats within a ``run '<code here>'`` statement is executed on ``Enter``, everything within a ``say '<note>'`` is written to your private terminal as a note.
 
