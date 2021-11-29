@@ -66,12 +66,12 @@
         <tr style="vertical-align:bottom">
             <td style="vertical-align:center">
                  <img style="width:280px;margin-bottom:0px" src="../pics/hhu_logo.svg"><br>
-                Slides: <a href="https://doi.org/10.5281/zenodo.4541323" target="_blank">DOI 10.5281/zenodo.4541323</a> (Scan the QR code)
+                Slides: <a href="https://doi.org/10.5281/zenodo.5702023" target="_blank">DOI 10.5281/zenodo.5702023</a> (Scan the QR code)
                 <br>
-                Sources: <a href="ZENODO DOI" target="_blank"> ZENODO DOI</a>
+                Sources: <a href="https://github.com/datalad-handbook/course" target="_blank">github.com/datalad-handbook/course</a>
             </td>
             <td style="vertical-align:center">
-                <img src="../pics/NWGQR" height="200px">
+                <img src="../pics/QRcode_hhu.png" height="200px">
             </td>
         </tr>
     </table>
@@ -99,7 +99,6 @@
         <dd class="fragment fade-in-then-semi-out" data-fragment-index="4">consume and collaborate on data (analyses) like software</dd>
         <dt class="fragment fade-in-then-semi-out" data-fragment-index="5">Computationally reproducible data analysis</dt>
         <dd class="fragment fade-in-then-semi-out" data-fragment-index="5">Track and share provenance of all digital objects</dd>
-        <li class="fragment fade-in-then-semi-out" data-fragment-index="6">Completely domain-agnostic</li>
             <br>
     </ul>
 </section>
@@ -121,6 +120,17 @@
 
         <!--<img class="fragment fade-in" style="box-shadow: 5px 5px 3px #888888"  height="330" src="../pics/artwork/src/collaboration.svg">-->
     </ul>
+</section>
+
+<section data-transition="None">
+    <h2>Version Control</h2>
+    <img src="../pics/turingway/ProjectHistory.png">
+</section>
+
+
+<section data-transition="None">
+    <h2>Version Control</h2>
+    <img src="../pics/researchlog.png">
 </section>
 
 <section data-transition="None">
@@ -419,10 +429,11 @@ action summary:
         <li>Video tutorials: <a href="https://www.youtube.com/datalad" target="_blank">www.youtube.com/datalad</a> </li>
         <li>User support: <a href="https://matrix.to/#/!SaWRuXhTcCDulfttET:matrix.org?via=matrix.org&via=inm7.de" target="_blank">DataLad Matrix Channel</a> </li>
         <li>"DataLad Office Hour" (weekly): <a href="https://www.youtube.com/watch?v=CDeG4S-mJts" target="_blank"> DataLad Office Hour Matrix Channel</a></li>
+        <li>DataLad Paper: <a href="https://joss.theoj.org/papers/10.21105/joss.03262" target="_blank">doi.org/10.21105/joss.03262</a> </li>
     </ul>
         <br>
         <br>
-    Use it on Hilbert: <pre><code>module load datalad</code></pre>
+    Use it on Hilbert: <pre><code>module load DataLad/0.14.0</code></pre>
         Install it on your own hardware: <a href="http://handbook.datalad.org/r.html?install" target="_blank">handbook.datalad.org/r.html?install</a>
 
 </section>
@@ -483,6 +494,7 @@ action summary:
 
 <section>
     <h1>Thanks!</h1>
+     <img src="../pics/QRcode_hhu.png" height="600px">
 </section>
 
 </div> <!-- /.slides -->
@@ -499,6 +511,9 @@ action summary:
     // specified using percentage units.
     width: 1280,
     height: 960,
+    pdfSeparateFragments: false,
+	pdfMaxPagesPerSlide: 1,
+	pdfPageHeightOffset: -1,
 
     // Factor of the display size that should remain empty around the content
     margin: 0.1,
