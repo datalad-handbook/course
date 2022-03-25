@@ -75,8 +75,8 @@
       </li>
       <li>
           Code along with copy-paste code snippets and hands-on exercises at
-              <a href="TODO" target="_blank">
-        TODO</a>
+              <a href="https://handbook.datalad.org/r.html?dgpa" target="_blank">
+        handbook.datalad.org/r.html?dgpa</a>
 
       </li>
       <li>Requirements:
@@ -271,6 +271,28 @@ dl.create(path="mydataset")</code></pre></div>
     A DataLad dataset is a joined Git + git-annex repository
     <img src="../pics/slides/pics/datalad_sandwhich_tuned/sandwhich03.svg">
 </section>
+
+    <section data-transition="None">
+        <h3> distributed version control for data </h3>
+        <table>
+            <tr>
+                <td>
+                    <img class="fragment fade-in" data-fragment-index="1" src="../pics/gitannex.png" height="250">
+                </td>
+                <td>
+                        <img class="fragment fade-in-then-out" data-fragment-index="1" src="../pics/datalad_logo_wide.svg" height="220">
+                </td>
+            </tr>
+        </table>
+            <img class="fragment fade-in-then-out" data-fragment-index="2" src="../pics/artwork/src/publishing/publishing_gitvsannex.svg" height="550">
+    </section>
+
+    <section data-transition="None">
+        <h3> distributed version control for data </h3>
+
+            <img src="../pics/artwork/src/publishing/publishing_network_gitvsannex.svg" height="850">
+    </section>
+
 
   <section>
       <h2>Version Control</h2>
@@ -485,17 +507,12 @@ dl.create(path="mydataset")</code></pre></div>
       <ul>
           <li>Typically, Git repositories are cumbersome to link to eachother.
               DataLad provides seamless nesting mechanisms:
-              <img data-fragment-index="3" height="330" src="pics/linkage_subds.svg">
+              <img data-fragment-index="3" height="330" src="../pics/artwork/src/linkage_subds.svg">
           <li class="fragment fade-in" data-fragment-index="1">
               Modularizes research components for transparency, reuse, and access
               management
           </li>
-          <li class="fragment fade-in" data-fragment-index="2">Overcomes scaling issues with large amounts of files</li>
-          <pre  class="fragment fade-in" data-fragment-index="2"><code class="fragment fade-in" data-fragment-index="2">adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
-  15530572 annex'd files (77.9 TB recorded total size)
-  nothing to save, working tree clean</code></pre>
-          <small><a class="fragment fade-in" data-fragment-index="2" href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
-      </ul>
+        </ul>
   </section>
 
   <section data-transition="None">
@@ -504,16 +521,16 @@ dl.create(path="mydataset")</code></pre></div>
       <ul>
           <li>Typically, Git repositories are cumbersome to link to eachother.
               DataLad provides seamless nesting mechanisms:
-              <img src="pics/Provenance_alpha.png" height="500px">
+              <img src="../pics/Provenance_alpha.png" height="500px">
           <li >
               Modularizes research components for transparency, reuse, and access
               management
           </li>
-          <li>Overcomes scaling issues with large amounts of files</li>
-          <pre  ><code class="fragment fade-in" data-fragment-index="2">adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
+          <li class="fragment fade-in" data-fragment-index="1">Overcomes scaling issues with large amounts of files</li>
+          <pre  class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
   15530572 annex'd files (77.9 TB recorded total size)
   nothing to save, working tree clean</code></pre>
-          <small><a href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
+          <small  class="fragment fade-in" data-fragment-index="1"><a href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
       </ul>
 
       <aside class="notes">
@@ -724,7 +741,7 @@ index 0000000..fabf852
     <br>
     General information: <a href="http://handbook.datalad.org/r.html?publish" target="_blank">
     handbook.datalad.org/r.html?publish</a>
-      <img height="900" src="../pics/artwork/src/publishing/startingpoint.svg">
+      <img height="800" src="../pics/artwork/src/publishing/startingpoint.svg">
     <ul class="fragment fade-in">
         Today: <a href="http://handbook.datalad.org/r.html?GIN" target="_blank">
         Publishing a dataset to Gin</a>
@@ -736,18 +753,18 @@ index 0000000..fabf852
     <h2>gin.g-node.org</h2>
 
     <a href="https://gin.g-node.org/" target="_blank">Gin</a> is a free repository hosting service.
-    <img src="../pics/screenshot-gin1.png">
+    <img src="../pics/screenshot-gin1.png" height="900px">
 </section>
 
 
 <section>
     <h2>Step-by-Step: Webinterface</h2>
-    <ul>
+    <ul style="font-size:25px">
         <li>Log into Gin</li>
         <li>Upload your SSH key</li>
-        <img src="../pics/screenshot-gin3.png" height="300">
+        <img src="../pics/screenshot-gin3.png" height="250">
         <li>Create a new repository</li>
-        <img src="../pics/screenshot-gin4.png" height="750">
+        <img src="../pics/screenshot-gin4.png" height="700">
     </ul>
 </section>
 
@@ -833,7 +850,7 @@ index 0000000..fabf852
           <ul style="margin-left:5px!important">
               <li>The Turing Way <br>
                   project & Scriberia</li>
-              <img src="pics/bannerthanks.svg">
+              <img src="../pics/bannerthanks.svg">
           </ul>
         </dd>
       </dl>
