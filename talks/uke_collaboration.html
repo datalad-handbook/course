@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Branching in datasets </title>
+  <meta name="description" content=" DataLad ">
+  <meta name="author" content=" Adina Wagner ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+<section>
+  <h2> An intuition on branching and <br>collaborative workflows </h2>
+  <table>
+  <tr>
+    <td> The what and the why and the how </td>
+  </tr>
+  <tr>
+    <td>
+      <small>Git workflows in datasets<br>
+      </small>
+    </td>
+  </tr>
+  </table>
+</section>
+
+<section>
+    <section data-transition="None">
+        <h2>Collaborative failures</h2>
+        <table >
+            <tr >
+                <td style="border:0px" align="right">
+                     <img src="../pics/fails/eyeroll.png" height="150px">
+                </td>
+                <td style="border:0px" align="left">
+                    <blockquote style="font-size:30px">
+            "I can't continue my work on the project because my colleague
+            is working on it at the moment"
+                    </blockquote>
+                </td>
+            </tr>
+            <tr >
+                <td style="border:0px" align="right">
+                    <blockquote style="font-size:30px">
+            "I have such a good rephrasing of the discussion, but my PI wanted
+            to work on this part of the manuscript for the past two weeks"
+                    </blockquote>
+                </td>
+                <td style="border:0px" align="left">
+                    <img src="../pics/fails/frown.png" height="150px">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <img src="../pics/fails/tear.png" height="150px">
+                </td>
+                <td align="left">
+                    <blockquote style="font-size:30px">
+            "Alright team, I propose everyone reviews the proposal and adds
+            changes and comments, and [poor scientific coordinator] will go through
+            all documents and merge everything!"
+                </blockquote>
+                </td>
+            </tr>
+        </table>
+</section>
+
+    <section>
+        <img src="../pics/fails/googlecollab.jpeg">
+    </section>
+
+<section>
+<section data-transition="None">
+    <h4>Your Git revision history is a timeline of changes</h4>
+<img height="100px" src="../pics/artwork/src/branching/tig.png"><br>
+<img class="fragment fade-in" height="200px" src="../pics/artwork/src/branching/linear_time_1.svg">
+</section>
+
+
+<section data-transition="None">
+    <h4>This timeline develops on a "branch" (by default "main" or "master")</h4>
+<img height="100px" src="../pics/artwork/src/branching/tig.png"><br>
+<img height="200px" src="../pics/artwork/src/branching/linear_time_2.svg">
+</section>
+
+
+<section data-transition="None">
+    <h3>Branch names</h3>
+    <ul style="font-size:35px">
+        <li>Datasets can have unlimited branches, each with their own timeline of changes</li>
+        <li>Each branch has a unique name, and this name serves as an identifier of the timeline</li>
+        <li>The default branch is typically called <em>main</em> or <em>master</em></li>
+        <ul  style="font-size:30px">
+            <li>This default name can be configured in general using
+            <pre><code>git config --global init.defaultbranch main</code></pre></li>
+            <li>Or initialized during dataset creation using
+            <pre><code>datalad create mydataset --initial-branch main</code></pre></li>
+        </ul>
+        <li>Running <em>git status</em> shows you which branch you're on
+        <pre><code>$ git status
+On branch main
+nothing to commit, working tree clean</code></pre></li>
+        <li>Running <em>git branch</em> shows you which branch you're on and which other branches you have
+        <pre><code>$ git branch
+  git-annex
+* main</code></pre></li>
+        <li>The <em>git-annex</em> branch that datasets have is a bit special (more info later) </li>
+    </ul>
+</section>
+</section>
+
+<section>
+<section data-transition="None">
+    <h3>How to do branching - basic workflow and commands</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>The default branch will be<br>
+                        created together with the dataset</li>
+                    <pre><code>$ datalad create mydataset</code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_1.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - basic workflow and commands</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Every commit (<em>datalad save</em>) <br>
+                        on this branch progresses <br>
+                        its timeline</li>
+                    <pre><code>$ datalad save -m \
+"adding preprocessing pipeline"</code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_2.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - basic workflow and commands</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>You can create new <br>
+                        branches for transparency, <br>
+                        structure, sandboxing new  <br>
+                        developments, collaboration, or fun</li>
+                    <pre><code>$ git branch preproc
+$ git checkout preproc
+# or shorter:
+$ git checkout -b preproc </code></pre>
+                    <li>The new branch shares the <br>
+                        history with its base <br>
+                        branch but adds <br>
+                        independent new changes</li>
+                    <pre><code>$ datalad save -m \
+"Added parametrization A"</code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_3.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - basic workflow and commands</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>You can add as many<br>
+                        changes to the branch <br>
+                        as you want - the default <br>
+                        branch "stays in the past" <br>
+                        while you test new changes
+                    </li>
+                    <li>
+                        After a few changes, <br>
+                        you might be confident <br>
+                        to run your script on <br>
+                        data and save the results
+                    </li>
+                    <pre><code>$ datalad save -m \
+"Tweak parameter, add comments"
+$ ...
+$ datalad save -m /
+"Compute results"</code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_4.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - basic workflow and commands</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>When done with sand-<br>
+                        boxing and the results<br>
+                        look ok, you could integrate<br>
+                         the changes from <em>preproc</em><br>
+                          into the default branch.<br>
+                    </li>
+                    <li>
+                        You can jump between <br>
+                        branches, and <em>merge</em><br>
+                        one or more branches into <br>
+                        another branch
+                    </li>
+                    <pre><code>$ git checkout main
+$ git merge preproc</code></pre>
+
+                    <li>Advantages:<br>
+                    - Transparency<br>
+                    - Cleanliness <br>
+                    - If sandboxing fails don't <br>
+                      merge and your default<br>
+                      branch stays orderly<br>
+                    - Keep different preprocessing<br>
+                      in parallel
+                    </li>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_5.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - Time is fluid</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Branches allow parallel <br>
+                        developments. While you <br>
+                        tweaked the parameters, <br>
+                        a fix for a path problem <br>
+                        was fixed in a new branch <br>
+                        and merged to <em>main</em>
+                    </li>
+                    <pre><code># create & enter a new branch
+# from main
+$ git branch fix-paths
+$ git checkout fix-paths
+$ datalad save -m \
+"Fix:Change abs to rel paths"
+
+# merge the fix into main
+$ git checkout main
+$ git merge fix-paths </code></pre>
+                    <li class="fragment fade-in">However: How does
+                    <em>preproc</em> get the crucial fix<br>
+                    from <em>main</em>?</li>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_6b.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - Time is fluid</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>You can merge <em>main</em><br>
+                        (contains the fix) into <br>
+                        <em>preproc</em> to keep <em>preproc</em> <br>
+                        up to date with <em>main</em>'s new developments
+                    </li>
+                    <pre><code>$ git checkout preproc
+$ git merge main</code></pre>
+                    <img src="https://i.imgur.com/5l1MUjk.gif">
+                    <li>Results can safely be <br>
+                        computed when the fix has<br>
+                        made it into <em>preproc</em>'s <br>
+                        timeline
+                    </li>
+                    <pre><code>$ datalad save -m \
+"Compute results"</code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_7b.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - time is fluid</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>
+                        Merging <em>preproc</em> into <br>
+                        <em>main</em> adds all the<br>
+                        changes <em>main</em> doesn't<br>
+                        yet know about from <em>preproc</em>
+                    </li>
+                    <pre><code>$ git checkout main
+$ git merge preproc</code></pre>
+                    <li>Development that doesn't <br>
+                    require sandboxing and <br>
+                    won't lead to disorder <br>
+                    can continue on <em>main</em></li>
+                    <pre><code>$ datalad save -m \
+"add DOI to README"</code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/branching_8.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h3>Summary - solitary branching</h3>
+    <ul style="font-size:30px">
+        <li>Branching relies completely on Git commands. The most important are:</li>
+        <dl style="font-size:25px">
+            <dt><em>git branch branchname</em></dt>
+            <dd>Create a new branch</dd>
+            <dt><em>git checkout branchname</em></dt>
+            <dd>Switch to a different, existing branch</dd>
+            <dt><em>git checkout -b branchname</em></dt>
+            <dd>Create a new branch and switch to it (shortcut)</dd>
+            <dt><em>git merge branchname</em></dt>
+            <dd>Integrate the changes from one branch into the one currently checked out</dd>
+        </dl>
+        <li>Some advantages of branching in a dataset only you work on are:</li>
+        <ul style="font-size:25px">
+            <li>Sandboxing developments</li>
+            <li>Keeping parallel developments (e.g., different preprocessing flavours)</li>
+            <li>Cleanliness and order, and slightly more exciting visualizations of your history</li>
+            <img height="150px" src="../pics/artwork/src/branching/tig-branches.png">
+        </ul>
+    </ul>
+</section>
+</section>
+
+
+<section>
+    <section>
+        <h3>Branching workflows in collaborations</h3>
+    </section>
+
+<section data-transition="None">
+    <h3>How to do branching - across time and space</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>
+                        In collaborative workflows <br>
+                        each collaborator has their <br>
+                        own copy of a dataset,<br>
+                        and there also is a <br>
+                        central dataset used <br>
+                        to let collaborators <br>
+                        synchronize their work
+                    </li>
+                    <li>
+                        To let others collaborate <br>
+                        on your dataset, you <br>
+                        put it to a central place <br>
+                        e.g., repository hosting <br>
+                        services like GitHub
+                    </li>
+                    <pre><code>$ datalad create-sibling-github \
+mydataset -n upstream \
+--access-protocol ssh</code></pre>
+                    <li>
+                        Once you have created <br>
+                        the central <em>sibling</em> <br>
+                        you can push your changes
+                    </li>
+                    <pre><code>$ datalad push --to upstream</code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/collab_1.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        There are three things you typically need to set up when using a repository hosting service:
+        <li>Have an account on that service</li>
+        <li>Create a personal tokens for authentication</li>
+        <li>Set up SSH keys to use the SSH protocol for repository access</li>
+    </ul>
+</section>
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Personal tokens for authentication</strong></li>
+        <br>
+        When creating a GitHub sibling for the first time, you need to supply a token:
+        <img src="../pics/artwork/src/github-token-question.png">
+    </ul>
+</section>
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Personal tokens for authentication</strong></li>
+        <br>
+        Clicking on the link takes you to the right place:
+        <img src="../pics/artwork/src/github-token-generation.png">
+    </ul>
+</section>
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Personal tokens for authentication</strong></li>
+        <br>
+        It needs appropriate permissions to create or modify repositories:
+        <img src="../pics/artwork/src/github-token-dark.png">
+    </ul>
+</section>
+
+
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Personal tokens for authentication</strong></li>
+        <br>
+        Once generated, copy it:<br>
+        <img src="../pics/artwork/src/github-token-copy.png">
+    </ul>
+</section>
+
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Personal tokens for authentication</strong></li>
+        <br>
+        ... and supply it to the command line:
+        <img src="../pics/artwork/src/github-token-supplied.png">
+    </ul>
+</section>
+
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Personal tokens for authentication</strong></li>
+        <br>
+        This will have created a new (but yet empty) repository on GitHub:
+        <img src="../pics/artwork/src/github-empty-dataset.png" height="500px">
+        <img class="fragment" src="../pics/artwork/src/github-pushed-dataset.png" height="500px"><br>
+        <em>datalad push</em> sends the local dataset changes to <em>upstream</em>
+        <img height="100px" src="../pics/artwork/src/dl-push-upstream.png">
+    </ul>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - across time and space</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Your own dataset now <br>
+                        has a <em>sibling</em> on GitHub <br>
+                        The repo on GitHub is <br>
+                        called "mydataset", <br>
+                        and your local dataset <br>
+                        knows this sibling <br>
+                        under the name <em>upstream</em></li>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/collab_1.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Set up SSH keys to use the SSH protocol for repository access</strong></li>
+        <br>
+        <li>Different protocols exist to synchronize changes between dataset siblings (e.g., <em>pushing</em> local changes <em>upstream</em>
+            or <em>pulling</em>/<em>updating</em> from <em>upstream</em>).
+            The most important ones are "HTTPS" and "SSH"</li>
+        <li>If you want to use SSH (which can be more convenient), you need an account and an SSH key pair.
+            This is a set of two files with character gibberish.
+            You create them from the command line with an OS-specific command, e.g.
+            <pre><code>ssh-keygen -t ed25519 -C "your_email@example.com"</code></pre>
+            (see here for <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" target="_blank">instructions for each OS</a>) </li>
+    </ul>
+</section>
+
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Set up SSH keys to use the SSH protocol for repository access</strong></li>
+        <br>
+        <li>One file is secret, one is public (ends with <em>.pub</em>). </li>
+        <li>Add the contents of the public file to your GitHub account:
+        <img src="../pics/artwork/src/GithubSSH.png" >
+        </li>
+    </ul>
+</section>
+
+
+
+<section data-transition="None">
+    <h3>Detour: Authentication and access</h3>
+
+    <ul style="font-size:30px">
+        <li><strong>Set up SSH keys to use the SSH protocol for repository access</strong></li>
+        <br>
+        <li>One file is secret, one is public (ends with <em>.pub</em>). </li>
+        <li>Add the contents of the public file to your GitHub account:
+        <img src="../pics/artwork/src/GithubSSH2.png"></li>
+    </ul>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - across time and space</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Your collaborator gets a  <br>
+                        copy of the central dataset <br>
+                         by <em>cloning</em> (via preferred
+                        protocol) from GitHub. <br>
+                    </li>
+
+                    <pre><code># via ssh
+$ datalad clone \
+git@github.com:adswa/mydataset.git
+# via https:
+$ datalad clone \
+https://github.com/adswa/mydataset.git    </code></pre>
+                        <li>You can get the clone <br>
+                        URL right from GitHub: <br>
+                        <img src="../pics/artwork/src/cloneurls.png" height="200px"></li>
+                    <li>For consistency, they can <br>
+                        name the sibling dataset <br>
+                        <em>upstream</em> as well
+                        <small>By default, the dataset one clones from is <br>
+                            known as "origin" to the local clone</small>
+                    </li>
+                    <pre><code>$ git remote rename origin upstream </code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="600px" src="../pics/artwork/src/branching/collab_2.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - across time and space</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>All collaborators can <br>
+                    work in parallel. <br>
+                    <small>They <em>could</em> work
+                    on the default branch,
+                    but this is bad practice
+                    and impractical - its better
+                    to use new branches</small></li>
+                </ul>
+            </td>
+            <td>
+                 <img height="700px" src="../pics/artwork/src/branching/collab_3.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section data-transition="None">
+    <h3>How to do branching - integrating other's changes</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>GitHub let's you add <br>
+                    "collaborators" to repos.<br>
+                    <img src="../pics/artwork/src/Github-collaborator.png">
+                    If collaborators are added, <br>
+                    they can push their <br>
+                    changes directly to the <br>
+                    central repo</li>
+                    <pre><code># your collaborator runs
+$ datalad push --to upstream
+# or with Git
+$ git push upstream fix-paths </code></pre>
+                    <li><small>If they are not a collaborator<br>
+                        they need to create a <em>fork</em> <br>
+                        of the repository under their <br>
+                        account and clone & push there.</small>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                 <img height="700px" src="../pics/artwork/src/branching/collab_4.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - integrating other's changes</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>When pushing the branch <br>
+                        to <em>upstream</em>, GitHub <br>
+                        prompts you to create a <br>
+                        <em>pull request</em>
+                        <small>other repository hosting services also call
+                            this a <em>merge request</em> because it is a request to
+                            merge the new branch into the default one</small>
+                        </li>
+                    <li>Merging the pull request <br>
+                        merges the collaborators <br>
+                        <em>fix-paths</em> branch into <br>
+                        the default branch.
+                    </li>
+                </ul>
+            </td>
+            <td>
+                 <img height="500px" src="../pics/artwork/src/Github-PR.png">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+
+<section data-transition="None">
+    <h3>How to do branching - integrating other's changes</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Others can integrate the<br>
+                        new changes if they need them <br>
+                    </li>
+                    <pre><code># you run on branch preproc
+$ git pull upstream main </code></pre>
+                </ul>
+            </td>
+            <td>
+                 <img height="700px" src="../pics/artwork/src/branching/collab_5.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - integrating other's changes</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Once ready, its your time <br>
+                        to push the changes and do a PR
+                    </li>
+                    <pre><code># you run on branch preproc
+$ datalad push --to upstream</code></pre>
+                    <img src="../pics/artwork/src/Github-pushedbranch.png">
+                </ul>
+            </td>
+            <td>
+                 <img height="700px" src="../pics/artwork/src/branching/collab_6.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+<section data-transition="None">
+    <h3>How to do branching - integrating other's changes</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Once ready, its your time <br>
+                        to push the changes and do a PR
+                    </li>
+                    <pre><code># you run on branch preproc
+$ datalad push --to upstream</code></pre>
+                    <img src="../pics/artwork/src/Github-pushedbranch.png">
+                </ul>
+            </td>
+            <td>
+                 <img height="500px" src="../pics/artwork/src/Github-openPR.png">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+
+<section data-transition="None">
+    <h3>How to do branching - integrating other's changes</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Once ready, its your time <br>
+                        to push the changes and do a PR
+                    </li>
+                    <pre><code># you run on branch preproc
+$ datalad push --to upstream</code></pre>
+                    <img src="../pics/artwork/src/Github-pushedbranch.png">
+                </ul>
+            </td>
+            <td>
+                 <img height="500px" src="../pics/artwork/src/Github-openPR2.png">
+            </td>
+        </tr>
+    </table>
+</section>
+
+
+
+
+<section data-transition="None">
+    <h3>How to do branching - integrating other's changes</h3>
+    <img height="500px" src="../pics/artwork/src/branching/collab_7.svg">
+    <img src="../pics/artwork/src/branching/collaborative-tig.png">
+</section>
+</section>
+
+
+<section>
+    <h3>Merge conflicts</h3>
+
+    <pre><code>$ git pull upstream master                                                                    1 !
+From github.com:adswa/mydataset
+ * branch            master     -> FETCH_HEAD
+Auto-merging code/preproc.sh
+CONFLICT (content): Merge conflict in code/preproc.sh
+Automatic merge failed; fix conflicts and then commit the result.</code></pre>
+<pre><code>$git status                                                                                  1 !
+On branch preproc
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Unmerged paths:
+  (use "git add file..." to mark resolution)
+	both modified:   code/preproc.sh
+
+no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
+<pre><code>$ git diff
+diff --cc code/preproc.sh
+index fc3f8e8,14a0a13..0000000
+--- a/code/preproc.sh
++++ b/code/preproc.sh
+@@@ -1,3 -1,1 +1,7 @@@
+++<<<<<<< HEAD
+ +this is a script for processing
+ +some parameter changes
+ +some more parameter tweaks
+++=======
++ fixed paths!
+++>>>>>>> 9217a4b101159e6b5aab0a548aeb75fb82cca798
+</code></pre>
+After fixing
+<code><pre>$ git diff
+diff --cc code/preproc.sh
+index fc3f8e8,14a0a13..0000000
+--- a/code/preproc.sh
++++ b/code/preproc.sh
+@@@ -1,3 -1,1 +1,4 @@@
+ +this is a script for processing
+ +some parameter changes
+ +some more parameter tweaks
++ fixed paths!
+</pre></code>
+
+<pre><code>$ git add code/preproc.sh
+(datalad) adina@juseless in ~/scratch/mydataset on preproc+ (merge)
+$ git commit
+[preproc 1cab31a] Merge branch 'master' of github.com:adswa/mydataset into preproc
+</code></pre>
+</section>
+
+<section data-markdown><script type="text/template">
+## Slide title
+
+![](../pics/.svg)<!-- .element: width="250" -->
+
+<imgcredit>Image author</imgcredit>
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    slideNumber: 'c',
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1,
+    pdfPageHeightOffset: -1,
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
