@@ -73,15 +73,17 @@
 </section>
 
     <section>
+        <h3>Collaboration in parallel improves things:</h3>
         <img src="../pics/fails/googlecollab.jpeg">
     </section>
-
+</section>
 <section>
+
 <section data-transition="None">
     <h4>Your Git revision history is a timeline of changes</h4>
 <img height="100px" src="../pics/artwork/src/branching/tig.png"><br>
-<img class="fragment fade-in" height="200px" src="../pics/artwork/src/branching/linear_time_1.svg">
-</section>
+    <img class="fragment fade-in" height="200px" src="../pics/artwork/src/branching/linear_time_1.svg"></section>
+
 
 
 <section data-transition="None">
@@ -147,7 +149,7 @@ nothing to commit, working tree clean</code></pre></li>
             <td>
                 <ul style="font-size:25px">
                     <li>Every commit (<em>datalad save</em>) <br>
-                        on this branch progresses <br>
+                        on this branch <br> progresses
                         its timeline</li>
                     <pre><code>$ datalad save -m \
 "adding preprocessing pipeline"</code></pre>
@@ -377,13 +379,13 @@ $ git merge preproc</code></pre>
     <ul style="font-size:30px">
         <li>Branching relies completely on Git commands. The most important are:</li>
         <dl style="font-size:25px">
-            <dt><em>git branch branchname</em></dt>
+            <dt><em>git branch [branchname]</em></dt>
             <dd>Create a new branch</dd>
-            <dt><em>git checkout branchname</em></dt>
+            <dt><em>git checkout [branchname]</em></dt>
             <dd>Switch to a different, existing branch</dd>
-            <dt><em>git checkout -b branchname</em></dt>
+            <dt><em>git checkout -b [branchname]</em></dt>
             <dd>Create a new branch and switch to it (shortcut)</dd>
-            <dt><em>git merge branchname</em></dt>
+            <dt><em>git merge [branchname]</em></dt>
             <dd>Integrate the changes from one branch into the one currently checked out</dd>
         </dl>
         <li>Some advantages of branching in a dataset only you work on are:</li>
@@ -835,19 +837,65 @@ $ datalad push --to upstream</code></pre>
     <img height="500px" src="../pics/artwork/src/branching/collab_7.svg">
     <img src="../pics/artwork/src/branching/collaborative-tig.png">
 </section>
-</section>
-
 
 <section>
-    <h3>Merge conflicts</h3>
+    <h3>Summary - collaborative branching</h3>
+    <ul style="font-size:30px">
+        <li>Branching workflows ensure clean, parallel development by multiple people</li>
+        <li>Collaborative workflows require a network of datasets:</li>
+        <img src="../pics/git_PR.png" height="450px">
+        <dl style="font-size:25px">
+            <dt><em>clone</em></dt>
+            <dd>A dataset that was cloned from elsewhere.</dd>
+            <dt><em>sibling/remote</em></dt>
+            <dd>A dataset (clone) that a given dataset knows about. Can be established
+                automatically (e.g., a clone knows its original dataset), or by hand
+                (via "datalad siblings add --name [name] --url [url]" or "git remote add [name] [url]").</dd>
+            <dt><em>fork</em></dt>
+            <dd> A clone on a repository hosting site. “Forking” a repo
+                from a different user “clones” it to your user account.
+                Necessary when you don’t have permissions to push changes
+                to the other users repository but still want to propose changes.
+                Not necessary when you are a collaborator on the repository
+                via the hosting service’s web interface.</dd>
+            <dt><em>upstream vs origin</em></dt>
+            <dd>Any clone knows its origin as a remote (by default called "origin").
+                A dataset can have multiple remotes (e.g., a different users’ dataset on GitHub,
+                your own fork of this repository on GitHub). Convention: the original dataset on
+                GitHub is "upstream", your fork of it is "origin". This involves adding a sibling/remote
+                by hand and potentially renaming siblings/remotes
+                (via git remote rename [name] [newname]).</dd>
+        </dl>
+    </ul>
+</section>
+</section>
 
-    <pre><code>$ git pull upstream master                                                                    1 !
+<section>
+<section data-transition="None">
+    <h3>Merge conflicts</h3>
+    <ul style="font-size:30px">
+        <li>Merge conflicts arise when a file version-controlled in Git contains
+            <strong>conflicting changes</strong>,
+            for example when two collaborators modified the exact same line with
+            different changes, and <strong>Git does not have a strategy to resolve the conflict</strong></li>
+        <li>A merge conflict indicates: <br>
+            <blockquote>"Before I merge, help me choose which modification to keep"</blockquote></li>
+        <li>A merge conflict looks like this:</li>
+            <pre><code>$ git pull upstream master                                                                    1 !
 From github.com:adswa/mydataset
  * branch            master     -> FETCH_HEAD
 Auto-merging code/preproc.sh
 CONFLICT (content): Merge conflict in code/preproc.sh
 Automatic merge failed; fix conflicts and then commit the result.</code></pre>
-<pre><code>$git status                                                                                  1 !
+    </ul>
+</section>
+
+    <section data-transition="None">
+        <h3>Tips for resolving merge conflicts</h3>
+        <ul>
+            <li><em>git status</em> can guide you through resolving the merge conflict. Run it frequently</li>
+        </ul>
+<pre><code>$ git status                                                                                  1 !
 On branch preproc
 You have unmerged paths.
   (fix conflicts and run "git commit")
@@ -858,6 +906,29 @@ Unmerged paths:
 	both modified:   code/preproc.sh
 
 no changes added to commit (use "git add" and/or "git commit -a")</code></pre>
+        <p class="fragment fade-in" style="z-index: 100;position: fixed;background-color:#ede6d5;font-size:20px;box-shadow: 10px 10px 8px #888888;margin-top:-285px;margin-bottom:500px;margin-left:400px">
+        "I'm in a merge conflict!"
+        </p>
+        <p class="fragment fade-in" style="z-index: 100;position: fixed;background-color:#ede6d5;font-size:20px;box-shadow: 10px 10px 8px #888888;margin-top:-220px;margin-bottom:500px;margin-left:700px">
+        How to emergency-abort
+        </p>
+        <p class="fragment fade-in" style="z-index: 100;position: fixed;background-color:#ede6d5;font-size:20px;box-shadow: 10px 10px 8px #888888;margin-top:-150px;margin-bottom:500px;margin-left:700px">
+        What to do next
+        </p>
+        <p class="fragment fade-in" style="z-index: 100;position: fixed;background-color:#ede6d5;font-size:20px;box-shadow: 10px 10px 8px #888888;margin-top:-120px;margin-bottom:500px;margin-left:700px">
+        Which files contain conflicts
+        </p>
+    </section>
+
+    <section data-transition="None">
+        <h3>Tips for resolving merge conflicts</h3>
+        <ul style="font-size:30px">
+            <li>Take a look into the file(s), in an editor or from the command line.
+                Git has special mark-up to indicate conflicting changes.</li>
+            <li>"<code><<<<<<<</code>" followed by a refspec (e.g., HEAD, a branch name, a commit SHA)
+                until "<code>======</code>" indicates one set of changes.</li>
+            <li>Everything after "<code>=======</code>" until "<code>>>>>>>></code>"
+                followed by a refspec indicates the other set of changes</li>
 <pre><code>$ git diff
 diff --cc code/preproc.sh
 index fc3f8e8,14a0a13..0000000
@@ -872,8 +943,30 @@ index fc3f8e8,14a0a13..0000000
 + fixed paths!
 ++>>>>>>> 9217a4b101159e6b5aab0a548aeb75fb82cca798
 </code></pre>
-After fixing
-<code><pre>$ git diff
+            <li>The refspec identifier shows you where the change is from (e.g.,
+                "HEAD" means "most recent commit on this branch")</li>
+            <p class="fragment fade-in" style="z-index: 100;position: fixed;background-color:#ede6d5;font-size:30px;box-shadow: 10px 10px 8px #888888;margin-top:-220px;margin-bottom:500px;margin-left:400px">
+        This is your most recent change
+        </p>
+            <p class="fragment fade-in" style="z-index: 100;position: fixed;background-color:#ede6d5;font-size:30px;box-shadow: 10px 10px 8px #888888;margin-top:-160px;margin-bottom:500px;margin-left:400px">
+        This is a conflicting change
+        </p>
+            <li>There can be multiple conflicts in a single file</li>
+            </ul>
+
+    </section>
+
+
+    <section data-transition="None">
+        <h3>Tips for resolving merge conflicts</h3>
+        <ul style="font-size:30px">
+            <li>To fix a merge conflict...</li>
+            <ul style="font-size:25px">
+                <li>Remove any lines you don't want to keep. You can keep lines from both change sets!</li>
+                <li>Remove the "<code><<<<<<</code>", "<code>>>>>>></code>", and
+                    "<code>======</code>" conflict mark-up afterwards</li>
+                Example (both changes are kept):
+<pre><code>$ git diff
 diff --cc code/preproc.sh
 index fc3f8e8,14a0a13..0000000
 --- a/code/preproc.sh
@@ -882,27 +975,31 @@ index fc3f8e8,14a0a13..0000000
  +this is a script for processing
  +some parameter changes
  +some more parameter tweaks
-+ fixed paths!
-</pre></code>
-
-<pre><code>$ git add code/preproc.sh
+ +fixed paths!
+</code></pre>
+                <li><em>git add</em> the file</li>
+                <li>When all files with conflicts are added, <em>git commit</em> to resolve the merge</li>
+            </ul>
+        <pre><code>$ git add code/preproc.sh
 (datalad) adina@juseless in ~/scratch/mydataset on preproc+ (merge)
 $ git commit
 [preproc 1cab31a] Merge branch 'master' of github.com:adswa/mydataset into preproc
-</code></pre>
+</code></pre></ul>
+
+
 </section>
 
-<section data-markdown><script type="text/template">
-## Slide title
-
-![](../pics/.svg)<!-- .element: width="250" -->
-
-<imgcredit>Image author</imgcredit>
-
-<aside class="notes">
-Note to self
-</aside>
-</script>
+    <section data-transition="None">
+        <h3>Tips for resolving merge conflicts</h3>
+        <ul style="font-size:30px">
+            <li>Merge conflicts are usually harmless</li>
+            <li>As with many other problems, <em>git status</em> will tell you
+                what to do next and which commands to run</li>
+            <li>You could configure Git to use merge strategies resulting in fewer manual resolutions,
+                e.g., "always keep my changes if others' changes conflict". More information:
+                <a href="https://git-scm.com/docs/merge-strategies" target="_blank">git-scm.com/docs/merge-strategies</a> </li>
+        </ul>
+</section>
 </section>
 
 
