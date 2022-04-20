@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Michał Szczepanik ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+
+
+  <section>
+<section>
+<script src="https://cdn.logwork.com/widget/countdown.js"></script>
+<a href="https://logwork.com/countdown-2zu8" class="countdown-timer"
+   data-style="columns" data-timezone="Europe/Berlin" data-date="2022-04-22 09:00">
+    Welcome Session starts in</a>
+    Have a ☕!
+</section>
+
+  <section>
+      <h2>Before we begin...</h2>
+      Any left-over questions from yesterday?
+  </section>
+
+<section>
+  <h2> Publishing datasets </h2>
+  <table>
+  <tr>
+    <td>How to share your work with others</td>
+  </tr>
+  <tr>
+    <td>
+        <small>Repository hosting services, siblings, and <code>datalad push</code><br>
+      </small>
+    </td>
+  </tr>
+  </table>
+</section>
+  </section>
+
+  <!--...WORKSHOP INTRODUCTION...-->
+
+  <section>
+
+  <section data-transition="None">
+      <h2>"Share data like source code"</h2>
+      <ul style="font-size:30px">
+          <li class="fragment fade-in-then-semi-out" data-fragment-index="1">Datasets can be cloned, pushed, and updated from and to <strong>local</strong> and <strong>remote</strong></strong> paths,
+              remote <strong>hosting services</strong>, external <strong>special remotes</strong></li>
+      <img class="fragment fade-in" data-fragment-index="1" style="box-shadow: 5px 5px 3px #888888"  height="330" src="../pics/artwork/src/collaboration.svg">
+          <li class="fragment fade-in">Examples: <br>
+          Local path <pre><code>../my-projects/experiment_data</code></pre>
+          Remote path <pre><code>myuser@myinstitutes.hcp.system:/home/myuser/my-projects/experiment_data</code></pre>
+          Hosting service <pre><code>git.github.com:myuser/experiment_data.git</code></pre>
+          External special remotes <pre><code>osf://my-osf-project-id</code></pre></li>
+      </ul>
+  <aside class="notes">
+  Idea behind datalad: Enable a similar level of tooling and culture for the distribution and version control of data as it is present for open source software development
+  </aside>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Interoperability</h2>
+      <ul style="font-size:30px">
+          <li>DataLad is built to maximize interoperability and use with hosting and
+              storage technology</li>
+          </ul>
+      <img class="fragment fade-in" src="../pics/services_only.png" height="650">
+            <small>See the chapter <a href="http://handbook.datalad.org/en/latest/basics/basics-thirdparty.html" target="_blank">
+          Third party infrastructure</a> for walk-throughs for different services</small>
+  </section>
+
+  <section data-transition="None">
+      <h2>Interoperability</h2>
+      <ul style="font-size:30px">
+          <li>DataLad is built to maximize interoperability and use with hosting and
+              storage technology</li>
+      </ul>
+      <img src="../pics/services_connected.png" height="650">
+      <small>See the chapter <a href="http://handbook.datalad.org/en/latest/basics/basics-thirdparty.html" target="_blank">
+          Third party infrastructure</a> for walk-throughs for different services</small>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      I have a dataset on my computer. How can I share it, or collaborate on it?
+      <img height="900" src="../pics/artwork/src/publishing/startingpoint.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Glossary</h2>
+      <dl style="font-size:30px">
+          <dt class="fragment fade-in" data-fragment-index="1">
+              Sibling (remote)</dt>
+          <dd class="fragment fade-in" data-fragment-index="1">
+              Linked clones of a dataset. You can usually update (from) siblings to keep all your siblings in sync
+              (e.g., ongoing data acquisition stored on experiment compute and backed up on cluster and external hard-drive)
+          </dd>
+          <dt class="fragment fade-in" data-fragment-index="2">
+              Repository hosting service</dt>
+          <dd class="fragment fade-in" data-fragment-index="2">
+              Webservices to host Git repositories, such as GitHub, GitLab, Bitbucket, Gin, ...</dd>
+          <dt class="fragment fade-in" data-fragment-index="3">
+              Third-party storage</dt>
+          <dd class="fragment fade-in" data-fragment-index="3">
+              Infrastructure (private/commercial/free/...) that can host data. A "special remote" protocol
+              is used to publish or pull data to and from it
+          </dd>
+          <dt class="fragment fade-in" data-fragment-index="4">
+              Publishing datasets</dt>
+          <dd class="fragment fade-in" data-fragment-index="4">
+              <em>Pushing</em> dataset contents (Git and/or annex) to a sibling using <strong>datalad push</strong></dd>
+          <dt class="fragment fade-in" data-fragment-index="5">
+              Updating datasets</dt>
+          <dd class="fragment fade-in" data-fragment-index="5">
+              <em>Pulling</em> new changes from a sibling using <strong>datalad update --merge</strong></dd>
+      </dl>
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul>
+          <li>Most public datasets separate content in Git versus git-annex behind the scenes</li>
+      </ul>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_gitvsannex.svg">
+
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishparts.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <img height="900" src="../pics/artwork/src/publishing/publishing_network_publishparts2.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      Typical case:
+      <ul style="font-size:30px">
+          <li class="fragment fade-in">
+              Datasets are exposed via a private or public repository on a
+              repository hosting service
+          </li>
+          <li class="fragment fade-in">
+              Data can't be stored in the repository hosting service, but can be
+              kept in almost any third party storage
+          </li>
+          <li class="fragment fade-in">
+              Publication dependencies automate pushing to the correct place, e.g.,
+              <pre><code style="bash">$ git config --local remote.github.datalad-publish-depends gdrive
+# or
+$ datalad siblings add --name origin --url git@git.jugit.fzj.de:adswa/experiment-data.git --publish-depends s3            </code></pre></li>
+      </ul>
+      <img src="../pics/artwork/src/publishing/publishing_network_publishdepends.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul style="font-size:30px">
+      <li>Real-life example 1:<br>
+          GitHub for repository hosting, data hosting via datapub.fz-juelich.de + GNODE
+      </li>
+      <img height="850" class="fragment fade-in" src="../pics/clonedata.gif" alt="a screenrecording of cloning studyforrest data from github">
+  </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul style="font-size:30px">
+      <li>Real-life example 2:<br>
+          GitLab for repository hosting, data hosting via internal webserver (access restricted)
+      </li>
+      <img height="850" class="fragment fade-in" src="../pics/centralmanagement.gif" alt="a screenrecording of cloning studyforrest data from github">
+  </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <ul style="font-size:30px">
+      <li>Real-life example 3:<br>
+          GitHub for repository hosting, data hosting via Amazon S3 (requires DUA)
+      </li>
+      <img height="850" class="fragment fade-in" src="../pics/get_hcpdata.gif" alt="a screenrecording of cloning studyforrest data from github">
+  </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+            <p style="font-size:30px"> Special case 1: repositories with annex support</p>
+      <img height="850" class="fragment fade-in" src="../pics/artwork/src/publishing/publishing_network_publishgin.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+      <p style="font-size:30px">Special case 2: Special remotes with repositories</p>
+      <img height="850" src="../pics/artwork/src/publishing/publishing_network_publishosf.svg">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+            <p style="font-size:30px"> Special case 1: repositories with annex support</p>
+      <img height="850" class="fragment fade-in" src="../pics/ginpublishing.gif">
+  </section>
+
+  <section data-transition="None">
+      <h2>Publishing datasets</h2>
+             <p style="font-size:30px">Special case 2: Special remotes with repositories</p>
+      <small>Requires the DataLad extension
+          <a href="http://docs.datalad.org/projects/osf/en/latest/" target="_blank">datalad-osf</a>
+      </small><br>
+      <img height="850" src="../pics/publishosf.gif">
+  </section>
+
+  <section>
+      <h2>Publishing datasets</h2>
+      <p style="font-size:30px">Special case 3: RIA stores for dataset hosting/backup</p>
+      <small>Tutorial for large scale, reproducible computation: <a href="https://github.com/psychoinformatics-de/fairly-big-processing-workflow" target="_blank">
+          github.com/psychoinformatics-de/fairly-big-processing-workflow</a> </small>
+      <img height="850" src="../pics/ukbworkflow_simplified.svg">
+  </section>
+
+
+  <section>
+      <h2>Publishing datasets</h2>
+      <ul style="font-size:30px">
+          DataLad can create siblings from the command line for the following services:
+          <dt>GitHub</dt>
+          <dd><code>datalad create-sibling-github</code></dd>
+          <dt>GitLab</dt>
+          <dd><code>datalad create-sibling-gitlab</code></dd>
+          <dt>Gin</dt>
+          <dd><code>datalad create-sibling-gin</code></dd>
+          <dt>Gogs</dt>
+          <dd><code>datalad create-sibling-gogs</code></dd>
+          <dt>local or remote paths</dt>
+          <dd><code>datalad create-sibling</code></dd>
+          <dt>RIA stores</dt>
+          <dd><code>datalad create-sibling-ria</code></dd>
+          <dt>Open Science Framework (needs datalad-osf)</dt>
+          <dd><code>datalad create-sibling-osf</code></dd><br>
+        (Additional services being worked on: webdav-based services such as Sciebo,
+          ebrains; if you need something else, get in touch)
+      </ul>
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_local.svg">
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_server.svg">
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      How does cloning dataset feel like for a consumer?
+      <img height="900" src="../pics/artwork/src/publishing/clone_url.svg">
+  </section>
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      Let's take a look at the special cases:
+      <img height="900" src="../pics/clonegin.gif">
+  </section>
+
+
+  <section>
+      <h2>Cloning DataLad datasets</h2>
+      Let's take a look at the special cases:<br>
+            <small>Requires the DataLad extension
+          <a href="http://docs.datalad.org/projects/osf/en/latest/" target="_blank">datalad-osf</a>
+      </small><br>
+      <img height="900" src="../pics/cloneosf.gif">
+  </section>
+
+  <section>
+      <h2>Summary: Data publication</h2>
+      <img src="../pics/in_case_of_fire.png" style="border:20px; margin:0px; float:center; width:500px;"/>
+      <dl style="font-size:30px"><br>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="1">datasets can have "siblings", linked clones in other places</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="1">Those can be local or remote, on commercial, free, or personal infrastructure</dd>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="2">Typical repository hosting services do not host annexed contents</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="2">A notable exception is Gin</dd>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="3">Typical storage providers do not host Git repositories</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="3">but datalad extensions can make it possible for certain services, such as the OSF</dd>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="4">Despite the different possible services, operations are streamlined</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="4"><strong>clone</strong> installs datasets, <strong>get</strong> retrieves data,
+              <strong>push</strong> publishes (new changes in) datasets,
+              <strong>update</strong> pulls dataset updates.
+              This remains the case even if underlying data hosting changes.</dd>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="5">Siblings serve multiple purposes:</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="5">Personal back-up that's easy to sync;
+              Publicly or privately exposed files to share with (selected) others;
+              Entrypoints for collaborations or others' contributions; ...</dd>
+
+      </dl>
+  </section>
+
+  <section>
+      <h2>Publish your own dataset</h2>
+
+      <a class="fragment fade-in" style="font-size:25px" href="https://psychoinformatics-de.github.io/rdm-course/01-content-tracking-with-datalad/index.html#getting-started-create-an-empty-dataset" target="_blank">
+           Code: psychoinformatics-de.github.io/rdm-course/03-remote-collaboration/index.html#publishing-datasets-to-gin
+      </a>
+  </section>
+  </section>
+
+  <section>
+      <section data-transition="None">
+          <h2>Using Gin for data publication</h2>
+          <img src="../pics/screenshot-gin1.png" height="400px"><br>
+          <ul style="font-size:30px">
+              <strong>Gin has a few advantages for publishing data</strong>
+              <li>DataLad Integration: Convenience commands to create siblings </li>
+              <li>Annex support: Easiest possible publication, preview and
+                  individual download of annexed contents in the webinterface</li>
+              <li>Open Science support: Archive datasets to obtain a DOI;
+                  ensures minimal metadata and a license</li>
+              <li>Private or Public repositories</li>
+              <li>Runs on European infrastructure (some data protection officers like this)</li>
+              <li>Free, and with yet unlimited storage</li>
+          </ul>
+      </section>
+
+      <section data-transition="None">
+          <h2>Using Gin for data publication</h2>
+          <img src="../pics/gin-doi2.png" height="800px"><br>
+      </section>
+
+      <section>
+          <h2>Using Gin for data publication</h2>
+          <ul style="font-size:30px">
+              <li>Step 1: Create a Gin account (requires an email address) </li>
+              <li>Step 2: Generate and upload an SSH key</li>
+              <li>Step 3: Create and register a sibling repository</li>
+              <li>Step 4: Publish your dataset</li>
+              <li>Step 5: Update your dataset</li>
+          </ul>
+      </section>
+
+      <section>
+          <h3>Summary: Publishing and updating data (Gin)</h3>
+      <dl style="font-size:30px"><br>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="1">
+              Gin is a free repository hosting service</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="1">
+              To publish datasets to Gin, you need an account and an SSH key</dd>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="2">
+              DataLad has built-in integration with <strong>datalad create-sibling-gin</strong></dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="2">
+              This requires generating an access token </dd>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="3">
+              Gin has annex support</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="3">
+              <strong>datalad push</strong> published all dataset contents and the Git history</dd>
+          <dt class="fragment fade-in-then-semi-out" data-fragment-index="4">
+              The dataset can be cloned from Gin by others</dt>
+          <dd class="fragment fade-in-then-semi-out" data-fragment-index="4">
+              If the dataset is public, this does not even require a Gin account</dd>
+          <dt class="fragment fade-in" data-fragment-index="5">
+              You can still publish your dataset to (your lab's) GitHub/GitLab/other places</dt>
+          <dd class="fragment fade-in" data-fragment-index="5">
+              and use Gin only for data hosting. Walkthrough:
+              <a href="http://handbook.datalad.org/en/latest/basics/101-139-gin.html#ginbts" target="_blank">
+                  handbook.datalad.org/basics/101-139-gin.html#ginbts
+              </a> </dd>
+      </dl>
+          <p class="fragment fade-in"><strong>Next: Let's collaborate!</strong></p>
+      </section>
+  </section>
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    slideNumber: 'c',
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1,
+    pdfPageHeightOffset: -1,
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
