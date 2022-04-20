@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Michał Szczepanik ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+
+
+
+<section>
+    <section>
+<script src="https://cdn.logwork.com/widget/countdown.js"></script>
+<a href="https://logwork.com/countdown-2zu8" class="countdown-timer"
+   data-style="columns" data-timezone="Europe/Berlin" data-date="2022-04-22 11:00">
+    "Concepts & principles for reproducible science" starts in</a>
+</section>
+  <section>
+      <h2>Concepts & principles for reproducible science</h2>
+      <img height="500" src="../pics/Provenance_alpha.png">
+      <imgcredit>CC-BY-SA Scriberia and The Turing Way</imgcredit>
+  </section>
+</section>
+
+<!--YODA principles-->
+
+<section>
+    <section>
+  <h2>DataLad Datasets for data analysis</h2>
+
+  <ul style="font-size:30px">
+      <li>A DataLad dataset can have <i>any</i> structure, and use as many or few
+          features of a dataset as required.</li>
+
+      <li>However, for <b>data analyses</b> it is beneficial to make
+          use of DataLad features and structure datasets according to the <b>YODA principles</b>:</li>
+  </ul>
+
+  <img style="" data-src="../pics/yoda.png" height="400">
+  <dl style="font-size:30px">
+      <dt>P1: One thing, one dataset</dt>
+      <dt>P2: Record where you got it from, and where it is now</dt>
+      <dt>P3: Record what you did to it, and with what</dt>
+  </dl>
+                      <note>Find out more about the YODA principles in
+          <a href="http://handbook.datalad.org/en/latest/basics/101-127-yoda.html" target="_blank">
+              the handbook</a>, and more about structuring dataset at
+          <a href="https://psychoinformatics-de.github.io/rdm-course/02-structuring-data/index.html#example-structure-yoda-principles" target="_blank">
+              psychoinformatics-de.github.io/rdm-course/02-structuring-data</a>
+                         </note>
+    </section>
+
+    <section data-markdown style="font-size:30px">
+## P1: One thing, one dataset
+![](../pics/dataset_modules.png)
+
+- Create **modular** datasets: Whenever a particular collection of files could anyhow be useful in more
+  than one context (e.g. data), put them in their own dataset, and install it as
+  a subdataset.
+- Keep everything **structured**: Bundle all components of one analysis into one superdataset, and
+  within this dataset, separate code, data, output, execution environments.
+- Keep a dataset **self-contained**, with relative paths in scripts to subdatasets or files.
+  Do not use absolute paths.
+
+</section>
+
+  <section data-transition="None">
+      <h2>Why Modularity?</h2>
+
+      <ul style="font-size:30px">
+          <li>1. Reuse and access management</li>
+              <img src="../pics/ukb_datasets.svg" height="500px">
+
+          </li>
+          <li class="fragment fade-in" data-fragment-index="1">2. Scalability</li>
+          <pre  class="fragment fade-in" data-fragment-index="1"><code class="fragment fade-in" data-fragment-index="1">adina@bulk1 in /ds/hcp/super on git:master❱ datalad status --annex -r
+  15530572 annex'd files (77.9 TB recorded total size)
+  nothing to save, working tree clean</code></pre>
+          <small  class="fragment fade-in" data-fragment-index="1"><a href="https://github.com/datalad-datasets/human-connectome-project-openaccess" target="_blank">(github.com/datalad-datasets/human-connectome-project-openaccess)</a></small>
+      </ul>
+
+  </section>
+
+<section style="font-size:30px" data-transition="None">
+<h2>Why Modularity?</h2>
+    <ul>
+        <li>3. Transparency</li><br>
+
+Original:
+<pre><code class="sh" style="max-height:none" data-trim>
+/dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+</code></pre>
+<div class="fragment">
+Without modularity, after applied transform (preprocessing, analysis, ...):
+<pre><code class="sh" style="max-height:none" data-trim>
+/dataset
+├── sample1
+│   ├── ps34t.dat
+│   └── a001.dat
+├── sample2
+│   ├── ps34t.dat
+│   └── a001.dat
+...
+</code></pre>
+Without expert/domain knowledge, no distinction between original and derived data
+    possible.
+</div>
+        </ul>
+</section>
+
+
+<section  style="font-size:30px" data-transition="None">
+<h2>Why Modularity?</h2>
+    <ul>
+        <li>3. Transparency</li><br>
+
+Original:
+<pre><code class="sh" style="max-height:none" data-trim>
+/raw_dataset
+├── sample1
+│   └── a001.dat
+├── sample2
+│   └── a001.dat
+...
+</code></pre>
+        <strong>With modularity</strong> after applied transform (preprocessing, analysis, ...)
+<pre><code class="sh" style="max-height:none" data-trim>
+/derived_dataset
+├── sample1
+│   └── ps34t.dat
+├── sample2
+│   └── ps34t.dat
+├── ...
+└── inputs
+    └── raw
+        ├── sample1
+        │   └── a001.dat
+        ├── sample2
+        │   └── a001.dat
+        ...
+</code></pre>
+Clearer separation of semantics, through use of pristine version of original dataset within a
+        <em>new, additional</em> dataset holding the outputs.</ul>
+</section>
+
+
+<section style="font-size:30px" data-transition="None" data-markdown><script type="text/template">
+## When to modularize?
+
+- Target audience is different
+  - public vs. private
+  - domain specific vs. domain general
+
+- Pace of evolution is different
+  - "factual" raw data vs. choices of (pre-)processing
+  - completed acquisition vs. ongoing study
+
+- Size impacts I/O and logistics
+  - Git can struggle with 1M+ files
+  - filesystems (licensing) can struggle with large numbers of inodes
+  - More infos: [Go Big or Go Home chapter](http://handbook.datalad.org/en/latest/beyond_basics/basics-scaling.html)
+
+- Legal/Access constraints
+  - personal vs. anonymized data
+
+<aside class="notes">
+Note to self
+</aside>
+</script>
+</section>
+
+<section style="font-size:30px" data-markdown data-transition="None">
+## P2: Record where you got it from, and where it is now
+![](../pics/data_origin.png)
+
+- **Link** individual datasets to declare data-dependencies (e.g. as subdatasets).
+- **Record data's origin** with appropriate commands, for example
+  to record access URLs for individual files obtained from (unstructured) sources "in the cloud".
+- Share and **publish** datasets for collaboration or back-up.
+
+</section>
+
+
+<section data-transition="None" style="font-size:30px">
+<h2>Dataset linkage</h2>
+<img data-src="../pics/dataset_linkage.png">
+<pre><code class="bash" style="font-size:115%;max-height:none">$ datalad clone --dataset . http://example.com/ds inputs/rawdata
+</code></pre>
+
+<pre><code class="diff" style="max-height:none">$ git diff HEAD~1
+diff --git a/.gitmodules b/.gitmodules
+new file mode 100644
+index 0000000..c3370ba
+--- /dev/null
++++ b/.gitmodules
+@@ -0,0 +1,3 @@
++[submodule "inputs/rawdata"]
++       path = inputs/rawdata
++       url = http://example.com/importantds
+diff --git a/inputs/rawdata b/inputs/rawdata
+new file mode 160000
+index 0000000..fabf852
+--- /dev/null
++++ b/inputs/rawdata
+@@ -0,0 +1 @@
++Subproject commit fabf8521130a13986bd6493cb33a70e580ce8572
+</code></pre>
+Each (sub)dataset is a separately, but jointly version-controlled entity.
+    If none of its data is retrieved, subdatasets are an extremely <strong>lightweight</strong> data dependency
+    and yet <strong>actionable</strong> (<strong>datalad get</strong> retrieves contents on demand)
+    <aside class="notes">weighs just a few bytes</aside>
+</section>
+
+<section data-transition="None" style="font-size:30px">
+  <h2>Example dataset structure</h2>
+  <img style="" height="750px" data-src="../pics/virtual_dirtree.png">
+  <p style="margin-top:-.5em">Link precisely versioned inputs to version-controlled outputs</p>
+    <aside class="notes">dataset linkage is pairwise, i.e. cheap</aside>
+</section>
+
+
+    <section data-markdown style="font-size:30px">
+## P3: Record what you did to it, and with what
+![](../pics/dataset_linkage_provenance.png)
+
+- Collect and store **provenance** of all contents of a dataset that you create
+- "Which script produced which output?", "From which data?", "In which **software environment**?"
+  ... Record it in an ideally machine-readable way with **datalad (containers-)run**
+
+</section>
+</section>
+
+<section>
+
+  <section data-transition="None">
+    <h3>Sharing software environments: Why and how</h3>
+
+        <p style="font-size:30px"> Science has many different building blocks: Code, software, and data produce research outputs.
+        The more you share, the more likely can others reproduce your results <br></p>
+        <img height="750px" src="../pics/agoodstart.png">
+  </section>
+
+
+
+<section data-transition="None">
+    <h3>Sharing software environments: Why and how</h3>
+    <ul style="font-size:30px">
+        <li>
+            Software can be difficult or impossible to install (e.g. conflicts with existing software,
+            or on HPC) for you or your collaborators
+        </li>
+        <li>
+            Different software versions/operating systems can produce different results:
+            <a href="https://doi.org/10.3389/fninf.2015.00012" target="_blank">Glatard et al., doi.org/10.3389/fninf.2015.00012</a>
+        </li>
+        <iframe width="1200"  height="500" src="https://doi.org/10.3389/fninf.2015.00012"></iframe>
+    </ul>
+</section>
+
+  <section>
+      <h3>Software containers</h3>
+      <ul style="font-size:30px">
+          <li class="fragment fade-in">
+              Software containers encapsulate a software environment and isolate it from
+              a surrounding operating system. Two common solutions: Docker, Singularity
+          </li>
+          <li class="fragment fade-in">
+              How familiar are you with software containers?
+
+             <iframe src="https://www.directpoll.com/r?XDbzPBd3ixYqg8huKIwKuJ7aj5lQw7fByQ4HgMgN",
+              style="border: 0", width="930", height="900"></iframe></li>
+      </ul>
+  </section>
+
+
+  <section>
+      <h2>Software containers</h2>
+      <ul style="font-size:30px">
+          <table>
+              <tr>
+                  <td>
+          <img src="../pics/dockerexplain.png" height="500">
+                  </td>
+                  <td><img height="100" src="../pics/blog_docker.png"><br>
+                  <img height="100" src="../pics/singularitylogo.jpg"> </td>
+              </tr>
+
+              </table>
+          </img>
+          <li>
+              Put simple, a cut-down virtual machine that is a portable and shareable
+              bundle of software libraries and their dependencies
+          </li>
+          <li><strong>Docker</strong> runs on all operating systems, but requires "sudo" (i.e., admin) privileges</li>
+          <li><strong>Singularity</strong> can run on computational clusters (no "sudo") but is not (well) on non-Linux</li>
+          <li>Their containers are different, but interoperable - e.g., Singularity can use and build Docker Images</li>
+      </ul>
+  </section>
+
+  <section>
+      <h2>The datalad-container extension</h2>
+      <ul style="font-size:30px">
+      <li>
+          The <code>datalad-container</code> extension gives DataLad commands to add, track, retrieve, and
+          execute Docker or Singularity containers.
+      </li>
+      <pre><code>pip/conda install datalad-container</code></pre>
+          <li>
+              If this extension is installed, DataLad can register software containers as "just another file" to your
+              dataset, and <strong>datalad containers-run</strong> analysis inside the container, capturing software as additional
+          provenance
+          </li>
+      </ul>
+      <img class="fragment fade-in" src="../pics/containers-run.svg" height="600"> <!-- .element: class="fragment" -->
+  </section>
+
+</section>
+<section>
+  <section data-transition="None">
+      <h3>Reproducible analysis: From DICOMs to brain masks</h3>
+      <small>Sadly, handling containerized analysis on the JupyterHub isn't possible
+      thus this is only a demonstration.
+          <br>
+          The code can be found at
+          <a href="https://github.com/datalad-handbook/course/blob/master/casts/uke-reproducibility" target="_blank">
+              github.com/datalad-handbook/course</a> </small><br><br>
+      <ul style="font-size: 30px">
+          <li>Step 1: Convert DICOMs to BIDS-structured NIfTI images</li>
+          <li>Step 2: Publish the BIDS-structured NIfTI images </li>
+          <li>Step 3: Reuse the NIfTI images in an analysis</li>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h3>Reproducible analysis: From DICOMs to brain masks</h3>
+      <ul style="font-size: 30px">
+          <li>Step 1: Convert DICOMs to BIDS-structured NIfTI images</li>
+          <pre><code style="max-height:None"># create a superdataset
+$ datalad create -c text2git bids-data
+[INFO   ] Creating a new annex repo at /home/adina/bids-data
+[INFO   ] scanning for unlocked files (this may take some time)
+[INFO   ] Running procedure cfg_text2git
+[INFO   ] == Command start (output follows) =====
+[INFO   ] == Command exit (modification check follows) =====
+create(ok): /home/adina/bids-data (dataset)
+$ cd bids-data
+# create a README
+$ echo "# A BIDS structured dataset for my input data" > README.md
+$ datalad status
+untracked: README.md (file)
+$ datalad save -m "Add a short README"
+add(ok): README.md (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  save (ok: 1)
+# add the input data (DICOMs) as a subdataset
+$ datalad clone --dataset . \
+ https://github.com/datalad/example-dicom-functional.git  \
+ inputs/rawdata'
+ install(ok): inputs/rawdata (dataset)
+add(ok): inputs/rawdata (file)
+add(ok): .gitmodules (file)
+save(ok): . (dataset)
+add(ok): .gitmodules (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 3)
+  install (ok: 1)
+  save (ok: 2)</code></pre>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h3>Reproducible analysis: From DICOMs to brain masks</h3>
+      <ul style="font-size: 30px">
+          <li>Step 1: Convert DICOMs to BIDS-structured NIfTI images</li>
+          <ul style="font-size:20px"><li><a href="https://github.com/nipy/heudiconv" target="_blank">
+              heudiconv</a> is a flexible DICOM converter that can do the job well.
+              It is part of a <a href="https://github.com/ReproNim/reproin" target="_blank">reproin</a>,
+              a framework for automatic DICOM to BIDS-dataset conversion.
+              reproin is part of a public container collection that can be installed as a subdataset:
+          </li></ul>
+          <pre><code style="max-height:None">$ datalad clone -d . \
+https://github.com/ReproNim/containers.git \
+code/containers
+[INFO   ] scanning for unlocked files (this may take some time)
+[INFO   ] Remote origin not usable by git-annex; setting annex-ignore
+install(ok): code/containers (dataset)
+add(ok): code/containers (file)
+add(ok): .gitmodules (file)
+save(ok): . (dataset)
+add(ok): .gitmodules (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 3)
+  install (ok: 1)
+  save (ok: 2)
+# list all available containers across the dataset hierarchy
+$ datalad containers-list --recursive
+[...]
+code/containers/repronim-reproin -> code/containers/images/repronim/repronim-reproin--0.9.0.sing
+[...]
+# list the direct subdataset of bids-data
+$ datalad subdatasets
+subdataset(ok): code/containers (dataset)
+subdataset(ok): inputs/rawdata (dataset)
+# use datalad containers-run to run the conversion and save its provenance
+$ datalad containers-run -m "Convert subject 02 to BIDS" \
+   --container-name code/containers/repronim-reproin \
+   --input inputs/rawdata/dicoms \
+   --output sub-02 \
+   "-f reproin -s 02 --bids -l "" --minmeta -o . --files inputs/rawdata/dicoms"
+[...]
+ save(ok): . (dataset)
+action summary:
+  add (ok: 18)
+  get (notneeded: 4, ok: 1)
+  save (notneeded: 2, ok: 1)
+</code></pre>
+      </ul>
+  </section>
+
+
+  <section data-transition="None">
+      <h3>Reproducible analysis: From DICOMs to brain masks</h3>
+      <ul style="font-size: 30px">
+          <li>Step 1: Convert DICOMs to BIDS-structured NIfTI images</li>
+          <li>Step 2: Publish the BIDS-structured NIfTI images </li>
+          <pre><code style="max-height:None">$ datalad siblings add -d . \
+--name gin \
+--url git@gin.g-node.org:/adswa/bids-data.git'
+$ datalad siblings
+ .: here(+) [git]
+[WARNING] Could not detect whether gin carries an annex. If gin is a pure Git remote, this is expected.
+.: gin(-) [git@gin.g-node.org:/adswa/bids-data.git (git)]
+$ datalad push --to gin
+copy(ok): sourcedata/sub-02/func/sub-02_task-oneback_run-01_bold.dicom.tgz (file) [to gin...]
+copy(ok): sub-02/func/sub-02_task-oneback_run-01_bold.nii.gz (file) [to gin...]
+publish(ok): . (dataset) [refs/heads/git-annex->gin:refs/heads/git-annex 68523d8..b4c1ee0]
+publish(ok): . (dataset) [refs/heads/master->gin:refs/heads/master [new branch]]
+action summary:
+  copy (ok: 2)
+  publish (ok: 2)
+</code></pre>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h3>Reproducible analysis: From DICOMs to brain masks</h3>
+      <ul style="font-size: 30px">
+          <li>Step 1: Convert DICOMs to BIDS-structured NIfTI images</li>
+          <li>Step 2: Publish the BIDS-structured NIfTI images </li>
+            <li>Step 3: Reuse the NIfTI images in an analysis</li>
+          <pre><code style="max-height:None">$ cd ../
+# create a new dataset for your analysis. The yoda procedure pre-structures it
+# and applies configurations that ensure that scripts are versioned in Git
+$ datalad create -c yoda myanalysis
+[INFO   ] Creating a new annex repo at /home/adina/myanalysis
+[INFO   ] scanning for unlocked files (this may take some time)
+[INFO   ] Running procedure cfg_yoda
+[INFO   ] == Command start (output follows) =====
+[INFO   ] == Command exit (modification check follows) =====
+create(ok): /home/adina/myanalysis (dataset)
+$ cd myanalysis
+$ tree
+.
+├── CHANGELOG.md
+├── code
+│   └── README.md
+└── README.md
+
+1 directory, 3 file
+# add the BIDS-structured data as input - in the form of a subdataset
+$ datalad clone -d . \
+https://gin.g-node.org/adswa/bids-data \
+input
+[INFO   ] scanning for unlocked files (this may take some time)
+install(ok): input (dataset)
+add(ok): input (file)
+add(ok): .gitmodules (file)
+save(ok): . (dataset)
+add(ok): .gitmodules (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 3)
+  install (ok: 1)
+  save (ok: 2)</code></pre>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h3>Reproducible analysis: From DICOMs to brain masks</h3>
+      <ul style="font-size: 30px">
+          <li>Step 1: Convert DICOMs to BIDS-structured NIfTI images</li>
+          <li>Step 2: Publish the BIDS-structured NIfTI images </li>
+            <li>Step 3: Reuse the NIfTI images in an analysis</li>
+          <pre><code style="max-height:None"># Get a script for the analysis
+$ datalad download-url -m "Download code for brain masking from Github" \
+  -O code/get_brainmask.py \
+  https://raw.githubusercontent.com/datalad-handbook/resources/master/get_brainmask.py'
+[INFO   ] Downloading 'https://raw.githubusercontent.com/datalad-handbook/...
+https://raw.githubusercontent.com/datalad-handbook/resources/master/get_brainmask.py:
+download_url(ok): /home/adina/myanalysis/code/get_brainmask.py (file)
+add(ok): code/get_brainmask.py (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 1)
+  download_url (ok: 1)
+  save (ok: 1)
+# Add a container with all relevant Python software
+$ datalad containers-add nilearn \
+  --url shub://adswa/nilearn-container:latest \
+  --call-fmt "singularity exec {img} {cmd}"
+[INFO   ] Initiating special remote datalad
+add(ok): .datalad/config (file)
+save(ok): . (dataset)
+containers_add(ok): /home/adina/myanalysis/.datalad/environments/nilearn/image (file)
+action summary:
+  add (ok: 1)
+  containers_add (ok: 1)
+  save (ok: 1)
+# run your containerized analysis reproducibly
+$ datalad containers-run -m "Compute brain mask" \
+  -n nilearn \
+  --input input/sub-02/func/sub-02_task-oneback_run-01_bold.nii.gz \
+  --output figures/ \
+  --output "sub-02*" \
+  "python code/get_brainmask.py"'
+[INFO   ] Making sure inputs are available (this may take some time)
+get(ok): input/sub-02/func/sub-02_task-oneback_run-01_bold.nii.gz (file) [from origin...]
+[INFO   ] == Command start (output follows) =====
+[INFO   ] == Command exit (modification check follows) =====
+add(ok): figures/sub-02_brainmask.png (file)
+add(ok): figures/sub-02_mean-epi.png (file)
+add(ok): sub-02_brain-mask.nii.gz (file)
+save(ok): . (dataset)
+action summary:
+  add (ok: 3)
+  get (notneeded: 2, ok: 1)
+  save (notneeded: 1, ok: 1)</code></pre>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h3>Reproducible analysis: From DICOMs to brain masks</h3>
+      <ul style="font-size: 30px">
+          <li>Step 1: Convert DICOMs to BIDS-structured NIfTI images</li>
+          <li>Step 2: Publish the BIDS-structured NIfTI images </li>
+            <li>Step 3: Reuse the NIfTI images in an analysis</li>
+          <pre><code style="max-height:None"># Ask your results how they came to be
+$ git log sub-02_brain-mask.nii.gz
+commit d2d35eb31a93a0a82163835de0e3c14946504811 (HEAD -> master)
+Author: Adina Wagner <adina.wagner@t-online.de>
+Date:   Wed Apr 20 16:05:40 2022 +0200
+
+    [DATALAD RUNCMD] Compute brain mask
+
+    === Do not change lines below ===
+    {
+     "chain": [],
+     "cmd": "singularity exec .datalad/environments/nilearn/image python code/get_brainmask.py",
+     "dsid": "421d677c-2873-49f0-a1a9-9c7bb0100e69",
+     "exit": 0,
+     "extra_inputs": [
+      ".datalad/environments/nilearn/image"
+     ],
+     "inputs": [
+      "input/sub-02/func/sub-02_task-oneback_run-01_bold.nii.gz"
+     ],
+     "outputs": [
+      "figures/",
+      "sub-02*"
+     ],
+     "pwd": "."
+    }
+    ^^^ Do not change lines above ^^^
+# ... or recompute them
+$ datalad rerun
+          </code></pre>
+      </ul>
+  </section>
+
+  <section>
+      <h3>Summary - Reproducible analysis</h3>
+
+      <ul style="font-size:30px">
+        <dt class="fragment fade-in"><code>datalad run</code> records a command and
+            its impact on the dataset.</dt>
+          <dd class="fragment fade-in">Data/directories specified as <code>--input</code>
+            are retrieved prior to command execution, Data/directories specified as <code>--output</code>
+            will be unlocked for modifications prior to a rerun of the command.</dd>
+        <br>
+        <dt class="fragment fade-in"><code>datalad containers-run</code> from the datalad-container
+            extends <code>datalad run</code> & can be used
+            to capture the software environment as provenance.</dt>
+          <dd class="fragment fade-in">Its ensures computations are ran in the desired software set up
+              and supports Docker and Singularity containers</dd>
+        <br>
+        <dt class="fragment fade-in">Modular dataset hierarchies ensure transparency, easier access management, and reusability</dt>
+          <dd class="fragment fade-in">To install a dataset into an existing dataset as a subdataset, use <strong>datalad clone -d . [URL]</strong></dd>
+        <br>
+        <dt class="fragment fade-in">The YODA procedure pre-structures and configures datasets in a way that aids reproducibility</dt>
+          <dd class="fragment fade-in"><strong>datalad create -c yoda newdataset</strong> applies it directory during creation</dd>
+
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>General reproducibility checklist (Hinsen, 2020)</h2>
+      <small><a href="https://www.nature.com/articles/d41586-020-02462-7" target="_blank">
+          https://www.nature.com/articles/d41586-020-02462-7
+      </a> </small>
+      <dl style="font-size:30px">
+          <dt>
+              Use code/scripts
+          </dt>
+          <dl class="fragment fade-in">
+              Workflows based on point-and-click interfaces (e.g. Excel), are
+              not reproducible. Enshrine computations and data manipulation in code.
+          </dl>
+          <dt>
+              Document
+          </dt>
+          <dl class="fragment fade-in">
+              Use comments, computational notebooks and README files to explain
+              how your code works, and to define the expected parameters and the
+              computational environment required.
+
+          </dl>
+          <dt>
+              Record
+          </dt>
+          <dl class="fragment fade-in">
+              Make a note of key parameters, e.g. ‘seed’ values used to start a
+              random-number generator.
+          </dl>
+          <dt>
+              Test
+          </dt>
+          <dl class="fragment fade-in">
+              Create a suite of test functions. Use positive and negative control
+              data sets to ensure you get the expected results, and run those tests
+              throughout development to squash bugs as they arise.
+          </dl>
+          <dt>
+              Guide
+          </dt>
+          <dl class="fragment fade-in">
+              Create a master script (for example, a ‘run.sh’ file or a Makefile) that downloads
+              required data sets and variables, executes your workflow and provides
+              an obvious entry point to the code.
+          </dl>
+      </dl>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>General reproducibility checklist (Hinsen, 2020)</h2>
+            <small><a href="https://www.nature.com/articles/d41586-020-02462-7" target="_blank">
+          https://www.nature.com/articles/d41586-020-02462-7
+      </a> </small>
+      <dl style="font-size:30px">
+          <dt>
+              Archive
+          </dt>
+          <dl class="fragment fade-in">
+              GitHub is a popular but impermanent online repository. Archiving
+              services such as Zenodo, Figshare and Software Heritage promise
+              long-term stability.
+          </dl>
+          <dt>
+              Track
+          </dt>
+          <dl class="fragment fade-in">
+              Use version-control tools such as Git to record your project’s history.
+              Note which version you used to create each result.
+          </dl>
+          <dt>
+              Package
+          </dt>
+          <dl class="fragment fade-in">
+              Create ready-to-use computational environments using containerization
+              tools (for example, Docker, Singularity), web services (Code Ocean,
+              Gigantum, Binder) or virtual-environment managers (Conda).
+          </dl>
+          <dt>
+              Automate
+          </dt>
+          <dl class="fragment fade-in">
+              Use continuous-integration services (for example, Travis CI) to
+              automatically test your code over time, and in various computational environments
+          </dl>
+          <dt>
+              Simplify
+          </dt>
+          <dl class="fragment fade-in">
+              Avoid niche or hard-to-install third-party code libraries that can complicate reuse.
+          </dl>
+          <dt>
+              Verify
+          </dt>
+          <dl class="fragment fade-in">
+              Check your code’s portability by running it in a range of computing environments.
+          </dl>
+      </dl>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Did you know...</h2>
+      <dl>
+          <small>
+            <dl>
+                <dt>
+                    Use code/scripts
+                </dt>
+                <dl>
+                    Workflows based on point-and-click interfaces (e.g. Excel), are
+              not reproducible. Enshrine computations and data manipulation in code.
+                </dl>
+            </dl>
+        </small>
+        <br><br>
+          <ul style="font-size:30px">
+              <li>First: YES! Very much so!</li>
+              <li class="fragment fade-in">But if your workflow includes interactive
+              code sessions, and you want to at least save the results, you could do
+              <pre><code>datalad run ipython/R/matlab/...</code></pre></li>
+              <li class="fragment fade-in">Once you close the interactive session,
+              every result you created would be saved (although with crappy provenance)</li>
+          </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Did you know...</h2>
+      <dl>
+          <small>
+          <dt>
+              Document
+          </dt>
+          <dl>
+              Use comments, computational notebooks and README files to explain
+              how your code works, and to define the expected parameters and the
+              computational environment required.
+
+          </dl>
+          <dt>
+              Record
+          </dt>
+          <dl>
+              Make a note of key parameters, e.g. ‘seed’ values used to start a
+              random-number generator.
+          </dl>
+        </small>
+        <br><br>
+          <ul style="font-size:30px">
+              <li>
+                  Commit messages and run records can do this for you, and are a useful basis
+                  to extend upon with "documentation for humans" such as READMEs
+              </li>
+              <li>
+                  If you create datasets using <strong>datalad create -c yoda ... </strong>
+                  the YODA procedure automatically populates your repository with README
+                  files to nudge you into using them (and makes sure that code is versioned with Git).
+              </li>
+          </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Did you know...</h2>
+      <dl>
+          <small>
+          <dt>
+              Test
+          </dt>
+          <dl>
+              Create a suite of test functions. Use positive and negative control
+              data sets to ensure you get the expected results, and run those tests
+              throughout development to squash bugs as they arise.
+          </dl>
+        </small>
+        <br><br>
+          <ul style="font-size:30px">
+              <li>There is an excellent
+                  <a href="https://the-turing-way.netlify.app/reproducible-research/testing.html" target="_blank">
+                  Turing Way chapter about it</a>
+              </li>
+              <li class="fragment fade-in">
+                  Because annexed files are stored by their content identity hash,
+                  if any change in your pipeline/workflow produces a changed results,
+                  the version control software will be able to tell you
+              </li>
+          </ul>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Did you know...</h2>
+      <dl>
+          <small>
+            <dt>
+              Guide
+            </dt>
+            <dl>
+              Create a master script (for example, a ‘run.sh’ file) that downloads
+              required data sets and variables, executes your workflow and provides
+              an obvious entry point to the code.
+            </dl>
+        </small>
+        <br><br>
+          <ul style="font-size:30px">
+              <li class="fragment fade-in">
+                  A well-made run record can do this, or at least help
+              </li>
+              <li class="fragment fade-in">
+                  Makefiles are also great. A tutorial for a reproducible paper
+                  using Makefiles is in
+                  <a href="https://github.com/datalad-handbook/repro-paper-sketch/" target="_blank">
+                      github.com/datalad-handbook/repro-paper-sketch/</a>
+              </li>
+          </ul>
+  </section>
+
+
+  <section data-transition="None">
+        <h2>Did you know...</h2>
+        <small>
+            <dl>
+                <dt>
+                    Archive
+                </dt>
+                <dl>
+                    Archiving services such as Zenodo, Figshare and Software Heritage promise
+                    long-term stability.
+                </dl>
+            </dl>
+        </small>
+        <br><br>
+        <p style="font-size:30px">You can archive a dataset to figshare? <br>
+            If you have a Figshare account, you can do the following:
+        <pre><code class="bash" style="max-height:none">$ datalad export-to-figshare
+[INFO   ] Exporting current tree as an archive under /tmp/comics since figshare does not support directories
+[INFO   ] Uploading /tmp/comics/datalad_ce82ff1f-e2b3-4a84-9e56-87d8eb6e5b27.zip to figshare
+Article
+Would you like to create a new article to upload to?  If not - we will list existing articles (choices: yes, no): yes
+
+New article
+Please enter the title (must be at least 3 characters long). [comics#ce82ff1f-e2b3-4a84-9e56-87d8eb6e5b27]: acomictest
+
+[INFO   ] Created a new (private) article 13247186 at https://figshare.com/account/articles/13247186. Please visit it, enter additional meta-data and make public
+[INFO   ] 'Registering' /tmp/comics/datalad_ce82ff1f-e2b3-4a84-9e56-87d8eb6e5b27.zip within annex
+[INFO   ] Adding URL https://ndownloader.figshare.com/files/25509824 for it
+[INFO   ] Registering links back for the content of the archive
+[INFO   ] Adding content of the archive /tmp/comics/datalad_ce82ff1f-e2b3-4a84-9e56-87d8eb6e5b27.zip into annex AnnexRepo(/tmp/comics)
+[INFO   ] Initiating special remote datalad-archives
+[INFO   ] Finished adding /tmp/comics/datalad_ce82ff1f-e2b3-4a84-9e56-87d8eb6e5b27.zip: Files processed: 4, removed: 4, +git: 2, +annex: 2
+[INFO   ] Removing generated and now registered in annex archive
+export_to_figshare(ok): Dataset(/tmp/comics) [Published archive https://ndownloader.figshare.com/files/25509824]
+</code></pre></p>
+    </section>
+
+    <section data-transition="None">
+        <h2>Did you know ...</h2>
+
+                <img src="../pics/figshare.png">
+    </section>
+
+
+  <section data-transition="None">
+      <h2>Did you know...</h2>
+      <dl>
+          <small>
+          <dt>
+              Package
+          </dt>
+          <dl>
+              Create ready-to-use computational environments using containerization
+              tools (for example, Docker, Singularity), web services (Code Ocean,
+              Gigantum, Binder) or virtual-environment managers (Conda).
+          </dl>
+        </small>
+        <br><br>
+          <ul style="font-size:30px">
+              <li>
+                  The <code>datalad-container</code> extension can help to use and share software
+                  environments in your dataset
+              </li>
+              <li><a href="https://github.com/repronim/containers" target="_blank">
+                  github.com/repronim/containers</a> is a public DataLad dataset with access to dozens of commonly used
+                  containerized neuroimaging software
+              </li>
+          </ul>
+      </dl>
+  </section>
+
+  <section>
+    <h2>Did you know...</h2>
+      <ul style="font-size:30px">
+          Helpful resources for working with software containers:
+          <li>
+              <a href="https://github.com/jupyterhub/repo2docker" target="_blank">
+                  repo2docker</a> can fetch a Git repository/DataLad dataset and builds
+              a container image from configuration files
+          </li>
+          <li>
+              <a href="https://github.com/ReproNim/neurodocker" target="_blank">
+                  neurodocker</a> can generate custom Dockerfiles and Singularity recipes
+              for neuroimaging.
+              </a>
+          </li>
+          <li>
+              <a href="https://github.com/repronim/containers" target="_blank">
+                  The ReproNim container collection</a>, a DataLad dataset that
+              includes common neuroimaging software as configured singularity containers.
+          </li>
+          <li>
+              <a href="https://github.com/rocker-org/rocker" target="_blank">
+                  rocker</a> - Docker container for R users
+          </li>
+      </ul>
+  </section>
+
+  <section style="font-size:30px">
+      <h2>Summary</h2>
+      Where can DataLad help?
+      <table>
+          <tr>
+              <td>
+                <img src="../pics/turingway/ReproducibleDefinitionGrid.png">
+                <imgcredit>Illustration by Scriberia and The Turing Way</imgcredit>
+              </td>
+              <td>
+                  <table style="font-size:30px">
+                      <tr >
+                         <b>Reproducible</b><br>
+                          automatic recompute <br>
+                          and identity checks<br>
+                          <b>Replicable</b><br>
+                          Easily exchange <br>
+                          input data<br>
+                          <b>Robust</b><br>
+                          Reuse data & change<br>
+                          code, update paper <br>
+                          <b>Generalisable</b><br>
+                          Share analysis in an<br>
+                          easily reusable and<br>
+                          adaptable framework
+                      </tr>
+                  </table>
+
+              </td>
+          </tr>
+      </table>
+
+  </section>
+
+  <section>
+      <h2>Questions!</h2>
+          <iframe src="https://www.directpoll.com/r?XDbzPBd3ixYqg8huKIwKuJ7aj5lQw7fByQ4HgMgN",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
+</section>
+
+
+
+<section>
+    <section>Backup</section>
+  <section data-transition="None">
+      <h2>Adding a Singularity Image from a path</h2>
+      <ul style="font-size:30px">
+          <li>You can get Singularity images by "pulling" them from Singularity or
+          Dockerhub:</li>
+          <pre><code class="bash">$ singularity pull docker://nipy/heudiconv:0.5.4
+$ singularity pull shub://adswa/python-ml:1
+INFO:    Downloading shub image
+ 265.56 MiB / 265.56 MiB [==================================================] 100.00% 10.23 MiB/s 25s</code></pre>
+          <li>You can also take/write a recipe file and build a container on your computer:
+          <pre><code class="bash">$ sudo singularity build myimage Singularity.2
+INFO:    Starting build...
+Getting image source signatures
+Copying blob 831751213a61 done
+[...]
+INFO:    Creating SIF file...
+INFO:    Build complete: myimage
+</code></pre></li>
+      <li>pulled or build images lie around as <i>.sif</i> or <i>.simg</i> files, and can be
+          added to the dataset with their path and <strong>datalad containers-add</strong>:
+      <pre><code class="bash">$ ls
+heudiconv_0.5.4.sif
+python-ml_1.sif</code></pre></li>
+          <pre><code class="bash">$ datalad containers-add software --url /home/me/singularity/myimage
+[INFO   ] Copying local file myimage to /home/adina/repos/resources/.datalad/environments/software/image
+add(ok): .datalad/environments/software/image (file)
+add(ok): .datalad/config (file)
+save(ok): . (dataset)
+containers_add(ok): /home/adina/repos/resources/.datalad/environments/software/image (file)
+action summary:
+  add (ok: 2)
+  containers_add (ok: 1)
+  save (ok: 1)
+ </code></pre>
+          <pre><code class="bash">$ datalad containers-list
+software -> .datalad/environments/software/image</code></pre>
+      </ul>
+  </section>
+
+   <section data-transition="None">
+      <h2>Adding a Singularity Image from a URL</h2>
+      <ul style="font-size:30px">
+          <li>
+          Tip: If you add Images from public URLs (e.g., Dockerhub or Singularity Hub),
+          others can retrieve your Image easily
+          </li>
+      <pre><code>$ datalad containers-add software --url shub://adswa/python-ml:1
+add(ok): .datalad/config (file)
+save(ok): . (dataset)
+containers_add(ok): /tmp/bla/.datalad/environments/software/image (file)
+action summary:
+  add (ok: 1)
+  containers_add (ok: 1)
+  save (ok: 1)
+</code></pre>
+      </ul>
+
+  </section>
+
+  <section data-transition="None">
+      <h2>Adding a Docker Image from a path</h2>
+      <ul style="font-size:30px">
+          <li>You can get Docker images by "pulling" them from Dockerhub:</li>
+          <pre><code class="bash">$ docker pull repronim/neurodocker:latest                                   1 !
+latest: Pulling from repronim/neurodocker</code></pre>
+          <li>You can also take/write a Dockerfile and build a container on your computer:
+          <pre><code class="bash">$ sudo docker build -t adwagner/somedockercontainer .
+Sending build context to Docker daemon  6.656kB
+Step 1/4 : FROM python:3.6
+[...]
+Successfully built 31d6acc37184
+Successfully tagged adwagner/somedockercontainer:latest
+</code></pre></li>
+      <li>Show docker images:
+      <pre><code class="bash">$ docker images
+REPOSITORY                      TAG                 IMAGE ID            CREATED             SIZE
+repronim/neurodocker            latest              84b9023f0019        7 months ago        81.5MB
+adwagner/min_preproc            latest              fca4a144b61f        8 months ago        5.96GB
+[...]</code></pre></li>
+                </ul>
+  </section>
+
+
+  <section data-transition="None">
+      <h2>Adding a Docker image from a URL</h2>
+      <ul style="font-size:30px">
+          <li>
+              <pre><code>$ datalad containers-add --url dhub://busybox:1.30 bb
+[INFO] Saved busybox:1.30 to C:\Users\datalad\testing\blablablabla\.datalad\environments\bb\image
+add(ok): .datalad\environments\bb\image\64f5d945efcc0f39ab11b3cd4ba403cc9fefe1fa3613123ca016cf3708e8cafb.json (file)
+add(ok): .datalad\environments\bb\image\a57c26390d4b78fd575fac72ed31f16a7a2fa3ebdccae4598513e8964dace9b2\VERSION (file)
+add(ok): .datalad\environments\bb\image\a57c26390d4b78fd575fac72ed31f16a7a2fa3ebdccae4598513e8964dace9b2\json (file)
+add(ok): .datalad\environments\bb\image\a57c26390d4b78fd575fac72ed31f16a7a2fa3ebdccae4598513e8964dace9b2\layer.tar (file)
+add(ok): .datalad\environments\bb\image\manifest.json (file)
+add(ok): .datalad\environments\bb\image\repositories (file)
+add(ok): .datalad\config (file)
+save(ok): . (dataset)
+containers_add(ok): C:\Users\datalad\testing\blablablabla\.datalad\environments\bb\image (file)
+action summary:
+  add (ok: 7)
+  containers_add (ok: 1)
+  save (ok: 1)</code></pre>
+          </li>
+      </ul>
+  </section>
+
+
+<section>
+    <h2>Configure containers</h2>
+    <ul>
+        <li>
+            <code>datalad containers-run</code> executes any command inside of the
+        specified container. How does it work?
+        </li>
+        <pre><code>$ cat .datalad/config
+[datalad "containers.midterm-software"]
+	updateurl = shub://adswa/resources:1
+	image = .datalad/environments/midterm-software/image
+	cmdexec = singularity exec {img} {cmd}</code></pre>
+        <li class="fragment fade-in">
+            You can configure the command execution however you like:
+        <pre><code>$ datalad containers-add fmriprep \
+--url shub://ReproNim/containers:bids-fmriprep--20.1.1 \
+--call-fmt 'singurity run --cleanenv -B $PWD,$PWD/.tools/license.txt {img} {cmd}'</code></pre><br>
+        <small>workflow demonstration fMRIprep: <a href="https://youtu.be/xlb_moXe48E?t=200" target="_blank">
+            OHBM 2020 Open Science Room presentation
+        </a> </small></li>
+    </ul>
+</section>
+  </section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    slideNumber: 'c',
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1,
+    pdfPageHeightOffset: -1,
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
+
