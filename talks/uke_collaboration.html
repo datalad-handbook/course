@@ -117,7 +117,7 @@ nothing to commit, working tree clean</code></pre></li>
         <pre><code>$ git branch
   git-annex
 * main</code></pre></li>
-        <li>The <em>git-annex</em> branch that datasets have is a bit special (more info later) </li>
+        <li>The <em>git-annex</em> branch special, and only modified by git-annex </li>
     </ul>
 </section>
 </section>
@@ -161,6 +161,30 @@ nothing to commit, working tree clean</code></pre></li>
             </td>
             <td>
                  <img height="600px" src="../pics/artwork/src/branching/branching_2.svg">
+            </td>
+        </tr>
+    </table>
+</section>
+
+<section data-transition="None">
+    <h3>How to do branching - basic workflow and commands</h3>
+    <table>
+        <col width="400px">
+        <col width="600px">
+        <tr>
+            <td>
+                <ul style="font-size:25px">
+                    <li>Every commit (<em>datalad save</em>) <br>
+                        on this branch <br> progresses
+                        its timeline</li>
+                    <pre><code>$ datalad save -m \
+"adding preprocessing pipeline"</code></pre>
+                    <li>But sometimes you're not sure if a new thing you're trying will work out in the end</li>
+                </ul>
+            </td>
+            <td style="font-size:20px">
+                My own very first version controlled project:
+                 <img height="450px" src="../pics/messy-history.png">
             </td>
         </tr>
     </table>
@@ -401,6 +425,13 @@ $ git merge preproc</code></pre>
         </ul>
     </ul>
 </section>
+
+  <section>
+      <h2>Questions!</h2>
+      <small>Awkward silence can be bridged with awkward MC questions :) </small>
+          <iframe src="https://www.directpoll.com/r?XDbzPBd3ixYqg8huKIwKuJ7aj5lQw7fByQ4HgMgN",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
 </section>
 
 
@@ -872,6 +903,13 @@ $ datalad push --to upstream</code></pre>
         </dl>
     </ul>
 </section>
+
+  <section>
+      <h2>Questions!</h2>
+      <small>Awkward silence can be bridged with awkward MC questions :) </small>
+          <iframe src="https://www.directpoll.com/r?XDbzPBd3ixYqg8huKIwKuJ7aj5lQw7fByQ4HgMgN",
+              style="border: 0", width="930", height="900"></iframe>
+  </section>
 </section>
 
 <section>
