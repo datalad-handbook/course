@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>RDM with DataLad</title>
+  <meta name="description" content=" Workshop on DataLad for research data management ">
+  <meta name="author" content=" Adina Wagner & Michał Szczepanik ">
+
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../css/main.css" id="theme">
+  <script src="../js/printpdf.js"></script>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+
+
+  <section>
+
+<section>
+  <h2> Dropping and removing stuff </h2>
+  <table>
+  <tr>
+    <td>What to do with files you don't want to keep</td>
+  </tr>
+  <tr>
+    <td>
+        <small><code>datalad drop</code> and <code>datalad remove</code><br>
+      </small>
+    </td>
+  </tr>
+  </table>
+
+      <a class="fragment fade-in" style="font-size:25px" href="https://psychoinformatics-de.github.io/rdm-course/91-branching" target="_blank">
+          Code: psychoinformatics-de.github.io/rdm-course/92-filesystem-operations
+      </a>
+</section>
+  </section>
+
+  <!--...WORKSHOP INTRODUCTION...-->
+
+  <section>
+
+  <section data-transition="None">
+      <h2>Drop & remove</h2>
+      <ul style="font-size:30px">
+          <li>Try to remove (<em>rm</em>) one of the pictures in your dataset. What happens?</li>
+          <li class="fragment fade-in">Version control tools keep a revision history of your files -
+              file contents are not actually removed when you <em>rm</em> them.
+              Interactions with the revision history of the dataset can bring them "back to life"</li>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Drop & remove</h2>
+      <ul style="font-size:30px">
+          <li>Clone a small example dataset to drop file contents and remove datasets:<br>
+              <pre><code>$ datalad clone https://github.com/datalad-datasets/machinelearning-books.git
+$ cd machinelearning-books
+$ datalad get A.Shashua-Introduction_to_Machine_Learning.pdf </code></pre>
+          <li class="fragment fade-in"><strong>datalad drop</strong> removes annexed file contents from a local dataset
+              annex and frees up disk space. It is the antagonist of <strong>get</strong> (which can get files and subdatasets).
+          <pre><code>$ datalad drop A.Shashua-Introduction_to_Machine_Learning.pdf
+drop(ok): /tmp/machinelearning-books/A.Shashua-Introduction_to_Machine_Learning.pdf (file)
+          [checking https://arxiv.org/pdf/0904.3664v1.pdf...]</code></pre></li>
+          <li class="fragment fade-in">But: Default safety checks require that dropped files can be re-obtained
+          to prevent accidental data loss. <strong>git annex whereis</strong> reports all registered locations
+          of a file's content</li>
+          <li class="fragment fade-in"><strong>drop</strong> does not only operate on individual annexed files,
+          but also directories, or globs, and it can uninstall subdatasets:
+          <pre><code>$ datalad clone https://github.com/datalad-datasets/human-connectome-project-openaccess.git
+$ cd human-connectome-project-openaccess
+$ datalad get -n HCP1200/996782
+$ datalad drop --what all  HCP1200/996782</code></pre></li>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Drop & remove</h2>
+      <ul style="font-size:30px">
+         <li><strong>datalad remove</strong> removes complete dataset or dataset hierarchies
+             and leaves no trace of them. It is the antagonist to <strong>clone</strong>.
+          <pre><code># The command operates outside of the to-be-removed dataset!
+$ datalad remove -d . machinelearning-books
+uninstall(ok): /tmp/machinelearning-books (dataset)</code></pre></li>
+          <li class="fragment fade-in">But: Default safety checks require that it could be re-cloned in its most recent version
+              from other places, i.e., that there is a <em>sibling</em> that has all revisions that exist locally
+              <strong>datalad siblings</strong> reports all registered siblings of a dataset.
+          </li>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Drop & remove</h2>
+      <ul style="font-size:30px">
+          <li>Create a dataset from scratch and add a file<br>
+              <pre><code>$ datalad create local-dataset
+$ cd local-dataset
+$ echo "This file content will only exist locally" > local-file.txt
+$ datalad save -m "Added a file without remote content availability"</code></pre>
+          <li class="fragment fade-in"><strong>datalad drop</strong> refuses to remove annexed file contents if it
+          can't verify that <strong>datalad get</strong> could re-retrieve it
+          <pre><code>$ datalad drop local-file.txt
+$ drop(error): local-file.txt (file) [unsafe; Could only verify the existence of 0 out of 1 necessary copy;
+              (Note that these git remotes have annex-ignore set: origin upstream);
+              (Use --reckless availability to override this check, or adjust numcopies.)]
+</code></pre></li>
+          <li class="fragment fade-in">Adding <strong>--reckless availability</strong> overrides this check
+          <pre><code>$ datalad drop local-file.txt --reckless availability</code></pre></li>
+          <li class="fragment fade-in">Be mindful that <strong>drop</strong> will only operate on
+          the most recent version of a file - past versions may still exist afterwards unless you drop them
+          specifically. <strong>git annex unused</strong> can identify all files that are left behind</li>
+      </ul>
+  </section>
+
+  <section data-transition="None">
+      <h2>Drop & remove</h2>
+      <ul style="font-size:30px">
+          <li class="fragment fade-in"><strong>datalad remove</strong> refuses to remove
+              datasets without an up-to-date <em>sibling</em>
+              <pre><code>$ datalad remove -d local-dataset
+uninstall(error): . (dataset) [to-be-dropped dataset has revisions that are not available at any known
+                  sibling. Use `datalad push --to ...` to push these before dropping the local dataset,
+                  or ignore via `--reckless availability`. Unique revisions: ['main']]
+</code></pre></li>
+          </li>
+          <li class="fragment fade-in">Adding <strong>--reckless availability</strong> overrides this check
+          <pre><code>$ datalad remove -d local-dataset --reckless availability</code></pre></li>
+      </ul>
+  </section>
+
+  <section>
+      <h2>Removing wrongly</h2>
+      <ul style="font-size:30px">
+      <li>
+          Using a file browser or command line calls like <strong>rm -rf</strong> on datasets is doomed to fail.
+          Recreate the local dataset we just removed:
+          <pre><code>$ datalad create local-dataset
+$ cd local-dataset
+$ echo "This file content will only exist locally" > local-file.txt
+$ datalad save -m "Added a file without remote content availability"</code></pre>
+      </li>
+      <li class="fragment fade-in" >Removing it the wrong way causes chaos and leaves an usuable dataset corpse behind:
+      <pre><code>$ rm -rf local-dataset
+rm: cannot remove 'local-dataset/.git/annex/objects/Kj/44/MD5E-s42--8f008874ab52d0ff02a5bbd0174ac95e.txt/
+MD5E-s42--8f008874ab52d0ff02a5bbd0174ac95e.txt': Permission denied
+</code></pre></li>
+      <li class="fragment fade-in" >The dataset can't be fixed, but to remove the corpse <strong>chmod</strong> (change file mode bits) it (i.e., make it writable)
+          <pre><code>$ chmod +w -R local-dataset
+$ rm -rf local-dataset
+</code></pre>
+      </li>
+      </ul>
+  </section>
+
+<section>
+          <h2>Questions!</h2>
+      <small>Awkward silence can be bridged with awkward MC questions :) </small>
+          <iframe src="https://www.directpoll.com/r?XDbzPBd3ixYqg8huKIwKuJ7aj5lQw7fByQ4HgMgN",
+              style="border: 0", width="930", height="900"></iframe>
+    <small>A complete overview of file system operations is in
+          <a href="http://handbook.datalad.org/en/latest/basics/101-136-filesystem.html" target="_blank">
+              handbook.datalad.org/en/latest/basics/101-136-filesystem.html
+          </a></small>
+  </section>
+  </section>
+
+
+</div> <!-- /.slides -->
+</div> <!-- /.reveal -->
+
+<script src="../reveal.js/js/reveal.js"></script>
+<script>
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    // The "normal" size of the presentation, aspect ratio will be preserved
+    // when the presentation is scaled to fit different resolutions. Can be
+    // specified using percentage units.
+    width: 1280,
+    height: 960,
+
+    // Factor of the display size that should remain empty around the content
+    margin: 0.1,
+
+    // Bounds for smallest/largest possible scale to apply to content
+    minScale: 0.2,
+    maxScale: 1.0,
+
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+    slideNumber: 'c',
+    pdfSeparateFragments: false,
+    pdfMaxPagesPerSlide: 1,
+    pdfPageHeightOffset: -1,
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+    // Optional reveal.js plugins
+    dependencies: [
+      { src: '../reveal.js/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+      { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+      { src: '../reveal.js/plugin/zoom-js/zoom.js', async: true },
+      { src: '../reveal.js/plugin/notes/notes.js', async: true }
+    ]
+  });
+</script>
+</body>
+</html>
