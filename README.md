@@ -1,4 +1,9 @@
-# DataLad course material
+## DataLad course material
+
+
+# ⚠️⚠️⚠️ Development on future talks and workshop materials is continued in https://github.com/datalad-handbook/datalad-course ⚠️⚠️⚠️
+(https://github.com/datalad-handbook/datalad-course was set up with a proper and more up-to-date reveal.js backbone that enables more reveal.js features and reliable PDF exports).
+
 
 Talks and materials for workshops based on the [DataLad handbook](http://handbook.datalad.org).
 
