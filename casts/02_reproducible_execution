@@ -27,7 +27,7 @@ datalad run -m "create a list of podcast titles" "bash code/list_titles.sh > rec
 say 'Let'"'"'s now check what has been written into the history. (runrecord)'
 run '### Code snippet 45
 git log -p -n 1'
-say 'A run command that does not result in changes (no modifcations, no additional files) will not produce a record in the dataset history. So what happens if we do the same again?'
+say 'A run command that does not result in changes (no modifications, no additional files) will not produce a record in the dataset history. So what happens if we do the same again?'
 run '### Code snippet 46
 datalad run -m "Try again to create a list of podcast titles" "bash code/list_titles.sh > recordings/podcasts.tsv"'
 say 'as the result is byte-identical, there is no new commit'
