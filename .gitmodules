@@ -6,5 +6,5 @@
 	url = kumo.ovgu.de:/home/mih/public_html/datalad/slides
 [submodule "pics/artwork"]
 	path = pics/artwork
-	url = git@github.com:datalad-handbook/artwork.git
+	url = https://github.com/datalad-handbook/artwork.git
 	datalad-id = 4d04397a-c725-11e9-a657-f0d5bf7b5561
